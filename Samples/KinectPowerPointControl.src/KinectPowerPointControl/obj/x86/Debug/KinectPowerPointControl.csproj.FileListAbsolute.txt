@@ -1,0 +1,9 @@
+C:\Users\Lucio\Desktop\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Lucio\Desktop\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\MainWindow.baml
+C:\Users\Lucio\Desktop\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\MainWindow.g.cs
+C:\Users\Lucio\Desktop\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\App.g.cs
+C:\Users\Lucio\Desktop\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\KinectPowerPointControl_MarkupCompile.cache
+C:\Users\Lucio\Desktop\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\KinectPowerPointControl.g.resources
+C:\Users\Lucio\Desktop\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\KinectPowerPointControl.Properties.Resources.resources
+C:\Users\Lucio\Desktop\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Lucio\Desktop\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\GenerateResource.write.1.tlog

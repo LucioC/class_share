@@ -1,0 +1,5 @@
+C:\Users\Lucio\Desktop\class_share\Samples\WCF\RestService\bin\RestService.dll
+C:\Users\Lucio\Desktop\class_share\Samples\WCF\RestService\bin\RestService.pdb
+C:\Users\Lucio\Desktop\class_share\Samples\WCF\RestService\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Lucio\Desktop\class_share\Samples\WCF\RestService\obj\Debug\RestService.dll
+C:\Users\Lucio\Desktop\class_share\Samples\WCF\RestService\obj\Debug\RestService.pdb
