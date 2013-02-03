@@ -8,3 +8,9 @@ C:\Users\Lucio\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\bin\WcfSe
 C:\Users\Lucio\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\Lucio\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\obj\Debug\WcfService1.dll
 C:\Users\Lucio\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\obj\Debug\WcfService1.pdb
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\bin\WcfService1.dll
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\bin\WcfService1.pdb
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\obj\Debug\WcfService1.csproj.ResolveComReference.cache
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\obj\Debug\WcfService1.dll
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\obj\Debug\WcfService1.pdb

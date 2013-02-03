@@ -7,3 +7,9 @@ C:\Users\Lucio\Documents\Visual Studio 2010\Projects\WcfService1\ConsoleApplicat
 C:\Users\Lucio\Desktop\class_share\Samples\WCF\WcfService1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config
 C:\Users\Lucio\Desktop\class_share\Samples\WCF\WcfService1\ConsoleApplication1\obj\x86\Debug\ConsoleApplication1.exe
 C:\Users\Lucio\Desktop\class_share\Samples\WCF\WcfService1\ConsoleApplication1\obj\x86\Debug\ConsoleApplication1.pdb
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\ConsoleApplication1\obj\x86\Debug\ConsoleApplication1.exe
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\ConsoleApplication1\obj\x86\Debug\ConsoleApplication1.pdb
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\ConsoleApplication1\obj\x86\Debug\ResolveAssemblyReference.cache

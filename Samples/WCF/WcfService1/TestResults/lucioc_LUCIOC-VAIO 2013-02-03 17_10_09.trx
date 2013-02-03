@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="f3797481-42fc-4f4f-8a00-091d7e4a8a67" name="lucioc@LUCIOC-VAIO 2013-02-03 17:10:09" runUser="lucioc-VAIO\lucioc" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="8cb53320-d39e-44a4-b8fa-ae4d1c0c140f">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="lucioc_LUCIOC-VAIO 2013-02-03 17_10_09">
+      <DeploymentItem filename="C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\bin\WcfService1.dll" />
+      <DeploymentItem filename="C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\PowerPointLibraries\bin\Debug\PowerPointLibraries.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2013-02-03T17:10:09.4919757-02:00" queuing="2013-02-03T17:10:09.5075758-02:00" start="2013-02-03T17:10:09.5231758-02:00" finish="2013-02-03T17:10:19.9595941-02:00" />
+  <ResultSummary outcome="Completed">
+    <Counters total="4" executed="4" passed="4" error="0" failed="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="prepareNotExistentPresentationTest" storage="c:\users\lucioc\desktop\class_share\samples\wcf\wcfservice1\testproject1\bin\debug\testproject1.dll" id="4dc0855b-0c69-7210-522a-eeb87db8e9ef">
+      <Execution id="d1e3bd04-d797-47cd-a2ca-1e3cb1f77ac1" />
+      <TestMethod codeBase="C:/Users/lucioc/Desktop/class_share/Samples/WCF/WcfService1/TestProject1/bin/Debug/TestProject1.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject1.PowerPointPresentationTest, TestProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="prepareNotExistentPresentationTest" />
+    </UnitTest>
+    <UnitTest name="closePresentationTest" storage="c:\users\lucioc\desktop\class_share\samples\wcf\wcfservice1\testproject1\bin\debug\testproject1.dll" id="7780ea74-fb7c-29c3-f7bb-16659ccd9577">
+      <Execution id="ef96be3c-ed66-4214-b720-06571c03cebf" />
+      <TestMethod codeBase="C:/Users/lucioc/Desktop/class_share/Samples/WCF/WcfService1/TestProject1/bin/Debug/TestProject1.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject1.PowerPointPresentationTest, TestProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="closePresentationTest" />
+    </UnitTest>
+    <UnitTest name="prepareCorrectPresentationTest" storage="c:\users\lucioc\desktop\class_share\samples\wcf\wcfservice1\testproject1\bin\debug\testproject1.dll" id="a1b1783a-a479-4916-4edf-069251581d0b">
+      <Execution id="9dc1883f-941f-4419-8371-752057756e3f" />
+      <TestMethod codeBase="C:/Users/lucioc/Desktop/class_share/Samples/WCF/WcfService1/TestProject1/bin/Debug/TestProject1.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject1.PowerPointPresentationTest, TestProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="prepareCorrectPresentationTest" />
+    </UnitTest>
+    <UnitTest name="closeNotStartedPresentationTest" storage="c:\users\lucioc\desktop\class_share\samples\wcf\wcfservice1\testproject1\bin\debug\testproject1.dll" id="7f40acb3-e6cc-827d-c8eb-00a57acfa480">
+      <Execution id="67c85c42-a889-4fad-bb0a-d82ce7b093eb" />
+      <TestMethod codeBase="C:/Users/lucioc/Desktop/class_share/Samples/WCF/WcfService1/TestProject1/bin/Debug/TestProject1.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject1.PowerPointPresentationTest, TestProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="closeNotStartedPresentationTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="4dc0855b-0c69-7210-522a-eeb87db8e9ef" executionId="d1e3bd04-d797-47cd-a2ca-1e3cb1f77ac1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7780ea74-fb7c-29c3-f7bb-16659ccd9577" executionId="ef96be3c-ed66-4214-b720-06571c03cebf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7f40acb3-e6cc-827d-c8eb-00a57acfa480" executionId="67c85c42-a889-4fad-bb0a-d82ce7b093eb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a1b1783a-a479-4916-4edf-069251581d0b" executionId="9dc1883f-941f-4419-8371-752057756e3f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="d1e3bd04-d797-47cd-a2ca-1e3cb1f77ac1" testId="4dc0855b-0c69-7210-522a-eeb87db8e9ef" testName="prepareNotExistentPresentationTest" computerName="LUCIOC-VAIO" duration="00:00:00.1928945" startTime="2013-02-03T17:10:09.5231758-02:00" endTime="2013-02-03T17:10:09.9287765-02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d1e3bd04-d797-47cd-a2ca-1e3cb1f77ac1">
+      <Output>
+        <StdOut>Power point open returned a exception message: PowerPoint could not open the file.</StdOut>
+        <DebugTrace>
+
+Power point open returned a exception message: PowerPoint could not open the file.
+
+</DebugTrace>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ef96be3c-ed66-4214-b720-06571c03cebf" testId="7780ea74-fb7c-29c3-f7bb-16659ccd9577" testName="closePresentationTest" computerName="LUCIOC-VAIO" duration="00:00:05.1527205" startTime="2013-02-03T17:10:09.9287765-02:00" endTime="2013-02-03T17:10:15.0767855-02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ef96be3c-ed66-4214-b720-06571c03cebf">
+      <Output>
+        <StdOut>Open presentation
+
+
+
+
+Started presentation</StdOut>
+        <DebugTrace>
+
+Open presentation
+
+
+
+Started presentation
+
+</DebugTrace>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="67c85c42-a889-4fad-bb0a-d82ce7b093eb" testId="7f40acb3-e6cc-827d-c8eb-00a57acfa480" testName="closeNotStartedPresentationTest" computerName="LUCIOC-VAIO" duration="00:00:00.0004363" startTime="2013-02-03T17:10:15.0767855-02:00" endTime="2013-02-03T17:10:15.0923856-02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="67c85c42-a889-4fad-bb0a-d82ce7b093eb">
+      <Output>
+        <StdOut>Power point close returned a exception message: Referência de objeto não definida para uma instância de um objeto.</StdOut>
+        <DebugTrace>
+
+Power point close returned a exception message: Referência de objeto não definida para uma instância de um objeto.
+
+</DebugTrace>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="9dc1883f-941f-4419-8371-752057756e3f" testId="a1b1783a-a479-4916-4edf-069251581d0b" testName="prepareCorrectPresentationTest" computerName="LUCIOC-VAIO" duration="00:00:04.8309177" startTime="2013-02-03T17:10:15.0923856-02:00" endTime="2013-02-03T17:10:19.9283941-02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9dc1883f-941f-4419-8371-752057756e3f">
+      <Output>
+        <StdOut>Open presentation</StdOut>
+        <DebugTrace>
+
+Open presentation
+
+</DebugTrace>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>

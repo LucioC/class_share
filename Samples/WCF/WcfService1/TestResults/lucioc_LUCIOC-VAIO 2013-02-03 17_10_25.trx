@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="03d4d574-bd42-40c8-86cf-a75200b97e29" name="lucioc@LUCIOC-VAIO 2013-02-03 17:10:25" runUser="lucioc-VAIO\lucioc" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="8cb53320-d39e-44a4-b8fa-ae4d1c0c140f">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="lucioc_LUCIOC-VAIO 2013-02-03 17_10_25">
+      <DeploymentItem filename="C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\bin\WcfService1.dll" />
+      <DeploymentItem filename="C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\PowerPointLibraries\bin\Debug\PowerPointLibraries.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2013-02-03T17:10:25.5240149-02:00" queuing="2013-02-03T17:10:25.5240149-02:00" start="2013-02-03T17:10:25.5396149-02:00" finish="2013-02-03T17:10:52.6524625-02:00" />
+  <ResultSummary outcome="Completed">
+    <Counters total="5" executed="5" passed="5" error="0" failed="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="GoToLastSlideTest" storage="c:\users\lucioc\desktop\class_share\samples\wcf\wcfservice1\testproject1\bin\debug\testproject1.dll" id="17bcbf66-c63d-d576-931b-799521e55765">
+      <Execution id="d256df81-2e2f-46a4-bd2e-68462d98ff52" />
+      <TestMethod codeBase="C:/Users/lucioc/Desktop/class_share/Samples/WCF/WcfService1/TestProject1/bin/Debug/TestProject1.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject1.PowerPointControlTest, TestProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="GoToLastSlideTest" />
+    </UnitTest>
+    <UnitTest name="GoToNextSlideTest" storage="c:\users\lucioc\desktop\class_share\samples\wcf\wcfservice1\testproject1\bin\debug\testproject1.dll" id="7b2a21ed-7842-a515-bc36-c73d8317a1a2">
+      <Execution id="864aae18-35a4-4b43-9b2c-7cbebf65c6a3" />
+      <TestMethod codeBase="C:/Users/lucioc/Desktop/class_share/Samples/WCF/WcfService1/TestProject1/bin/Debug/TestProject1.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject1.PowerPointControlTest, TestProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="GoToNextSlideTest" />
+    </UnitTest>
+    <UnitTest name="GoToSlideNumberTest" storage="c:\users\lucioc\desktop\class_share\samples\wcf\wcfservice1\testproject1\bin\debug\testproject1.dll" id="d132e612-4837-2d12-046f-a1d1d776af8a">
+      <Execution id="a5cc066b-b20d-484e-ba71-bbfe6234bd61" />
+      <TestMethod codeBase="C:/Users/lucioc/Desktop/class_share/Samples/WCF/WcfService1/TestProject1/bin/Debug/TestProject1.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject1.PowerPointControlTest, TestProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="GoToSlideNumberTest" />
+    </UnitTest>
+    <UnitTest name="GoToPrevioustSlideTest" storage="c:\users\lucioc\desktop\class_share\samples\wcf\wcfservice1\testproject1\bin\debug\testproject1.dll" id="81c44fed-a869-0b8d-bace-ca65dad2a800">
+      <Execution id="1a83bfac-d8c3-4f59-9950-83dc979556f2" />
+      <TestMethod codeBase="C:/Users/lucioc/Desktop/class_share/Samples/WCF/WcfService1/TestProject1/bin/Debug/TestProject1.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject1.PowerPointControlTest, TestProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="GoToPrevioustSlideTest" />
+    </UnitTest>
+    <UnitTest name="GoToFirstSlideTest" storage="c:\users\lucioc\desktop\class_share\samples\wcf\wcfservice1\testproject1\bin\debug\testproject1.dll" id="861a307a-71f7-f20b-bab6-2616eb0e999d">
+      <Execution id="805031d2-44fb-4b84-add8-9ce1d16c7997" />
+      <TestMethod codeBase="C:/Users/lucioc/Desktop/class_share/Samples/WCF/WcfService1/TestProject1/bin/Debug/TestProject1.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject1.PowerPointControlTest, TestProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="GoToFirstSlideTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="17bcbf66-c63d-d576-931b-799521e55765" executionId="d256df81-2e2f-46a4-bd2e-68462d98ff52" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7b2a21ed-7842-a515-bc36-c73d8317a1a2" executionId="864aae18-35a4-4b43-9b2c-7cbebf65c6a3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="81c44fed-a869-0b8d-bace-ca65dad2a800" executionId="1a83bfac-d8c3-4f59-9950-83dc979556f2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="861a307a-71f7-f20b-bab6-2616eb0e999d" executionId="805031d2-44fb-4b84-add8-9ce1d16c7997" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d132e612-4837-2d12-046f-a1d1d776af8a" executionId="a5cc066b-b20d-484e-ba71-bbfe6234bd61" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="d256df81-2e2f-46a4-bd2e-68462d98ff52" testId="17bcbf66-c63d-d576-931b-799521e55765" testName="GoToLastSlideTest" computerName="LUCIOC-VAIO" duration="00:00:05.4353804" startTime="2013-02-03T17:10:25.5552149-02:00" endTime="2013-02-03T17:10:31.1868248-02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d256df81-2e2f-46a4-bd2e-68462d98ff52">
+      <Output>
+        <StdOut>Open presentation
+
+
+
+
+Started presentation</StdOut>
+        <DebugTrace>
+
+Open presentation
+
+
+
+Started presentation
+
+</DebugTrace>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="864aae18-35a4-4b43-9b2c-7cbebf65c6a3" testId="7b2a21ed-7842-a515-bc36-c73d8317a1a2" testName="GoToNextSlideTest" computerName="LUCIOC-VAIO" duration="00:00:05.4844915" startTime="2013-02-03T17:10:31.1868248-02:00" endTime="2013-02-03T17:10:36.6780345-02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="864aae18-35a4-4b43-9b2c-7cbebf65c6a3">
+      <Output>
+        <StdOut>Open presentation
+
+
+
+
+Started presentation
+
+
+
+
+Next slide command. curent slide position: 2</StdOut>
+        <DebugTrace>
+
+Open presentation
+
+
+
+Started presentation
+
+
+
+Next slide command. curent slide position: 2
+
+</DebugTrace>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="1a83bfac-d8c3-4f59-9950-83dc979556f2" testId="81c44fed-a869-0b8d-bace-ca65dad2a800" testName="GoToPrevioustSlideTest" computerName="LUCIOC-VAIO" duration="00:00:05.4628225" startTime="2013-02-03T17:10:36.6780345-02:00" endTime="2013-02-03T17:10:42.1380441-02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1a83bfac-d8c3-4f59-9950-83dc979556f2">
+      <Output>
+        <StdOut>Open presentation
+
+
+
+
+Started presentation
+
+
+
+
+Previous slide command. curent slide position: 4</StdOut>
+        <DebugTrace>
+
+Open presentation
+
+
+
+Started presentation
+
+
+
+Previous slide command. curent slide position: 4
+
+</DebugTrace>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="805031d2-44fb-4b84-add8-9ce1d16c7997" testId="861a307a-71f7-f20b-bab6-2616eb0e999d" testName="GoToFirstSlideTest" computerName="LUCIOC-VAIO" duration="00:00:05.2208510" startTime="2013-02-03T17:10:42.1380441-02:00" endTime="2013-02-03T17:10:47.3640532-02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="805031d2-44fb-4b84-add8-9ce1d16c7997">
+      <Output>
+        <StdOut>Open presentation
+
+
+
+
+Started presentation</StdOut>
+        <DebugTrace>
+
+Open presentation
+
+
+
+Started presentation
+
+</DebugTrace>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a5cc066b-b20d-484e-ba71-bbfe6234bd61" testId="d132e612-4837-2d12-046f-a1d1d776af8a" testName="GoToSlideNumberTest" computerName="LUCIOC-VAIO" duration="00:00:05.2017059" startTime="2013-02-03T17:10:47.3796533-02:00" endTime="2013-02-03T17:10:52.5744624-02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a5cc066b-b20d-484e-ba71-bbfe6234bd61">
+      <Output>
+        <StdOut>Open presentation
+
+
+
+
+Started presentation</StdOut>
+        <DebugTrace>
+
+Open presentation
+
+
+
+Started presentation
+
+</DebugTrace>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>

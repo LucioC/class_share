@@ -1,0 +1,6 @@
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\bin\WcfService1.dll
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\bin\WcfService1.pdb
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\obj\Release\ResolveAssemblyReference.cache
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\obj\Release\WcfService1.csproj.ResolveComReference.cache
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\obj\Release\WcfService1.dll
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\obj\Release\WcfService1.pdb

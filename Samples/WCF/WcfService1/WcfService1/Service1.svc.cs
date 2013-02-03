@@ -6,8 +6,6 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 using Microsoft.Office.Interop.PowerPoint;
-using Microsoft.Office.
-
 
 namespace WcfService1
 {

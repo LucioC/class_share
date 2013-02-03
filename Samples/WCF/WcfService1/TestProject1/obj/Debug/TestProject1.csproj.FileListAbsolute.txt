@@ -5,3 +5,13 @@ C:\Users\Lucio\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\bin\Debu
 C:\Users\Lucio\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\Lucio\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\obj\Debug\TestProject1.dll
 C:\Users\Lucio\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\obj\Debug\TestProject1.pdb
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\obj\Debug\TestProject1.dll
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\obj\Debug\TestProject1.pdb
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\bin\Debug\TestProject1.dll
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\bin\Debug\TestProject1.pdb
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\bin\Debug\WcfService1.dll
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\bin\Debug\WcfService1.pdb
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\bin\Debug\resources\PEP_posM.pptx
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\bin\Debug\PowerPointLibraries.dll
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\bin\Debug\PowerPointLibraries.pdb

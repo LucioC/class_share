@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		WcfService1.vsmdi = WcfService1.vsmdi
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerPointLibrary", "PowerPointLibraries\PowerPointLibrary.csproj", "{244A6FAF-A40B-425B-A063-74672E630540}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = WcfService1.vsmdi
@@ -57,6 +59,16 @@ Global
 		{AA58A61C-995F-43B3-BDAF-3BCBF12D1C51}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{AA58A61C-995F-43B3-BDAF-3BCBF12D1C51}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{AA58A61C-995F-43B3-BDAF-3BCBF12D1C51}.Release|x86.ActiveCfg = Release|Any CPU
+		{244A6FAF-A40B-425B-A063-74672E630540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{244A6FAF-A40B-425B-A063-74672E630540}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{244A6FAF-A40B-425B-A063-74672E630540}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{244A6FAF-A40B-425B-A063-74672E630540}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{244A6FAF-A40B-425B-A063-74672E630540}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{244A6FAF-A40B-425B-A063-74672E630540}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{244A6FAF-A40B-425B-A063-74672E630540}.Release|Any CPU.Build.0 = Release|Any CPU
+		{244A6FAF-A40B-425B-A063-74672E630540}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{244A6FAF-A40B-425B-A063-74672E630540}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{244A6FAF-A40B-425B-A063-74672E630540}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

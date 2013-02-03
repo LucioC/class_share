@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="b9e38a11-a1bf-4d32-9261-e76b306b1b85" name="lucioc@LUCIOC-VAIO 2013-02-03 16:01:18" runUser="lucioc-VAIO\lucioc" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="8cb53320-d39e-44a4-b8fa-ae4d1c0c140f">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="lucioc_LUCIOC-VAIO 2013-02-03 16_01_18">
+      <DeploymentItem filename="C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\PowerPointPresentationMethods\bin\Debug\PowerPointPresentationMethods.exe" />
+      <DeploymentItem filename="C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\WcfService1\bin\WcfService1.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2013-02-03T16:01:18.1760193-02:00" queuing="2013-02-03T16:01:18.1840198-02:00" start="2013-02-03T16:01:18.1930203-02:00" finish="2013-02-03T16:01:33.2238800-02:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="4" executed="4" passed="1" error="0" failed="3" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>
+
+Open presentation
+
+
+
+
+Started presentation
+
+
+</StdOut>
+      <DebugTrace>
+
+Open presentation
+
+
+
+Started presentation
+
+</DebugTrace>
+    </Output>
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="goToNextSlideTest" storage="c:\users\lucioc\desktop\class_share\samples\wcf\wcfservice1\testproject1\bin\debug\testproject1.dll" id="9e21af63-93be-0b9f-3ac5-f8254c696766">
+      <Execution id="6e399d06-7555-48dc-ba84-8a3fadc7b112" />
+      <TestMethod codeBase="C:/Users/lucioc/Desktop/class_share/Samples/WCF/WcfService1/TestProject1/bin/Debug/TestProject1.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject1.PowerPointControlTest, TestProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="goToNextSlideTest" />
+    </UnitTest>
+    <UnitTest name="goToFirstSlideTest" storage="c:\users\lucioc\desktop\class_share\samples\wcf\wcfservice1\testproject1\bin\debug\testproject1.dll" id="09a924be-8822-e6d9-3f21-f790e21afee0">
+      <Execution id="ec4b6159-070a-4c6d-9160-86934e8bb153" />
+      <TestMethod codeBase="C:/Users/lucioc/Desktop/class_share/Samples/WCF/WcfService1/TestProject1/bin/Debug/TestProject1.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject1.PowerPointControlTest, TestProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="goToFirstSlideTest" />
+    </UnitTest>
+    <UnitTest name="goToSlideNumberTest" storage="c:\users\lucioc\desktop\class_share\samples\wcf\wcfservice1\testproject1\bin\debug\testproject1.dll" id="ed653daf-2abc-d0df-cd5b-acd27fb0a246">
+      <Execution id="ef0ed52e-1728-4a09-99ce-79c039bd44a0" />
+      <TestMethod codeBase="C:/Users/lucioc/Desktop/class_share/Samples/WCF/WcfService1/TestProject1/bin/Debug/TestProject1.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject1.PowerPointControlTest, TestProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="goToSlideNumberTest" />
+    </UnitTest>
+    <UnitTest name="goToLastSlideTest" storage="c:\users\lucioc\desktop\class_share\samples\wcf\wcfservice1\testproject1\bin\debug\testproject1.dll" id="8534f2b6-f223-d268-ae2c-b38fd91cc75c">
+      <Execution id="73fed2c6-516f-40ee-93f2-a94bd083f59d" />
+      <TestMethod codeBase="C:/Users/lucioc/Desktop/class_share/Samples/WCF/WcfService1/TestProject1/bin/Debug/TestProject1.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject1.PowerPointControlTest, TestProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="goToLastSlideTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="09a924be-8822-e6d9-3f21-f790e21afee0" executionId="ec4b6159-070a-4c6d-9160-86934e8bb153" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8534f2b6-f223-d268-ae2c-b38fd91cc75c" executionId="73fed2c6-516f-40ee-93f2-a94bd083f59d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9e21af63-93be-0b9f-3ac5-f8254c696766" executionId="6e399d06-7555-48dc-ba84-8a3fadc7b112" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ed653daf-2abc-d0df-cd5b-acd27fb0a246" executionId="ef0ed52e-1728-4a09-99ce-79c039bd44a0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="ec4b6159-070a-4c6d-9160-86934e8bb153" testId="09a924be-8822-e6d9-3f21-f790e21afee0" testName="goToFirstSlideTest" computerName="LUCIOC-VAIO" duration="00:00:00.2554789" startTime="2013-02-03T16:01:18.2230220-02:00" endTime="2013-02-03T16:01:33.1738771-02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ec4b6159-070a-4c6d-9160-86934e8bb153">
+      <Output>
+        <StdOut>Next slide command. curent slide position: 2</StdOut>
+        <DebugTrace>
+
+Next slide command. curent slide position: 2
+
+</DebugTrace>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="73fed2c6-516f-40ee-93f2-a94bd083f59d" testId="8534f2b6-f223-d268-ae2c-b38fd91cc75c" testName="goToLastSlideTest" computerName="LUCIOC-VAIO" duration="00:00:00.0130865" startTime="2013-02-03T16:01:33.1748772-02:00" endTime="2013-02-03T16:01:33.1918782-02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="73fed2c6-516f-40ee-93f2-a94bd083f59d">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method TestProject1.PowerPointControlTest.goToLastSlideTest threw exception: 
+System.Runtime.InteropServices.InvalidComObjectException: Não é possível usar o objeto COM que foi separado do seu RCW subjacente.</Message>
+          <StackTrace>    em System.StubHelpers.StubHelpers.GetCOMIPFromRCW(Object objSrc, IntPtr pCPCMD, Boolean&amp; pfNeedsRelease)
+   em Microsoft.Office.Interop.PowerPoint._Presentation.get_SlideShowWindow()
+   em PowerPointPresentationMethods.PowerPointControl.goToLastSlide() na C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\PowerPointPresentationMethods\PowerPointControl.cs:linha 54
+   em TestProject1.PowerPointControlTest.goToLastSlideTest() na C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\PowerPointControlTest.cs:linha 142
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="6e399d06-7555-48dc-ba84-8a3fadc7b112" testId="9e21af63-93be-0b9f-3ac5-f8254c696766" testName="goToNextSlideTest" computerName="LUCIOC-VAIO" duration="00:00:00.0019015" startTime="2013-02-03T16:01:33.1928782-02:00" endTime="2013-02-03T16:01:33.1988786-02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6e399d06-7555-48dc-ba84-8a3fadc7b112">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method TestProject1.PowerPointControlTest.goToNextSlideTest threw exception: 
+System.Runtime.InteropServices.InvalidComObjectException: Não é possível usar o objeto COM que foi separado do seu RCW subjacente.</Message>
+          <StackTrace>    em System.StubHelpers.StubHelpers.GetCOMIPFromRCW(Object objSrc, IntPtr pCPCMD, Boolean&amp; pfNeedsRelease)
+   em Microsoft.Office.Interop.PowerPoint._Presentation.get_SlideShowWindow()
+   em PowerPointPresentationMethods.PowerPointControl.goToNextSlide() na C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\PowerPointPresentationMethods\PowerPointControl.cs:linha 72
+   em TestProject1.PowerPointControlTest.goToNextSlideTest() na C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\PowerPointControlTest.cs:linha 152
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ef0ed52e-1728-4a09-99ce-79c039bd44a0" testId="ed653daf-2abc-d0df-cd5b-acd27fb0a246" testName="goToSlideNumberTest" computerName="LUCIOC-VAIO" duration="00:00:00.0017878" startTime="2013-02-03T16:01:33.2018787-02:00" endTime="2013-02-03T16:01:33.2088791-02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ef0ed52e-1728-4a09-99ce-79c039bd44a0">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method TestProject1.PowerPointControlTest.goToSlideNumberTest threw exception: 
+System.Runtime.InteropServices.InvalidComObjectException: Não é possível usar o objeto COM que foi separado do seu RCW subjacente.</Message>
+          <StackTrace>    em System.StubHelpers.StubHelpers.GetCOMIPFromRCW(Object objSrc, IntPtr pCPCMD, Boolean&amp; pfNeedsRelease)
+   em Microsoft.Office.Interop.PowerPoint._Presentation.get_SlideShowWindow()
+   em PowerPointPresentationMethods.PowerPointControl.goToSlideNumber(Int32 slideNumber) na C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\PowerPointPresentationMethods\PowerPointControl.cs:linha 59
+   em TestProject1.PowerPointControlTest.goToSlideNumberTest() na C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\PowerPointControlTest.cs:linha 174
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>
