@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="1fb49886-d099-47a9-a783-ae14e04f5284" name="lucioc@LUCIOC-VAIO 2013-02-03 23:01:45" runUser="lucioc-VAIO\lucioc" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="8cb53320-d39e-44a4-b8fa-ae4d1c0c140f">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="lucioc_LUCIOC-VAIO 2013-02-03 23_01_45">
+      <DeploymentItem filename="C:\Users\lucioc\Desktop\class_share\ClassService\PowerPointLibrary\bin\Debug\PowerPointLibraries.dll" />
+      <DeploymentItem filename="C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\bin\WcfService1.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2013-02-03T23:01:45.0088461-02:00" queuing="2013-02-03T23:01:45.0158465-02:00" start="2013-02-03T23:01:45.0248470-02:00" finish="2013-02-03T23:01:45.2658608-02:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="3" executed="3" error="0" failed="3" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="testUnit" storage="c:\users\lucioc\desktop\class_share\classservice\servicetest\bin\debug\testproject1.dll" id="3ecc851e-2d6e-b0e2-3dce-1d1f6cde8608">
+      <Execution id="0c0e532b-19a3-4679-a9d6-1d32400f3433" />
+      <TestMethod codeBase="C:/Users/lucioc/Desktop/class_share/ClassService/ServiceTest/bin/Debug/TestProject1.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject1.ServiceTest, TestProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="testUnit" />
+      <AspNet webSiteUrl="http://localhost:a2475/Servicessasd.svc/" />
+    </UnitTest>
+    <UnitTest name="AddTest" storage="c:\users\lucioc\desktop\class_share\classservice\servicetest\bin\debug\testproject1.dll" id="f2657f9c-cafd-4141-1167-8a6a05f83b41">
+      <Execution id="12e3429d-1587-4e1f-85ab-2f3c1fbea524" />
+      <TestMethod codeBase="C:/Users/lucioc/Desktop/class_share/ClassService/ServiceTest/bin/Debug/TestProject1.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject1.ServiceTest, TestProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="AddTest" />
+      <AspNet>
+        <Host pathToWebApp="C:\Users\lucioc\Desktop\class_share\ClassService\WcfService" webAppRoot="/" />
+      </AspNet>
+    </UnitTest>
+    <UnitTest name="AddParameterTest" storage="c:\users\lucioc\desktop\class_share\classservice\servicetest\bin\debug\testproject1.dll" id="f21e01fc-5c5d-1397-4541-dadfeaa3788c">
+      <Execution id="bb8290aa-f434-4b47-9148-88fdb5724329" />
+      <TestMethod codeBase="C:/Users/lucioc/Desktop/class_share/ClassService/ServiceTest/bin/Debug/TestProject1.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject1.ServiceTest, TestProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="AddParameterTest" />
+      <AspNet>
+        <Host pathToWebApp="C:\Users\lucioc\Desktop\class_share\ClassService\WcfService" webAppRoot="/" />
+      </AspNet>
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="3ecc851e-2d6e-b0e2-3dce-1d1f6cde8608" executionId="0c0e532b-19a3-4679-a9d6-1d32400f3433" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f21e01fc-5c5d-1397-4541-dadfeaa3788c" executionId="bb8290aa-f434-4b47-9148-88fdb5724329" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f2657f9c-cafd-4141-1167-8a6a05f83b41" executionId="12e3429d-1587-4e1f-85ab-2f3c1fbea524" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="0c0e532b-19a3-4679-a9d6-1d32400f3433" testId="3ecc851e-2d6e-b0e2-3dce-1d1f6cde8608" testName="testUnit" computerName="LUCIOC-VAIO" startTime="2013-02-03T23:01:45.0268471-02:00" endTime="2013-02-03T23:01:45.2388593-02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0c0e532b-19a3-4679-a9d6-1d32400f3433">
+      <Output>
+        <ErrorInfo>
+          <Message>Class Initialization method TestProject1.ServiceTest.InitializeClass threw exception. System.InvalidOperationException: System.InvalidOperationException: O serviço 'ClassService.Service' não tem nenhum ponto de extremidade de aplicativo (sem infra-estrutura). Isto talvez seja porque não foi encontrado nenhum arquivo de configuração para seu aplicativo ou porque nenhum elemento de serviço correspondente ao nome de serviço pôde ser encontrado, ou porque nenhum ponto de extremidade foi definido no elemento de serviço..</Message>
+          <StackTrace>    em System.ServiceModel.Description.DispatcherBuilder.EnsureThereAreApplicationEndpoints(ServiceDescription description)
+   em System.ServiceModel.Description.DispatcherBuilder.InitializeServiceHost(ServiceDescription description, ServiceHostBase serviceHost)
+   em System.ServiceModel.ServiceHostBase.InitializeRuntime()
+   em System.ServiceModel.ServiceHostBase.OnBeginOpen()
+   em System.ServiceModel.ServiceHostBase.OnOpen(TimeSpan timeout)
+   em System.ServiceModel.Channels.CommunicationObject.Open(TimeSpan timeout)
+   em System.ServiceModel.Channels.CommunicationObject.Open()
+   em TestProject1.ServiceTest.InitializeClass(TestContext ctx) na C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\ServiceTest.cs:linha 28
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="bb8290aa-f434-4b47-9148-88fdb5724329" testId="f21e01fc-5c5d-1397-4541-dadfeaa3788c" testName="AddParameterTest" computerName="LUCIOC-VAIO" startTime="2013-02-03T23:01:45.2408594-02:00" endTime="2013-02-03T23:01:45.2498599-02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bb8290aa-f434-4b47-9148-88fdb5724329">
+      <Output>
+        <ErrorInfo>
+          <Message>Class Initialization method TestProject1.ServiceTest.InitializeClass threw exception. System.InvalidOperationException: System.InvalidOperationException: O serviço 'ClassService.Service' não tem nenhum ponto de extremidade de aplicativo (sem infra-estrutura). Isto talvez seja porque não foi encontrado nenhum arquivo de configuração para seu aplicativo ou porque nenhum elemento de serviço correspondente ao nome de serviço pôde ser encontrado, ou porque nenhum ponto de extremidade foi definido no elemento de serviço..</Message>
+          <StackTrace>    em System.ServiceModel.Description.DispatcherBuilder.EnsureThereAreApplicationEndpoints(ServiceDescription description)
+   em System.ServiceModel.Description.DispatcherBuilder.InitializeServiceHost(ServiceDescription description, ServiceHostBase serviceHost)
+   em System.ServiceModel.ServiceHostBase.InitializeRuntime()
+   em System.ServiceModel.ServiceHostBase.OnBeginOpen()
+   em System.ServiceModel.ServiceHostBase.OnOpen(TimeSpan timeout)
+   em System.ServiceModel.Channels.CommunicationObject.Open(TimeSpan timeout)
+   em System.ServiceModel.Channels.CommunicationObject.Open()
+   em TestProject1.ServiceTest.InitializeClass(TestContext ctx) na C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\ServiceTest.cs:linha 28
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="12e3429d-1587-4e1f-85ab-2f3c1fbea524" testId="f2657f9c-cafd-4141-1167-8a6a05f83b41" testName="AddTest" computerName="LUCIOC-VAIO" startTime="2013-02-03T23:01:45.2518600-02:00" endTime="2013-02-03T23:01:45.2548602-02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="12e3429d-1587-4e1f-85ab-2f3c1fbea524">
+      <Output>
+        <ErrorInfo>
+          <Message>Class Initialization method TestProject1.ServiceTest.InitializeClass threw exception. System.InvalidOperationException: System.InvalidOperationException: O serviço 'ClassService.Service' não tem nenhum ponto de extremidade de aplicativo (sem infra-estrutura). Isto talvez seja porque não foi encontrado nenhum arquivo de configuração para seu aplicativo ou porque nenhum elemento de serviço correspondente ao nome de serviço pôde ser encontrado, ou porque nenhum ponto de extremidade foi definido no elemento de serviço..</Message>
+          <StackTrace>    em System.ServiceModel.Description.DispatcherBuilder.EnsureThereAreApplicationEndpoints(ServiceDescription description)
+   em System.ServiceModel.Description.DispatcherBuilder.InitializeServiceHost(ServiceDescription description, ServiceHostBase serviceHost)
+   em System.ServiceModel.ServiceHostBase.InitializeRuntime()
+   em System.ServiceModel.ServiceHostBase.OnBeginOpen()
+   em System.ServiceModel.ServiceHostBase.OnOpen(TimeSpan timeout)
+   em System.ServiceModel.Channels.CommunicationObject.Open(TimeSpan timeout)
+   em System.ServiceModel.Channels.CommunicationObject.Open()
+   em TestProject1.ServiceTest.InitializeClass(TestContext ctx) na C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\ServiceTest.cs:linha 28
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>

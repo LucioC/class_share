@@ -1,0 +1,10 @@
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\obj\Debug\TestProject1.dll
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\resources\PEP_posM.pptx
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\TestProject1.dll
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\TestProject1.pdb
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\PowerPointLibraries.dll
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\PowerPointLibraries.pdb
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\obj\Debug\TestProject1.pdb
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\WcfService1.dll
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\WcfService1.pdb

@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="f526a236-23d0-4148-88ce-4f2191b44ed0" name="lucioc@LUCIOC-VAIO 2013-02-03 22:34:59" runUser="lucioc-VAIO\lucioc" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="8cb53320-d39e-44a4-b8fa-ae4d1c0c140f">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="lucioc_LUCIOC-VAIO 2013-02-03 22_34_59">
+      <DeploymentItem filename="C:\Users\lucioc\Desktop\class_share\ClassService\PowerPointLibrary\bin\Debug\PowerPointLibraries.dll" />
+      <DeploymentItem filename="C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\bin\WcfService1.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2013-02-03T22:34:59.4200117-02:00" queuing="2013-02-03T22:34:59.6870270-02:00" start="2013-02-03T22:34:59.7500306-02:00" finish="2013-02-03T22:35:00.0500477-02:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="2" executed="2" passed="1" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="AddTest" storage="c:\users\lucioc\desktop\class_share\classservice\servicetest\bin\debug\testproject1.dll" id="f2657f9c-cafd-4141-1167-8a6a05f83b41">
+      <Execution id="bc6553c8-6d6a-47d9-bed7-b2b43a60e331" />
+      <TestMethod codeBase="C:/Users/lucioc/Desktop/class_share/ClassService/ServiceTest/bin/Debug/TestProject1.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject1.ServiceTest, TestProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="AddTest" />
+      <AspNet>
+        <Host pathToWebApp="C:\Users\lucioc\Desktop\class_share\ClassService\WcfService" webAppRoot="/" />
+      </AspNet>
+    </UnitTest>
+    <UnitTest name="AddParameterTest" storage="c:\users\lucioc\desktop\class_share\classservice\servicetest\bin\debug\testproject1.dll" id="f21e01fc-5c5d-1397-4541-dadfeaa3788c">
+      <Execution id="0d387f44-7cf0-49eb-915d-64126c8e6c7d" />
+      <TestMethod codeBase="C:/Users/lucioc/Desktop/class_share/ClassService/ServiceTest/bin/Debug/TestProject1.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="TestProject1.ServiceTest, TestProject1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="AddParameterTest" />
+      <AspNet>
+        <Host pathToWebApp="C:\Users\lucioc\Desktop\class_share\ClassService\WcfService" webAppRoot="/" />
+      </AspNet>
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="f21e01fc-5c5d-1397-4541-dadfeaa3788c" executionId="0d387f44-7cf0-49eb-915d-64126c8e6c7d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f2657f9c-cafd-4141-1167-8a6a05f83b41" executionId="bc6553c8-6d6a-47d9-bed7-b2b43a60e331" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="0d387f44-7cf0-49eb-915d-64126c8e6c7d" testId="f21e01fc-5c5d-1397-4541-dadfeaa3788c" testName="AddParameterTest" computerName="LUCIOC-VAIO" duration="00:00:00.0356324" startTime="2013-02-03T22:34:59.7620312-02:00" endTime="2013-02-03T22:35:00.0090454-02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0d387f44-7cf0-49eb-915d-64126c8e6c7d">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method TestProject1.ServiceTest.AddParameterTest threw exception: 
+System.NullReferenceException: Referência de objeto não definida para uma instância de um objeto.</Message>
+          <StackTrace>    em ClassService.Service.AddParameter(MyContract name) na C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\Service.svc.cs:linha 19
+   em TestProject1.ServiceTest.AddParameterTest() na C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\ServiceTest.cs:linha 123
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="bc6553c8-6d6a-47d9-bed7-b2b43a60e331" testId="f2657f9c-cafd-4141-1167-8a6a05f83b41" testName="AddTest" computerName="LUCIOC-VAIO" duration="00:00:00.0004560" startTime="2013-02-03T22:35:00.0100454-02:00" endTime="2013-02-03T22:35:00.0170458-02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bc6553c8-6d6a-47d9-bed7-b2b43a60e331">
+    </UnitTestResult>
+  </Results>
+</TestRun>
