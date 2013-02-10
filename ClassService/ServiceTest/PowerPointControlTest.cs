@@ -68,14 +68,14 @@ namespace ServiceTest
             correctFileName = @"C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\resources\PEP_posM.pptx";
 
             powerPointControl = new PowerPointControl();
-            powerPointControl.preparePresentation(correctFileName);
-            powerPointControl.startPresentation();
+            powerPointControl.PreparePresentation(correctFileName);
+            powerPointControl.StartPresentation();
         }
 
         [TestCleanup()]
         public void TestCleanup()
         {
-            powerPointControl.closePresentation();
+            powerPointControl.ClosePresentation();
         }
 
         /// <summary>
@@ -84,10 +84,10 @@ namespace ServiceTest
         [TestMethod()]
         public void GoToSlideNumberTest()
         {
-            int slideNumber = 5; // TODO: Initialize to an appropriate value
-            powerPointControl.goToSlideNumber(slideNumber);
+            int slideNumber = 5; 
+            powerPointControl.GoToSlideNumber(slideNumber);
 
-            Assert.AreEqual(slideNumber, powerPointControl.currentSlide());
+            Assert.AreEqual(slideNumber, powerPointControl.CurrentSlide());
         }
 
         /// <summary>
@@ -96,9 +96,9 @@ namespace ServiceTest
         [TestMethod()]
         public void GoToFirstSlideTest()
         {
-            powerPointControl.goToFirstSlide();
+            powerPointControl.GoToFirstSlide();
 
-            Assert.AreEqual(1, powerPointControl.currentSlide());
+            Assert.AreEqual(1, powerPointControl.CurrentSlide());
         }
 
         /// <summary>
@@ -107,9 +107,9 @@ namespace ServiceTest
         [TestMethod()]
         public void GoToLastSlideTest()
         {
-            powerPointControl.goToLastSlide();
+            powerPointControl.GoToLastSlide();
 
-            Assert.AreEqual(powerPointControl.totalSlides(), powerPointControl.currentSlide());
+            Assert.AreEqual(powerPointControl.TotalSlides(), powerPointControl.CurrentSlide());
         }
 
         /// <summary>
@@ -118,10 +118,10 @@ namespace ServiceTest
         [TestMethod()]
         public void GoToNextSlideTest()
         {
-            powerPointControl.goToFirstSlide();
-            powerPointControl.goToNextSlide();
+            powerPointControl.GoToFirstSlide();
+            powerPointControl.GoToNextSlide();
 
-            Assert.AreEqual(2, powerPointControl.currentSlide());
+            Assert.AreEqual(2, powerPointControl.CurrentSlide());
         }
 
         /// <summary>
@@ -130,10 +130,10 @@ namespace ServiceTest
         [TestMethod()]
         public void GoToPrevioustSlideTest()
         {
-            powerPointControl.goToSlideNumber(5);
-            powerPointControl.goToPreviousSlide();
+            powerPointControl.GoToSlideNumber(5);
+            powerPointControl.GoToPreviousSlide();
 
-            Assert.AreEqual(4, powerPointControl.currentSlide());
+            Assert.AreEqual(4, powerPointControl.CurrentSlide());
         }
 
     }

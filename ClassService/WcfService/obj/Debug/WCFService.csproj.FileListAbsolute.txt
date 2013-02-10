@@ -4,3 +4,5 @@ C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\obj\Debug\ResolveAss
 C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\obj\Debug\WCFService.csproj.ResolveComReference.cache
 C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\obj\Debug\WcfService1.dll
 C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\obj\Debug\WcfService1.pdb
+C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\bin\PowerPointLibraries.dll
+C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\bin\PowerPointLibraries.pdb

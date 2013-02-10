@@ -1,0 +1,8 @@
+C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\bin\WcfService1.dll
+C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\bin\WcfService1.pdb
+C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\bin\PowerPointLibraries.dll
+C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\bin\PowerPointLibraries.pdb
+C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\obj\Release\ResolveAssemblyReference.cache
+C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\obj\Release\WCFService.csproj.ResolveComReference.cache
+C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\obj\Release\WcfService1.dll
+C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\obj\Release\WcfService1.pdb

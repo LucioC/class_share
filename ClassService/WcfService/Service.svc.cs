@@ -6,33 +6,108 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 using Microsoft.Office.Interop.PowerPoint;
+using PowerPointPresentation;
 
 namespace ClassService
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class Service : IService
     {
-        public static String last = "Lucio";
+        private static PowerPointControl presentationControl;
+        private static String last = "Lucio";
+
+        public Service()
+        {
+            presentationControl = new PowerPointControl();
+        }
+
+        public Service(PowerPointControl powerPointControl)
+        {
+            presentationControl = powerPointControl;
+        }
 
         public MyContract AddParameter(MyContract name)
         {
-            last = name.first;      
+            last = name.first;
             return name;
         }
+
         public String Add()
         {
             return last;
         }
 
-        public String openPresentation(String fileName)
+        public Result StartPresentation(String fileName)
         {
-            Application application = new Application();
-            Presentation presentation = application.Presentations.Open2007(fileName, Microsoft.Office.Core.MsoTriState.msoTrue, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoTrue);
-            SlideShowSettings sst = presentation.SlideShowSettings;
-            sst.ShowType = Microsoft.Office.Interop.PowerPoint.PpSlideShowType.ppShowTypeSpeaker;
-            sst.Run();
+            if (presentationControl.PreparePresentation(fileName))
+            {
+                presentationControl.StartPresentation();
+                return new Result("Presentation has been started.");
+            }
+            else
+            {
+                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                return new Result("Something went wrong. Verify if the file name is corrected.");
+            }
+        }
 
-            return null;
+        public Result NextSlide()
+        {
+            try
+            {
+                presentationControl.GoToNextSlide();
+                return new Result("Advanced one slide");
+            }
+            catch (Exception e)
+            {
+                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+                return new Result(e.Message);
+            }
+        }
+
+        public Result PreviousSlide()
+        {
+            try
+            {
+                presentationControl.GoToPreviousSlide();
+                return new Result("Returned one slide");
+            }
+            catch (Exception e)
+            {
+                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+                return new Result(e.Message);
+            }
+        }
+
+
+        public Result GoToSlideNumber(string number)
+        {
+            try
+            {
+                int slideNumber = Int32.Parse(number);
+                presentationControl.GoToSlideNumber(slideNumber);
+                return new Result("Went to slide number " + number);
+            }
+            catch (Exception e)
+            {
+                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                return new Result(e.Message);
+            }
+        }
+
+
+        public Result ClosePresentation()
+        {
+            try
+            {
+                presentationControl.ClosePresentation();
+                return new Result("Presentation was closed");
+            }
+            catch(Exception e)
+            {
+                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+                return new Result(e.Message);
+            }
         }
     }
 }

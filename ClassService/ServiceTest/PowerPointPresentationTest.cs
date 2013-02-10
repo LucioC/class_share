@@ -28,7 +28,7 @@ namespace ServiceTest
             string fileName = correctFileName; // TODO: Initialize to an appropriate value
             bool expected = true; // TODO: Initialize to an appropriate value
             bool actual;
-            actual = target.preparePresentation(fileName);
+            actual = target.PreparePresentation(fileName);
             Assert.AreEqual(expected, actual);
         }
 
@@ -42,7 +42,7 @@ namespace ServiceTest
             string fileName = "wrondfile.dd"; // TODO: Initialize to an appropriate value
             bool expected = false; // TODO: Initialize to an appropriate value
             bool actual;
-            actual = target.preparePresentation(fileName);
+            actual = target.PreparePresentation(fileName);
             Assert.AreEqual(expected, actual);
         }
 
@@ -54,12 +54,12 @@ namespace ServiceTest
         {
             PowerPointControl target = new PowerPointControl(); // TODO: Initialize to an appropriate value
 
-            target.preparePresentation(correctFileName);
-            target.startPresentation();
+            target.PreparePresentation(correctFileName);
+            target.StartPresentation();
             
             bool expected = true; // TODO: Initialize to an appropriate value
             bool actual;
-            actual = target.closePresentation();
+            actual = target.ClosePresentation();
             Assert.AreEqual(expected, actual);
         }
 
@@ -73,7 +73,7 @@ namespace ServiceTest
                         
             bool expected = false; // TODO: Initialize to an appropriate value
             bool actual;
-            actual = target.closePresentation();
+            actual = target.ClosePresentation();
             Assert.AreEqual(expected, actual);
         }
     }

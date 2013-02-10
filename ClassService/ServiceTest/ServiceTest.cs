@@ -5,6 +5,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting.Web;
 using System.Net;
 using System.IO;
 using System.ServiceModel;
+using Autofac;
+using PowerPointPresentation;
+using Moq;
 
 namespace TestProject1
 {
@@ -20,6 +23,33 @@ namespace TestProject1
         {
             return base.Channel.AddParameter(name);
         }
+
+        public Result StartPresentation(string fileName)
+        {
+            throw new NotImplementedException();
+        }
+        
+        public Result NextSlide()
+        {
+            throw new NotImplementedException();
+        }
+        
+        public Result PreviousSlide()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Result GoToSlideNumber(string number)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Result ClosePresentation()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     
@@ -30,8 +60,6 @@ namespace TestProject1
     [TestClass()]
     public class ServiceTest
     {
-
-       
         private TestContext testContextInstance;
 
         /// <summary>
@@ -108,8 +136,7 @@ namespace TestProject1
         //[UrlToTest("http://localhost:2475/Service.svc/")]
         public void AddTest()
         {
-           // string url = HttpContext.Current.Request.Url.ToString();
-
+            
             Service target = new Service(); // TODO: Initialize to an appropriate value
             string expected = "Lucio"; // TODO: Initialize to an appropriate value
             string actual;
@@ -155,6 +182,21 @@ namespace TestProject1
             resultString = client.Add();
             Assert.AreEqual("Lucio", resultString);
 
+        }
+
+        [TestMethod()]
+        public void verifyCorrectStartMessage()
+        {
+            //TODO finish example with mock and maybe di
+            var mock = new Mock<PowerPointControl>();
+            mock.Setup(foo => foo.PreparePresentation(It.IsAny<string>())).Returns(true);
+
+            Service target = new Service();
+
+            Result actual;
+            actual = target.StartPresentation("correct");
+
+            Assert.AreEqual("Presentation has been started.", actual.Message);
         }
     }
 }

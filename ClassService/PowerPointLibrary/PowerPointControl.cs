@@ -9,6 +9,8 @@ using System.IO;
 
 namespace PowerPointPresentation
 {
+    //TODO: not thread safe yet
+    //TODO: remove write to console function? Maybe refactor it to a class that can allow to write or not depending on initialization.
     public class PowerPointControl
     {
         private Application application;
@@ -18,7 +20,7 @@ namespace PowerPointPresentation
         {
         }
 
-        public Boolean preparePresentation(String fileName)
+        public Boolean PreparePresentation(String fileName)
         {
             application = new Application();
             try
@@ -35,27 +37,7 @@ namespace PowerPointPresentation
             }
         }
 
-        public int currentSlide()
-        {
-            return presentation.SlideShowWindow.View.CurrentShowPosition;
-        }
-
-        public void goToFirstSlide()
-        {
-            presentation.SlideShowWindow.View.First();
-        }
-
-        public void goToLastSlide()
-        {
-            presentation.SlideShowWindow.View.Last();
-        }
-
-        public void goToSlideNumber(int slideNumber)
-        {
-            presentation.SlideShowWindow.View.GotoSlide(slideNumber);
-        }
-
-        public void startPresentation()
+        public void StartPresentation()
         {
             SlideShowSettings sst = presentation.SlideShowSettings;
             sst.ShowType = Microsoft.Office.Interop.PowerPoint.PpSlideShowType.ppShowTypeSpeaker;
@@ -63,24 +45,44 @@ namespace PowerPointPresentation
             writeToConsoleAndOutput("Started presentation");
         }
 
-        public void goToNextSlide()
+        public int CurrentSlide()
+        {
+            return presentation.SlideShowWindow.View.CurrentShowPosition;
+        }
+
+        public void GoToFirstSlide()
+        {
+            presentation.SlideShowWindow.View.First();
+        }
+
+        public void GoToLastSlide()
+        {
+            presentation.SlideShowWindow.View.Last();
+        }
+
+        public void GoToSlideNumber(int slideNumber)
+        {
+            presentation.SlideShowWindow.View.GotoSlide(slideNumber);
+        }
+
+        public void GoToNextSlide()
         {
             presentation.SlideShowWindow.View.Next();
             writeToConsoleAndOutput("Next slide command. curent slide position: " + presentation.SlideShowWindow.View.CurrentShowPosition.ToString());
         }
 
-        public void goToPreviousSlide()
+        public void GoToPreviousSlide()
         {
             presentation.SlideShowWindow.View.Previous();
             writeToConsoleAndOutput("Previous slide command. curent slide position: " + presentation.SlideShowWindow.View.CurrentShowPosition.ToString());
         }
 
-        public int totalSlides()
+        public int TotalSlides()
         {
             return presentation.Slides.Count;
         }
 
-        public Boolean closePresentation()
+        public Boolean ClosePresentation()
         {
             try
             {

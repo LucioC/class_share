@@ -1,0 +1,6 @@
+C:\Users\lucioc\Desktop\class_share\ClassService\WCFClientExample\bin\Debug\ConsoleApplication1.exe.config
+C:\Users\lucioc\Desktop\class_share\ClassService\WCFClientExample\obj\x86\Debug\ConsoleApplication1.exe
+C:\Users\lucioc\Desktop\class_share\ClassService\WCFClientExample\obj\x86\Debug\ConsoleApplication1.pdb
+C:\Users\lucioc\Desktop\class_share\ClassService\WCFClientExample\bin\Debug\ConsoleApplication1.exe
+C:\Users\lucioc\Desktop\class_share\ClassService\WCFClientExample\bin\Debug\ConsoleApplication1.pdb
+C:\Users\lucioc\Desktop\class_share\ClassService\WCFClientExample\obj\x86\Debug\ResolveAssemblyReference.cache
