@@ -12,17 +12,8 @@ using Moq;
 namespace TestProject1
 {
 
-    public class ServiceClient : ClientBase<IService>, IService
+    /*public class ServiceClient : ClientBase<IService>, IService
     {
-        public String Add()
-        {
-            return base.Channel.Add();
-        }
-
-        public MyContract AddParameter(MyContract name)
-        {
-            return base.Channel.AddParameter(name);
-        }
 
         public Result StartPresentation(string fileName)
         {
@@ -50,7 +41,7 @@ namespace TestProject1
         {
             throw new NotImplementedException();
         }
-    }
+    }*/
 
     
     /// <summary>
@@ -124,65 +115,6 @@ namespace TestProject1
             }
         }
 
-        /// <summary>
-        ///A test for Add
-        ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
-        [TestMethod()]
-        //[HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\Users\\lucioc\\Desktop\\class_share\\ClassService\\WcfService", "/")]
-        //[UrlToTest("http://localhost:2475/Service.svc/")]
-        public void AddTest()
-        {
-            
-            Service target = new Service(); // TODO: Initialize to an appropriate value
-            string expected = "Lucio"; // TODO: Initialize to an appropriate value
-            string actual;
-            actual = target.Add();
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod()]
-        [UrlToTest("http://localhost:2475/Service.svc/")]
-        public void testUnit()
-        {
-            Service target = new Service();
-            string expected = "Lucio";
-            string actual;
-            actual = target.Add();
-            Assert.AreEqual(expected, actual);
-        }
-
-
-        /// <summary>
-        ///A test for AddParameter
-        ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
-        [TestMethod()]
-        //[HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\Users\\lucioc\\Desktop\\class_share\\ClassService\\WcfService", "/")]
-       // [UrlToTest("http://localhost:2475/Service.svc/")]
-        public void AddParameterTest()
-        {
-            Service target = new Service(); // TODO: Initialize to an appropriate value
-            MyContract name = new MyContract(); // TODO: Initialize to an appropriate value "
-            name.first = "Lucio";
-            name.last = "L";
-            MyContract expected = null; // TODO: Initialize to an appropriate value
-            MyContract actual;
-            actual = target.AddParameter(name);
-            //Assert.AreEqual(expected, actual);
-
-            String resultString;
-            ServiceClient client = new ServiceClient();
-            resultString = client.Add();
-            Assert.AreEqual("Lucio", resultString);
-
-        }
 
         [TestMethod()]
         public void verifyCorrectStartMessage()

@@ -5,12 +5,14 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using System.ServiceModel.Web;
+using System.IO;
 
 namespace ClassService
 {
     [ServiceContract]
     public interface IService
     {
+        /*
         [OperationContract(Name = "AddParameter")]
         [WebInvoke(
             UriTemplate = "/", 
@@ -26,7 +28,18 @@ namespace ClassService
             ResponseFormat = WebMessageFormat.Json, 
             BodyStyle = WebMessageBodyStyle.Bare)]
         String Add();
-        
+        */
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/files/{fileName}",
+            Method = "POST")]
+        String UploadPhoto(string fileName, Stream fileContents);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/files/{fileName}",
+            Method = "GET")]
+        Stream GetFile(string fileName);
+
         [OperationContract(Name = "StartPresentation")]
         [WebInvoke(UriTemplate = "/presentation/open?fileName={fileName}",
             Method = "GET", 
@@ -68,6 +81,7 @@ namespace ClassService
         Result ClosePresentation();
     }
 
+    /*
     [DataContract(Namespace="http://yournamespace.com")]
     public class MyContract
     {
@@ -76,7 +90,7 @@ namespace ClassService
 
         [DataMember(Order=2)]
         public string last { get; set;}
-    }
+    } */
 
     [DataContract(Namespace = "http://yournamespace.com")]
     public class Result
@@ -86,7 +100,8 @@ namespace ClassService
             this.Message = message;
         }
 
-        [DataMember(Order = 1)]
+        [DataMember(Order = 1, Name = "message")]
         public string Message { get; set; }
     }
+
 }

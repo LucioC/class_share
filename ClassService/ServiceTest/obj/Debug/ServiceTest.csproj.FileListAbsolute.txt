@@ -8,3 +8,9 @@ C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\PowerPoin
 C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\obj\Debug\TestProject1.pdb
 C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\WcfService1.dll
 C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\WcfService1.pdb
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\Autofac.Configuration.dll
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\Autofac.dll
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\Moq.dll
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\Autofac.xml
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\Moq.pdb
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\Moq.xml

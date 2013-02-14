@@ -7,6 +7,7 @@ using System.ServiceModel.Web;
 using System.Text;
 using Microsoft.Office.Interop.PowerPoint;
 using PowerPointPresentation;
+using System.IO;
 
 namespace ClassService
 {
@@ -14,7 +15,6 @@ namespace ClassService
     public class Service : IService
     {
         private static PowerPointControl presentationControl;
-        private static String last = "Lucio";
 
         public Service()
         {
@@ -25,29 +25,18 @@ namespace ClassService
         {
             presentationControl = powerPointControl;
         }
-
-        public MyContract AddParameter(MyContract name)
-        {
-            last = name.first;
-            return name;
-        }
-
-        public String Add()
-        {
-            return last;
-        }
-
+        
         public Result StartPresentation(String fileName)
         {
             if (presentationControl.PreparePresentation(fileName))
             {
                 presentationControl.StartPresentation();
-                return new Result("Presentation has been started.");
+                return new Result("Presentation has been started");
             }
             else
             {
                 WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
-                return new Result("Something went wrong. Verify if the file name is corrected.");
+                return new Result("Something went wrong. Verify if the file name is corrected");
             }
         }
 
@@ -107,6 +96,49 @@ namespace ClassService
             {
                 WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
                 return new Result(e.Message);
+            }
+        }
+
+        byte[] StreamToByteArray(Stream stream)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                stream.CopyTo(ms);
+                return ms.ToArray();
+            }
+        }
+
+        public String UploadPhoto(string fileName, Stream fileContents)
+        {
+            byte[] buffer = StreamToByteArray(fileContents);
+            
+            if (!System.IO.File.Exists(fileName))
+            {
+                using (System.IO.FileStream fs = System.IO.File.Create(fileName))
+                {
+                    fs.Write(buffer, 0, buffer.Length);
+                    fs.Close();
+                }                
+            }
+            Console.WriteLine("Uploaded file {0} with {1} bytes", fileName, buffer.Length);
+
+            return "ok";
+        }
+        
+        Stream GetFile(string fileName)
+        {
+            Stream fileStream;
+            try
+            {
+                fileStream = new FileStream(fileName, FileMode.Open);
+                return fileStream;
+            }
+            catch (Exception e)
+            {
+                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                byte[] byteArray = Encoding.ASCII.GetBytes(e.Message);
+                MemoryStream stream = new MemoryStream(byteArray);
+                return stream;
             }
         }
     }

@@ -1,0 +1,16 @@
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\Upload files using a WCF REST Service\C#\PhotoServiceClient\bin\Debug\PhotoServiceClient.exe.config
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\Upload files using a WCF REST Service\C#\PhotoServiceClient\bin\Debug\PhotoServiceClient.exe
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\Upload files using a WCF REST Service\C#\PhotoServiceClient\bin\Debug\PhotoServiceClient.pdb
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\Upload files using a WCF REST Service\C#\PhotoServiceClient\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\Upload files using a WCF REST Service\C#\PhotoServiceClient\obj\x86\Debug\MainWindow.baml
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\Upload files using a WCF REST Service\C#\PhotoServiceClient\obj\x86\Debug\UploadNewPhoto.baml
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\Upload files using a WCF REST Service\C#\PhotoServiceClient\obj\x86\Debug\MainWindow.g.cs
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\Upload files using a WCF REST Service\C#\PhotoServiceClient\obj\x86\Debug\UploadNewPhoto.g.cs
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\Upload files using a WCF REST Service\C#\PhotoServiceClient\obj\x86\Debug\App.g.cs
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\Upload files using a WCF REST Service\C#\PhotoServiceClient\obj\x86\Debug\PhotoServiceClient_MarkupCompile.cache
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\Upload files using a WCF REST Service\C#\PhotoServiceClient\obj\x86\Debug\PhotoServiceClient.g.resources
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\Upload files using a WCF REST Service\C#\PhotoServiceClient\obj\x86\Debug\PhotoServiceClient.Properties.Resources.resources
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\Upload files using a WCF REST Service\C#\PhotoServiceClient\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\Upload files using a WCF REST Service\C#\PhotoServiceClient\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\Upload files using a WCF REST Service\C#\PhotoServiceClient\obj\x86\Debug\PhotoServiceClient.exe
+C:\Users\lucioc\Desktop\class_share\Samples\WCF\Upload files using a WCF REST Service\C#\PhotoServiceClient\obj\x86\Debug\PhotoServiceClient.pdb
