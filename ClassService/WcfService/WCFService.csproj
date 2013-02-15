@@ -91,6 +91,10 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonUtils\CommonUtils.csproj">
+      <Project>{FE1F7F9D-FD82-4820-A939-C65FC7360F68}</Project>
+      <Name>CommonUtils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PowerPointLibrary\PowerPointLibrary.csproj">
       <Project>{244A6FAF-A40B-425B-A063-74672E630540}</Project>
       <Name>PowerPointLibrary</Name>

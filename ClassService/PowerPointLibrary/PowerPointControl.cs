@@ -20,21 +20,10 @@ namespace PowerPointPresentation
         {
         }
 
-        public Boolean PreparePresentation(String fileName)
+        public void PreparePresentation(String fileName)
         {
             application = new Application();
-            try
-            {
-                presentation = application.Presentations.Open2007(fileName, Microsoft.Office.Core.MsoTriState.msoTrue, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoTrue);
-                writeToConsoleAndOutput("Open presentation");
-                
-                return true;
-            }
-            catch (Exception e)
-            {
-                writeToConsoleAndOutput("Power point open returned a exception message: " + e.Message);
-                return false;
-            }
+            presentation = application.Presentations.Open2007(fileName, Microsoft.Office.Core.MsoTriState.msoTrue, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoTrue);
         }
 
         public void StartPresentation()
@@ -42,7 +31,6 @@ namespace PowerPointPresentation
             SlideShowSettings sst = presentation.SlideShowSettings;
             sst.ShowType = Microsoft.Office.Interop.PowerPoint.PpSlideShowType.ppShowTypeSpeaker;
             sst.Run();
-            writeToConsoleAndOutput("Started presentation");
         }
 
         public int CurrentSlide()
@@ -68,13 +56,11 @@ namespace PowerPointPresentation
         public void GoToNextSlide()
         {
             presentation.SlideShowWindow.View.Next();
-            writeToConsoleAndOutput("Next slide command. curent slide position: " + presentation.SlideShowWindow.View.CurrentShowPosition.ToString());
         }
 
         public void GoToPreviousSlide()
         {
             presentation.SlideShowWindow.View.Previous();
-            writeToConsoleAndOutput("Previous slide command. curent slide position: " + presentation.SlideShowWindow.View.CurrentShowPosition.ToString());
         }
 
         public int TotalSlides()
@@ -82,24 +68,9 @@ namespace PowerPointPresentation
             return presentation.Slides.Count;
         }
 
-        public Boolean ClosePresentation()
+        public void ClosePresentation()
         {
-            try
-            {
-                presentation.Close();
-                return true;
-            }
-            catch (Exception e)
-            {
-                writeToConsoleAndOutput("Power point close returned a exception message: " + e.Message);
-                return false;
-            }
-        }
-
-        public void writeToConsoleAndOutput(String message)
-        {
-            System.Diagnostics.Debug.Write("\n\n" + message + "\n\n");
-            Console.WriteLine("\n\n" + message + "\n\n");
+            presentation.Close();
         }
     }
 }

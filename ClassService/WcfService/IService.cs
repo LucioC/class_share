@@ -12,24 +12,6 @@ namespace ClassService
     [ServiceContract]
     public interface IService
     {
-        /*
-        [OperationContract(Name = "AddParameter")]
-        [WebInvoke(
-            UriTemplate = "/", 
-            Method = "POST", 
-            ResponseFormat = WebMessageFormat.Json,            
-            RequestFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.Bare)]
-        MyContract AddParameter(MyContract name);
-
-        [OperationContract(Name = "Add")]
-        [WebGet(UriTemplate = "/", 
-            RequestFormat = WebMessageFormat.Json,
-            ResponseFormat = WebMessageFormat.Json, 
-            BodyStyle = WebMessageBodyStyle.Bare)]
-        String Add();
-        */
-
         [OperationContract]
         [WebInvoke(UriTemplate = "/files/{fileName}",
             Method = "POST")]
@@ -38,59 +20,48 @@ namespace ClassService
         [OperationContract]
         [WebInvoke(UriTemplate = "/files/{fileName}",
             Method = "GET")]
-        Stream GetFile(string fileName);
+        Stream GetFile(String fileName);
 
         [OperationContract(Name = "StartPresentation")]
-        [WebInvoke(UriTemplate = "/presentation/open?fileName={fileName}",
-            Method = "GET", 
+        [WebInvoke(UriTemplate = "/presentation",
+            Method = "PUT", 
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare)]
-        Result StartPresentation(String fileName);
+        Result StartPresentation(File fileName);
 
         [OperationContract(Name = "NextSlide")]
-        [WebInvoke(UriTemplate = "/presentation/next",
-            Method = "GET",
+        [WebInvoke(UriTemplate = "/presentation/action",
+            Method = "PUT",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare)]
-        Result NextSlide();
-
-        [OperationContract(Name = "PreviousSlide")]
-        [WebInvoke(UriTemplate = "/presentation/previous",
-            Method = "GET",
-            RequestFormat = WebMessageFormat.Json,
-            ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.Bare)]
-        Result PreviousSlide();
+        Result PresentationCommand(Action action);
+    }
+    
+    [DataContract(Namespace = "http://yournamespace.com")]
+    public class File
+    {
+        public File(String filename)
+        {
+            this.FileName = filename;
+        }
         
-        [OperationContract(Name = "GoToSlideNumber")]
-        [WebInvoke(UriTemplate = "/presentation/slide?number={number}",
-            Method = "GET",
-            RequestFormat = WebMessageFormat.Json,
-            ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.Bare)]
-        Result GoToSlideNumber(String number);
-
-        [OperationContract(Name = "ClosePresentation")]
-        [WebInvoke(UriTemplate = "/presentation/close",
-            Method = "GET",
-            RequestFormat = WebMessageFormat.Json,
-            ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.Bare)]
-        Result ClosePresentation();
+        [DataMember(Order = 1, Name = "fileName")]
+        public string FileName { get; set; }
     }
 
-    /*
-    [DataContract(Namespace="http://yournamespace.com")]
-    public class MyContract
+    [DataContract(Namespace = "http://yournamespace.com")]
+    public class Action
     {
-        [DataMember(Order=1)]
-        public string first { get; set;}
-
-        [DataMember(Order=2)]
-        public string last { get; set;}
-    } */
+        public Action(String command)
+        {
+            this.Command = command;
+        }
+        
+        [DataMember(Order = 1, Name = "command")]
+        public string Command { get; set; }
+    }
 
     [DataContract(Namespace = "http://yournamespace.com")]
     public class Result

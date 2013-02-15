@@ -6,3 +6,5 @@ C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\obj\Debug\WcfService
 C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\obj\Debug\WcfService1.pdb
 C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\bin\PowerPointLibraries.dll
 C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\bin\PowerPointLibraries.pdb
+C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\bin\CommonUtils.dll
+C:\Users\lucioc\Desktop\class_share\ClassService\WcfService\bin\CommonUtils.pdb

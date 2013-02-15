@@ -24,12 +24,19 @@ namespace ServiceTest
         [TestMethod()]
         public void prepareCorrectPresentationTest()
         {
-            PowerPointControl target = new PowerPointControl(); // TODO: Initialize to an appropriate value
-            string fileName = correctFileName; // TODO: Initialize to an appropriate value
-            bool expected = true; // TODO: Initialize to an appropriate value
-            bool actual;
-            actual = target.PreparePresentation(fileName);
-            Assert.AreEqual(expected, actual);
+            PowerPointControl target = new PowerPointControl(); 
+            string fileName = correctFileName; 
+
+            try
+            {
+                target.PreparePresentation(fileName);
+                Assert.IsTrue(true);
+            }
+            catch(Exception e)
+            {
+                Assert.Fail("Exeption" + e.Message);
+            }
+
         }
 
         /// <summary>
@@ -38,12 +45,17 @@ namespace ServiceTest
         [TestMethod()]
         public void prepareNotExistentPresentationTest()
         {
-            PowerPointControl target = new PowerPointControl(); // TODO: Initialize to an appropriate value
-            string fileName = "wrondfile.dd"; // TODO: Initialize to an appropriate value
-            bool expected = false; // TODO: Initialize to an appropriate value
-            bool actual;
-            actual = target.PreparePresentation(fileName);
-            Assert.AreEqual(expected, actual);
+            PowerPointControl target = new PowerPointControl(); 
+            string fileName = "wrondfile.dd"; 
+            try
+            {
+                target.PreparePresentation(fileName);
+                Assert.Fail("No exception was throw with a wrong name");
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(true, "Exeption was throw " + e.Message );
+            }
         }
 
         /// <summary>
@@ -56,11 +68,17 @@ namespace ServiceTest
 
             target.PreparePresentation(correctFileName);
             target.StartPresentation();
-            
-            bool expected = true; // TODO: Initialize to an appropriate value
-            bool actual;
-            actual = target.ClosePresentation();
-            Assert.AreEqual(expected, actual);
+
+            try
+            {
+                target.ClosePresentation();
+                Assert.IsTrue(true, "Presentation was closed with no exception");
+            }
+            catch(Exception e)
+            {
+                Assert.Fail("Exception : " + e.Message); 
+            }
+
         }
 
         /// <summary>
@@ -70,11 +88,16 @@ namespace ServiceTest
         public void closeNotStartedPresentationTest()
         {
             PowerPointControl target = new PowerPointControl(); // TODO: Initialize to an appropriate value
-                        
-            bool expected = false; // TODO: Initialize to an appropriate value
-            bool actual;
-            actual = target.ClosePresentation();
-            Assert.AreEqual(expected, actual);
+
+            try
+            {
+                target.ClosePresentation();
+                Assert.Fail("Non existent presentation was closed with no exception");
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(true, "Exception was correctly throw for a bad non existent presentation");
+            }
         }
     }
 }

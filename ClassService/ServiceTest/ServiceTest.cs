@@ -115,18 +115,17 @@ namespace TestProject1
             }
         }
 
-
         [TestMethod()]
         public void verifyCorrectStartMessage()
         {
             //TODO finish example with mock and maybe di
             var mock = new Mock<PowerPointControl>();
-            mock.Setup(foo => foo.PreparePresentation(It.IsAny<string>())).Returns(true);
+            //mock.Setup(foo => foo.PreparePresentation(It.IsAny<string>())).(true);
 
             Service target = new Service();
 
             Result actual;
-            actual = target.StartPresentation("correct");
+            actual = target.StartPresentation( new ClassService.File("correct") );
 
             Assert.AreEqual("Presentation has been started.", actual.Message);
         }

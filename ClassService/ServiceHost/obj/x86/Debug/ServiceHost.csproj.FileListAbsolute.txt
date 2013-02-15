@@ -8,3 +8,5 @@ C:\Users\lucioc\Desktop\class_share\ClassService\ServiceHost\bin\Debug\WcfServic
 C:\Users\lucioc\Desktop\class_share\ClassService\ServiceHost\bin\Debug\PowerPointLibraries.pdb
 C:\Users\lucioc\Desktop\class_share\ClassService\ServiceHost\obj\x86\Debug\ServiceHost.exe
 C:\Users\lucioc\Desktop\class_share\ClassService\ServiceHost\obj\x86\Debug\ServiceHost.pdb
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceHost\bin\Debug\CommonUtils.dll
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceHost\bin\Debug\CommonUtils.pdb

@@ -14,3 +14,5 @@ C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\Moq.dll
 C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\Autofac.xml
 C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\Moq.pdb
 C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\Moq.xml
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\CommonUtils.dll
+C:\Users\lucioc\Desktop\class_share\ClassService\ServiceTest\bin\Debug\CommonUtils.pdb

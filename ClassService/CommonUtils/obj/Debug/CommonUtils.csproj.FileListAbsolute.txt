@@ -1,0 +1,5 @@
+C:\Users\lucioc\Desktop\class_share\ClassService\CommonUtils\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\lucioc\Desktop\class_share\ClassService\CommonUtils\bin\Debug\CommonUtils.dll
+C:\Users\lucioc\Desktop\class_share\ClassService\CommonUtils\bin\Debug\CommonUtils.pdb
+C:\Users\lucioc\Desktop\class_share\ClassService\CommonUtils\obj\Debug\CommonUtils.dll
+C:\Users\lucioc\Desktop\class_share\ClassService\CommonUtils\obj\Debug\CommonUtils.pdb

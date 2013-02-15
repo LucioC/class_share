@@ -8,6 +8,7 @@ using System.Text;
 using Microsoft.Office.Interop.PowerPoint;
 using PowerPointPresentation;
 using System.IO;
+using CommonUtils;
 
 namespace ClassService
 {
@@ -16,24 +17,44 @@ namespace ClassService
     {
         private static PowerPointControl presentationControl;
 
+        private FileManager fileManager;
+
         public Service()
         {
             presentationControl = new PowerPointControl();
+            fileManager = new FileManager();
         }
 
         public Service(PowerPointControl powerPointControl)
         {
             presentationControl = powerPointControl;
         }
-        
-        public Result StartPresentation(String fileName)
+
+        public Result PresentationCommand(Action action)
         {
-            if (presentationControl.PreparePresentation(fileName))
+            switch (action.Command)
             {
+                case "next": NextSlide();
+                    break;
+                case "previous": PreviousSlide();
+                    break;
+                case "close": ClosePresentation();
+                    break;
+                default: return new Result("wrong command argument option");
+            }
+
+            return new Result("Command Executed");
+        }
+        
+        public Result StartPresentation(File file)
+        {
+            try
+            {
+                presentationControl.PreparePresentation(file.FileName);
                 presentationControl.StartPresentation();
                 return new Result("Presentation has been started");
             }
-            else
+            catch(Exception e)
             {
                 WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
                 return new Result("Something went wrong. Verify if the file name is corrected");
@@ -99,33 +120,19 @@ namespace ClassService
             }
         }
 
-        byte[] StreamToByteArray(Stream stream)
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                stream.CopyTo(ms);
-                return ms.ToArray();
-            }
-        }
-
         public String UploadPhoto(string fileName, Stream fileContents)
         {
-            byte[] buffer = StreamToByteArray(fileContents);
-            
-            if (!System.IO.File.Exists(fileName))
+            if(fileManager.FileExists(fileName))
             {
-                using (System.IO.FileStream fs = System.IO.File.Create(fileName))
-                {
-                    fs.Write(buffer, 0, buffer.Length);
-                    fs.Close();
-                }                
+                fileManager.CreateFile(fileName, fileContents);
             }
-            Console.WriteLine("Uploaded file {0} with {1} bytes", fileName, buffer.Length);
+
+            Console.WriteLine("Uploaded file {0} with {1} bytes", fileName, fileContents.Length);
 
             return "ok";
         }
-        
-        Stream GetFile(string fileName)
+
+        public Stream GetFile(string fileName)
         {
             Stream fileStream;
             try
