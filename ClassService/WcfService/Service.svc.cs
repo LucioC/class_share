@@ -89,7 +89,6 @@ namespace ClassService
             }
         }
 
-
         public Result GoToSlideNumber(string number)
         {
             try
@@ -105,7 +104,6 @@ namespace ClassService
             }
         }
 
-
         public Result ClosePresentation()
         {
             try
@@ -120,14 +118,15 @@ namespace ClassService
             }
         }
 
-        public String UploadPhoto(string fileName, Stream fileContents)
+        public Result UploadFile(string fileName, Stream fileContents)
         {
-            if(!fileManager.FileExists(fileName))
+            if(fileManager.FileExists(fileName))
             {
-                fileManager.CreateFile(fileName, fileContents);
+                fileManager.DeleteFile(fileName);   
             }
+            fileManager.CreateFile(fileName, fileContents);
 
-            return "ok";
+            return new Result("File was uploaded to server");
         }
 
         public Stream GetFile(string fileName)
