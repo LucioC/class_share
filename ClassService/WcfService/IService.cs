@@ -14,7 +14,8 @@ namespace ClassService
     {
         [OperationContract]
         [WebInvoke(UriTemplate = "/files/{fileName}",
-            Method = "POST")]
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json)]
         String UploadPhoto(string fileName, Stream fileContents);
 
         [OperationContract]

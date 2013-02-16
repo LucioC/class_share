@@ -122,12 +122,10 @@ namespace ClassService
 
         public String UploadPhoto(string fileName, Stream fileContents)
         {
-            if(fileManager.FileExists(fileName))
+            if(!fileManager.FileExists(fileName))
             {
                 fileManager.CreateFile(fileName, fileContents);
             }
-
-            Console.WriteLine("Uploaded file {0} with {1} bytes", fileName, fileContents.Length);
 
             return "ok";
         }
