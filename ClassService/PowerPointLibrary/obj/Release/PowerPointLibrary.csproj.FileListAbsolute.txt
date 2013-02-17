@@ -1,6 +1,0 @@
-C:\Users\lucioc\Desktop\class_share\ClassService\PowerPointLibrary\bin\Release\PowerPointLibraries.dll
-C:\Users\lucioc\Desktop\class_share\ClassService\PowerPointLibrary\bin\Release\PowerPointLibraries.pdb
-C:\Users\lucioc\Desktop\class_share\ClassService\PowerPointLibrary\obj\Release\ResolveAssemblyReference.cache
-C:\Users\lucioc\Desktop\class_share\ClassService\PowerPointLibrary\obj\Release\PowerPointLibrary.csproj.ResolveComReference.cache
-C:\Users\lucioc\Desktop\class_share\ClassService\PowerPointLibrary\obj\Release\PowerPointLibraries.dll
-C:\Users\lucioc\Desktop\class_share\ClassService\PowerPointLibrary\obj\Release\PowerPointLibraries.pdb

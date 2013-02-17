@@ -1,7 +1,0 @@
-C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\bin\Release\TestProject1.dll
-C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\bin\Release\TestProject1.pdb
-C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\bin\Release\WcfService1.dll
-C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\bin\Release\WcfService1.pdb
-C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\obj\Release\ResolveAssemblyReference.cache
-C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\obj\Release\TestProject1.dll
-C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\obj\Release\TestProject1.pdb
