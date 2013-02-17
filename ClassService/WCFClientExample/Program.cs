@@ -20,7 +20,7 @@ namespace ConsoleTestProject
         Uri previousAddress = new Uri("http://localhost:8880/presentation/action");
         // Uri goto5Address = new Uri("http://localhost:8880/presentation/slide?number=5");
         Uri closeAddress = new Uri("http://localhost:8880/presentation/action");
-        Uri sendFileAddress = new Uri("http://localhost:8880/files/filename");
+        Uri sendFileAddress = new Uri("http://localhost:8880/files/presentation.pptx");
 
         String fileName = "C:/Users/lucioc/Dropbox/Public/Mestrado/Dissertacao/PEP/PEP_posM.pptx";
 
