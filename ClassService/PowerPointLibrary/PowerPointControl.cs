@@ -22,8 +22,11 @@ namespace PowerPointPresentation
 
         public void PreparePresentation(String fileName)
         {
+            //Get current directory path and put the disered filename on it
+            String localPath = Directory.GetCurrentDirectory() + "\\";
+            localPath = localPath + fileName;
             application = new Application();
-            presentation = application.Presentations.Open2007(fileName, Microsoft.Office.Core.MsoTriState.msoTrue, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoTrue);
+            presentation = application.Presentations.Open2007(localPath, Microsoft.Office.Core.MsoTriState.msoTrue, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoFalse, Microsoft.Office.Core.MsoTriState.msoTrue);
         }
 
         public void StartPresentation()

@@ -20,9 +20,11 @@ namespace ConsoleTestProject
         Uri previousAddress = new Uri("http://localhost:8880/presentation/action");
         // Uri goto5Address = new Uri("http://localhost:8880/presentation/slide?number=5");
         Uri closeAddress = new Uri("http://localhost:8880/presentation/action");
-        Uri sendFileAddress = new Uri("http://localhost:8880/files/presentation.pptx");
 
-        String fileName = "C:/Users/lucioc/Dropbox/Public/Mestrado/Dissertacao/PEP/PEP_posM.pptx";
+        static String fileName = "presentation.pptx";
+        Uri sendFileAddress = new Uri("http://localhost:8880/files/" + fileName);
+
+        String localFileName = "C:/Users/lucioc/Dropbox/Public/Mestrado/Dissertacao/PEP/PEP_posM.pptx";
 
         static void Main(string[] args)
         {
@@ -31,8 +33,8 @@ namespace ConsoleTestProject
 
             Program p = new Program();
 
-            //p.OpenNextPreviousClosePresentation();
             p.PostFile();
+            p.OpenNextPreviousClosePresentation();
 
             Console.Write("Press any key to continue . . . ");
             Console.ReadKey(true);
@@ -40,7 +42,7 @@ namespace ConsoleTestProject
 
         public void PostFile()
         {
-            FileStream fileStream = new FileStream(fileName, FileMode.Open);
+            FileStream fileStream = new FileStream(localFileName, FileMode.Open);
             Console.Write("file stream presente " + fileStream != null);
 
             postFile(sendFileAddress, fileStream, "application/vnd.openxmlformats-officedocument.presentationml.presentation", (int)fileStream.Length);
