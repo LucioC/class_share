@@ -1,37 +1,34 @@
-http://www.creativedistraction.com/demos/gesture-recognition-kinect-with-hidden-markov-models-hmms/
+HIgh to low priority
 
+0.
+http://kinectpowerpoint.codeplex.com/
 
-
-http://www.franklins.net/gesturepak.aspx
-
+1.
 http://social.msdn.microsoft.com/Forums/en-US/kinectsdknuiapi/thread/9f260b45-1ad3-421c-ae3a-56f6081d0d03
+http://kinectdtw.codeplex.com/
+Example
+https://code.google.com/p/kineticspace/
+http://www.youtube.com/watch?v=e0c2B3PBvRw
 
+2.
+http://kinecttoolbox.codeplex.com/
+http://kinecttoolbox.codeplex.com/discussions/348220
 
+3.
 http://blogs.msdn.com/b/eternalcoding/archive/2011/07/04/gestures-and-tools-for-kinect.aspx
 
-
-
-http://kinecttoolbox.codeplex.com/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+4.
 http://blogs.msdn.com/b/mcsuksoldev/archive/2011/08/08/writing-a-gesture-service-with-the-kinect-for-windows-sdk.aspx
 
-
+5.
 http://aswathkrishnan.tumblr.com/post/7175233975/geekalert-kinecting-2-position-and-gesture
 
 
+http://www.creativedistraction.com/demos/gesture-recognition-kinect-with-hidden-markov-models-hmms/
+http://www.franklins.net/gesturepak.aspx
+http://stackoverflow.com/questions/12177965/kinect-swipe-up-down-gestures
 http://www.oriolardevol.com/Article/Details/44
+http://www.exceptontuesdays.com/gestures-with-microsoft-kinect-for-windows-sdk-v1-5/
+
 
 
