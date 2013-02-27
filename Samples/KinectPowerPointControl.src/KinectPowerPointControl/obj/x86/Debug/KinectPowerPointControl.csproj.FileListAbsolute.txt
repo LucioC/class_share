@@ -7,3 +7,16 @@ C:\Users\Lucio\Desktop\KinectPowerPointControl.src\KinectPowerPointControl\obj\x
 C:\Users\Lucio\Desktop\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\KinectPowerPointControl.Properties.Resources.resources
 C:\Users\Lucio\Desktop\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\GenerateResource.read.1.tlog
 C:\Users\Lucio\Desktop\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\lucioc\Desktop\class_share\Samples\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\lucioc\Desktop\class_share\Samples\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\MainWindow.baml
+C:\Users\lucioc\Desktop\class_share\Samples\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\MainWindow.g.cs
+C:\Users\lucioc\Desktop\class_share\Samples\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\App.g.cs
+C:\Users\lucioc\Desktop\class_share\Samples\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\KinectPowerPointControl_MarkupCompile.cache
+C:\Users\lucioc\Desktop\class_share\Samples\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\KinectPowerPointControl.g.resources
+C:\Users\lucioc\Desktop\class_share\Samples\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\KinectPowerPointControl.Properties.Resources.resources
+C:\Users\lucioc\Desktop\class_share\Samples\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\lucioc\Desktop\class_share\Samples\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\lucioc\Desktop\class_share\Samples\KinectPowerPointControl.src\KinectPowerPointControl\bin\Debug\KinectPowerPointControl.exe
+C:\Users\lucioc\Desktop\class_share\Samples\KinectPowerPointControl.src\KinectPowerPointControl\bin\Debug\KinectPowerPointControl.pdb
+C:\Users\lucioc\Desktop\class_share\Samples\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\KinectPowerPointControl.exe
+C:\Users\lucioc\Desktop\class_share\Samples\KinectPowerPointControl.src\KinectPowerPointControl\obj\x86\Debug\KinectPowerPointControl.pdb

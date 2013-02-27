@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceHost", "ServiceHost\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonUtils", "CommonUtils\CommonUtils.csproj", "{FE1F7F9D-FD82-4820-A939-C65FC7360F68}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectPowerPointControl", "KinectPowerPointControl\KinectPowerPointControl.csproj", "{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = WcfService.vsmdi
@@ -93,6 +95,16 @@ Global
 		{FE1F7F9D-FD82-4820-A939-C65FC7360F68}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{FE1F7F9D-FD82-4820-A939-C65FC7360F68}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{FE1F7F9D-FD82-4820-A939-C65FC7360F68}.Release|x86.ActiveCfg = Release|Any CPU
+		{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}.Debug|x86.ActiveCfg = Debug|x86
+		{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}.Debug|x86.Build.0 = Debug|x86
+		{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}.Release|Any CPU.ActiveCfg = Release|x86
+		{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}.Release|Mixed Platforms.Build.0 = Release|x86
+		{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}.Release|x86.ActiveCfg = Release|x86
+		{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
