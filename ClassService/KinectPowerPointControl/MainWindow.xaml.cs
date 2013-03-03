@@ -24,9 +24,9 @@ namespace KinectPowerPointControl
     public partial class MainWindow : Window
     {
         KinectSensor sensor;
-        SpeechRecognitionEngine speechRecognizer;
 
-        DispatcherTimer readyTimer;
+        ClassKinectSpeechRecognition speechRecognition;
+        ClassGrammar grammar;
 
         byte[] colorBytes;
         Skeleton[] skeletons;
@@ -48,6 +48,7 @@ namespace KinectPowerPointControl
             //Handle the content obtained from the video camera, once received.
 
             this.KeyDown += new KeyEventHandler(MainWindow_KeyDown);
+
         }
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -73,15 +74,17 @@ namespace KinectPowerPointControl
 
             Application.Current.Exit += new ExitEventHandler(Current_Exit);
 
-            InitializeSpeechRecognition();
+            speechRecognition = new ClassKinectSpeechRecognition(this.sensor);
+            speechRecognition.SpeechRecognized += this.SpeechRecognized;
+            grammar = new ClassGrammar();
+            speechRecognition.InitializeSpeechRecognition(GetKinectRecognizer(), grammar);
         }
 
         void Current_Exit(object sender, ExitEventArgs e)
         {
-            if (speechRecognizer != null)
+            if (speechRecognition != null)
             {
-                speechRecognizer.RecognizeAsyncCancel();
-                speechRecognizer.RecognizeAsyncStop();
+                speechRecognition.stop();
             }
             if (sensor != null)
             {
@@ -184,6 +187,58 @@ namespace KinectPowerPointControl
             }
         }
 
+        private void SpeechRecognized(String speech)
+        {
+            if (grammar.IsCommand(ClassGrammar.SHOW_WINDOW, speech))
+            {
+                this.Dispatcher.BeginInvoke((Action)delegate
+                {
+                    this.Topmost = true;
+                    this.WindowState = System.Windows.WindowState.Normal;
+                });
+            }
+            else if (grammar.IsCommand(ClassGrammar.HIDE_WINDOW, speech))
+            {
+                this.Dispatcher.BeginInvoke((Action)delegate
+                {
+                    this.Topmost = false;
+                    this.WindowState = System.Windows.WindowState.Minimized;
+                });
+            }
+            else if (grammar.IsCommand(ClassGrammar.HIDE_CIRCLES, speech))
+            {
+                this.Dispatcher.BeginInvoke((Action)delegate
+                {
+                    this.HideCircles();
+                });
+            }
+            else if (grammar.IsCommand(ClassGrammar.SHOW_CIRCLES, speech))
+            {
+                this.Dispatcher.BeginInvoke((Action)delegate
+                {
+                    this.ShowCircles();
+                });
+            }
+            else if (grammar.IsCommand(ClassGrammar.NEXT_SLIDE, speech))
+            {
+                ProcessNextSlide();
+            }
+            else if (grammar.IsCommand(ClassGrammar.PREVIOUS_SLIDE, speech))
+            {
+                ProcessPreviousSlide();
+            }
+        }
+
+        private void ProcessNextSlide()
+        {
+            System.Windows.Forms.SendKeys.SendWait("{Right}");
+        }
+
+        private void ProcessPreviousSlide()
+        {
+            System.Windows.Forms.SendKeys.SendWait("{Left}");
+        }
+
         //Process gesture
         private void ProcessForwardBackGesture(Joint head, Joint rightHand, Joint leftHand)
         {
@@ -192,7 +247,7 @@ namespace KinectPowerPointControl
                 if (!isBackGestureActive && !isForwardGestureActive)
                 {
                     isForwardGestureActive = true;
-                    System.Windows.Forms.SendKeys.SendWait("{Right}");
+                    ProcessNextSlide();
                 }
             }
             else
@@ -205,7 +260,7 @@ namespace KinectPowerPointControl
                 if (!isBackGestureActive && !isForwardGestureActive)
                 {
                     isBackGestureActive = true;
-                    System.Windows.Forms.SendKeys.SendWait("{Left}");
+                    ProcessPreviousSlide();
                 }
             }
             else
@@ -274,135 +329,6 @@ namespace KinectPowerPointControl
             return SpeechRecognitionEngine.InstalledRecognizers().Where(matchingFunc).FirstOrDefault();
         }
 
-        private void InitializeSpeechRecognition()
-        {
-            RecognizerInfo ri = GetKinectRecognizer();
-            if (ri == null)
-            {
-                MessageBox.Show(
-                    @"There was a problem initializing Speech Recognition.
-Ensure you have the Microsoft Speech SDK installed.",
-                    "Failed to load Speech SDK",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
-                return;
-            }
-
-            try
-            {
-                speechRecognizer = new SpeechRecognitionEngine(ri.Id);
-            }
-            catch
-            {
-                MessageBox.Show(
-                    @"There was a problem initializing Speech Recognition.
-Ensure you have the Microsoft Speech SDK installed and configured.",
-                    "Failed to load Speech SDK",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
-            }
-
-            var phrases = new Choices();
-            phrases.Add("computer show window");
-            phrases.Add("computer hide window");
-            phrases.Add("computer show circles");
-            phrases.Add("computer hide circles");
-
-            var gb = new GrammarBuilder();
-            //Specify the culture to match the recognizer in case we are running in a different culture.                                 
-            gb.Culture = ri.Culture;
-            gb.Append(phrases);
-
-            // Create the actual Grammar instance, and then load it into the speech recognizer.
-            var g = new Grammar(gb);
-
-            speechRecognizer.LoadGrammar(g);
-            speechRecognizer.SpeechRecognized += SreSpeechRecognized;
-            speechRecognizer.SpeechHypothesized += SreSpeechHypothesized;
-            speechRecognizer.SpeechRecognitionRejected += SreSpeechRecognitionRejected;
-
-            this.readyTimer = new DispatcherTimer();
-            this.readyTimer.Tick += this.ReadyTimerTick;
-            this.readyTimer.Interval = new TimeSpan(0, 0, 4);
-            this.readyTimer.Start();
-
-        }
-
-        private void ReadyTimerTick(object sender, EventArgs e)
-        {
-            this.StartSpeechRecognition();
-            this.readyTimer.Stop();
-            this.readyTimer = null;
-        }
-
-        private void StartSpeechRecognition()
-        {
-            if (sensor == null || speechRecognizer == null)
-                return;
-
-            var audioSource = this.sensor.AudioSource;
-            audioSource.BeamAngleMode = BeamAngleMode.Adaptive;
-            var kinectStream = audioSource.Start();
-                
-            speechRecognizer.SetInputToAudioStream(
-                    kinectStream, new SpeechAudioFormatInfo(EncodingFormat.Pcm, 16000, 16, 1, 32000, 2, null));
-            speechRecognizer.RecognizeAsync(RecognizeMode.Multiple);
-            
-        }
-
-        void SreSpeechRecognitionRejected(object sender, SpeechRecognitionRejectedEventArgs e)
-        {
-            Trace.WriteLine("\nSpeech Rejected, confidence: " + e.Result.Confidence);
-        }
-
-        void SreSpeechHypothesized(object sender, SpeechHypothesizedEventArgs e)
-        {
-            Trace.Write("\rSpeech Hypothesized: \t{0}", e.Result.Text);
-        }
-
-        void SreSpeechRecognized(object sender, SpeechRecognizedEventArgs e)
-        {
-            //This first release of the Kinect language pack doesn't have a reliable confidence model, so 
-            //we don't use e.Result.Confidence here.
-            if (e.Result.Confidence < 0.70)
-            {
-                Trace.WriteLine("\nSpeech Rejected filtered, confidence: " + e.Result.Confidence);
-                return;
-            }
-
-            Trace.WriteLine("\nSpeech Recognized, confidence: " + e.Result.Confidence + ": \t{0}", e.Result.Text);
-
-            if (e.Result.Text == "computer show window")
-            {
-                this.Dispatcher.BeginInvoke((Action)delegate
-                    {
-                        this.Topmost = true;
-                        this.WindowState = System.Windows.WindowState.Normal;
-                    });
-            }
-            else if (e.Result.Text == "computer hide window")
-            {
-                this.Dispatcher.BeginInvoke((Action)delegate
-                {
-                    this.Topmost = false;
-                    this.WindowState = System.Windows.WindowState.Minimized;
-                });
-            }
-            else if (e.Result.Text == "computer hide circles")
-            {
-                this.Dispatcher.BeginInvoke((Action)delegate
-                {
-                    this.HideCircles();
-                });
-            }
-            else if (e.Result.Text == "computer show circles")
-            {
-                this.Dispatcher.BeginInvoke((Action)delegate
-                {
-                    this.ShowCircles();
-                });
-            }
-        }
         
         #endregion
 
