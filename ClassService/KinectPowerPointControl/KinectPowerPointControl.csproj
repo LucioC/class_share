@@ -75,6 +75,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ClassGrammar.cs" />
+    <Compile Include="ClassKinectGestureRecognition.cs" />
     <Compile Include="ClassKinectSpeechRecognition.cs" />
     <Compile Include="ISpeechGrammar.cs" />
     <Compile Include="MainWindow.xaml.cs">

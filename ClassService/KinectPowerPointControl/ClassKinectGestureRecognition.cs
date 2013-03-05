@@ -18,9 +18,6 @@ namespace KinectPowerPointControl
         public delegate void GestureRecognizedEvent(String gesture);
         public event GestureRecognizedEvent GestureRecognized;
 
-        public delegate void JointsReadyEvent();
-        public event JointsReadyEvent JointsUpdatedEvent;
-
         public Joint Head;
         public Joint RightHand;
         public Joint LeftHand;       
@@ -59,11 +56,6 @@ namespace KinectPowerPointControl
             Head = head;
             RightHand = rightHand;
             LeftHand = leftHand;
-
-            if (this.JointsUpdatedEvent != null)
-            {
-                this.JointsUpdatedEvent();
-            }
 
             //Update Right hand, left hand, and head positions for tracking and image 
             //SetEllipsePosition(ellipseHead, head, false);
