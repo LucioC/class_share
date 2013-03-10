@@ -1,7 +1,25 @@
-HIgh to low priority
+Specific
+
+Zoom in and out
+- http://stackoverflow.com/questions/9051868/unsmooth-zooming-images-with-kinect-correction-needed-in-approach
+- http://stackoverflow.com/questions/11140345/image-manipulation-with-kinect
+- http://social.msdn.microsoft.com/Forums/en-US/wpf/thread/72c782e7-9c02-4435-9fa5-12606a7b35cd/
+- http://social.msdn.microsoft.com/Forums/en/wpf/thread/aec5763c-5037-4b6c-a6c4-703260bf339d
+
+-http://social.msdn.microsoft.com/Forums/en-US/kinectsdk/thread/7b84def4-59c0-4329-ac1a-a1eb4bb1b317/
+
+
+
+
+
+General HIgh to low priority
 
 0.
 http://kinectpowerpoint.codeplex.com/
+
+0.5
+http://www.franklins.net/gesturepak.aspx
+
 
 1.
 http://social.msdn.microsoft.com/Forums/en-US/kinectsdknuiapi/thread/9f260b45-1ad3-421c-ae3a-56f6081d0d03
