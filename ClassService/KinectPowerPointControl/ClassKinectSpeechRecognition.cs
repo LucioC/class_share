@@ -108,6 +108,7 @@ Ensure you have the Microsoft Speech SDK installed and configured.",
 
             Trace.WriteLine("\nSpeech Recognized, confidence: " + e.Result.Confidence + ": \t{0}", e.Result.Text);
 
+            //Trigger event so the recognized text can be processed and generate some action outside of this class
             if (this.SpeechRecognized != null)
             {
                 this.SpeechRecognized(e.Result.Text);

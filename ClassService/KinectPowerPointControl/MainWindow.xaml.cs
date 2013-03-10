@@ -28,13 +28,12 @@ namespace KinectPowerPointControl
         ClassKinectSpeechRecognition speechRecognition;
         ClassGrammar grammar;
 
+        ClassKinectGestureRecognition gestureRecognition;
+
         byte[] colorBytes;
-        Skeleton[] skeletons;
         
         bool isCirclesVisible = true;
 
-        bool isForwardGestureActive = false;
-        bool isBackGestureActive = false;
         SolidColorBrush activeBrush = new SolidColorBrush(Colors.Green);
         SolidColorBrush inactiveBrush = new SolidColorBrush(Colors.Red);
 
@@ -49,6 +48,8 @@ namespace KinectPowerPointControl
 
             this.KeyDown += new KeyEventHandler(MainWindow_KeyDown);
 
+            gestureRecognition = new ClassKinectGestureRecognition();
+            gestureRecognition.GestureRecognized += this.GestureRecognized;
         }
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -148,42 +149,26 @@ namespace KinectPowerPointControl
                 if (skeletonFrame == null)
                     return;
 
-                if (skeletons == null ||
-                    skeletons.Length != skeletonFrame.SkeletonArrayLength)
-                {
-                    skeletons = new Skeleton[skeletonFrame.SkeletonArrayLength];
-                }
-
-                skeletonFrame.CopySkeletonDataTo(skeletons);
-
-                Skeleton closestSkeleton = (from s in skeletons
-                                            where s.TrackingState == SkeletonTrackingState.Tracked &&
-                                                  s.Joints[JointType.Head].TrackingState == JointTrackingState.Tracked
-                                            select s).OrderBy(s => s.Joints[JointType.Head].Position.Z)
-                                                    .FirstOrDefault();
-
-                if (closestSkeleton == null)
-                    return;
-
-                var head = closestSkeleton.Joints[JointType.Head];
-                var rightHand = closestSkeleton.Joints[JointType.HandRight];
-                var leftHand = closestSkeleton.Joints[JointType.HandLeft];
-
-                if (head.TrackingState != JointTrackingState.Tracked ||
-                    rightHand.TrackingState != JointTrackingState.Tracked ||
-                    leftHand.TrackingState != JointTrackingState.Tracked)
-                {
-                    //Don't have a good read on the joints so we cannot process gestures
-                    return;
-                }
+                gestureRecognition.ProcessFrameReady(skeletonFrame);
 
                 //Update Right hand, left hand, and head positions for tracking and image 
-                SetEllipsePosition(ellipseHead, head, false);
-                SetEllipsePosition(ellipseLeftHand, leftHand, isBackGestureActive);
-                SetEllipsePosition(ellipseRightHand, rightHand, isForwardGestureActive);
+                SetEllipsePosition(ellipseHead, gestureRecognition.Head, false);
 
-                //Process gesture for each skeleton track event
-                ProcessForwardBackGesture(head, rightHand, leftHand);
+                //Original version change color when a gesture is active (last parameter true)
+                SetEllipsePosition(ellipseLeftHand, gestureRecognition.LeftHand, false);
+                SetEllipsePosition(ellipseRightHand, gestureRecognition.RightHand, false);
+            }
+        }
+
+        private void GestureRecognized(String gesture)
+        {
+            if (gesture == ClassKinectGestureRecognition.ForwardGesture)
+            {
+                ProcessNextSlide();
+            }
+            if (gesture == ClassKinectGestureRecognition.BackGesture)
+            {
+                ProcessPreviousSlide();
             }
         }
 
@@ -237,36 +222,6 @@ namespace KinectPowerPointControl
         private void ProcessPreviousSlide()
         {
             System.Windows.Forms.SendKeys.SendWait("{Left}");
-        }
-
-        //Process gesture
-        private void ProcessForwardBackGesture(Joint head, Joint rightHand, Joint leftHand)
-        {
-            if (rightHand.Position.X > head.Position.X + 0.45)
-            {
-                if (!isBackGestureActive && !isForwardGestureActive)
-                {
-                    isForwardGestureActive = true;
-                    ProcessNextSlide();
-                }
-            }
-            else
-            {
-                isForwardGestureActive = false;
-            }
-
-            if (leftHand.Position.X < head.Position.X - 0.45)
-            {
-                if (!isBackGestureActive && !isForwardGestureActive)
-                {
-                    isBackGestureActive = true;
-                    ProcessPreviousSlide();
-                }
-            }
-            else
-            {
-                isBackGestureActive = false;
-            }
         }
 
         //This method is used to position the ellipses on the canvas
