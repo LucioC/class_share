@@ -38,6 +38,13 @@ namespace ClassService
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare)]
         Result PresentationCommand(Action action);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/image?fileName={fileName}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            Method = "GET")]
+        Result OpenImage(string fileName);
     }
     
     [DataContract(Namespace = "http://yournamespace.com")]
