@@ -9,8 +9,8 @@ namespace CommonUtils
     {
         public void WriteToDebugAndConsole(String message)
         {
-            System.Diagnostics.Debug.Write("\n\n" + message + "\n\n");
-            Console.WriteLine("\n\n" + message + "\n\n");
+            System.Diagnostics.Debug.Write("\n" + message + "\n");
+            //Console.WriteLine("\n" + message + "\n");
         }
     }
 

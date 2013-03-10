@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Kinect PowerPoint Control"
         Height="480"
-        Width="640">
+        Width="640" Loaded="Window_Loaded">
     <Viewbox Stretch="Uniform">
         <Grid>
             <Image Name="videoImage"
