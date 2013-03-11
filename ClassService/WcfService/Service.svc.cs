@@ -10,6 +10,7 @@ using PowerPointPresentation;
 using System.IO;
 using CommonUtils;
 using ImageZoom;
+using KinectPowerPointControl;
 
 namespace ClassService
 {
@@ -19,6 +20,7 @@ namespace ClassService
         private static PowerPointControl presentationControl;
         private static ImageFormControl imageForm;
         private FileManager fileManager;
+        private static KinectWindowControl kinectWindow;
 
         public Service()
         {
@@ -153,6 +155,9 @@ namespace ClassService
 
             imageForm = new ImageFormControl(fileName);
             imageForm.RunFormInNewThread();
+
+            kinectWindow = new KinectWindowControl();
+            kinectWindow.RunWindowInNewThread();
 
             return new Result("Ok");
         }

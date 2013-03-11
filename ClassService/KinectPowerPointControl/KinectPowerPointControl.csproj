@@ -78,6 +78,7 @@
     <Compile Include="ClassKinectGestureRecognition.cs" />
     <Compile Include="ClassKinectSpeechRecognition.cs" />
     <Compile Include="ISpeechGrammar.cs" />
+    <Compile Include="KinectWindowControl.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -7,10 +7,16 @@ namespace CommonUtils
 {
     public class Output
     {
-        public void WriteToDebugAndConsole(String message)
+        public void WriteToDebugOrConsole(String message)
         {
-            System.Diagnostics.Debug.Write("\n" + message + "\n");
-            //Console.WriteLine("\n" + message + "\n");
+            if(System.Diagnostics.Debugger.IsAttached)
+            {
+                System.Diagnostics.Debug.Write("\n" + message + "\n");
+            }
+            else
+            {
+                Console.WriteLine("\n" + message + "\n");
+            }
         }
     }
 

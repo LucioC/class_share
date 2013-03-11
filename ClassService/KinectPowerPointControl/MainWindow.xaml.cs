@@ -30,8 +30,6 @@ namespace KinectPowerPointControl
 
         ClassKinectGestureRecognition gestureRecognition;
 
-        private System.Windows.Shapes.Ellipse ellipseCenterShoulder;
-
         byte[] colorBytes;
         
         bool isCirclesVisible = true;
@@ -42,8 +40,6 @@ namespace KinectPowerPointControl
         public MainWindow()
         {
             InitializeComponent();
-
-            ellipseCenterShoulder = new Ellipse();
 
             //Runtime initialization is handled when the window is opened. When the window
             //is closed, the runtime MUST be unitialized.
@@ -77,7 +73,8 @@ namespace KinectPowerPointControl
 
             sensor.ElevationAngle = 0;
 
-            Application.Current.Exit += new ExitEventHandler(Current_Exit);
+            //Application.Current.Exit += new ExitEventHandler(Current_Exit);
+            this.Closed += Current_Exit;
 
             speechRecognition = new ClassKinectSpeechRecognition(this.sensor);
             speechRecognition.SpeechRecognized += this.SpeechRecognized;
@@ -85,7 +82,7 @@ namespace KinectPowerPointControl
             speechRecognition.InitializeSpeechRecognition(GetKinectRecognizer(), grammar);
         }
 
-        void Current_Exit(object sender, ExitEventArgs e)
+        void Current_Exit(object sender, System.EventArgs e)
         {
             if (speechRecognition != null)
             {
