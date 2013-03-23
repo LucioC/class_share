@@ -15,7 +15,8 @@ namespace ServiceTest
         [TestInitialize()]
         public void TestInitialize()
         {
-            correctFileName = @"C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\resources\PEP_posM.pptx";
+            string fileName = "test.pptx";
+            correctFileName = CommonTest.GetFileResourcePath(fileName);
         }
 
         /// <summary>

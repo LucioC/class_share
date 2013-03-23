@@ -17,20 +17,21 @@ namespace ClassService
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class Service : IService
     {
-        private static PowerPointControl presentationControl;
-        private static ImageFormControl imageForm;
+        public static PowerPointControl PresentationControl;
+        public static ImageFormControl ImageForm;
         private FileManager fileManager;
-        private static KinectWindowControl kinectWindow;
+        public static KinectWindowControl KinectWindow;
 
         public Service()
         {
-            presentationControl = new PowerPointControl();
             fileManager = new FileManager();
         }
 
-        public Service(PowerPointControl powerPointControl)
-        {
-            presentationControl = powerPointControl;
+        static Service()
+        {        
+            KinectWindow = new KinectWindowControl();
+            ImageForm = new ImageFormControl();
+            PresentationControl = new PowerPointControl();
         }
 
         public Result PresentationCommand(Action action)
@@ -53,8 +54,17 @@ namespace ClassService
         {
             try
             {
-                presentationControl.PreparePresentation(file.FileName);
-                presentationControl.StartPresentation();
+                //Get current directory and look for file
+                String localPath = Directory.GetCurrentDirectory() + "\\";
+                localPath = localPath + file.FileName;
+
+                //Open power point presentation
+                PresentationControl.PreparePresentation(localPath);
+                PresentationControl.StartPresentation();
+
+                //Initialize Kinect windows for gesture and speech recognition
+                KinectWindow.RunWindowInNewThread();
+
                 return new Result("Presentation has been started");
             }
             catch(Exception e)
@@ -68,7 +78,7 @@ namespace ClassService
         {
             try
             {
-                presentationControl.GoToNextSlide();
+                PresentationControl.GoToNextSlide();
                 return new Result("Advanced one slide");
             }
             catch (Exception e)
@@ -82,7 +92,7 @@ namespace ClassService
         {
             try
             {
-                presentationControl.GoToPreviousSlide();
+                PresentationControl.GoToPreviousSlide();
                 return new Result("Returned one slide");
             }
             catch (Exception e)
@@ -97,7 +107,7 @@ namespace ClassService
             try
             {
                 int slideNumber = Int32.Parse(number);
-                presentationControl.GoToSlideNumber(slideNumber);
+                PresentationControl.GoToSlideNumber(slideNumber);
                 return new Result("Went to slide number " + number);
             }
             catch (Exception e)
@@ -111,7 +121,7 @@ namespace ClassService
         {
             try
             {
-                presentationControl.ClosePresentation();
+                PresentationControl.ClosePresentation();
                 return new Result("Presentation was closed");
             }
             catch(Exception e)
@@ -153,13 +163,23 @@ namespace ClassService
         {
             fileName = (fileName == null || fileName == String.Empty) ? @"C:\Users\lucioc\Desktop\class_share\ClassService\Image_Pan_and_Zoom\ponei.jpg" : fileName;
 
-            imageForm = new ImageFormControl(fileName);
-            imageForm.RunFormInNewThread();
+            //Run image output window
+            ImageForm = new ImageFormControl(fileName);
+            ImageForm.RunFormInNewThread();
 
-            kinectWindow = new KinectWindowControl();
-            kinectWindow.RunWindowInNewThread();
+            //Initialize Kinect windows for gesture and speech recognition
+            KinectWindow.RunWindowInNewThread();
 
-            return new Result("Ok");
+            return new Result("Image Opened");
+        }
+
+        public Result CloseCurrentImage()
+        {
+            ImageForm.StopThread();
+
+            KinectWindow.StopThread();
+
+            return new Result("Image Closed");
         }
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Microsoft.Kinect;
 using CommonUtils;
+using System.Collections;
+using System.Collections.Specialized;
 
 namespace KinectPowerPointControl
 {
@@ -22,6 +24,8 @@ namespace KinectPowerPointControl
         public float HandsDistance { get; set; }
         public float HandsDistanceErrorIgnored { get; set; }
         public long ZoomIntervalMiliseconds { get; set; }
+        public ArrayList Gestures { get; protected set; }
+
         private long lastZoomTrigged = 0;
 
         public delegate void GestureRecognizedEvent(String gesture);
@@ -38,10 +42,26 @@ namespace KinectPowerPointControl
 
         public ClassKinectGestureRecognition()
         {
+            Gestures = new ArrayList();
+
             output = new Output();
             HandsDistance = 0f;
             HandsDistanceErrorIgnored = 0.05f;
             ZoomIntervalMiliseconds = 200;
+        }
+
+        public Boolean AddGestureRecognition(IGestureRecognizer gestureRecognizer)
+        {
+            foreach (IGestureRecognizer i in Gestures)
+            {
+                if (i.GetType() == gestureRecognizer.GetType())
+                {
+                    return false;
+                }
+            }
+
+            Gestures.Add(gestureRecognizer);
+            return true;
         }
 
         public void ProcessFrameReady(SkeletonFrame skeletonFrame)

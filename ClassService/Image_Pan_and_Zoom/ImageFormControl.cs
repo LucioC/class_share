@@ -25,6 +25,10 @@ namespace ImageZoom
             fileManager = new FileManager();
         }
 
+        public ImageFormControl(): this(null)
+        {            
+        }
+
         //Throws exception if dont exist or cant be converted to an Image
         public void checkIfImageExit()
         {

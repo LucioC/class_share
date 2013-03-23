@@ -1,6 +1,8 @@
 ﻿using PowerPointPresentation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.IO;
+using CommonUtils;
 
 namespace ServiceTest
 {   
@@ -65,8 +67,9 @@ namespace ServiceTest
         [TestInitialize()]
         public void TestInitialize()
         {
-            correctFileName = @"C:\Users\lucioc\Desktop\class_share\Samples\WCF\WcfService1\TestProject1\resources\PEP_posM.pptx";
-
+            string fileName = "test.pptx";
+            correctFileName = CommonTest.GetFileResourcePath(fileName);
+            
             powerPointControl = new PowerPointControl();
             powerPointControl.PreparePresentation(correctFileName);
             powerPointControl.StartPresentation();

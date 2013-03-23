@@ -125,7 +125,7 @@ namespace TestProject1
         }
 
         [TestMethod()]
-        public void CloseFileTest()
+        public void DeleteFileTest()
         {
             FileManager target = new FileManager(); // TODO: Initialize to an appropriate value
 
