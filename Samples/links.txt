@@ -15,3 +15,10 @@ http://www.codeproject.com/Articles/26532/A-Zoomable-and-Scrollable-PictureBox
 http://social.msdn.microsoft.com/Forums/en-NZ/winappswithcsharp/thread/757aa5af-a48b-4b4e-8e0b-98f0ecc868b8
 
 http://www.codeproject.com/Articles/15373/A-scrollable-zoomable-and-scalable-picture-box
+
+
+
+CROSS THREAD EVENTS FOR FORMS
+http://www.codeproject.com/Articles/21168/Raising-Events-from-Other-Threads
+http://www.codeproject.com/Articles/23517/How-to-Properly-Handle-Cross-thread-Events-and-Upd
+http://msdn.microsoft.com/library/zyzhdc6b.aspx

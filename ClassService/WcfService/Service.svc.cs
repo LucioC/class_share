@@ -9,6 +9,8 @@ using Microsoft.Office.Interop.PowerPoint;
 using PowerPointPresentation;
 using System.IO;
 using CommonUtils;
+using ImageZoom;
+using KinectPowerPointControl;
 
 namespace ClassService
 {
@@ -16,8 +18,9 @@ namespace ClassService
     public class Service : IService
     {
         private static PowerPointControl presentationControl;
-
+        private static ImageFormControl imageForm;
         private FileManager fileManager;
+        private static KinectWindowControl kinectWindow;
 
         public Service()
         {
@@ -144,6 +147,19 @@ namespace ClassService
                 MemoryStream stream = new MemoryStream(byteArray);
                 return stream;
             }
+        }
+        
+        public Result OpenImage(string fileName)
+        {
+            fileName = (fileName == null || fileName == String.Empty) ? @"C:\Users\lucioc\Desktop\class_share\ClassService\Image_Pan_and_Zoom\ponei.jpg" : fileName;
+
+            imageForm = new ImageFormControl(fileName);
+            imageForm.RunFormInNewThread();
+
+            kinectWindow = new KinectWindowControl();
+            kinectWindow.RunWindowInNewThread();
+
+            return new Result("Ok");
         }
     }
 }

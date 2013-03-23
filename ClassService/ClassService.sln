@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonUtils", "CommonUtils\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectPowerPointControl", "KinectPowerPointControl\KinectPowerPointControl.csproj", "{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageZoom", "Image_Pan_and_Zoom\ImageZoom.csproj", "{8241A955-C8E4-4CFD-BA28-EEAB34F6C00C}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = WcfService.vsmdi
@@ -105,6 +107,16 @@ Global
 		{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}.Release|Mixed Platforms.Build.0 = Release|x86
 		{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}.Release|x86.ActiveCfg = Release|x86
 		{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}.Release|x86.Build.0 = Release|x86
+		{8241A955-C8E4-4CFD-BA28-EEAB34F6C00C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8241A955-C8E4-4CFD-BA28-EEAB34F6C00C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8241A955-C8E4-4CFD-BA28-EEAB34F6C00C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8241A955-C8E4-4CFD-BA28-EEAB34F6C00C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8241A955-C8E4-4CFD-BA28-EEAB34F6C00C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8241A955-C8E4-4CFD-BA28-EEAB34F6C00C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8241A955-C8E4-4CFD-BA28-EEAB34F6C00C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8241A955-C8E4-4CFD-BA28-EEAB34F6C00C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8241A955-C8E4-4CFD-BA28-EEAB34F6C00C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8241A955-C8E4-4CFD-BA28-EEAB34F6C00C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

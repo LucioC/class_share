@@ -73,7 +73,8 @@ namespace KinectPowerPointControl
 
             sensor.ElevationAngle = 0;
 
-            Application.Current.Exit += new ExitEventHandler(Current_Exit);
+            //Application.Current.Exit += new ExitEventHandler(Current_Exit);
+            this.Closed += Current_Exit;
 
             speechRecognition = new ClassKinectSpeechRecognition(this.sensor);
             speechRecognition.SpeechRecognized += this.SpeechRecognized;
@@ -81,7 +82,7 @@ namespace KinectPowerPointControl
             speechRecognition.InitializeSpeechRecognition(GetKinectRecognizer(), grammar);
         }
 
-        void Current_Exit(object sender, ExitEventArgs e)
+        void Current_Exit(object sender, System.EventArgs e)
         {
             if (speechRecognition != null)
             {
@@ -157,6 +158,7 @@ namespace KinectPowerPointControl
                 //Original version change color when a gesture is active (last parameter true)
                 SetEllipsePosition(ellipseLeftHand, gestureRecognition.LeftHand, false);
                 SetEllipsePosition(ellipseRightHand, gestureRecognition.RightHand, false);
+                SetEllipsePosition(ellipseCenterShoulder, gestureRecognition.CenterShoulder, false);
             }
         }
 
@@ -166,9 +168,17 @@ namespace KinectPowerPointControl
             {
                 ProcessNextSlide();
             }
-            if (gesture == ClassKinectGestureRecognition.BackGesture)
+            else if (gesture == ClassKinectGestureRecognition.BackGesture)
             {
                 ProcessPreviousSlide();
+            }
+            else if (gesture == ClassKinectGestureRecognition.ZoomIn)
+            {
+                ProcessZoomIn();
+            }
+            else if (gesture == ClassKinectGestureRecognition.ZoomOut)
+            {
+                ProcessZoomOut();
             }
         }
 
@@ -212,6 +222,16 @@ namespace KinectPowerPointControl
             {
                 ProcessPreviousSlide();
             }
+        }
+
+        private void ProcessZoomOut()
+        {
+            System.Windows.Forms.SendKeys.SendWait("{PGDN}");
+        }
+        
+        private void ProcessZoomIn()
+        {
+            System.Windows.Forms.SendKeys.SendWait("{PGUP}");
         }
 
         private void ProcessNextSlide()
@@ -261,6 +281,7 @@ namespace KinectPowerPointControl
             ellipseHead.Visibility = System.Windows.Visibility.Collapsed;
             ellipseLeftHand.Visibility = System.Windows.Visibility.Collapsed;
             ellipseRightHand.Visibility = System.Windows.Visibility.Collapsed;
+            ellipseCenterShoulder.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         void ShowCircles()
@@ -269,6 +290,7 @@ namespace KinectPowerPointControl
             ellipseHead.Visibility = System.Windows.Visibility.Visible;
             ellipseLeftHand.Visibility = System.Windows.Visibility.Visible;
             ellipseRightHand.Visibility = System.Windows.Visibility.Visible;
+            ellipseCenterShoulder.Visibility = System.Windows.Visibility.Visible;
         }
 
         #region Speech Recognition Methods
@@ -286,6 +308,11 @@ namespace KinectPowerPointControl
 
         
         #endregion
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
 
     }
 }

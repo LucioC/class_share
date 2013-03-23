@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Threading;
+using CommonUtils;
+using System.Drawing;
+using System.IO;
 
 namespace ImageZoom
 {
@@ -8,12 +12,16 @@ namespace ImageZoom
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ImageZoomMainForm(@"../../poneis.jpg"));
+            ImageFormControl f = new ImageFormControl(@"../../poneis.jpg");
+            //f.InitializeForm();
+            f.RunFormInNewThread();
+            //f.Stop();
+            System.Threading.Thread.Sleep(10000);
+            f.StopThread();
+            f.InitializeForm();
         }
     }
+    
 }

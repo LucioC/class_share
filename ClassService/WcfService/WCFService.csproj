@@ -95,6 +95,14 @@
       <Project>{FE1F7F9D-FD82-4820-A939-C65FC7360F68}</Project>
       <Name>CommonUtils</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Image_Pan_and_Zoom\ImageZoom.csproj">
+      <Project>{8241A955-C8E4-4CFD-BA28-EEAB34F6C00C}</Project>
+      <Name>ImageZoom</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KinectPowerPointControl\KinectPowerPointControl.csproj">
+      <Project>{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}</Project>
+      <Name>KinectPowerPointControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PowerPointLibrary\PowerPointLibrary.csproj">
       <Project>{244A6FAF-A40B-425B-A063-74672E630540}</Project>
       <Name>PowerPointLibrary</Name>
