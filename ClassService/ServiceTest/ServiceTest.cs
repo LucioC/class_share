@@ -5,6 +5,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting.Web;
 using System.IO;
 using ImageZoom;
 using KinectPowerPointControl;
+using Moq;
+using ServiceCore;
 
 namespace TestProject1
 {
@@ -88,203 +90,21 @@ namespace TestProject1
         {
             Service target = new Service();
 
-            var imageControlMock = new Moq.Mock<ImageFormControl>();
-            var kinectControlMock = new Moq.Mock<KinectWindowControl>();
+            var imageControlMock = new Mock<IWindowThreadControl>();
+            var kinectControlMock = new Mock<IWindowThreadControl>();
+
+            imageControlMock.Setup(foo => foo.StopThread());
+            kinectControlMock.Setup(foo => foo.StopThread());
 
             Service.ImageForm = imageControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
             
             target.CloseCurrentImage();
 
-            imageControlMock.Verify(foo => foo.StopThread());
-            kinectControlMock.Verify(foo => foo.StopThread());
+            imageControlMock.Verify(x => x.StopThread(), Times.Exactly(1));
+            kinectControlMock.Verify(x => x.StopThread(), Times.Exactly(1));
         }
 
-        /// <summary>
-        ///A test for ClosePresentation
-        ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
-        [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\Users\\lucioc\\Desktop\\class_share\\ClassService\\WcfService", "/")]
-        [UrlToTest("http://localhost:2475/")]
-        public void ClosePresentationTest()
-        {
-            Service target = new Service(); // TODO: Initialize to an appropriate value
-            Result expected = null; // TODO: Initialize to an appropriate value
-            Result actual;
-            actual = target.ClosePresentation();
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for GetFile
-        ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
-        [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\Users\\lucioc\\Desktop\\class_share\\ClassService\\WcfService", "/")]
-        [UrlToTest("http://localhost:2475/")]
-        public void GetFileTest()
-        {
-            Service target = new Service(); // TODO: Initialize to an appropriate value
-            string fileName = string.Empty; // TODO: Initialize to an appropriate value
-            Stream expected = null; // TODO: Initialize to an appropriate value
-            Stream actual;
-            actual = target.GetFile(fileName);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for GoToSlideNumber
-        ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
-        [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\Users\\lucioc\\Desktop\\class_share\\ClassService\\WcfService", "/")]
-        [UrlToTest("http://localhost:2475/")]
-        public void GoToSlideNumberTest()
-        {
-            Service target = new Service(); // TODO: Initialize to an appropriate value
-            string number = string.Empty; // TODO: Initialize to an appropriate value
-            Result expected = null; // TODO: Initialize to an appropriate value
-            Result actual;
-            actual = target.GoToSlideNumber(number);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for NextSlide
-        ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
-        [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\Users\\lucioc\\Desktop\\class_share\\ClassService\\WcfService", "/")]
-        [UrlToTest("http://localhost:2475/")]
-        public void NextSlideTest()
-        {
-            Service target = new Service(); // TODO: Initialize to an appropriate value
-            Result expected = null; // TODO: Initialize to an appropriate value
-            Result actual;
-            actual = target.NextSlide();
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for OpenImage
-        ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
-        [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\Users\\lucioc\\Desktop\\class_share\\ClassService\\WcfService", "/")]
-        [UrlToTest("http://localhost:2475/")]
-        public void OpenImageTest()
-        {
-            Service target = new Service(); // TODO: Initialize to an appropriate value
-            string fileName = string.Empty; // TODO: Initialize to an appropriate value
-            Result expected = null; // TODO: Initialize to an appropriate value
-            Result actual;
-            actual = target.OpenImage(fileName);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for PresentationCommand
-        ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
-        [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\Users\\lucioc\\Desktop\\class_share\\ClassService\\WcfService", "/")]
-        [UrlToTest("http://localhost:2475/")]
-        public void PresentationCommandTest()
-        {
-            Service target = new Service(); // TODO: Initialize to an appropriate value
-            ClassService.Action action = null; // TODO: Initialize to an appropriate value
-            Result expected = null; // TODO: Initialize to an appropriate value
-            Result actual;
-            actual = target.PresentationCommand(action);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for PreviousSlide
-        ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
-        [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\Users\\lucioc\\Desktop\\class_share\\ClassService\\WcfService", "/")]
-        [UrlToTest("http://localhost:2475/")]
-        public void PreviousSlideTest()
-        {
-            Service target = new Service(); // TODO: Initialize to an appropriate value
-            Result expected = null; // TODO: Initialize to an appropriate value
-            Result actual;
-            actual = target.PreviousSlide();
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for StartPresentation
-        ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
-        [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\Users\\lucioc\\Desktop\\class_share\\ClassService\\WcfService", "/")]
-        [UrlToTest("http://localhost:2475/")]
-        public void StartPresentationTest()
-        {
-            Service target = new Service(); // TODO: Initialize to an appropriate value
-            ClassService.File file = null; // TODO: Initialize to an appropriate value
-            Result expected = null; // TODO: Initialize to an appropriate value
-            Result actual;
-            actual = target.StartPresentation(file);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-
-        /// <summary>
-        ///A test for UploadFile
-        ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
-        [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("C:\\Users\\lucioc\\Desktop\\class_share\\ClassService\\WcfService", "/")]
-        [UrlToTest("http://localhost:2475/")]
-        public void UploadFileTest()
-        {
-            Service target = new Service(); // TODO: Initialize to an appropriate value
-            string fileName = string.Empty; // TODO: Initialize to an appropriate value
-            Stream fileContents = null; // TODO: Initialize to an appropriate value
-            Result expected = null; // TODO: Initialize to an appropriate value
-            Result actual;
-            actual = target.UploadFile(fileName, fileContents);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
+       
     }
 }

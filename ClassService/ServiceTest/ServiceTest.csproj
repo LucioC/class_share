@@ -54,9 +54,6 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Rhino.Mocks">
-      <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
@@ -121,6 +118,10 @@
     <ProjectReference Include="..\PowerPointLibrary\PowerPointLibrary.csproj">
       <Project>{244A6FAF-A40B-425B-A063-74672E630540}</Project>
       <Name>PowerPointLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceCore\ServiceCore.csproj">
+      <Project>{7EF09EFE-213E-4589-BA79-2071302C67A9}</Project>
+      <Name>ServiceCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\WcfService\WCFService.csproj">
       <Project>{9FB2C65C-499D-48D5-AD76-B0CBE5C0CD85}</Project>

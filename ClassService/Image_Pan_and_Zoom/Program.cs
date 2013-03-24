@@ -16,7 +16,7 @@ namespace ImageZoom
         {
             ImageFormControl f = new ImageFormControl(@"../../poneis.jpg");
             //f.InitializeForm();
-            f.RunFormInNewThread();
+            f.StartThread();
             //f.Stop();
             System.Threading.Thread.Sleep(10000);
             f.StopThread();

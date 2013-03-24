@@ -11,6 +11,7 @@ using System.IO;
 using CommonUtils;
 using ImageZoom;
 using KinectPowerPointControl;
+using ServiceCore;
 
 namespace ClassService
 {
@@ -18,9 +19,9 @@ namespace ClassService
     public class Service : IService
     {
         public static PowerPointControl PresentationControl;
-        public static ImageFormControl ImageForm;
+        public static IWindowThreadControl ImageForm;
         private FileManager fileManager;
-        public static KinectWindowControl KinectWindow;
+        public static IWindowThreadControl KinectWindow;
 
         public Service()
         {
@@ -63,7 +64,7 @@ namespace ClassService
                 PresentationControl.StartPresentation();
 
                 //Initialize Kinect windows for gesture and speech recognition
-                KinectWindow.RunWindowInNewThread();
+                KinectWindow.StartThread();
 
                 return new Result("Presentation has been started");
             }
@@ -165,10 +166,10 @@ namespace ClassService
 
             //Run image output window
             ImageForm = new ImageFormControl(fileName);
-            ImageForm.RunFormInNewThread();
+            ImageForm.StartThread();
 
             //Initialize Kinect windows for gesture and speech recognition
-            KinectWindow.RunWindowInNewThread();
+            KinectWindow.StartThread();
 
             return new Result("Image Opened");
         }

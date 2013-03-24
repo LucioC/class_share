@@ -27,7 +27,7 @@ namespace KinectPowerPointControl
 
         public bool IdentifyGesture(Microsoft.Kinect.Skeleton skeleton)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }

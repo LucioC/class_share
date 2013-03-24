@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Microsoft.Kinect;
+using Moq;
 
 namespace TestProject1
 {
@@ -81,14 +82,13 @@ namespace TestProject1
         {
             LeftGestureRecognizer target = new LeftGestureRecognizer();
 
-            var skeletonMock = new Moq.Mock<Skeleton>();
+            var skeletonMock = new Mock<Skeleton>();
 
             Skeleton skeleton = skeletonMock.Object;
             bool expected = false; // TODO: Initialize to an appropriate value
             bool actual;
             actual = target.IdentifyGesture(skeleton);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
     }
 }

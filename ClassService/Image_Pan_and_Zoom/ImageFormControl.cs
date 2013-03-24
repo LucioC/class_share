@@ -7,10 +7,11 @@ using CommonUtils;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using ServiceCore;
 
 namespace ImageZoom
 {
-    public class ImageFormControl
+    public class ImageFormControl : IWindowThreadControl
     {
         delegate void CloseDelegate();
         private Thread thread;
@@ -30,7 +31,7 @@ namespace ImageZoom
         }
 
         //Throws exception if dont exist or cant be converted to an Image
-        public void checkIfImageExit()
+        public void CheckIfImageExit()
         {
             if (fileManager.FileExists(File))
             {
@@ -43,9 +44,9 @@ namespace ImageZoom
             }
         }
 
-        public void RunFormInNewThread()
+        public void StartThread()
         {
-            checkIfImageExit();
+            CheckIfImageExit();
             thread = new Thread(this.InitializeForm);
             thread.Start();
         }
