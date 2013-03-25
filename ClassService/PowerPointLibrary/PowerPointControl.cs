@@ -6,12 +6,13 @@ using Microsoft.Office.Core;
 using Microsoft.Office.Interop.PowerPoint;
 using System.Runtime.InteropServices;
 using System.IO;
+using ServiceCore;
 
 namespace PowerPointPresentation
 {
     //TODO: not thread safe yet
     //TODO: remove write to console function? Maybe refactor it to a class that can allow to write or not depending on initialization.
-    public class PowerPointControl
+    public class PowerPointControl : IPowerPointControl
     {
         private Application application;
         private Presentation presentation;

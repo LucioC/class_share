@@ -11,17 +11,17 @@ using ServiceCore;
 
 namespace ImageZoom
 {
-    public class ImageFormControl : IWindowThreadControl
+    public class ImageFormControl : IThreadFileWindow
     {
         delegate void CloseDelegate();
         private Thread thread;
-        public String File { get; set; }
+        public String FileName { get; set; }
         private ImageZoomMainForm imageForm = null;
-        FileManager fileManager;
+        private FileManager fileManager;
 
         public ImageFormControl(String imageFileToOpen)
         {
-            File = imageFileToOpen;
+            FileName = imageFileToOpen;
             thread = null;
             fileManager = new FileManager();
         }
@@ -31,12 +31,12 @@ namespace ImageZoom
         }
 
         //Throws exception if dont exist or cant be converted to an Image
-        public void CheckIfImageExit()
+        public virtual void CheckIfImageExit()
         {
-            if (fileManager.FileExists(File))
+            if (fileManager.FileExists(FileName))
             {
                 //Better way to do this?
-                Image newImage = Image.FromFile(File);
+                Image newImage = Image.FromFile(FileName);
             }
             else
             {
@@ -64,7 +64,12 @@ namespace ImageZoom
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(imageForm = new ImageZoomMainForm(File));
+            Application.Run(imageForm = new ImageZoomMainForm(FileName));
+        }
+
+        public void SetFilePath(string fileName)
+        {
+            FileName = fileName;
         }
     }
 }

@@ -18,8 +18,8 @@ namespace ClassService
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class Service : IService
     {
-        public static PowerPointControl PresentationControl;
-        public static IWindowThreadControl ImageForm;
+        public static IPowerPointControl PresentationControl;
+        public static IThreadFileWindow ImageForm;
         private FileManager fileManager;
         public static IWindowThreadControl KinectWindow;
 
@@ -39,13 +39,15 @@ namespace ClassService
         {
             switch (action.Command)
             {
-                case "next": NextSlide();
+                case Action.NEXT: NextSlide();
                     break;
-                case "previous": PreviousSlide();
+                case Action.PREVIOUS: PreviousSlide();
                     break;
-                case "close": ClosePresentation();
+                case Action.CLOSE: ClosePresentation();
                     break;
-                default: return new Result("wrong command argument option");
+                default:
+                    WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                    return new Result("wrong command argument option");
             }
 
             return new Result("Command Executed");
@@ -123,6 +125,7 @@ namespace ClassService
             try
             {
                 PresentationControl.ClosePresentation();
+                KinectWindow.StopThread();
                 return new Result("Presentation was closed");
             }
             catch(Exception e)
@@ -165,13 +168,43 @@ namespace ClassService
             fileName = (fileName == null || fileName == String.Empty) ? @"C:\Users\lucioc\Desktop\class_share\ClassService\Image_Pan_and_Zoom\ponei.jpg" : fileName;
 
             //Run image output window
-            ImageForm = new ImageFormControl(fileName);
+            ImageForm.SetFilePath(fileName);
             ImageForm.StartThread();
 
             //Initialize Kinect windows for gesture and speech recognition
             KinectWindow.StartThread();
 
             return new Result("Image Opened");
+        }
+
+        public void ImageRotateRight()
+        {
+            
+        }
+
+        public void ImageRotateLeft()
+        {
+
+        }
+
+        public void ImageZoomIn()
+        {
+
+        }
+
+        public void ImageZoomOut()
+        {
+
+        }
+
+        public void ImageMoveRight()
+        {
+
+        }
+
+        public void ImageMoveLeft()
+        {
+
         }
 
         public Result CloseCurrentImage()

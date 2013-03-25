@@ -66,6 +66,10 @@ namespace ClassService
         {
             this.Command = command;
         }
+
+        public const String NEXT = "next";
+        public const String PREVIOUS = "previous";
+        public const String CLOSE = "close";
         
         [DataMember(Order = 1, Name = "command")]
         public string Command { get; set; }

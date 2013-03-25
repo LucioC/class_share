@@ -4,9 +4,7 @@ using System;
 using System.Collections;
 
 namespace TestProject1
-{
-    
-    
+{   
     /// <summary>
     ///This is a test class for ClassKinectGestureRecognitionTest and is intended
     ///to contain all ClassKinectGestureRecognitionTest Unit Tests
@@ -14,8 +12,6 @@ namespace TestProject1
     [TestClass()]
     public class ClassKinectGestureRecognitionTest
     {
-
-
         private TestContext testContextInstance;
 
         /// <summary>

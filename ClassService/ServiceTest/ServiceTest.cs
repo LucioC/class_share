@@ -9,9 +9,7 @@ using Moq;
 using ServiceCore;
 
 namespace TestProject1
-{
-    
-    
+{    
     /// <summary>
     ///This is a test class for ServiceTest and is intended
     ///to contain all ServiceTest Unit Tests
@@ -19,8 +17,6 @@ namespace TestProject1
     [TestClass()]
     public class ServiceTest
     {
-
-
         private TestContext testContextInstance;
 
         /// <summary>
@@ -82,19 +78,18 @@ namespace TestProject1
             Assert.IsNotNull(Service.PresentationControl);
         }
 
+        #region ImageControlTest
+
         /// <summary>
         ///A test for CloseCurrentImage
         ///</summary>
         [TestMethod()]
-        public void CloseCurrentImageWithoutInitializeTest()
+        public void CloseImageWindow()
         {
             Service target = new Service();
 
-            var imageControlMock = new Mock<IWindowThreadControl>();
+            var imageControlMock = new Mock<IThreadFileWindow>();
             var kinectControlMock = new Mock<IWindowThreadControl>();
-
-            imageControlMock.Setup(foo => foo.StopThread());
-            kinectControlMock.Setup(foo => foo.StopThread());
 
             Service.ImageForm = imageControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
@@ -105,6 +100,115 @@ namespace TestProject1
             kinectControlMock.Verify(x => x.StopThread(), Times.Exactly(1));
         }
 
-       
+        [TestMethod()]
+        public void OpenImageTest()
+        {
+            Service target = new Service();
+
+            var imageControlMock = new Mock<IThreadFileWindow>();
+            var kinectControlMock = new Mock<IWindowThreadControl>();
+                 
+            Service.ImageForm = imageControlMock.Object;
+            Service.KinectWindow = kinectControlMock.Object;
+
+            target.OpenImage("");
+
+            imageControlMock.Verify(x => x.StartThread(), Times.Exactly(1));
+            kinectControlMock.Verify(x => x.StartThread(), Times.Exactly(1));
+        }
+
+        #endregion
+
+        #region PresentationTest
+
+        [TestMethod()]
+        public void StartPresentationTest()
+        {
+            Service target = new Service();
+
+            var presentationControlMock = new Mock<IPowerPointControl>();
+            var kinectControlMock = new Mock<IWindowThreadControl>();
+
+            Service.PresentationControl = presentationControlMock.Object;
+            Service.KinectWindow = kinectControlMock.Object;
+
+            ClassService.File file = new ClassService.File("");
+            target.StartPresentation(file);
+
+            presentationControlMock.Verify(x => x.PreparePresentation(It.IsAny<String>()), Times.Exactly(1));
+            presentationControlMock.Verify(x => x.StartPresentation(), Times.Exactly(1));
+            kinectControlMock.Verify(x => x.StartThread(), Times.Exactly(1));
+        }
+
+        [TestMethod()]
+        public void StopPresentationTest()
+        {
+            Service target = new Service();
+
+            var presentationControlMock = new Mock<IPowerPointControl>();
+            var kinectControlMock = new Mock<IWindowThreadControl>();
+
+            Service.PresentationControl = presentationControlMock.Object;
+            Service.KinectWindow = kinectControlMock.Object;
+
+            target.ClosePresentation();
+
+            presentationControlMock.Verify(x => x.ClosePresentation(), Times.Exactly(1));
+            kinectControlMock.Verify(x => x.StopThread(), Times.Exactly(1));
+        }
+
+        [TestMethod()]
+        public void PresentationNextCommand()
+        {
+            Service target = new Service();
+
+            var presentationControlMock = new Mock<IPowerPointControl>();
+            var kinectControlMock = new Mock<IWindowThreadControl>();
+
+            Service.PresentationControl = presentationControlMock.Object;
+            Service.KinectWindow = kinectControlMock.Object;
+
+            ClassService.Action action = new ClassService.Action(ClassService.Action.NEXT);
+            target.PresentationCommand(action);
+
+            presentationControlMock.Verify(x => x.GoToNextSlide(), Times.Exactly(1));
+        }
+
+        [TestMethod()]
+        public void PresentationPreviousCommand()
+        {
+            Service target = new Service();
+
+            var presentationControlMock = new Mock<IPowerPointControl>();
+            var kinectControlMock = new Mock<IWindowThreadControl>();
+
+            Service.PresentationControl = presentationControlMock.Object;
+            Service.KinectWindow = kinectControlMock.Object;
+
+            ClassService.Action action = new ClassService.Action(ClassService.Action.PREVIOUS);
+            target.PresentationCommand(action);
+
+            presentationControlMock.Verify(x => x.GoToPreviousSlide(), Times.Exactly(1));
+        }
+
+        [TestMethod()]
+        public void PresentationCloseCommand()
+        {
+            Service target = new Service();
+
+            var presentationControlMock = new Mock<IPowerPointControl>();
+            var kinectControlMock = new Mock<IWindowThreadControl>();
+
+            Service.PresentationControl = presentationControlMock.Object;
+            Service.KinectWindow = kinectControlMock.Object;
+
+            ClassService.Action action = new ClassService.Action(ClassService.Action.CLOSE);
+            target.PresentationCommand(action);
+
+            presentationControlMock.Verify(x => x.ClosePresentation(), Times.Exactly(1));
+            kinectControlMock.Verify(x => x.StopThread(), Times.Exactly(1));
+        }
+
+        #endregion
     }
 }
