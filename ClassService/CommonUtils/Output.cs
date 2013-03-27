@@ -7,7 +7,7 @@ namespace CommonUtils
 {
     public class Output
     {
-        public void WriteToDebugOrConsole(String message)
+        public static void WriteToDebugOrConsole(String message)
         {
             if(System.Diagnostics.Debugger.IsAttached)
             {

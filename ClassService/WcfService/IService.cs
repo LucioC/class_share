@@ -14,7 +14,7 @@ namespace ClassService
     {
         [OperationContract]
         [WebInvoke(UriTemplate = "/files/{fileName}",
-            Method = "POST",
+            Method = "PUT",
             ResponseFormat = WebMessageFormat.Json)]
         Result UploadFile(string fileName, Stream fileContents);
 
@@ -31,20 +31,28 @@ namespace ClassService
             BodyStyle = WebMessageBodyStyle.Bare)]
         Result StartPresentation(File fileName);
 
-        [OperationContract(Name = "NextSlide")]
+        [OperationContract]
         [WebInvoke(UriTemplate = "/presentation/action",
             Method = "PUT",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare)]
-        Result PresentationCommand(Action action);
+        Result PresentationCommand(PresentationAction action);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/image?fileName={fileName}",
+        [WebInvoke(UriTemplate = "/image",
+            Method = "PUT",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        Result OpenImage(string fileName);
+        
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/image/action",
+            Method = "PUT",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
-            Method = "GET")]
-        Result OpenImage(string fileName);
+            BodyStyle = WebMessageBodyStyle.Bare)]
+        Result ImageCommand(ImageAction action);
     }
     
     [DataContract(Namespace = "http://yournamespace.com")]
@@ -60,9 +68,9 @@ namespace ClassService
     }
 
     [DataContract(Namespace = "http://yournamespace.com")]
-    public class Action
+    public class PresentationAction
     {
-        public Action(String command)
+        public PresentationAction(String command)
         {
             this.Command = command;
         }
@@ -74,6 +82,27 @@ namespace ClassService
         [DataMember(Order = 1, Name = "command")]
         public string Command { get; set; }
     }
+
+    [DataContract(Namespace = "http://yournamespace.com")]
+    public class ImageAction
+    {
+        public ImageAction(String command)
+        {
+            this.Command = command;
+        }
+
+        public const String ZOOMIN = "zoomin";
+        public const String ZOOMOUT = "zoomout";
+        public const String ROTATERIGHT = "rotateright";
+        public const String ROTATELEFT = "rotateleft";
+        public const String MOVERIGHT = "moveright";
+        public const String MOVELEFT = "moveleft";
+        public const String CLOSE = "close";
+
+        [DataMember(Order = 1, Name = "command")]
+        public string Command { get; set; }
+    }
+
 
     [DataContract(Namespace = "http://yournamespace.com")]
     public class Result

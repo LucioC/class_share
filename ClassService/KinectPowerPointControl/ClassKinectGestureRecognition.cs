@@ -105,7 +105,7 @@ namespace KinectPowerPointControl
             //Process gestures, if one is detected dont do another
             if (ProcessForwardBackGesture(head, rightHand, leftHand))
             {
-                output.WriteToDebugOrConsole("Forward or Back Gesture was identified");
+                Output.WriteToDebugOrConsole("Forward or Back Gesture was identified");
             }
             else
             {

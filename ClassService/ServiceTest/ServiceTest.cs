@@ -84,11 +84,11 @@ namespace TestProject1
         ///A test for CloseCurrentImage
         ///</summary>
         [TestMethod()]
-        public void CloseImageWindow()
+        public void CloseImageWindowTest()
         {
             Service target = new Service();
 
-            var imageControlMock = new Mock<IThreadFileWindow>();
+            var imageControlMock = new Mock<IImageService>();
             var kinectControlMock = new Mock<IWindowThreadControl>();
 
             Service.ImageForm = imageControlMock.Object;
@@ -105,7 +105,7 @@ namespace TestProject1
         {
             Service target = new Service();
 
-            var imageControlMock = new Mock<IThreadFileWindow>();
+            var imageControlMock = new Mock<IImageService>();
             var kinectControlMock = new Mock<IWindowThreadControl>();
                  
             Service.ImageForm = imageControlMock.Object;
@@ -115,6 +115,21 @@ namespace TestProject1
 
             imageControlMock.Verify(x => x.StartThread(), Times.Exactly(1));
             kinectControlMock.Verify(x => x.StartThread(), Times.Exactly(1));
+        }
+
+        [TestMethod()]
+        public void ImageCommandTest()
+        {
+            Service target = new Service();
+
+            var imageControlMock = new Mock<IImageService>();
+            var kinectControlMock = new Mock<IWindowThreadControl>();
+
+            Service.ImageForm = imageControlMock.Object;
+            Service.KinectWindow = kinectControlMock.Object;
+
+            ImageAction action = new ImageAction(ImageAction.ZOOMIN);
+            target.ImageCommand(action);
         }
 
         #endregion
@@ -168,7 +183,7 @@ namespace TestProject1
             Service.PresentationControl = presentationControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
 
-            ClassService.Action action = new ClassService.Action(ClassService.Action.NEXT);
+            ClassService.PresentationAction action = new ClassService.PresentationAction(ClassService.PresentationAction.NEXT);
             target.PresentationCommand(action);
 
             presentationControlMock.Verify(x => x.GoToNextSlide(), Times.Exactly(1));
@@ -185,7 +200,7 @@ namespace TestProject1
             Service.PresentationControl = presentationControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
 
-            ClassService.Action action = new ClassService.Action(ClassService.Action.PREVIOUS);
+            ClassService.PresentationAction action = new ClassService.PresentationAction(ClassService.PresentationAction.PREVIOUS);
             target.PresentationCommand(action);
 
             presentationControlMock.Verify(x => x.GoToPreviousSlide(), Times.Exactly(1));
@@ -202,7 +217,7 @@ namespace TestProject1
             Service.PresentationControl = presentationControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
 
-            ClassService.Action action = new ClassService.Action(ClassService.Action.CLOSE);
+            ClassService.PresentationAction action = new ClassService.PresentationAction(ClassService.PresentationAction.CLOSE);
             target.PresentationCommand(action);
 
             presentationControlMock.Verify(x => x.ClosePresentation(), Times.Exactly(1));

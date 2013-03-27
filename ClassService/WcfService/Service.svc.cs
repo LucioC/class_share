@@ -19,7 +19,7 @@ namespace ClassService
     public class Service : IService
     {
         public static IPowerPointControl PresentationControl;
-        public static IThreadFileWindow ImageForm;
+        public static IImageService ImageForm;
         private FileManager fileManager;
         public static IWindowThreadControl KinectWindow;
 
@@ -35,15 +35,15 @@ namespace ClassService
             PresentationControl = new PowerPointControl();
         }
 
-        public Result PresentationCommand(Action action)
+        public Result PresentationCommand(PresentationAction action)
         {
             switch (action.Command)
             {
-                case Action.NEXT: NextSlide();
+                case PresentationAction.NEXT: NextSlide();
                     break;
-                case Action.PREVIOUS: PreviousSlide();
+                case PresentationAction.PREVIOUS: PreviousSlide();
                     break;
-                case Action.CLOSE: ClosePresentation();
+                case PresentationAction.CLOSE: ClosePresentation();
                     break;
                 default:
                     WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
@@ -137,6 +137,7 @@ namespace ClassService
 
         public Result UploadFile(string fileName, Stream fileContents)
         {
+            Output.WriteToDebugOrConsole("Entered uploadFile call");
             if(fileManager.FileExists(fileName))
             {
                 fileManager.DeleteFile(fileName);   
@@ -179,32 +180,33 @@ namespace ClassService
 
         public void ImageRotateRight()
         {
-            
+            ImageForm.SendCommand("rotateright");
         }
 
         public void ImageRotateLeft()
         {
-
+            ImageForm.SendCommand("rotateleft");
         }
 
         public void ImageZoomIn()
         {
-
+            ImageForm.SendCommand("zoomin");
         }
 
         public void ImageZoomOut()
         {
-
+            ImageForm.SendCommand("zoomout");
         }
 
         public void ImageMoveRight()
         {
 
+            ImageForm.SendCommand("moveright");
         }
 
         public void ImageMoveLeft()
         {
-
+            ImageForm.SendCommand("moveleft");
         }
 
         public Result CloseCurrentImage()
@@ -214,6 +216,32 @@ namespace ClassService
             KinectWindow.StopThread();
 
             return new Result("Image Closed");
+        }
+
+        public Result ImageCommand(ImageAction action)
+        {
+            switch (action.Command)
+            {
+                case ImageAction.ZOOMIN: ImageZoomIn();
+                    break;
+                case ImageAction.ZOOMOUT: ImageZoomOut();
+                    break;
+                case ImageAction.ROTATERIGHT: ImageRotateRight();
+                    break;
+                case ImageAction.ROTATELEFT: ImageRotateLeft();
+                    break;
+                case ImageAction.MOVERIGHT: ImageMoveRight();
+                    break;
+                case ImageAction.MOVELEFT: ImageMoveLeft();
+                    break;
+                case ImageAction.CLOSE: CloseCurrentImage();
+                    break;
+                default:
+                    WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                    return new Result("wrong command argument option");
+            }
+
+            return new Result("Command Executed");
         }
     }
 }

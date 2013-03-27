@@ -11,7 +11,7 @@ using ServiceCore;
 
 namespace ImageZoom
 {
-    public class ImageFormControl : IThreadFileWindow
+    public class ImageFormControl : IImageService
     {
         delegate void CloseDelegate();
         private Thread thread;
@@ -70,6 +70,33 @@ namespace ImageZoom
         public void SetFilePath(string fileName)
         {
             FileName = fileName;
+        }
+
+        public void SendCommand(string command)
+        {
+            switch (command)
+            {
+                case "moveright":
+                    SendKeys.SendWait("{RIGHT}");
+                    break;
+                case "moveleft":
+                    SendKeys.SendWait("{LEFT}");
+                    break;
+                case "rotateright":
+                    SendKeys.SendWait("{END}");
+                    break;
+                case "rotateleft":
+                    SendKeys.SendWait("{HOME}");
+                    break;
+                case "zoomin":
+                    SendKeys.SendWait("{PGUP}");
+                    break;
+                case "zoomout":
+                    SendKeys.SendWait("{PGDN}");
+                    break;
+                default:
+                    throw new ArgumentException("not valid argument passed");
+            }
         }
     }
 }

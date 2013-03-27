@@ -5,8 +5,9 @@ using System.Text;
 
 namespace ServiceCore
 {
-    public interface IThreadFileWindow: IWindowThreadControl
+    public interface IImageService: IWindowThreadControl
     {
         void SetFilePath(String fileName);
+        void SendCommand(String command);
     }
 }
