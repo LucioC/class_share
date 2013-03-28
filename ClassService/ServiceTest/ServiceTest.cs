@@ -101,6 +101,23 @@ namespace TestProject1
         }
 
         [TestMethod()]
+        public void SendCommandTest()
+        {
+            Service target = new Service();
+
+            var imageControlMock = new Mock<IImageService>();
+            var kinectControlMock = new Mock<IWindowThreadControl>();
+
+            Service.ImageForm = imageControlMock.Object;
+            Service.KinectWindow = kinectControlMock.Object;
+
+            ImageAction action = new ImageAction("moveright");
+            target.ImageCommand(action);
+
+            imageControlMock.Verify(x => x.SendCommand(It.IsAny<String>()), Times.Exactly(1));
+        }
+
+        [TestMethod()]
         public void OpenImageTest()
         {
             Service target = new Service();
