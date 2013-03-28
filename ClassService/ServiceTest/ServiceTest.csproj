@@ -86,12 +86,13 @@
   <ItemGroup>
     <Compile Include="ClassKinectGestureRecognitionTest.cs" />
     <Compile Include="CommonTest.cs" />
+    <Compile Include="unit\ImageZoomMainFormTest.cs" />
     <Compile Include="integration\FileManagerTest.cs" />
     <Compile Include="integration\PowerPointControlTest.cs" />
     <Compile Include="LeftGestureRecognizerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="integration\PowerPointPresentationTest.cs" />
-    <Compile Include="ServiceTest.cs" />
+    <Compile Include="unit\ServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -101,6 +102,7 @@
     <None Include="resources\test.pptx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Shadow Include="Test References\ImageZoom.accessor" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommonUtils\CommonUtils.csproj">

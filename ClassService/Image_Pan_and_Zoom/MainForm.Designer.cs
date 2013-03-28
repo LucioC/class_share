@@ -57,6 +57,7 @@ namespace ImageZoom
             this.Controls.Add(this.pictureBox);
             this.Name = "ImageZoomMainForm";
             this.Text = "Image Zoom and Scan with fixed focus";
+            this.Load += new System.EventHandler(this.ImageZoomMainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
 

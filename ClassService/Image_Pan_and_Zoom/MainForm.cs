@@ -128,12 +128,6 @@ namespace ImageZoom
             pictureBox.Refresh();  // calls imageBox_Paint
         }
 
-        public void Rotate()
-        {
-            angle += 10;
-            pictureBox.Refresh();
-        }
-
         private void imageBox_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -209,6 +203,11 @@ namespace ImageZoom
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void ImageZoomMainForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
