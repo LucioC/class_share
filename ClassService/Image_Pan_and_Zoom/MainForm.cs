@@ -182,6 +182,16 @@ namespace ImageZoom
                         zoomPicture(0.1f);
                         pictureBox.Refresh();
                         break;
+
+                    case Keys.End:
+                        angle += 90F;
+                        pictureBox.Refresh();
+                        break;
+
+                    case Keys.Home:
+                        angle -= 90F;
+                        pictureBox.Refresh();
+                        break;
                 }
             }
 
