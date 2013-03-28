@@ -18,6 +18,8 @@ namespace ImageZoom
         float zoom = 1;
         float angle = 0;
 
+        ImageUtils imageUtils;
+
         public ImageZoomMainForm(String imagePath)
         {
             InitializeComponent();
@@ -40,6 +42,8 @@ namespace ImageZoom
             //zoom = ((float)pictureBox.Width / (float)img.Width) * (img.HorizontalResolution / g.DpiX);
 
             pictureBox.Paint += new PaintEventHandler(imageBox_Paint);
+
+            imageUtils = new ImageUtils();
         }
 
         private void pictureBox_MouseMove(object sender, EventArgs e)
@@ -134,32 +138,11 @@ namespace ImageZoom
             e.Graphics.ScaleTransform(zoom, zoom);
 
             Image i = (Image)img.Clone();
-            i = RotateImage(i, angle);
+            i = imageUtils.RotateImage(i, angle);
 
             e.Graphics.DrawImage(i, imgx, imgy);
         }
 
-        public Image RotateImage(Image b, float angle)
-        {
-            //Make it positive
-            while (angle < 0) angle = angle + 360;
-
-            int l = b.Width;
-            int h = b.Height;
-            double an = angle * Math.PI / 180;
-            double cos = Math.Abs(Math.Cos(an));
-            double sin = Math.Abs(Math.Sin(an));
-            int nl = (int)(l * cos + h * sin);
-            int nh = (int)(l * sin + h * cos);
-            Bitmap returnBitmap = new Bitmap(nl, nh);
-            Graphics g = Graphics.FromImage(returnBitmap);
-            g.TranslateTransform((float)(nl - l) / 2, (float)(nh - h) / 2);
-            g.TranslateTransform((float)b.Width / 2, (float)b.Height / 2);
-            g.RotateTransform(angle);
-            g.TranslateTransform(-(float)b.Width / 2, -(float)b.Height / 2);
-            g.DrawImage(b, new Point(0, 0));
-            return returnBitmap;
-        }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {

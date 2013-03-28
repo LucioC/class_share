@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ServiceTest;
 
 namespace TestProject1
 {   
@@ -60,24 +61,6 @@ namespace TestProject1
         //}
         //
         #endregion
-
-        
-        /// <summary>
-        ///A test for RotateImage
-        ///</summary>
-        [TestMethod()]
-        public void RotateImageTest()
-        {
-            string imagePath = string.Empty; // TODO: Initialize to an appropriate value
-            ImageZoomMainForm target = new ImageZoomMainForm(imagePath); // TODO: Initialize to an appropriate value
-            Image b = null; // TODO: Initialize to an appropriate value
-            float angle = 0F; // TODO: Initialize to an appropriate value
-            Image expected = null; // TODO: Initialize to an appropriate value
-            Image actual;
-            actual = target.RotateImage(b, angle);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
-        }
 
         /// <summary>
         ///A test for imageBox_MouseDown

@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="ClassKinectGestureRecognitionTest.cs" />
     <Compile Include="CommonTest.cs" />
+    <Compile Include="ImageUtilsTest.cs" />
     <Compile Include="unit\ImageZoomMainFormTest.cs" />
     <Compile Include="integration\FileManagerTest.cs" />
     <Compile Include="integration\PowerPointControlTest.cs" />
@@ -129,6 +130,11 @@
       <Project>{9FB2C65C-499D-48D5-AD76-B0CBE5C0CD85}</Project>
       <Name>WCFService</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\poneis_malditos.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
