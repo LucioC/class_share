@@ -33,8 +33,8 @@ namespace ConsoleTestProject
 
             Program p = new Program();
 
-            p.PostFile();
-            p.OpenNextPreviousClosePresentation();
+            //p.PostFile();
+            //p.OpenNextPreviousClosePresentation();
 
             Console.Write("Press any key to continue . . . ");
             Console.ReadKey(true);

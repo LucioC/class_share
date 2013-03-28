@@ -82,9 +82,21 @@ namespace TestProject1
         {
             LeftGestureRecognizer target = new LeftGestureRecognizer();
 
-            var skeletonMock = new Mock<Skeleton>();
+            Skeleton skeleton = new Skeleton();
+            Joint rightHand = new Joint();
+            SkeletonPoint point = new SkeletonPoint();
+            point.X = 1;
+            point.Y = 1;
+            rightHand.Position = point;
+            
+            Joint leftHand = new Joint();
+            point = new SkeletonPoint();
+            point.X = 0.2f;
+            point.Y = 1;
+            leftHand.Position = point;
 
-            Skeleton skeleton = skeletonMock.Object;
+            skeleton.Joints[JointType.HandRight] = rightHand;
+
             bool expected = false; // TODO: Initialize to an appropriate value
             bool actual;
             actual = target.IdentifyGesture(skeleton);

@@ -128,7 +128,7 @@ namespace TestProject1
             Service.ImageForm = imageControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
 
-            target.OpenImage("");
+            target.OpenImage(new ClassService.File(""));
 
             imageControlMock.Verify(x => x.StartThread(), Times.Exactly(1));
             kinectControlMock.Verify(x => x.StartThread(), Times.Exactly(1));

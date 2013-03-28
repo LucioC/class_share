@@ -164,12 +164,14 @@ namespace ClassService
             }
         }
         
-        public Result OpenImage(string fileName)
+        public Result OpenImage(File fileName)
         {
-            fileName = (fileName == null || fileName == String.Empty) ? @"C:\Users\lucioc\Desktop\class_share\ClassService\Image_Pan_and_Zoom\ponei.jpg" : fileName;
+            Output.WriteToDebugOrConsole("open image function");
+
+            fileName = (fileName == null || fileName.FileName == String.Empty) ? new File(@"C:\Users\lucioc\Desktop\class_share\ClassService\Image_Pan_and_Zoom\ponei.jpg") : fileName;
 
             //Run image output window
-            ImageForm.SetFilePath(fileName);
+            ImageForm.SetFilePath(fileName.FileName);
             ImageForm.StartThread();
 
             //Initialize Kinect windows for gesture and speech recognition

@@ -18,6 +18,7 @@ using System.IO;
 using Microsoft.Speech.AudioFormat;
 using System.Diagnostics;
 using System.Windows.Threading;
+using CommonUtils;
 
 namespace KinectPowerPointControl
 {
@@ -58,10 +59,12 @@ namespace KinectPowerPointControl
 
             if (sensor == null)
             {
-                MessageBox.Show("This application requires a Kinect sensor.");
+                //MessageBox.Show("This application requires a Kinect sensor.");
+                Output.WriteToDebugOrConsole("A kinect sensor was not detected, closing kinect window.");
                 this.Close();
+                return;
             }
-            
+                        
             sensor.Start();
 
             sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);

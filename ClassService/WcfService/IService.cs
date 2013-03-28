@@ -44,7 +44,7 @@ namespace ClassService
             Method = "PUT",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        Result OpenImage(string fileName);
+        Result OpenImage(File fileName);
         
         [OperationContract]
         [WebInvoke(UriTemplate = "/image/action",
