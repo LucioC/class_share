@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using System.IO;
 
 namespace ImageZoom
 {
@@ -24,11 +25,15 @@ namespace ImageZoom
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
-            //string imagefilename = @"..\..\test.tif";
-            //string imagefilename = @"..\..\ponei.jpg";
+
             string imagefilename = imagePath;
-                        
-            img = Image.FromFile(imagefilename);
+
+            //FromFile function was locking image file to be used a second time
+            //img = Image.FromFile(imagefilename);
+            using (var bmpTemp = new Bitmap(imagefilename))
+            {
+                img = new Bitmap(bmpTemp);
+            }
 
             Graphics g = this.CreateGraphics();
 
@@ -138,8 +143,8 @@ namespace ImageZoom
             e.Graphics.ScaleTransform(zoom, zoom);
 
             Image i = (Image)img.Clone();
-            i = imageUtils.RotateImage(i, angle);
-
+            i = imageUtils.RotateImage(i, angle);           
+            
             e.Graphics.DrawImage(i, imgx, imgy);
         }
 
@@ -201,6 +206,11 @@ namespace ImageZoom
         private void ImageZoomMainForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void ImageZoomMainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            img.Dispose();
         }
     }
 }

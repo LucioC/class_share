@@ -170,6 +170,10 @@ namespace ClassService
 
             fileName = (fileName == null || fileName.FileName == String.Empty) ? new File(@"C:\Users\lucioc\Desktop\class_share\ClassService\Image_Pan_and_Zoom\ponei.jpg") : fileName;
 
+            if (ImageForm.IsThreadRunning())
+            {
+                ImageForm.StopThread();
+            }
             //Run image output window
             ImageForm.SetFilePath(fileName.FileName);
             ImageForm.StartThread();
@@ -202,8 +206,17 @@ namespace ClassService
 
         public void ImageMoveRight()
         {
-
             ImageForm.SendCommand("moveright");
+        }
+
+        public void ImageMoveUp()
+        {
+            ImageForm.SendCommand("moveup");
+        }
+
+        public void ImageMoveDown()
+        {
+            ImageForm.SendCommand("movedown");
         }
 
         public void ImageMoveLeft()
@@ -235,6 +248,10 @@ namespace ClassService
                 case ImageAction.MOVERIGHT: ImageMoveRight();
                     break;
                 case ImageAction.MOVELEFT: ImageMoveLeft();
+                    break;
+                case ImageAction.MOVEUP: ImageMoveUp();
+                    break;
+                case ImageAction.MOVEDOWN: ImageMoveDown();
                     break;
                 case ImageAction.CLOSE: CloseCurrentImage();
                     break;

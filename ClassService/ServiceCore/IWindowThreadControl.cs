@@ -9,5 +9,6 @@ namespace ServiceCore
     {
         void StartThread();
         void StopThread();
+        Boolean IsThreadRunning();
     }
 }

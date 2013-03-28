@@ -96,6 +96,8 @@ namespace ClassService
         public const String ROTATERIGHT = "rotateright";
         public const String ROTATELEFT = "rotateleft";
         public const String MOVERIGHT = "moveright";
+        public const String MOVEUP = "moveup";
+        public const String MOVEDOWN = "movedown";
         public const String MOVELEFT = "moveleft";
         public const String CLOSE = "close";
 

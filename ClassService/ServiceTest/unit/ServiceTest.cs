@@ -135,6 +135,28 @@ namespace TestProject1
         }
 
         [TestMethod()]
+        public void OpenSecondImageShouldCloseFirstTest()
+        {
+            Service target = new Service();
+
+            var imageControlMock = new Mock<IImageService>();
+            var kinectControlMock = new Mock<IWindowThreadControl>();
+
+            //If a thread is already running, it should be closed
+            imageControlMock.Setup(foo => foo.IsThreadRunning()).Returns(true);
+
+            Service.ImageForm = imageControlMock.Object;
+            Service.KinectWindow = kinectControlMock.Object;
+
+            target.OpenImage(new ClassService.File(""));
+
+            //Verify if running thread was closed
+            imageControlMock.Verify(x => x.StopThread(), Times.Exactly(1));
+            imageControlMock.Verify(x => x.StartThread(), Times.Exactly(1));
+            kinectControlMock.Verify(x => x.StartThread(), Times.Exactly(1));
+        }
+
+        [TestMethod()]
         public void ImageCommandTest()
         {
             Service target = new Service();

@@ -36,7 +36,13 @@ namespace ImageZoom
             if (fileManager.FileExists(FileName))
             {
                 //Better way to do this?
-                Image newImage = Image.FromFile(FileName);
+                //Not using Image.FromFile because it could LOCK image file (dont know why)
+                Image newImage;
+                using (var bmpTemp = new Bitmap(FileName))
+                {
+                    newImage = new Bitmap(bmpTemp);
+                }
+                newImage.Dispose();
             }
             else
             {
@@ -53,7 +59,7 @@ namespace ImageZoom
 
         public void StopThread()
         {
-            if (thread != null && thread.IsAlive && imageForm != null)
+            if (IsThreadRunning())
             {
                 imageForm.Invoke(new CloseDelegate(imageForm.Close));
             }
@@ -82,6 +88,12 @@ namespace ImageZoom
                 case "moveleft":
                     SendKeys.SendWait("{LEFT}");
                     break;
+                case "moveup":
+                    SendKeys.SendWait("{UP}");
+                    break;
+                case "movedown":
+                    SendKeys.SendWait("{DOWN}");
+                    break;
                 case "rotateright":
                     SendKeys.SendWait("{END}");
                     break;
@@ -97,6 +109,15 @@ namespace ImageZoom
                 default:
                     throw new ArgumentException("not valid argument passed");
             }
+        }
+        
+        public bool IsThreadRunning()
+        {
+            if (thread != null && thread.IsAlive && imageForm != null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -27,15 +27,9 @@ namespace KinectPowerPointControl
             thread.Start();
         }
 
-        private Boolean isThreadRunning()
-        {
-            if (thread == null || window == null) return false;
-            return false;
-        }
-
         public void StopThread()
         {
-            if (!isThreadRunning()) return;
+            if (!IsThreadRunning()) return;
             if (window.Dispatcher.CheckAccess())
             {
                 window.Close();
@@ -55,6 +49,13 @@ namespace KinectPowerPointControl
             window = new MainWindow();
             window.Show();
             System.Windows.Threading.Dispatcher.Run();
+        }
+
+
+        public bool IsThreadRunning()
+        {
+            if (thread == null || window == null || !thread.IsAlive) return false;
+            return false;
         }
     }
 }
