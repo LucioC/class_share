@@ -287,7 +287,7 @@ namespace KinectPowerPointControl
             }
             else if (grammar.IsCommand(ImagePresentationGrammar.MOVE_UP, speech))
             {
-                ProcessMoveLeft();
+                ProcessMoveUp();
             }
             else if (grammar.IsCommand(ImagePresentationGrammar.MOVE_DOWN, speech))
             {

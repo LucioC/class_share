@@ -56,7 +56,7 @@ namespace KinectPowerPointControl.Speech
             dictionary.Add(ZOOM_IN, zoomIn);
 
             List<String> zoomOut = new List<string>();
-            zoomOut.Add("computer hide window");
+            zoomOut.Add("zoom out");
             dictionary.Add(ZOOM_OUT, zoomOut);
 
             #endregion
