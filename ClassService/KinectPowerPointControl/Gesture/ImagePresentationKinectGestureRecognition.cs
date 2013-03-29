@@ -10,6 +10,7 @@ namespace KinectPowerPointControl.Gesture
         public ImagePresentationKinectGestureRecognition(): base()
         {
             gestureRecognizers.Add(new ZoomGesture());
+            gestureRecognizers.Add(new RotationGesture());
             gestureRecognizers.Add(new Move());
         }
     }

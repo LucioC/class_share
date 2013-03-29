@@ -76,9 +76,11 @@
     </Compile>
     <Compile Include="Gesture\AbstractKinectGestureRecognition.cs" />
     <Compile Include="Gesture\GestureEvents.cs" />
+    <Compile Include="Gesture\GestureUtils.cs" />
     <Compile Include="Gesture\ImagePresentationKinectGestureRecognition.cs" />
     <Compile Include="Gesture\Interval.cs" />
     <Compile Include="Gesture\Move.cs" />
+    <Compile Include="Gesture\RotationGesture.cs" />
     <Compile Include="Gesture\SwipeLeftGesture.cs" />
     <Compile Include="Gesture\SwipeRightGesture.cs" />
     <Compile Include="Gesture\ZoomGesture.cs" />

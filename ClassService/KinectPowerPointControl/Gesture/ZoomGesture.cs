@@ -50,7 +50,7 @@ namespace KinectPowerPointControl.Gesture
             }
 
             //Calculate and update hands distance
-            float distance = calculateDistanceX(rightHand.Position, leftHand.Position);
+            float distance = GestureUtils.calculateDistanceX(rightHand.Position, leftHand.Position);
             float deltaDistance = distance - HandsDistance;
             deltaDistance = normalizeDistance(deltaDistance, HandsDistanceErrorIgnored);
             HandsDistance = distance;
@@ -69,13 +69,15 @@ namespace KinectPowerPointControl.Gesture
             {
                 //TriggerGestureEvent(ZoomOut);
                 Name = GestureEvents.ZOOM_IN;
+                return true;
             }
             else if (deltaDistance < 0)
             {
                 //TriggerGestureEvent(ZoomIn);
                 Name = GestureEvents.ZOOM_OUT;
+                return true;
             }
-            return true;
+            return false;
         }
 
         private Boolean CanTriggerZoom()
@@ -112,13 +114,6 @@ namespace KinectPowerPointControl.Gesture
             }
 
             return result;
-        }
-
-        //Calculate distance of X axis
-        private float calculateDistanceX(SkeletonPoint rightHandPosition, SkeletonPoint leftHandPosition)
-        {
-            float distance = Math.Abs(rightHandPosition.X - leftHandPosition.X);
-            return distance;
         }
         
         public string Name

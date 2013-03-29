@@ -26,28 +26,38 @@ namespace KinectPowerPointControl.Gesture
             var leftHand = skeleton.Joints[JointType.HandLeft];
             var spine = skeleton.Joints[JointType.Spine];
 
-            if (rightHand.Position.X > spine.Position.X + 0.45 && rightHand.Position.Y > spine.Position.Y)
+            float zD = 0.30f;
+
+            if (rightHand.Position.X > spine.Position.X + 0.35 
+                && rightHand.Position.Z < spine.Position.Z - zD
+                && leftHand.Position.Y < spine.Position.Y)
             {
                 Name = GestureEvents.MOVE_RIGHT;
                 intervalControl.TriggerIt();
                 return true;
             }
 
-            if (rightHand.Position.X < spine.Position.X - 0.1)
+            if (rightHand.Position.X < spine.Position.X - 0.1
+                && rightHand.Position.Z < spine.Position.Z - zD
+                && leftHand.Position.Y < spine.Position.Y)
             {
                 Name = GestureEvents.MOVE_LEFT;
                 intervalControl.TriggerIt();
                 return true;
             }
 
-            if (rightHand.Position.Y > spine.Position.Y + 0.3)
+            if (rightHand.Position.Y > spine.Position.Y + 0.45
+                && rightHand.Position.Z < spine.Position.Z - zD
+                && leftHand.Position.Y < spine.Position.Y)
             {
                 Name = GestureEvents.MOVE_UP;
                 intervalControl.TriggerIt();
                 return true;
             }
 
-            if (rightHand.Position.Y < spine.Position.Y && rightHand.Position.X > spine.Position.X + 0.45)
+            if (rightHand.Position.Y < spine.Position.Y
+                && rightHand.Position.Z < spine.Position.Z - zD
+                && leftHand.Position.Y < spine.Position.Y)
             {
                 Name = GestureEvents.MOVE_DOWN;
                 intervalControl.TriggerIt();
