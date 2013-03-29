@@ -9,9 +9,10 @@ using ServiceCore;
 
 namespace KinectPowerPointControl
 {
-    public class KinectWindowControl : IWindowThreadControl
+    public class KinectWindowControl : IKinectService
     {
         delegate void CloseDelegate();
+        private PRESENTATION_MODE mode = PRESENTATION_MODE.POWERPOINT;
         private Thread thread = null;
         private Window window = null;
 
@@ -46,16 +47,20 @@ namespace KinectPowerPointControl
         [STAThread]
         public void StartWindow()
         {
-            window = new MainWindow();
+            window = new MainWindow(mode);
             window.Show();
             System.Windows.Threading.Dispatcher.Run();
         }
-
 
         public bool IsThreadRunning()
         {
             if (thread == null || window == null || !thread.IsAlive) return false;
             return false;
+        }
+
+        public void setMode(PRESENTATION_MODE mode)
+        {
+            this.mode = mode;
         }
     }
 }

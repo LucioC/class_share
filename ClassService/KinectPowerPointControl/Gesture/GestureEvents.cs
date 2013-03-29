@@ -13,6 +13,9 @@ namespace KinectPowerPointControl.Gesture
         public const String SWIPE_RIGHT = "swiperight";
         public const String SWIPE_LEFT = "swipeleft";
 
+        public const String ROTATE_RIGHT = "rotateright";
+        public const String ROTATE_LEFT = "rotateleft";
+
         public const String MOVE_RIGHT = "moveright";
         public const String MOVE_LEFT = "moveleft";
         public const String MOVE_UP = "moveup";

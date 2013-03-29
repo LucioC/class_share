@@ -7,7 +7,7 @@ using CommonUtils;
 
 namespace KinectPowerPointControl.Gesture
 {
-    public class ZoomGesture
+    public class ZoomGesture: IGestureRecognizer
     {
         private long lastZoomTrigged = 0;
         private System.Object lockInterval = new System.Object();
@@ -15,18 +15,15 @@ namespace KinectPowerPointControl.Gesture
         private Boolean ZoomStarted = false;
         public float HandsDistance { get; set; }
         public float HandsDistanceErrorIgnored { get; set; }
-        public long ZoomIntervalMiliseconds { get; set; }
-
-        public String LastEventName = null;
 
         public ZoomGesture()
         {
             HandsDistance = 0f;
             HandsDistanceErrorIgnored = 0.05f;
-            ZoomIntervalMiliseconds = 200;
+            Interval = 200;
         }
 
-        public Boolean ProcessZoomGestures(Skeleton skeleton)
+        public bool IdentifyGesture(Skeleton skeleton)
         {
             var rightHand = skeleton.Joints[JointType.HandRight];
             var leftHand = skeleton.Joints[JointType.HandLeft];
@@ -71,12 +68,12 @@ namespace KinectPowerPointControl.Gesture
             if (deltaDistance > 0)
             {
                 //TriggerGestureEvent(ZoomOut);
-                LastEventName = GestureEvents.ZOOM_OUT;
+                Name = GestureEvents.ZOOM_IN;
             }
             else if (deltaDistance < 0)
             {
                 //TriggerGestureEvent(ZoomIn);
-                LastEventName = GestureEvents.ZOOM_IN;
+                Name = GestureEvents.ZOOM_OUT;
             }
             return true;
         }
@@ -86,7 +83,7 @@ namespace KinectPowerPointControl.Gesture
             lock (lockInterval)
             {
                 long now = Time.CurrentTimeMillis();
-                if (now - lastZoomTrigged > ZoomIntervalMiliseconds)
+                if (now - lastZoomTrigged > Interval)
                 {
                     lastZoomTrigged = now;
                     return true;
@@ -123,6 +120,17 @@ namespace KinectPowerPointControl.Gesture
             float distance = Math.Abs(rightHandPosition.X - leftHandPosition.X);
             return distance;
         }
+        
+        public string Name
+        {
+            get;
+            set;
+        }
 
+        public long Interval
+        {
+            get;
+            set;
+        }
     }
 }

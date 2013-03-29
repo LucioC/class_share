@@ -24,6 +24,8 @@ using KinectPowerPointControl.Gesture;
 
 namespace KinectPowerPointControl
 {
+    public enum PRESENTATION_MODE { POWERPOINT, IMAGE };
+
     public partial class MainWindow : Window
     {
         KinectSensor sensor;
@@ -31,11 +33,9 @@ namespace KinectPowerPointControl
         ClassKinectSpeechRecognition speechRecognition;
         ISpeechGrammar grammar;
 
-        public enum PRESENTATION_MODE { POWERPOINT, IMAGE };
-
         public PRESENTATION_MODE mode { get; set; }
 
-        ClassKinectGestureRecognition gestureRecognition;
+        AbstractKinectGestureRecognition gestureRecognition;
 
         byte[] colorBytes;
         
@@ -44,7 +44,7 @@ namespace KinectPowerPointControl
         SolidColorBrush activeBrush = new SolidColorBrush(Colors.Green);
         SolidColorBrush inactiveBrush = new SolidColorBrush(Colors.Red);
         
-        public MainWindow()
+        public MainWindow(PRESENTATION_MODE mode)
         {
             InitializeComponent();
 
@@ -55,15 +55,17 @@ namespace KinectPowerPointControl
 
             this.KeyDown += new KeyEventHandler(MainWindow_KeyDown);
 
-            gestureRecognition = new ClassKinectGestureRecognition();
-            gestureRecognition.GestureRecognized += this.GestureRecognized;
-
-            mode = PRESENTATION_MODE.POWERPOINT;
-        }
-
-        public MainWindow(PRESENTATION_MODE mode)
-        {
             this.mode = mode;
+
+            if (mode == PRESENTATION_MODE.POWERPOINT)
+            {
+                gestureRecognition = new PowerPointKinectGestureRecognition();
+            }
+            else if (mode == PRESENTATION_MODE.IMAGE)
+            {
+                gestureRecognition = new ImagePresentationKinectGestureRecognition();
+            }
+            gestureRecognition.GestureRecognized += this.GestureRecognized;            
         }
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -204,6 +206,30 @@ namespace KinectPowerPointControl
             else if (gesture == GestureEvents.ZOOM_OUT)
             {
                 ProcessZoomOut();
+            }
+            else if (gesture == GestureEvents.MOVE_RIGHT)
+            {
+                ProcessMoveRight();
+            }
+            else if (gesture == GestureEvents.MOVE_LEFT)
+            {
+                ProcessMoveLeft();
+            }
+            else if (gesture == GestureEvents.MOVE_UP)
+            {
+                ProcessMoveUp();
+            }
+            else if (gesture == GestureEvents.MOVE_DOWN)
+            {
+                ProcessMoveDown();
+            }
+            else if (gesture == GestureEvents.ROTATE_RIGHT)
+            {
+                ProcessRotateRight();
+            }
+            else if (gesture == GestureEvents.ROTATE_LEFT)
+            {
+                ProcessRotateLeft();
             }
         }
 

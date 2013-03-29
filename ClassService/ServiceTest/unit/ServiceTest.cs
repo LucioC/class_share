@@ -89,7 +89,7 @@ namespace TestProject1
             Service target = new Service();
 
             var imageControlMock = new Mock<IImageService>();
-            var kinectControlMock = new Mock<IWindowThreadControl>();
+            var kinectControlMock = new Mock<IKinectService>();
 
             Service.ImageForm = imageControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
@@ -106,7 +106,7 @@ namespace TestProject1
             Service target = new Service();
 
             var imageControlMock = new Mock<IImageService>();
-            var kinectControlMock = new Mock<IWindowThreadControl>();
+            var kinectControlMock = new Mock<IKinectService>();
 
             Service.ImageForm = imageControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
@@ -123,7 +123,7 @@ namespace TestProject1
             Service target = new Service();
 
             var imageControlMock = new Mock<IImageService>();
-            var kinectControlMock = new Mock<IWindowThreadControl>();
+            var kinectControlMock = new Mock<IKinectService>();
                  
             Service.ImageForm = imageControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
@@ -140,7 +140,7 @@ namespace TestProject1
             Service target = new Service();
 
             var imageControlMock = new Mock<IImageService>();
-            var kinectControlMock = new Mock<IWindowThreadControl>();
+            var kinectControlMock = new Mock<IKinectService>();
 
             //If a thread is already running, it should be closed
             imageControlMock.Setup(foo => foo.IsThreadRunning()).Returns(true);
@@ -162,7 +162,7 @@ namespace TestProject1
             Service target = new Service();
 
             var imageControlMock = new Mock<IImageService>();
-            var kinectControlMock = new Mock<IWindowThreadControl>();
+            var kinectControlMock = new Mock<IKinectService>();
 
             Service.ImageForm = imageControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
@@ -181,7 +181,7 @@ namespace TestProject1
             Service target = new Service();
 
             var presentationControlMock = new Mock<IPowerPointControl>();
-            var kinectControlMock = new Mock<IWindowThreadControl>();
+            var kinectControlMock = new Mock<IKinectService>();
 
             Service.PresentationControl = presentationControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
@@ -200,7 +200,7 @@ namespace TestProject1
             Service target = new Service();
 
             var presentationControlMock = new Mock<IPowerPointControl>();
-            var kinectControlMock = new Mock<IWindowThreadControl>();
+            var kinectControlMock = new Mock<IKinectService>();
 
             Service.PresentationControl = presentationControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
@@ -217,7 +217,7 @@ namespace TestProject1
             Service target = new Service();
 
             var presentationControlMock = new Mock<IPowerPointControl>();
-            var kinectControlMock = new Mock<IWindowThreadControl>();
+            var kinectControlMock = new Mock<IKinectService>();
 
             Service.PresentationControl = presentationControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
@@ -234,7 +234,7 @@ namespace TestProject1
             Service target = new Service();
 
             var presentationControlMock = new Mock<IPowerPointControl>();
-            var kinectControlMock = new Mock<IWindowThreadControl>();
+            var kinectControlMock = new Mock<IKinectService>();
 
             Service.PresentationControl = presentationControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
@@ -251,7 +251,7 @@ namespace TestProject1
             Service target = new Service();
 
             var presentationControlMock = new Mock<IPowerPointControl>();
-            var kinectControlMock = new Mock<IWindowThreadControl>();
+            var kinectControlMock = new Mock<IKinectService>();
 
             Service.PresentationControl = presentationControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
