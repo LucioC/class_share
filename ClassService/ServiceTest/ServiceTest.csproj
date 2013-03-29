@@ -84,12 +84,10 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClassKinectGestureRecognitionTest.cs" />
     <Compile Include="CommonTest.cs" />
     <Compile Include="integration\ImageUtilsTest.cs" />
     <Compile Include="integration\FileManagerTest.cs" />
     <Compile Include="integration\PowerPointControlTest.cs" />
-    <Compile Include="unit\LeftGestureRecognizerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="integration\PowerPointPresentationTest.cs" />
     <Compile Include="unit\ServiceTest.cs" />

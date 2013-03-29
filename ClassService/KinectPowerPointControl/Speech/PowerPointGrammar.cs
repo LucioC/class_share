@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace KinectPowerPointControl
+namespace KinectPowerPointControl.Speech
 {
-    public class ClassGrammar: ISpeechGrammar
+    public class PowerPointGrammar: AbstractGrammar
     {
-        List<String> words;
-
         public const String NEXT_SLIDE = "next slide";
         public const String PREVIOUS_SLIDE = "previous slide";
         public const String START_PRESENTATION = "start presentation";
@@ -19,13 +17,12 @@ namespace KinectPowerPointControl
         public const String SHOW_CIRCLES = "computer show circles";
         public const String HIDE_CIRCLES = "computer hide circles";
 
-        private Dictionary<String, IList<String>> dictionary;
-
-        public ClassGrammar()
+        public PowerPointGrammar()
         {
             words = new List<string>();
             dictionary = new Dictionary<string, IList<string>>();
 
+            //FIXME could take sentences from a file?
             //NEXT SLIDE COMMAND
             List<String> nextSlide = new List<string>();
             nextSlide.Add("next slide");
@@ -80,32 +77,6 @@ namespace KinectPowerPointControl
             words.AddRange(hideWindow);
             words.AddRange(showCircles);
             words.AddRange(hideCircles);
-        }
-
-        public Boolean IsCommand(String action, String speech)
-        {
-            if( dictionary.ContainsKey(action) )
-            {
-                IList<String> list = dictionary[action];
-                return IsOnList(list, speech);
-            }
-
-            return false;
-        }
-
-        private Boolean IsOnList(IList<String> sentences, String speech)
-        {
-            foreach (String sentence in sentences)
-            {
-                if (sentence == speech)
-                    return true;
-            }
-            return false;
-        }
-        
-        public IList<string> GrammarWords()
-        {
-            return words;
         }
     }
 }

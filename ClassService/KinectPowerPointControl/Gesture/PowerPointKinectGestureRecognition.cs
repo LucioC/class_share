@@ -7,9 +7,9 @@ using CommonUtils;
 using System.Collections;
 using System.Collections.Specialized;
 
-namespace KinectPowerPointControl
+namespace KinectPowerPointControl.Gesture
 {
-    public class ClassKinectGestureRecognition
+    public class PowerPointKinectGestureRecognition
     {
         Skeleton[] skeletons;
         bool isForwardGestureActive = false;
@@ -40,7 +40,7 @@ namespace KinectPowerPointControl
 
         private System.Object lockInterval = new System.Object();
 
-        public ClassKinectGestureRecognition()
+        public PowerPointKinectGestureRecognition()
         {
             Gestures = new ArrayList();
 

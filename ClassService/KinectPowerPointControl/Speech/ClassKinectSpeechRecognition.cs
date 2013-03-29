@@ -9,7 +9,7 @@ using System.Windows.Threading;
 using Microsoft.Kinect;
 using Microsoft.Speech.AudioFormat;
 
-namespace KinectPowerPointControl
+namespace KinectPowerPointControl.Speech
 {
     public class ClassKinectSpeechRecognition
     {

@@ -19,6 +19,8 @@ using Microsoft.Speech.AudioFormat;
 using System.Diagnostics;
 using System.Windows.Threading;
 using CommonUtils;
+using KinectPowerPointControl.Speech;
+using KinectPowerPointControl.Gesture;
 
 namespace KinectPowerPointControl
 {
@@ -27,9 +29,10 @@ namespace KinectPowerPointControl
         KinectSensor sensor;
 
         ClassKinectSpeechRecognition speechRecognition;
-        ClassGrammar grammar;
+        PowerPointGrammar powerPointGrammar;
+        ImagePresentationGrammar imagePresentationGrammar;
 
-        ClassKinectGestureRecognition gestureRecognition;
+        PowerPointKinectGestureRecognition gestureRecognition;
 
         byte[] colorBytes;
         
@@ -49,7 +52,7 @@ namespace KinectPowerPointControl
 
             this.KeyDown += new KeyEventHandler(MainWindow_KeyDown);
 
-            gestureRecognition = new ClassKinectGestureRecognition();
+            gestureRecognition = new PowerPointKinectGestureRecognition();
             gestureRecognition.GestureRecognized += this.GestureRecognized;
         }
 
@@ -81,8 +84,8 @@ namespace KinectPowerPointControl
 
             speechRecognition = new ClassKinectSpeechRecognition(this.sensor);
             speechRecognition.SpeechRecognized += this.SpeechRecognized;
-            grammar = new ClassGrammar();
-            speechRecognition.InitializeSpeechRecognition(GetKinectRecognizer(), grammar);
+            powerPointGrammar = new PowerPointGrammar();
+            speechRecognition.InitializeSpeechRecognition(GetKinectRecognizer(), powerPointGrammar);
         }
 
         void Current_Exit(object sender, System.EventArgs e)
@@ -167,19 +170,19 @@ namespace KinectPowerPointControl
 
         private void GestureRecognized(String gesture)
         {
-            if (gesture == ClassKinectGestureRecognition.ForwardGesture)
+            if (gesture == PowerPointKinectGestureRecognition.ForwardGesture)
             {
                 ProcessNextSlide();
             }
-            else if (gesture == ClassKinectGestureRecognition.BackGesture)
+            else if (gesture == PowerPointKinectGestureRecognition.BackGesture)
             {
                 ProcessPreviousSlide();
             }
-            else if (gesture == ClassKinectGestureRecognition.ZoomIn)
+            else if (gesture == PowerPointKinectGestureRecognition.ZoomIn)
             {
                 ProcessZoomIn();
             }
-            else if (gesture == ClassKinectGestureRecognition.ZoomOut)
+            else if (gesture == PowerPointKinectGestureRecognition.ZoomOut)
             {
                 ProcessZoomOut();
             }
@@ -187,7 +190,7 @@ namespace KinectPowerPointControl
 
         private void SpeechRecognized(String speech)
         {
-            if (grammar.IsCommand(ClassGrammar.SHOW_WINDOW, speech))
+            if (powerPointGrammar.IsCommand(PowerPointGrammar.SHOW_WINDOW, speech))
             {
                 this.Dispatcher.BeginInvoke((Action)delegate
                 {
@@ -195,7 +198,7 @@ namespace KinectPowerPointControl
                     this.WindowState = System.Windows.WindowState.Normal;
                 });
             }
-            else if (grammar.IsCommand(ClassGrammar.HIDE_WINDOW, speech))
+            else if (powerPointGrammar.IsCommand(PowerPointGrammar.HIDE_WINDOW, speech))
             {
                 this.Dispatcher.BeginInvoke((Action)delegate
                 {
@@ -203,30 +206,94 @@ namespace KinectPowerPointControl
                     this.WindowState = System.Windows.WindowState.Minimized;
                 });
             }
-            else if (grammar.IsCommand(ClassGrammar.HIDE_CIRCLES, speech))
+            else if (powerPointGrammar.IsCommand(PowerPointGrammar.HIDE_CIRCLES, speech))
             {
                 this.Dispatcher.BeginInvoke((Action)delegate
                 {
                     this.HideCircles();
                 });
             }
-            else if (grammar.IsCommand(ClassGrammar.SHOW_CIRCLES, speech))
+            else if (powerPointGrammar.IsCommand(PowerPointGrammar.SHOW_CIRCLES, speech))
             {
                 this.Dispatcher.BeginInvoke((Action)delegate
                 {
                     this.ShowCircles();
                 });
             }
-            else if (grammar.IsCommand(ClassGrammar.NEXT_SLIDE, speech))
+            else if (powerPointGrammar.IsCommand(PowerPointGrammar.NEXT_SLIDE, speech))
             {
                 ProcessNextSlide();
             }
-            else if (grammar.IsCommand(ClassGrammar.PREVIOUS_SLIDE, speech))
+            else if (powerPointGrammar.IsCommand(PowerPointGrammar.PREVIOUS_SLIDE, speech))
             {
                 ProcessPreviousSlide();
             }
+            else if (powerPointGrammar.IsCommand(ImagePresentationGrammar.MOVE_RIGHT, speech))
+            {
+                ProcessMoveRight();
+            }
+            else if (powerPointGrammar.IsCommand(ImagePresentationGrammar.MOVE_LEFT, speech))
+            {
+                ProcessMoveLeft();
+            }
+            else if (powerPointGrammar.IsCommand(ImagePresentationGrammar.MOVE_UP, speech))
+            {
+                ProcessMoveLeft();
+            }
+            else if (powerPointGrammar.IsCommand(ImagePresentationGrammar.MOVE_DOWN, speech))
+            {
+                ProcessMoveDown();
+            }
+            else if (powerPointGrammar.IsCommand(ImagePresentationGrammar.ROTATE_RIGHT, speech))
+            {
+                ProcessRotateRight();
+            }
+            else if (powerPointGrammar.IsCommand(ImagePresentationGrammar.ROTATE_LEFT, speech))
+            {
+                ProcessRotateLeft();
+            }
+            else if (powerPointGrammar.IsCommand(ImagePresentationGrammar.ZOOM_IN, speech))
+            {
+                ProcessZoomIn();
+            }
+            else if (powerPointGrammar.IsCommand(ImagePresentationGrammar.ZOOM_OUT, speech))
+            {
+                ProcessZoomOut();
+            }
         }
 
+        #region imageControl
+        
+        private void ProcessMoveRight()
+        {
+            System.Windows.Forms.SendKeys.SendWait("{Right}");
+        }
+
+        private void ProcessMoveLeft()
+        {
+            System.Windows.Forms.SendKeys.SendWait("{Left}");
+        }
+
+        private void ProcessMoveUp()
+        {
+            System.Windows.Forms.SendKeys.SendWait("{UP}");
+        }
+
+        private void ProcessMoveDown()
+        {
+            System.Windows.Forms.SendKeys.SendWait("{Down}");
+        }
+
+        private void ProcessRotateRight()
+        {
+            System.Windows.Forms.SendKeys.SendWait("{END}");
+        }
+
+        private void ProcessRotateLeft()
+        {
+            System.Windows.Forms.SendKeys.SendWait("{HOME}");
+        }
+            
         private void ProcessZoomOut()
         {
             System.Windows.Forms.SendKeys.SendWait("{PGDN}");
@@ -237,6 +304,10 @@ namespace KinectPowerPointControl
             System.Windows.Forms.SendKeys.SendWait("{PGUP}");
         }
 
+        #endregion
+
+        #region slideControl
+
         private void ProcessNextSlide()
         {
             System.Windows.Forms.SendKeys.SendWait("{Right}");
@@ -246,6 +317,8 @@ namespace KinectPowerPointControl
         {
             System.Windows.Forms.SendKeys.SendWait("{Left}");
         }
+
+        #endregion
 
         //This method is used to position the ellipses on the canvas
         //according to correct movements of the tracked joints.

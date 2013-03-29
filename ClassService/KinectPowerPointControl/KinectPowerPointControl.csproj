@@ -66,8 +66,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="LeftGestureRecognizer.cs" />
-    <Compile Include="RightGestureRecognizer.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -76,11 +74,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ClassGrammar.cs" />
-    <Compile Include="ClassKinectGestureRecognition.cs" />
-    <Compile Include="ClassKinectSpeechRecognition.cs" />
-    <Compile Include="IGestureRecognizer.cs" />
-    <Compile Include="ISpeechGrammar.cs" />
+    <Compile Include="Speech\AbstractGrammar.cs" />
+    <Compile Include="Speech\PowerPointGrammar.cs" />
+    <Compile Include="Gesture\PowerPointKinectGestureRecognition.cs" />
+    <Compile Include="Speech\ClassKinectSpeechRecognition.cs" />
+    <Compile Include="Gesture\IGestureRecognizer.cs" />
+    <Compile Include="Speech\ImagePresentationGrammar.cs" />
+    <Compile Include="Speech\ISpeechGrammar.cs" />
     <Compile Include="KinectWindowControl.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
