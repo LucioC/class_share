@@ -72,6 +72,13 @@ namespace KinectPowerPointControl.Speech
             dictionary.Add(ROTATE_LEFT, rotateLeft);
 
             #endregion
+            
+            List<String> closeImage = new List<string>();
+            closeImage.Add("close image");
+            closeImage.Add("close");
+            dictionary.Add(CLOSE_IMAGE, closeImage);
+
+            words.AddRange(closeImage);
 
             words.AddRange(moveRight);
             words.AddRange(moveLeft);

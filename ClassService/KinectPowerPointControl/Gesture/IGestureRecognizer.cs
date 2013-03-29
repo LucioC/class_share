@@ -8,7 +8,7 @@ namespace KinectPowerPointControl.Gesture
 {
     public interface IGestureRecognizer
     {
-        String Name { get; }
+        String Name { get; set; }
 
         /// <summary>
         /// Time interval in miliseconds that the between triggering the identified gesture event

@@ -46,6 +46,7 @@ namespace KinectPowerPointControl.Speech
             //CLOSE PRESENTATION COMMAND
             List<String> closePresentation = new List<string>();
             closePresentation.Add("close presentation");
+            closePresentation.Add("close");
             dictionary.Add(CLOSE_PRESENTATION, closePresentation);
             
             //SHOW WINDOW COMMAND

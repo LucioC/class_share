@@ -74,6 +74,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Gesture\GestureEvents.cs" />
+    <Compile Include="Gesture\SwipeLeftGesture.cs" />
+    <Compile Include="Gesture\SwipeRightGesture.cs" />
+    <Compile Include="Gesture\ZoomGesture.cs" />
     <Compile Include="Speech\AbstractGrammar.cs" />
     <Compile Include="Speech\PowerPointGrammar.cs" />
     <Compile Include="Gesture\PowerPointKinectGestureRecognition.cs" />
