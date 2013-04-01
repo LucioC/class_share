@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Windows.Threading;
 using Microsoft.Kinect;
 using Microsoft.Speech.AudioFormat;
+using CommonUtils;
 
 namespace KinectPowerPointControl.Speech
 {
@@ -120,13 +121,20 @@ Ensure you have the Microsoft Speech SDK installed and configured.",
             if (sensor == null || speechRecognizer == null)
                 return;
 
-            var audioSource = this.sensor.AudioSource;
-            audioSource.BeamAngleMode = BeamAngleMode.Adaptive;
-            var kinectStream = audioSource.Start();
+            try
+            {
+                var audioSource = this.sensor.AudioSource;
+                audioSource.BeamAngleMode = BeamAngleMode.Adaptive;
+                var kinectStream = audioSource.Start();
 
-            speechRecognizer.SetInputToAudioStream(
-                    kinectStream, new SpeechAudioFormatInfo(EncodingFormat.Pcm, 16000, 16, 1, 32000, 2, null));
-            speechRecognizer.RecognizeAsync(RecognizeMode.Multiple);
+                speechRecognizer.SetInputToAudioStream(
+                        kinectStream, new SpeechAudioFormatInfo(EncodingFormat.Pcm, 16000, 16, 1, 32000, 2, null));
+                speechRecognizer.RecognizeAsync(RecognizeMode.Multiple);
+            }
+            catch(Exception e)
+            {
+                Output.WriteToDebugOrConsole(e.Message);
+            }
 
         }
 
