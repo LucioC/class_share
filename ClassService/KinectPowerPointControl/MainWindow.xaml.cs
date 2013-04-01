@@ -65,7 +65,9 @@ namespace KinectPowerPointControl
             {
                 gestureRecognition = new ImagePresentationKinectGestureRecognition();
             }
-            gestureRecognition.GestureRecognized += this.GestureRecognized;            
+            gestureRecognition.GestureRecognized += this.GestureRecognized;
+
+            Minimize();
         }
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -233,23 +235,33 @@ namespace KinectPowerPointControl
             }
         }
 
+        private void Minimize()
+        {
+            this.Dispatcher.BeginInvoke((Action)delegate
+            {
+                this.Topmost = false;
+                this.WindowState = System.Windows.WindowState.Minimized;
+            });
+        }
+
+        private void UnMinimize()
+        {
+            this.Dispatcher.BeginInvoke((Action)delegate
+            {
+                this.Topmost = true;
+                this.WindowState = System.Windows.WindowState.Normal;
+            });
+        }
+
         private void SpeechRecognized(String speech)
         {
             if (grammar.IsCommand(PowerPointGrammar.SHOW_WINDOW, speech))
             {
-                this.Dispatcher.BeginInvoke((Action)delegate
-                {
-                    this.Topmost = true;
-                    this.WindowState = System.Windows.WindowState.Normal;
-                });
+                UnMinimize();
             }
             else if (grammar.IsCommand(PowerPointGrammar.HIDE_WINDOW, speech))
             {
-                this.Dispatcher.BeginInvoke((Action)delegate
-                {
-                    this.Topmost = false;
-                    this.WindowState = System.Windows.WindowState.Minimized;
-                });
+                Minimize();
             }
             else if (grammar.IsCommand(PowerPointGrammar.HIDE_CIRCLES, speech))
             {

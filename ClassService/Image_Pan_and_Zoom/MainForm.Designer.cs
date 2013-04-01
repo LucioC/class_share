@@ -45,6 +45,7 @@ namespace ImageZoom
             this.pictureBox.Size = new System.Drawing.Size(1065, 577);
             this.pictureBox.TabIndex = 8;
             this.pictureBox.TabStop = false;
+            this.pictureBox.Click += new System.EventHandler(this.pictureBox_Click);
             this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.imageBox_MouseDown);
             this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseMove);
             this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.imageBox_MouseUp);

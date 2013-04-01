@@ -49,6 +49,11 @@ namespace ImageZoom
             pictureBox.Paint += new PaintEventHandler(imageBox_Paint);
 
             imageUtils = new ImageUtils();
+
+            //this.WindowState = FormWindowState.Minimized;
+            this.Show();
+            this.WindowState = FormWindowState.Maximized;
+            this.Activate();
         }
 
         private void pictureBox_MouseMove(object sender, EventArgs e)
@@ -211,6 +216,11 @@ namespace ImageZoom
         private void ImageZoomMainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             img.Dispose();
+        }
+
+        private void pictureBox_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
