@@ -55,7 +55,7 @@ namespace KinectPowerPointControl
         public bool IsThreadRunning()
         {
             if (thread == null || window == null || !thread.IsAlive) return false;
-            return false;
+            return true;
         }
 
         public void setMode(PRESENTATION_MODE mode)
