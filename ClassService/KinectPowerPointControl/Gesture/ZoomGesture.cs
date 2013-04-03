@@ -20,7 +20,7 @@ namespace KinectPowerPointControl.Gesture
         {
             HandsDistance = 0f;
             HandsDistanceErrorIgnored = 0.05f;
-            Interval = 200;
+            Interval = 100;
         }
 
         public bool IdentifyGesture(Skeleton skeleton)
@@ -52,15 +52,16 @@ namespace KinectPowerPointControl.Gesture
             //Calculate and update hands distance
             float distance = GestureUtils.calculateDistanceX(rightHand.Position, leftHand.Position);
             float deltaDistance = distance - HandsDistance;
-            deltaDistance = normalizeDistance(deltaDistance, HandsDistanceErrorIgnored);
-            HandsDistance = distance;
-
+            deltaDistance = GestureUtils.normalizeDistance(deltaDistance, HandsDistanceErrorIgnored);
+            
             //Set as zoom gesture track started
             Boolean lastZoomStarted = ZoomStarted;
             ZoomStarted = true;
+
             //If has not started before than just return
             if (!lastZoomStarted)
             {
+                HandsDistance = distance;
                 return false;
             }
 
@@ -68,13 +69,13 @@ namespace KinectPowerPointControl.Gesture
             if (deltaDistance > 0)
             {
                 //TriggerGestureEvent(ZoomOut);
-                Name = GestureEvents.ZOOM_IN;
+                Name = GestureEvents.ZOOM_IN; HandsDistance = distance;
                 return true;
             }
             else if (deltaDistance < 0)
             {
                 //TriggerGestureEvent(ZoomIn);
-                Name = GestureEvents.ZOOM_OUT;
+                Name = GestureEvents.ZOOM_OUT; HandsDistance = distance;
                 return true;
             }
             return false;
@@ -95,25 +96,6 @@ namespace KinectPowerPointControl.Gesture
                     return false;
                 }
             }
-        }
-
-        //From diferent frames an error may occur
-        private float normalizeDistance(float deltaDistance, float errorExpected)
-        {
-            float result = deltaDistance;
-
-            if (deltaDistance > 0)
-            {
-                result = deltaDistance - errorExpected;
-                if (result < 0) result = 0f;
-            }
-            else if (deltaDistance < 0)
-            {
-                result = deltaDistance + errorExpected;
-                if (result > 0) result = 0f;
-            }
-
-            return result;
         }
         
         public string Name

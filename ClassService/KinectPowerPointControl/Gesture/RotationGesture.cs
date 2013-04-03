@@ -16,7 +16,7 @@ namespace KinectPowerPointControl.Gesture
         public RotationGesture()
         {
             intervalControl = new IntervalControl();
-            Interval = 500;
+            Interval = 300;
         }
 
         public bool IdentifyGesture(Skeleton skeleton)
@@ -57,6 +57,13 @@ namespace KinectPowerPointControl.Gesture
             }
 
             //If got here is because gesture was started, now just verify when one hand is above the other
+
+            //Is getting weird results with this, comment for now
+          /*  float newDistanceX = GestureUtils.calculateDistanceX(rightHand.Position, leftHand.Position);
+            if (newDistanceX > 0.1 )
+            {
+                return false;
+            } */
 
             //Right hand is above left
             if (rightHand.Position.Y > leftHand.Position.Y + 0.1)

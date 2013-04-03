@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonTest.cs" />
+    <Compile Include="unit\GestureUtilsTest.cs" />
     <Compile Include="integration\ImageUtilsTest.cs" />
     <Compile Include="integration\FileManagerTest.cs" />
     <Compile Include="integration\PowerPointControlTest.cs" />
