@@ -28,16 +28,11 @@ namespace KinectPowerPointControl
 
     public partial class MainWindow : Window
     {
-        KinectSensor sensor;
-
-        ClassKinectSpeechRecognition speechRecognition;
+        KinectControl kinectControl;
+        AbstractKinectGestureRecognition gestureRecognition;
         ISpeechGrammar grammar;
 
         public PRESENTATION_MODE mode { get; set; }
-
-        AbstractKinectGestureRecognition gestureRecognition;
-
-        byte[] colorBytes;
         
         bool isCirclesVisible = true;
 
@@ -72,32 +67,22 @@ namespace KinectPowerPointControl
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            sensor = KinectSensor.KinectSensors.FirstOrDefault();
+            kinectControl = new KinectControl();
 
-            if (sensor == null)
+            try
             {
-                //MessageBox.Show("This application requires a Kinect sensor.");
-                Output.WriteToDebugOrConsole("A kinect sensor was not detected, closing kinect window.");
-                this.Close();
-                return;
+                kinectControl.StartKinect();
             }
-                        
-            sensor.Start();
-
-            sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
-            sensor.ColorFrameReady += new EventHandler<ColorImageFrameReadyEventArgs>(sensor_ColorFrameReady);
-
-            sensor.DepthStream.Enable(DepthImageFormat.Resolution320x240Fps30);
-            sensor.SkeletonStream.Enable();
-            sensor.SkeletonFrameReady += new EventHandler<SkeletonFrameReadyEventArgs>(sensor_SkeletonFrameReady);
-
-            sensor.ElevationAngle = 0;
+            catch(KinectNotFoundException exception)
+            {
+                Output.WriteToDebugOrConsole(exception.Message);
+                this.Close();
+            }
 
             //Application.Current.Exit += new ExitEventHandler(Current_Exit);
             this.Closed += Current_Exit;
 
-            speechRecognition = new ClassKinectSpeechRecognition(this.sensor);
-            speechRecognition.SpeechRecognized += this.SpeechRecognized;
+            kinectControl.SpeechRecognized += this.SpeechRecognized;
 
             if (mode == PRESENTATION_MODE.POWERPOINT)
             {
@@ -107,23 +92,34 @@ namespace KinectPowerPointControl
             {
                 grammar = new ImagePresentationGrammar();
             }
+            kinectControl.SpeechGrammar = grammar;
 
-            speechRecognition.InitializeSpeechRecognition(GetKinectRecognizer(), grammar);
+            kinectControl.ColorFrameGot += this.UpdateImage;
+            kinectControl.SkeletonRecognized += SkeletonReady;
+            kinectControl.GestureRecognition = gestureRecognition;
+
+            kinectControl.InitializeSpeechRecognition();
+        }
+
+        public void SkeletonReady(Joint Head, Joint LeftHand, Joint RightHand, Joint CenterShoulder)
+        {
+            //Update Right hand, left hand, and head positions for tracking and image 
+            SetEllipsePosition(ellipseHead, Head, false);
+
+            //Original version change color when a gesture is active (last parameter true)
+            SetEllipsePosition(ellipseLeftHand, LeftHand, false);
+            SetEllipsePosition(ellipseRightHand, RightHand, false);
+            SetEllipsePosition(ellipseCenterShoulder, CenterShoulder, false);
+        }
+
+        protected void UpdateImage(ImageSource source)
+        {
+            videoImage.Source = source;
         }
 
         void Current_Exit(object sender, System.EventArgs e)
         {
-            if (speechRecognition != null)
-            {
-                speechRecognition.stop();
-            }
-            if (sensor != null)
-            {
-                sensor.AudioSource.Stop();
-                sensor.Stop();
-                sensor.Dispose();
-                sensor = null;
-            }
+            kinectControl.StopSensor();
         }
 
         void MainWindow_KeyDown(object sender, KeyEventArgs e)
@@ -134,63 +130,7 @@ namespace KinectPowerPointControl
             }
         }
 
-        //when color frame is ready
-        void sensor_ColorFrameReady(object sender, ColorImageFrameReadyEventArgs e)
-        {
-            using (var image = e.OpenColorImageFrame())
-            {
-                if (image == null)
-                    return;
-
-                if (colorBytes == null ||
-                    colorBytes.Length != image.PixelDataLength)
-                {
-                    colorBytes = new byte[image.PixelDataLength];
-                }
-
-                image.CopyPixelDataTo(colorBytes);
-
-                //You could use PixelFormats.Bgr32 below to ignore the alpha,
-                //or if you need to set the alpha you would loop through the bytes 
-                //as in this loop below
-                int length = colorBytes.Length;
-                for (int i = 0; i < length; i += 4)
-                {
-                    colorBytes[i + 3] = 255;
-                }
-
-                BitmapSource source = BitmapSource.Create(image.Width,
-                    image.Height,
-                    96,
-                    96,
-                    PixelFormats.Bgra32,
-                    null,
-                    colorBytes,
-                    image.Width * image.BytesPerPixel);
-                videoImage.Source = source;
-            }
-        }
-
-
-        void sensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
-        {
-            using (var skeletonFrame = e.OpenSkeletonFrame())
-            {
-                if (skeletonFrame == null)
-                    return;
-
-                gestureRecognition.ProcessFrameReady(skeletonFrame);
-
-                //Update Right hand, left hand, and head positions for tracking and image 
-                SetEllipsePosition(ellipseHead, gestureRecognition.Head, false);
-
-                //Original version change color when a gesture is active (last parameter true)
-                SetEllipsePosition(ellipseLeftHand, gestureRecognition.LeftHand, false);
-                SetEllipsePosition(ellipseRightHand, gestureRecognition.RightHand, false);
-                SetEllipsePosition(ellipseCenterShoulder, gestureRecognition.CenterShoulder, false);
-            }
-        }
-
+        
         private void GestureRecognized(String gesture)
         {
             if (gesture == GestureEvents.SWIPE_RIGHT)
@@ -401,7 +341,7 @@ namespace KinectPowerPointControl
         //according to correct movements of the tracked joints.
         private void SetEllipsePosition(Ellipse ellipse, Joint joint, bool isHighlighted)
         {
-            var point = sensor.MapSkeletonPointToColor(joint.Position, sensor.ColorStream.Format);
+            var point = kinectControl.MapSkeletonPointToColor(joint);
 
             if (isHighlighted)
             {
@@ -445,22 +385,6 @@ namespace KinectPowerPointControl
             ellipseRightHand.Visibility = System.Windows.Visibility.Visible;
             ellipseCenterShoulder.Visibility = System.Windows.Visibility.Visible;
         }
-
-        #region Speech Recognition Methods
-
-        private static RecognizerInfo GetKinectRecognizer()
-        {
-            Func<RecognizerInfo, bool> matchingFunc = r =>
-            {
-                string value;
-                r.AdditionalInfo.TryGetValue("Kinect", out value);
-                return "True".Equals(value, StringComparison.InvariantCultureIgnoreCase) && "en-US".Equals(r.Culture.Name, StringComparison.InvariantCultureIgnoreCase);
-            };
-            return SpeechRecognitionEngine.InstalledRecognizers().Where(matchingFunc).FirstOrDefault();
-        }
-
-        
-        #endregion
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
