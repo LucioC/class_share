@@ -101,7 +101,6 @@
     <None Include="resources\test.pptx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Shadow Include="Test References\ImageZoom.accessor" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommonUtils\CommonUtils.csproj">
@@ -133,6 +132,9 @@
     <None Include="resources\poneis_malditos.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Test References\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
