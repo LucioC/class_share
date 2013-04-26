@@ -129,7 +129,7 @@ namespace TestProject1
         {
             FileManager target = new FileManager(); // TODO: Initialize to an appropriate value
 
-            String fileName = "MyFile.txt";
+            String fileName = "MyFile1.txt";
             String content = "Content of my file";
 
             createFile(fileName, Encoding.ASCII.GetBytes(content));
