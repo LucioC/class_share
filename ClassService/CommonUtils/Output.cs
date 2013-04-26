@@ -12,6 +12,7 @@ namespace CommonUtils
             if(System.Diagnostics.Debugger.IsAttached)
             {
                 System.Diagnostics.Debug.Write("\n" + message + "\n");
+                Console.WriteLine("\n" + message + "\n");
             }
             else
             {

@@ -46,7 +46,7 @@ namespace ImageZoom
             }
             else
             {
-                throw new FileNotFoundException();
+                throw new FileNotFoundException("file " + FileName + " was not found on the server.");
             }
         }
 

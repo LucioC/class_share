@@ -167,23 +167,32 @@ namespace ClassService
         
         public Result OpenImage(File fileName)
         {
-            Output.WriteToDebugOrConsole("open image function");
-
-            fileName = (fileName == null || fileName.FileName == String.Empty) ? new File(@"C:\Users\lucioc\Desktop\class_share\ClassService\Image_Pan_and_Zoom\ponei.jpg") : fileName;
-
-            if (ImageForm.IsThreadRunning())
+            try
             {
-                ImageForm.StopThread();
+                Output.WriteToDebugOrConsole("open image function");
+
+                fileName = (fileName == null || fileName.FileName == String.Empty) ? new File(@"C:\Users\lucioc\Desktop\class_share\ClassService\Image_Pan_and_Zoom\ponei.jpg") : fileName;
+
+                if (ImageForm.IsThreadRunning())
+                {
+                    ImageForm.StopThread();
+                }
+                //Run image output window
+                ImageForm.SetFilePath(fileName.FileName);
+                ImageForm.StartThread();
+
+                //Initialize Kinect windows for gesture and speech recognition
+                KinectWindow.setMode(PRESENTATION_MODE.IMAGE);
+                KinectWindow.StartThread();
+
+                return new Result("Image Opened");
             }
-            //Run image output window
-            ImageForm.SetFilePath(fileName.FileName);
-            ImageForm.StartThread();
-
-            //Initialize Kinect windows for gesture and speech recognition
-            KinectWindow.setMode(PRESENTATION_MODE.IMAGE);
-            KinectWindow.StartThread();
-
-            return new Result("Image Opened");
+            catch (Exception e)
+            {
+                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+                Output.WriteToDebugOrConsole(e.Message);
+                return new Result(e.Message);
+            }
         }
 
         public void ImageRotateRight()

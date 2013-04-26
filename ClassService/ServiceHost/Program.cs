@@ -16,7 +16,7 @@ namespace ServiceHostConsole
  
         public static void Main()
         {
-            WebServiceHost host = new WebServiceHost(typeof(Service), new Uri("http://10.1.1.7:8880"));
+            WebServiceHost host = new WebServiceHost(typeof(Service), new Uri("http://0.0.0.0:8880"));
             WebHttpBinding webHttpBinding = new WebHttpBinding();
             webHttpBinding.MaxReceivedMessageSize = 2147483647;
             webHttpBinding.MaxBufferPoolSize = 2147483647;
