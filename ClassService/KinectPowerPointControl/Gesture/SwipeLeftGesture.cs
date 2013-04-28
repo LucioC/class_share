@@ -3,52 +3,71 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Kinect;
+using CommonUtils;
 
 namespace KinectPowerPointControl.Gesture
 {
     public class SwipeLeftGesture: IGestureRecognizer
     {
-        bool isForwardGestureActive = false;
-        bool isBackGestureActive = false;
-
         public SwipeLeftGesture()
         {
             Name = GestureEvents.SWIPE_LEFT;
         }
+
+        private int state = 0;
+        private SkeletonPoint initialPosition;
 
         public bool IdentifyGesture(Skeleton skeleton)
         {
             var rightHand = skeleton.Joints[JointType.HandRight];
             var leftHand = skeleton.Joints[JointType.HandLeft];
             var head = skeleton.Joints[JointType.Head];
+            var centerShoulder = skeleton.Joints[JointType.ShoulderCenter];
 
-            if (rightHand.Position.X > head.Position.X + 0.45)
+            //If hand is lower than center shoulder minus 10 centimers then reset gesture
+            if (rightHand.Position.Y < centerShoulder.Position.Y - 0.1)
             {
-                if (!isBackGestureActive && !isForwardGestureActive)
+                state = 0;
+                return false;
+            }
+
+            if (state == 0)
+            {
+                state = 1;
+                initialPosition = rightHand.Position;
+
+                Output.Debug("SwipeLeft", "Identifyed hand above shoudler");
+
+                return false;
+            }
+
+            if (state == 1)
+            {
+                SkeletonPoint nextPoint = rightHand.Position;
+
+                //If hand went right then reset state
+                if (nextPoint.X > initialPosition.X + 0.1)
                 {
-                    isForwardGestureActive = true;
-                    //TriggerGestureEvent(GestureEvents.NEXT_SLIDE);
+                    state = 0;
                     return false;
                 }
-            }
-            else
-            {
-                isForwardGestureActive = false;
-            }
 
-            if (leftHand.Position.X < head.Position.X - 0.45)
-            {
-                if (!isBackGestureActive && !isForwardGestureActive)
+                //If hand went left 30cm then swipe occured
+                if (nextPoint.X < initialPosition.X - 0.3)
                 {
-                    isBackGestureActive = true;
-                    //TriggerGestureEvent(GestureEvents.PREVIOUS_SLIDE);
+                    //Mark as state 2, it means "already executed" so it will reset only when hand are down
+                    state = 2;
+                    Output.Debug("SwipeLeft", "Left Gesture Executed");
                     return true;
                 }
+
+                return false;
             }
-            else
-            {
-                isBackGestureActive = false;
-            }
+
+            //Gesture if finished already, it need to be reset by hand positioning
+            if (state == 2) return false;
+
+            state = 0;
             return false;
         }
 

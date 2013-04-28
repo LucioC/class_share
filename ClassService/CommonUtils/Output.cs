@@ -19,6 +19,14 @@ namespace CommonUtils
                 Console.WriteLine("\n" + message + "\n");
             }
         }
+
+        public static void Debug(String tag, String message)
+        {
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                System.Diagnostics.Debug.Write("\n" + tag + " : " + message);
+            }
+        }
     }
 
 }
