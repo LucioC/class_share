@@ -12,6 +12,8 @@ using Microsoft.Speech.Recognition;
 using System.Windows.Threading;
 using Microsoft.Speech.AudioFormat;
 using System.Diagnostics;
+using Microsoft.Kinect.Toolkit.Interaction;
+using System.Diagnostics.CodeAnalysis;
 
 namespace KinectPowerPointControl
 {
@@ -36,16 +38,23 @@ namespace KinectPowerPointControl
         public event SpeechRecognizedEvent SpeechRecognized;
         public ISpeechGrammar SpeechGrammar { get; set; }
 
+        private Skeleton[] skeletons;
+
+        private KinectInteractionEvents kinectInteraction;
+        
+        public IInteractionClient InteractionClient { get; set; }
         public KinectControl()
         {
             SpeechGrammar = null;
             GestureRecognition = null;
+            this.kinectInteraction = new KinectInteractionEvents();
         }
 
         public KinectControl(AbstractKinectGestureRecognition gestureRecognition, ISpeechGrammar speechGrammar)
         {
             this.GestureRecognition = gestureRecognition;
             this.SpeechGrammar = speechGrammar;
+            this.kinectInteraction = new KinectInteractionEvents();
         }
 
         public void StartKinect()
@@ -58,6 +67,19 @@ namespace KinectPowerPointControl
             }
 
             StartImageSensor();
+
+            StartInteractionProcessing();
+        }
+
+        private InteractionStream interactionStream;
+        protected void StartInteractionProcessing()
+        {
+            this.InteractionClient = new InteractionClient();
+            this.interactionStream = new InteractionStream(this.sensor, this.InteractionClient);
+
+            //Prepare interaction
+            this.kinectInteraction.AllocateUserInfos(InteractionFrame.UserInfoArrayLength);
+            this.interactionStream.InteractionFrameReady += kinectInteraction.InteractionFrameReady;
         }
 
         protected void StartImageSensor()
@@ -67,9 +89,11 @@ namespace KinectPowerPointControl
             sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
             sensor.ColorFrameReady += new EventHandler<ColorImageFrameReadyEventArgs>(ColorFrameReady);
 
-            sensor.DepthStream.Enable(DepthImageFormat.Resolution320x240Fps30);
+            sensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
             sensor.SkeletonStream.Enable();
             sensor.SkeletonFrameReady += new EventHandler<SkeletonFrameReadyEventArgs>(SkeletonFrameReady);
+
+            sensor.DepthFrameReady += this.SensorDepthFrameReady;
 
             sensor.ElevationAngle = 0;
         }
@@ -179,14 +203,31 @@ namespace KinectPowerPointControl
             {
                 if (skeletonFrame == null)
                     return;
-
-                GestureRecognition.ProcessFrameReady(skeletonFrame);
+                
+                //Get skeletons from this frame
+                if (skeletons == null ||
+                        skeletons.Length != skeletonFrame.SkeletonArrayLength)
+                {
+                    skeletons = new Skeleton[skeletonFrame.SkeletonArrayLength];
+                }
+                skeletonFrame.CopySkeletonDataTo(skeletons);
+                
+                //Process sksletons using the custom gesture recognition
+                GestureRecognition.ProcessFrameReady(skeletons);
 
                 if (this.SkeletonRecognized != null && GestureRecognition.BestSkeleton != null)
                 {
                     this.SkeletonRecognized(GestureRecognition.BestSkeleton);
                 }
-            }
+
+                //Pass info to the interaction stream               
+                var accelerometerReading = this.sensor.AccelerometerGetCurrentReading();
+
+                // Hand data to Interaction framework to be processed
+                if(this.interactionStream != null)
+                    this.interactionStream.ProcessSkeleton(this.skeletons, accelerometerReading, skeletonFrame.Timestamp);
+               
+            }                    
         }
 
         public ColorImagePoint MapSkeletonPointToColor(Joint joint)
@@ -272,7 +313,32 @@ namespace KinectPowerPointControl
         {
             speechRecognizer.RecognizeAsyncCancel();
             speechRecognizer.RecognizeAsyncStop();
-        }
+        }        
 
+        /// <summary>
+        /// Handler for the Kinect sensor's DepthFrameReady event
+        /// </summary>
+        /// <param name="sender">object sending the event</param>
+        /// <param name="depthImageFrameReadyEventArgs">event arguments</param>
+        private void SensorDepthFrameReady(object sender, DepthImageFrameReadyEventArgs depthImageFrameReadyEventArgs)
+        {
+            // Even though we un-register all our event handlers when the sensor
+            // changes, there may still be an event for the old sensor in the queue
+            // due to the way the KinectSensor delivers events.  So check again here.
+            if (this.sensor != sender)
+            {
+                return;
+            }
+
+            using (DepthImageFrame depthFrame = depthImageFrameReadyEventArgs.OpenDepthImageFrame())
+            {
+                if (null != depthFrame)
+                {
+                    // Hand data to Interaction framework to be processed
+                    if(this.interactionStream != null)
+                        this.interactionStream.ProcessDepth(depthFrame.GetRawPixelData(), depthFrame.Timestamp);                    
+                }
+            }
+        }
     }
 }

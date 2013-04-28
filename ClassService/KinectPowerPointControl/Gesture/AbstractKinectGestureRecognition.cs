@@ -3,21 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Kinect;
+using CommonUtils;
 
 namespace KinectPowerPointControl.Gesture
 {
     public class AbstractKinectGestureRecognition
     {
-        protected Skeleton[] skeletons;
         protected List<IGestureRecognizer> gestureRecognizers;
 
         public delegate void GestureRecognizedEvent(String gesture);
         public event GestureRecognizedEvent GestureRecognized;
 
-        public Joint Head { get; set; }
-        public Joint RightHand { get; set; }
-        public Joint LeftHand { get; set; }
-        public Joint CenterShoulder { get; set; }
         public Skeleton BestSkeleton { get; protected set; }
 
         public AbstractKinectGestureRecognition()
@@ -26,25 +22,18 @@ namespace KinectPowerPointControl.Gesture
             BestSkeleton = null;
         }
 
-        public virtual void ProcessFrameReady(SkeletonFrame skeletonFrame)
+        public virtual void ProcessFrameReady(Skeleton[] skeletons)
         {
-            if (skeletons == null ||
-                    skeletons.Length != skeletonFrame.SkeletonArrayLength)
-            {
-                skeletons = new Skeleton[skeletonFrame.SkeletonArrayLength];
-            }
-
-            skeletonFrame.CopySkeletonDataTo(skeletons);
-
             //Get closest Skeleton needed
             Skeleton closestSkeleton = (from s in skeletons
                                         where s.TrackingState == SkeletonTrackingState.Tracked &&
                                               s.Joints[JointType.Head].TrackingState == JointTrackingState.Tracked
                                         select s).OrderBy(s => s.Joints[JointType.Head].Position.Z)
                                                 .FirstOrDefault();
-
+            
             if (closestSkeleton == null)
                 return;
+
 
             //Verify if some skeleton joints are correctly tracked
             var head = closestSkeleton.Joints[JointType.Head];
@@ -61,10 +50,6 @@ namespace KinectPowerPointControl.Gesture
                 return;
             }
 
-            Head = head;
-            RightHand = rightHand;
-            LeftHand = leftHand;
-            CenterShoulder = shoulderCenter;
             BestSkeleton = closestSkeleton;
 
             VerifyGestures(closestSkeleton);
