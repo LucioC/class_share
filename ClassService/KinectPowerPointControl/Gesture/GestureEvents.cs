@@ -20,5 +20,7 @@ namespace KinectPowerPointControl.Gesture
         public const String MOVE_LEFT = "moveleft";
         public const String MOVE_UP = "moveup";
         public const String MOVE_DOWN = "movedown";
+
+        public const String JOIN_HANDS = "joinhands";
     }
 }

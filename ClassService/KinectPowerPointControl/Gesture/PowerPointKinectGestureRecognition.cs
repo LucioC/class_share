@@ -15,6 +15,7 @@ namespace KinectPowerPointControl.Gesture
         {
             gestureRecognizers.Add(new SwipeRightGesture());
             gestureRecognizers.Add(new SwipeLeftGesture());
+            gestureRecognizers.Add(new JoinHandsGesture());
         }
 
     }
