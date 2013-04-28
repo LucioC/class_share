@@ -38,7 +38,12 @@ namespace KinectPowerPointControl
 
         SolidColorBrush activeBrush = new SolidColorBrush(Colors.Green);
         SolidColorBrush inactiveBrush = new SolidColorBrush(Colors.Red);
-        
+
+        public MainWindow():this(PRESENTATION_MODE.IMAGE)
+        {
+
+        }
+
         public MainWindow(PRESENTATION_MODE mode)
         {
             InitializeComponent();
@@ -101,8 +106,15 @@ namespace KinectPowerPointControl
             kinectControl.InitializeSpeechRecognition();
         }
 
-        public void SkeletonReady(Joint Head, Joint LeftHand, Joint RightHand, Joint CenterShoulder)
+        public void SkeletonReady(Skeleton skeleton)
         {
+            var Head = skeleton.Joints[JointType.Head];
+            var LeftHand = skeleton.Joints[JointType.HandLeft];
+            var RightHand = skeleton.Joints[JointType.HandRight];
+            var RightWrist = skeleton.Joints[JointType.WristRight];
+            var LeftWrist = skeleton.Joints[JointType.WristLeft];
+            var CenterShoulder = skeleton.Joints[JointType.ShoulderCenter];
+
             //Update Right hand, left hand, and head positions for tracking and image 
             SetEllipsePosition(ellipseHead, Head, false);
 
@@ -110,6 +122,9 @@ namespace KinectPowerPointControl
             SetEllipsePosition(ellipseLeftHand, LeftHand, false);
             SetEllipsePosition(ellipseRightHand, RightHand, false);
             SetEllipsePosition(ellipseCenterShoulder, CenterShoulder, false);
+
+            SetEllipsePosition(ellipseRightWrist, RightWrist, false);
+            SetEllipsePosition(ellipseLeftWrist, LeftWrist, false);
         }
 
         protected void UpdateImage(ImageSource source)
@@ -384,6 +399,8 @@ namespace KinectPowerPointControl
             ellipseLeftHand.Visibility = System.Windows.Visibility.Visible;
             ellipseRightHand.Visibility = System.Windows.Visibility.Visible;
             ellipseCenterShoulder.Visibility = System.Windows.Visibility.Visible;
+            ellipseLeftWrist.Visibility = System.Windows.Visibility.Visible;
+            ellipseRightWrist.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

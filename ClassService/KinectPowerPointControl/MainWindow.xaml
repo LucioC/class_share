@@ -23,6 +23,16 @@
                 <Ellipse Fill="Red"
                          Height="20"
                          Width="20"
+                         Name="ellipseRightWrist"
+                         Stroke="White" />
+                <Ellipse Fill="Red"
+                         Height="20"
+                         Width="20"
+                         Name="ellipseLeftWrist"
+                         Stroke="White" />
+                <Ellipse Fill="Red"
+                         Height="20"
+                         Width="20"
                          Name="ellipseHead"
                          Stroke="White" />
                 <Ellipse Fill="Red"

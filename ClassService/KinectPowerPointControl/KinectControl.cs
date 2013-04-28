@@ -26,7 +26,7 @@ namespace KinectPowerPointControl
         public delegate void ColorFrameReadyEvent(ImageSource image);
         public event ColorFrameReadyEvent ColorFrameGot;
 
-        public delegate void SkeletonReadyEvent(Joint Head, Joint LeftHand, Joint RightHand, Joint CenterShoulder);
+        public delegate void SkeletonReadyEvent(Skeleton skeleton);
         public event SkeletonReadyEvent SkeletonRecognized;
 
         //Speech Recognition
@@ -182,13 +182,10 @@ namespace KinectPowerPointControl
 
                 GestureRecognition.ProcessFrameReady(skeletonFrame);
 
-                //Update Right hand, left hand, and head positions for tracking and image 
-                //SetEllipsePosition(ellipseHead, gestureRecognition.Head, false);
-
-                //Original version change color when a gesture is active (last parameter true)
-                //SetEllipsePosition(ellipseLeftHand, gestureRecognition.LeftHand, false);
-               // SetEllipsePosition(ellipseRightHand, gestureRecognition.RightHand, false);
-               // SetEllipsePosition(ellipseCenterShoulder, gestureRecognition.CenterShoulder, false);
+                if (this.SkeletonRecognized != null && GestureRecognition.BestSkeleton != null)
+                {
+                    this.SkeletonRecognized(GestureRecognition.BestSkeleton);
+                }
             }
         }
 

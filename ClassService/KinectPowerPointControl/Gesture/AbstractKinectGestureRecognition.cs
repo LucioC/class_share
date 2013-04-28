@@ -18,10 +18,12 @@ namespace KinectPowerPointControl.Gesture
         public Joint RightHand { get; set; }
         public Joint LeftHand { get; set; }
         public Joint CenterShoulder { get; set; }
+        public Skeleton BestSkeleton { get; protected set; }
 
         public AbstractKinectGestureRecognition()
         {
             gestureRecognizers = new List<IGestureRecognizer>();
+            BestSkeleton = null;
         }
 
         public virtual void ProcessFrameReady(SkeletonFrame skeletonFrame)
@@ -63,6 +65,7 @@ namespace KinectPowerPointControl.Gesture
             RightHand = rightHand;
             LeftHand = leftHand;
             CenterShoulder = shoulderCenter;
+            BestSkeleton = closestSkeleton;
 
             VerifyGestures(closestSkeleton);
         }
