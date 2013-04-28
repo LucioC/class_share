@@ -45,6 +45,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Kinect, Version=1.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Kinect.Toolkit.Interaction">
+      <HintPath>..\..\..\..\..\..\Program Files\Microsoft SDKs\Kinect\Developer Toolkit v1.7.0\Assemblies\Microsoft.Kinect.Toolkit.Interaction.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Speech, Version=11.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -86,6 +89,7 @@
     <Compile Include="Gesture\SwipeRightGesture.cs" />
     <Compile Include="Gesture\ZoomGesture.cs" />
     <Compile Include="IKinectService.cs" />
+    <Compile Include="InteractionClient.cs" />
     <Compile Include="KinectControl.cs" />
     <Compile Include="KinectNotFoundException.cs" />
     <Compile Include="KinectSpeechRecognitionInitializationException.cs" />
@@ -135,6 +139,14 @@
       <Project>{7EF09EFE-213E-4589-BA79-2071302C67A9}</Project>
       <Name>ServiceCore</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="KinectInteraction170_32.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="KinectInteraction170_64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
