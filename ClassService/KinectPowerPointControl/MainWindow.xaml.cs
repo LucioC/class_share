@@ -37,7 +37,7 @@ namespace KinectPowerPointControl
         bool isCirclesVisible = true;
 
         SolidColorBrush activeBrush = new SolidColorBrush(Colors.Green);
-        SolidColorBrush inactiveBrush = new SolidColorBrush(Colors.Red);
+        SolidColorBrush inactiveBrush = new SolidColorBrush(Colors.DarkRed);
 
         public MainWindow():this(PRESENTATION_MODE.IMAGE)
         {
@@ -381,9 +381,9 @@ namespace KinectPowerPointControl
             }
             else
             {
-                ellipse.Width = 20;
-                ellipse.Height = 20;
-                ellipse.Fill = inactiveBrush;
+                ellipse.Width = 10;
+                ellipse.Height = 10;
+                ellipse.Fill = inactiveBrush;                
             }
 
             Canvas.SetLeft(ellipse, point.X - ellipse.ActualWidth / 2);
