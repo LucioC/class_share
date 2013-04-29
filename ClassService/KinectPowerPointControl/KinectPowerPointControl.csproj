@@ -91,7 +91,6 @@
     <Compile Include="Gesture\SwipeLeftGesture.cs" />
     <Compile Include="Gesture\SwipeRightGesture.cs" />
     <Compile Include="Gesture\ZoomGesture.cs" />
-    <Compile Include="IKinectService.cs" />
     <Compile Include="InteractionClient.cs" />
     <Compile Include="KinectControl.cs" />
     <Compile Include="KinectNotFoundException.cs" />

@@ -13,6 +13,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFClientExample", "WCFClientExample\WCFClientExample.csproj", "{A0E2DCD6-D01D-4E10-94DB-7064D6185DEB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFService", "WcfService\WCFService.csproj", "{9FB2C65C-499D-48D5-AD76-B0CBE5C0CD85}"
+	ProjectSection(ProjectDependencies) = postProject
+		{69BB0E72-9FA9-43B7-9673-1BCB6F7F3877} = {69BB0E72-9FA9-43B7-9673-1BCB6F7F3877}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceHost", "ServiceHost\ServiceHost.csproj", "{95773702-20CF-498D-BF28-D9F7E818506F}"
 EndProject
@@ -26,7 +29,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceCore", "ServiceCore\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceTest", "ServiceTest\ServiceTest.csproj", "{AA58A61C-995F-43B3-BDAF-3BCBF12D1C51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlsBasics-WPF", "ControlsBasics-WPF\ControlsBasics-WPF.csproj", "{69BB0E72-9FA9-43B7-9673-1BCB6F7F3877}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopMainWindow", "ControlsBasics-WPF\DesktopMainWindow.csproj", "{69BB0E72-9FA9-43B7-9673-1BCB6F7F3877}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8241A955-C8E4-4CFD-BA28-EEAB34F6C00C} = {8241A955-C8E4-4CFD-BA28-EEAB34F6C00C}
+		{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1} = {9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Kinect.Toolkit", "Microsoft.Kinect.Toolkit\Microsoft.Kinect.Toolkit.csproj", "{C6F9C31B-6130-4443-A5CC-EF0664552ECD}"
 EndProject

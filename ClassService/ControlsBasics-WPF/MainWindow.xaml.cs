@@ -13,6 +13,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     using Microsoft.Kinect;
     using Microsoft.Kinect.Toolkit;
     using Microsoft.Kinect.Toolkit.Controls;
+    using System.IO;
 
     /// <summary>
     /// Interaction logic for MainWindow
@@ -61,6 +62,27 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             // Bind listner to scrollviwer scroll position change, and check scroll viewer position
             this.UpdatePagingButtonState();
             scrollViewer.ScrollChanged += (o, e) => this.UpdatePagingButtonState();
+
+            this.WindowState = System.Windows.WindowState.Maximized;
+
+            LoadFilesFromFolder(@"C:\Users\lucioc\Dropbox\Public\Mestrado\Dissertacao\PrototypeFiles");
+        }
+
+        public void LoadFilesFromFolder(string folderPath)
+        {
+            this.wrapPanel.Children.Clear();
+
+            string[] filePaths = Directory.GetFiles(folderPath);
+            for (int i = 0; i < filePaths.Length; ++i)
+            {
+                string file = filePaths[i];
+                KinectTileButton tile = new KinectTileButton();
+                tile.Width = 350;
+                tile.Label = i.ToString() + " " + System.IO.Path.GetFileName(file);
+                this.wrapPanel.Children.Add(tile);
+            }
+
+            this.wrapPanel.Height = (filePaths.Length / 3) * 350;
         }
 
         /// <summary>
@@ -163,8 +185,11 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private void KinectTileButtonClick(object sender, RoutedEventArgs e)
         {
             var button = (KinectTileButton)e.OriginalSource;
-            var selectionDisplay = new SelectionDisplay(button.Label as string);
-            this.kinectRegionGrid.Children.Add(selectionDisplay);
+            //var selectionDisplay = new SelectionDisplay(button.Label as string);
+            //this.kinectRegionGrid.Children.Add(selectionDisplay);
+
+
+
             e.Handled = true;
         }
 

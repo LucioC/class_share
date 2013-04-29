@@ -21,11 +21,10 @@ using System.Windows.Threading;
 using CommonUtils;
 using KinectPowerPointControl.Speech;
 using KinectPowerPointControl.Gesture;
+using ServiceCore;
 
 namespace KinectPowerPointControl
 {
-    public enum PRESENTATION_MODE { POWERPOINT, IMAGE };
-
     public partial class MainWindow : Window
     {
         KinectControl kinectControl;
@@ -74,6 +73,10 @@ namespace KinectPowerPointControl
         {
             kinectControl = new KinectControl();
 
+            kinectControl.GestureRecognition = gestureRecognition;
+            kinectControl.ColorFrameGot += this.UpdateImage;
+            kinectControl.SkeletonRecognized += SkeletonReady;
+
             try
             {
                 kinectControl.StartKinect();
@@ -98,10 +101,6 @@ namespace KinectPowerPointControl
                 grammar = new ImagePresentationGrammar();
             }
             kinectControl.SpeechGrammar = grammar;
-
-            kinectControl.ColorFrameGot += this.UpdateImage;
-            kinectControl.SkeletonRecognized += SkeletonReady;
-            kinectControl.GestureRecognition = gestureRecognition;
 
             kinectControl.InitializeSpeechRecognition();
         }

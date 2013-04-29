@@ -2,6 +2,8 @@
 
 namespace ServiceCore
 {
+    public enum PRESENTATION_MODE { FILE_SELECTION, POWERPOINT, IMAGE };
+
     public interface IPowerPointControl
     {
         void ClosePresentation();
