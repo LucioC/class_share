@@ -20,12 +20,12 @@ namespace ClassService
     {
         public static IPowerPointControl PresentationControl;
         public static IImageService ImageForm;
-        private FileManager fileManager;
         public static IKinectService KinectWindow;
+        private ServiceFileManager fileManager;
 
         public Service()
         {
-            fileManager = new FileManager();
+            fileManager = new ServiceFileManager();
         }
 
         static Service()
@@ -57,9 +57,7 @@ namespace ClassService
         {
             try
             {
-                //Get current directory and look for file
-                String localPath = Directory.GetCurrentDirectory() + "\\";
-                localPath = localPath + file.FileName;
+                String localPath = fileManager.GetFilePath(file.FileName);
 
                 //Open power point presentation
                 PresentationControl.PreparePresentation(localPath);
@@ -139,11 +137,7 @@ namespace ClassService
         public Result UploadFile(string fileName, Stream fileContents)
         {
             Output.WriteToDebugOrConsole("Entered uploadFile call");
-            if(fileManager.FileExists(fileName))
-            {
-                fileManager.DeleteFile(fileName);   
-            }
-            fileManager.CreateFile(fileName, fileContents);
+            fileManager.SaveNewFile(fileName, fileContents);
 
             return new Result("File was uploaded to server");
         }
@@ -153,6 +147,7 @@ namespace ClassService
             Stream fileStream;
             try
             {
+                fileName = fileManager.GetFilePath(fileName);
                 fileStream = new FileStream(fileName, FileMode.Open);
                 return fileStream;
             }
@@ -171,7 +166,7 @@ namespace ClassService
             {
                 Output.WriteToDebugOrConsole("open image function");
 
-                fileName = (fileName == null || fileName.FileName == String.Empty) ? new File(@"C:\Users\lucioc\Desktop\class_share\ClassService\Image_Pan_and_Zoom\ponei.jpg") : fileName;
+                fileName.FileName = fileManager.GetFilePath(fileName.FileName);
 
                 if (ImageForm.IsThreadRunning())
                 {

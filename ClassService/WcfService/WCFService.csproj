@@ -75,6 +75,7 @@
     <Compile Include="Service.svc.cs">
       <DependentUpon>Service.svc</DependentUpon>
     </Compile>
+    <Compile Include="ServiceFileManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
