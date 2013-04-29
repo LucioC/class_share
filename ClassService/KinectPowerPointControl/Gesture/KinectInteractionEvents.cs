@@ -17,6 +17,8 @@ namespace KinectPowerPointControl.Gesture
             this.userInfos = new UserInfo[size];
         }
 
+        int pressState = 0;
+
         /// <summary>
         /// Event handler for InteractionStream's InteractionFrameReady event
         /// </summary>
@@ -59,13 +61,21 @@ namespace KinectPowerPointControl.Gesture
                     foreach (var handPointer in user.HandPointers)
                     {
                         if (handPointer.IsPressed)
-                        {
-                            Output.Debug("KinectControl", "Hand Pressed " + handPointer.PressExtent.ToString());
+                        {   
+                            //Do not repeat output
+                            if(pressState != 2)
+                                Output.Debug("KinectControl", "Hand Pressed " + handPointer.PressExtent.ToString());
+                            
+                            pressState = 2;
                         }
                         else
                             if (handPointer.PressExtent > 0.5d)
                             {
-                                Output.Debug("KinectControl", "Hand Almost Pressed " + handPointer.PressExtent.ToString());
+                                //Do not repeat output
+                                if(pressState != 1)
+                                    Output.Debug("KinectControl", "Hand Almost Pressed " + handPointer.PressExtent.ToString());
+
+                                pressState = 1;
                             }
 
 

@@ -116,6 +116,10 @@ namespace KinectPowerPointControl
             var CenterShoulder = skeleton.Joints[JointType.ShoulderCenter];
             var Spine = skeleton.Joints[JointType.Spine];
             var CenterHip = skeleton.Joints[JointType.HipCenter];
+            var RightElbow = skeleton.Joints[JointType.ElbowRight];
+            var LeftElbow = skeleton.Joints[JointType.ElbowLeft];
+            var RightShoulder = skeleton.Joints[JointType.ShoulderRight];
+            var LeftShoulder = skeleton.Joints[JointType.ShoulderLeft];
 
             //Update Right hand, left hand, and head positions for tracking and image 
             SetEllipsePosition(ellipseHead, Head, false);
@@ -130,6 +134,12 @@ namespace KinectPowerPointControl
 
             SetEllipsePosition(ellipseSpine, Spine, false);
             SetEllipsePosition(ellipseCenterHip, CenterHip, false);
+
+            SetEllipsePosition(ellipseRightElbow, RightElbow, false);
+            SetEllipsePosition(ellipseLeftElbow, LeftElbow, false);
+
+            SetEllipsePosition(ellipseRightShoulder, RightShoulder, false);
+            SetEllipsePosition(ellipseLeftShoulder, LeftShoulder, false);
         }
 
         protected void UpdateImage(ImageSource source)
@@ -408,6 +418,10 @@ namespace KinectPowerPointControl
             ellipseRightWrist.Visibility = System.Windows.Visibility.Visible;
             ellipseSpine.Visibility = System.Windows.Visibility.Visible;
             ellipseCenterHip.Visibility = System.Windows.Visibility.Visible;
+            ellipseRightElbow.Visibility = System.Windows.Visibility.Visible;
+            ellipseLeftElbow.Visibility = System.Windows.Visibility.Visible;
+            ellipseRightShoulder.Visibility = System.Windows.Visibility.Visible;
+            ellipseLeftShoulder.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
