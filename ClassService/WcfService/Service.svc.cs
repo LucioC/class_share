@@ -180,8 +180,8 @@ namespace ClassService
                 ImageForm.StartThread();
 
                 //Initialize Kinect windows for gesture and speech recognition
-                //KinectWindow.setMode(PRESENTATION_MODE.IMAGE);
-                //KinectWindow.StartThread();
+                KinectWindow.setMode(PRESENTATION_MODE.IMAGE);
+                KinectWindow.StartThread();
 
                 return new Result("Image Opened");
             }
