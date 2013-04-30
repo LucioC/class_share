@@ -15,8 +15,7 @@
         MinHeight="700"
         FontFamily="Segoe UI"
         >
-    
-<Window.Resources>
+    <Window.Resources>
         <PathGeometry x:Key="ChevronGeometry" x:Shared="False">
             F1M150.001,146.9932L126.565,169.3822L126.565,153.5962L150.001,130.6182L173.435,153.5962L173.435,169.3822z
         </PathGeometry>

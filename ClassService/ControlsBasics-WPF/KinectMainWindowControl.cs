@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows.Threading;
 using ServiceCore;
 using Microsoft.Samples.Kinect.ControlsBasics;
+using System.Windows.Media;
 
 namespace KinectPowerPointControl
 {
@@ -19,7 +20,6 @@ namespace KinectPowerPointControl
 
         public KinectMainWindowControl()
         {
-
         }
 
         public void StartThread()
@@ -46,11 +46,24 @@ namespace KinectPowerPointControl
         }
 
         [STAThread]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "4.0.0.0")]
         public void StartWindow()
-        {
+        {            
+            /*ResourceDictionary resourceDictionary = new ResourceDictionary();// { Source = new Uri(@"Common/StandardStyles.xaml") };
+            resourceDictionary.Add("BlueBrush", new SolidColorBrush() { Color = (Color)ColorConverter.ConvertFromString("#FF00BCF2") });
+            resourceDictionary.Add("MediumGreyBrush", new SolidColorBrush() { Color = (Color)ColorConverter.ConvertFromString("#ff6e6e6e") });
+            app.Resources = resourceDictionary; */
+
+            Microsoft.Samples.Kinect.ControlsBasics.App app = new Microsoft.Samples.Kinect.ControlsBasics.App();
+            app.InitializeComponent();
+            app.Run();
+
+            /*
             window = new MainWindow();
             window.Show();
-            System.Windows.Threading.Dispatcher.Run();
+            //app.Run(window);
+            System.Windows.Threading.Dispatcher.Run(); */
         }
 
         public bool IsThreadRunning()

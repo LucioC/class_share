@@ -108,6 +108,14 @@
       <Project>{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}</Project>
       <Name>KinectPowerPointControl</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Microsoft.Kinect.Toolkit.Controls\Microsoft.Kinect.Toolkit.Controls.csproj">
+      <Project>{4508C4D1-85BB-4F3F-9E3B-CC93D231C65D}</Project>
+      <Name>Microsoft.Kinect.Toolkit.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.Kinect.Toolkit\Microsoft.Kinect.Toolkit.csproj">
+      <Project>{C6F9C31B-6130-4443-A5CC-EF0664552ECD}</Project>
+      <Name>Microsoft.Kinect.Toolkit</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PowerPointLibrary\PowerPointLibrary.csproj">
       <Project>{244A6FAF-A40B-425B-A063-74672E630540}</Project>
       <Name>PowerPointLibrary</Name>

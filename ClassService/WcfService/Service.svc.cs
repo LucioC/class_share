@@ -22,6 +22,7 @@ namespace ClassService
         public static IImageService ImageForm;
         public static IKinectService KinectWindow;
         private ServiceFileManager fileManager;
+        private static KinectMainWindowControl mainWindow;
 
         public Service()
         {
@@ -33,6 +34,8 @@ namespace ClassService
             KinectWindow = new KinectWindowControl();
             ImageForm = new ImageFormControl();
             PresentationControl = new PowerPointControl();
+            mainWindow = new KinectMainWindowControl();
+            mainWindow.StartThread();
         }
 
         public Result PresentationCommand(PresentationAction action)
@@ -177,8 +180,8 @@ namespace ClassService
                 ImageForm.StartThread();
 
                 //Initialize Kinect windows for gesture and speech recognition
-                KinectWindow.setMode(PRESENTATION_MODE.IMAGE);
-                KinectWindow.StartThread();
+                //KinectWindow.setMode(PRESENTATION_MODE.IMAGE);
+                //KinectWindow.StartThread();
 
                 return new Result("Image Opened");
             }
