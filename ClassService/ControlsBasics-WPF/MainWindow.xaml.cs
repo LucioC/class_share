@@ -185,10 +185,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private void KinectTileButtonClick(object sender, RoutedEventArgs e)
         {
             var button = (KinectTileButton)e.OriginalSource;
-            //var selectionDisplay = new SelectionDisplay(button.Label as string);
-            //this.kinectRegionGrid.Children.Add(selectionDisplay);
-
-
+            var selectionDisplay = new SelectionDisplay(button.Label as string);
+            this.kinectRegionGrid.Children.Add(selectionDisplay);
 
             e.Handled = true;
         }
