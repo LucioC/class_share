@@ -11,10 +11,8 @@ namespace KinectPowerPointControl.Gesture
         {
             gestureRecognizers.Add(new ZoomGesture());
             gestureRecognizers.Add(new RotationGesture());
-            gestureRecognizers.Add(new Move());
             gestureRecognizers.Add(new JoinHandsGesture());
-            gestureRecognizers.Add(new OpenArmsGesture());
-            gestureRecognizers.Add(new OutstretchedArmGesture());
+            gestureRecognizers.Add(new OutstretchedArmMOvementGesture());
         }
     }
 }

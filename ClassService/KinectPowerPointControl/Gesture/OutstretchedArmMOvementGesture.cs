@@ -7,16 +7,17 @@ using CommonUtils;
 
 namespace KinectPowerPointControl.Gesture
 {
-    public class OutstretchedArmGesture: IGestureRecognizer
+    public class OutstretchedArmMOvementGesture: IGestureRecognizer
     {
-        public OutstretchedArmGesture()
+        public OutstretchedArmMOvementGesture()
         {
             Name = GestureEvents.OUTSTRETCHED_ARM;
         }
 
-        int state = 0;
+        private int state = 0;
+        private SkeletonPoint initialPoint;
 
-        float percentage = 0.7f;
+        private float percentage = 0.7f;
 
         public bool IdentifyGesture(Skeleton skeleton)
         {
@@ -50,13 +51,18 @@ namespace KinectPowerPointControl.Gesture
                 }
                 {
                     state = 1;
-                    Output.Debug("OutstretchedArm", "Is Stresched");
+                    Output.Debug("OutstretchedArmMovement", "Is Stresched");
                     return true;
                 }
             }
 
+            if (state == 1)
+            {
+
+            }
+
             if (state != 0)
-                Output.Debug("OutstretchedArm", "Arm not stretched");
+                Output.Debug("OutstretchedArmMovement", "Arm not stretched");
 
             state = 0;
             return false;

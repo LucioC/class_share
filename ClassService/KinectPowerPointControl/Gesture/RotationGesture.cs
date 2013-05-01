@@ -3,85 +3,81 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Kinect;
+using CommonUtils;
 
 namespace KinectPowerPointControl.Gesture
 {
     public class RotationGesture: IGestureRecognizer
     {
-        protected IntervalControl intervalControl;
-
-        private bool started = false;
         private float handsYDistanceToStart = 0.03f;
+        private int state = 0;
+
+        private double initialRightHeight = 0;
+        private double initialLeftHeight = 0;
+
+        private double heightDelta = 0.05;
 
         public RotationGesture()
         {
-            intervalControl = new IntervalControl();
-            Interval = 300;
         }
 
         public bool IdentifyGesture(Skeleton skeleton)
         {
-            intervalControl.Interval = Interval;
-
-            if (!intervalControl.HasIntervalPassed()) return false;
-
             var rightHand = skeleton.Joints[JointType.HandRight];
             var leftHand = skeleton.Joints[JointType.HandLeft];
             var spine = skeleton.Joints[JointType.Spine];
             var rightShoulder = skeleton.Joints[JointType.ShoulderRight];
             var leftShoulder = skeleton.Joints[JointType.ShoulderLeft];
 
-            //Hands should be above spine
-            if (rightHand.Position.Y < spine.Position.Y 
-                || leftHand.Position.Y < spine.Position.Y
-                || rightHand.Position.X > spine.Position.X + 0.25
-                || leftHand.Position.X < spine.Position.X - 0.25)
-            {
-                started = false;
-                return false;
-            }
-            else //Verify if hands are at the same height to start and are not so apart
-            if (!started 
-                && !isClose(rightHand.Position.Y, leftHand.Position.Y, handsYDistanceToStart) 
+            if( 
+                rightHand.Position.Y <= spine.Position.Y
+                && leftHand.Position.Y <= spine.Position.Y 
                 )
             {
-                started = false;
+                state = 0;
                 return false;
             }
 
-            if (!started )
+            //Hands should be above spine
+            if (
+                isClose(rightHand.Position.Y, leftHand.Position.Y, handsYDistanceToStart)
+                )
             {
+                if (state != 1)
+                    Output.Debug("RotationGesture", "hand at same height");
                 //Gesture was started. Hands are at the same height
-                started = true;
+                initialRightHeight = rightHand.Position.Y;
+                initialLeftHeight = leftHand.Position.Y;
+                state = 1;
                 return false;
             }
 
-            //If got here is because gesture was started, now just verify when one hand is above the other
-
-            //Is getting weird results with this, comment for now
-          /*  float newDistanceX = GestureUtils.calculateDistanceX(rightHand.Position, leftHand.Position);
-            if (newDistanceX > 0.1 )
+            if (state == 1)
             {
+                //Output.Debug("RotationGesture", "initial right " + initialRightHeight.ToString() + " " + rightHand.Position.Y);
+                //Output.Debug("RotationGesture", "initial left " + initialLeftHeight.ToString() + " " + leftHand.Position.Y);
+
+                //Right hand is above left
+                if (rightHand.Position.Y > initialRightHeight + heightDelta && leftHand.Position.Y < initialLeftHeight - heightDelta)
+                {
+                    Name = GestureEvents.ROTATE_LEFT;
+                    state = 2;
+                    Output.Debug("RotationGesture", "Rotate Left " + initialRightHeight.ToString() + " " + initialLeftHeight.ToString());
+                    return true;
+                }
+                else
+                    if (rightHand.Position.Y < initialRightHeight - heightDelta && leftHand.Position.Y > initialLeftHeight + heightDelta)
+                    {
+                        Name = GestureEvents.ROTATE_RIGHT;
+                        state = 2;
+                        Output.Debug("RotationGesture", "Rotate Right " + initialRightHeight.ToString() + " " + initialLeftHeight.ToString());
+                        return true;
+                    }
+
                 return false;
-            } */
-
-            //Right hand is above left
-            if (rightHand.Position.Y > leftHand.Position.Y + 0.1)
-            {
-                Name = GestureEvents.ROTATE_LEFT;
-                intervalControl.TriggerIt();
-                started = false;
-                return true;
-            }
-            else
-            if (leftHand.Position.Y > rightHand.Position.Y + 0.1)
-            {
-                Name = GestureEvents.ROTATE_RIGHT;
-                intervalControl.TriggerIt();
-                started = false;
-                return true;
             }
 
+            state = 0;
             return false;
         }
 
