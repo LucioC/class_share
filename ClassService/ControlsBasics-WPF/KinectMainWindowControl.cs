@@ -18,6 +18,8 @@ namespace KinectPowerPointControl
         private Thread thread = null;
         private Window window = null;
 
+        public event MessageEvent MessageSent;
+
         public KinectMainWindowControl()
         {
         }

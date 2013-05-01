@@ -31,6 +31,8 @@ namespace KinectPowerPointControl
         AbstractKinectGestureRecognition gestureRecognition;
         ISpeechGrammar grammar;
 
+        public event MessageEvent MessageSent;
+
         public PRESENTATION_MODE mode { get; set; }
         
         bool isCirclesVisible = true;
@@ -149,6 +151,7 @@ namespace KinectPowerPointControl
         void Current_Exit(object sender, System.EventArgs e)
         {
             kinectControl.StopSensor();
+            Application.Current.Shutdown();
         }
 
         void MainWindow_KeyDown(object sender, KeyEventArgs e)
@@ -310,6 +313,11 @@ namespace KinectPowerPointControl
         {
             //System.Windows.Forms.SendKeys.SendWait("{ESC}");
             //this.Close();
+
+            if (this.MessageSent != null)
+            {
+                this.MessageSent("closeimage");
+            }
         }
 
         #region imageControl

@@ -27,6 +27,7 @@ namespace ClassService
         public Service()
         {
             fileManager = new ServiceFileManager();
+            KinectWindow.MessageSent += this.MessageReceived;
         }
 
         static Service()
@@ -36,6 +37,14 @@ namespace ClassService
             PresentationControl = new PowerPointControl();
             mainWindow = new KinectMainWindowControl();
             mainWindow.StartThread();
+        }
+
+        public void MessageReceived(string message)
+        {
+            if (message == "closeimage")
+            {
+                CloseCurrentImage();
+            }
         }
 
         public Result PresentationCommand(PresentationAction action)

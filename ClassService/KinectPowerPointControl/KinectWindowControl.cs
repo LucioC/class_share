@@ -6,6 +6,7 @@ using System.Windows;
 using System.Threading;
 using System.Windows.Threading;
 using ServiceCore;
+using CommonUtils;
 
 namespace KinectPowerPointControl
 {
@@ -14,11 +15,23 @@ namespace KinectPowerPointControl
         delegate void CloseDelegate();
         private PRESENTATION_MODE mode = PRESENTATION_MODE.POWERPOINT;
         private Thread thread = null;
-        private Window window = null;
+        private MainWindow window = null;
+        
+        public event MessageEvent MessageSent;
 
         public KinectWindowControl()
         {
 
+        }
+
+        public void MessageEvent(string message)
+        {
+            Output.Debug("KinectWindowControl", message);
+
+            if (this.MessageSent != null)
+            {
+                this.MessageSent(message);
+            }
         }
 
         public void StartThread()
@@ -48,6 +61,7 @@ namespace KinectPowerPointControl
         public void StartWindow()
         {
             window = new MainWindow(mode);
+            window.MessageSent += this.MessageEvent;
             window.Show();
             System.Windows.Threading.Dispatcher.Run();
         }

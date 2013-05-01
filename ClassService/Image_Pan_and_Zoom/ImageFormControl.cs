@@ -19,6 +19,8 @@ namespace ImageZoom
         private ImageZoomMainForm imageForm = null;
         private FileManager fileManager;
 
+        public event MessageEvent MessageSent;
+
         public ImageFormControl(String imageFileToOpen)
         {
             FileName = imageFileToOpen;

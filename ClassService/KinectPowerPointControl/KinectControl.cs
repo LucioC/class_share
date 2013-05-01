@@ -240,7 +240,14 @@ namespace KinectPowerPointControl
 
         public ColorImagePoint MapSkeletonPointToColor(Joint joint)
         {
-            return sensor.MapSkeletonPointToColor(joint.Position, sensor.ColorStream.Format);
+            if (this.sensor != null)
+            {
+                return sensor.MapSkeletonPointToColor(joint.Position, sensor.ColorStream.Format);
+            }
+            else
+            {
+                return new ColorImagePoint();
+            }
         }
 
         public void StopSensor()
