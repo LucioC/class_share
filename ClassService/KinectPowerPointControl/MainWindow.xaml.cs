@@ -150,7 +150,7 @@ namespace KinectPowerPointControl
 
         void Current_Exit(object sender, System.EventArgs e)
         {
-            kinectControl.StopSensor();
+            //kinectControl.StopSensor();
             Application.Current.Shutdown();
         }
 
@@ -311,12 +311,9 @@ namespace KinectPowerPointControl
 
         public void ProcessCloseImage()
         {
-            //System.Windows.Forms.SendKeys.SendWait("{ESC}");
-            //this.Close();
-
             if (this.MessageSent != null)
             {
-                this.MessageSent("closeimage");
+                this.MessageSent.BeginInvoke("closeimage", null, null);
             }
         }
 

@@ -30,7 +30,7 @@ namespace KinectPowerPointControl
 
             if (this.MessageSent != null)
             {
-                this.MessageSent(message);
+                this.MessageSent.BeginInvoke(message, null, null);
             }
         }
 
