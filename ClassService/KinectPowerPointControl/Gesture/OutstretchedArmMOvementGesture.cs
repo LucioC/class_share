@@ -7,17 +7,19 @@ using CommonUtils;
 
 namespace KinectPowerPointControl.Gesture
 {
-    public class OutstretchedArmMOvementGesture: IGestureRecognizer
+    public class OutstretchedArmMovementGesture: IGestureRecognizer
     {
-        public OutstretchedArmMOvementGesture()
+        public OutstretchedArmMovementGesture()
         {
             Name = GestureEvents.OUTSTRETCHED_ARM;
         }
 
         private int state = 0;
         private SkeletonPoint initialPoint;
-
+        
         private float percentage = 0.7f;
+
+        private float distanceIntervalToMovement = 0.08f;
 
         public bool IdentifyGesture(Skeleton skeleton)
         {
@@ -44,23 +46,55 @@ namespace KinectPowerPointControl.Gesture
             if (distanceZRightShoulderAndElbow > distanceRightShoulderAndElbow * percentage
                 && distanceZRightElbowAndHand > distanceRightElbowAndHand * percentage)
             {
-                //Already fired that
-                if (state == 1)
-                {
-                    return false;
-                }
+                if (state != 1)
                 {
                     state = 1;
                     Output.Debug("OutstretchedArmMovement", "Is Stresched");
+                    initialPoint = rightHand.Position;
                     return true;
                 }
+            }
+            else
+            {
+                state = 0;
+                return false;
             }
 
             if (state == 1)
             {
+                double deltaX = rightHand.Position.X - initialPoint.X;
+                double deltaY = rightHand.Position.Y - initialPoint.Y;
 
+                if (deltaX > distanceIntervalToMovement)
+                {
+                    Name = GestureEvents.MOVE_LEFT;
+                    initialPoint.X += distanceIntervalToMovement;
+                    return true;
+                }
+                else if (deltaX < -distanceIntervalToMovement)
+                {
+                    Name = GestureEvents.MOVE_RIGHT;
+                    initialPoint.X -= distanceIntervalToMovement;
+                    return true;
+                }
+                else if (deltaY > distanceIntervalToMovement)
+                {
+                    Name = GestureEvents.MOVE_DOWN;
+                    initialPoint.Y += distanceIntervalToMovement;
+                    return true;
+                }
+                else if (deltaY < -distanceIntervalToMovement)
+                {
+                    Name = GestureEvents.MOVE_UP;
+                    initialPoint.Y -= distanceIntervalToMovement;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-
+            
             if (state != 0)
                 Output.Debug("OutstretchedArmMovement", "Arm not stretched");
 

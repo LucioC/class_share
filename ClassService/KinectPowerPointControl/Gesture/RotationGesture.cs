@@ -31,7 +31,7 @@ namespace KinectPowerPointControl.Gesture
 
             if( 
                 rightHand.Position.Y <= spine.Position.Y
-                && leftHand.Position.Y <= spine.Position.Y 
+                || leftHand.Position.Y <= spine.Position.Y 
                 )
             {
                 state = 0;
