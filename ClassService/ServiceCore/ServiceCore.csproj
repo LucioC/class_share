@@ -40,9 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractCommunicator.cs" />
+    <Compile Include="AbstractNonBlockingSpeaker.cs" />
+    <Compile Include="IListener.cs" />
     <Compile Include="IKinectService.cs" />
     <Compile Include="IPowerPointControl.cs" />
     <Compile Include="IImageService.cs" />
+    <Compile Include="ISpeaker.cs" />
     <Compile Include="IWindowThreadControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -11,16 +11,14 @@ using ServiceCore;
 
 namespace ImageZoom
 {
-    public class ImageFormControl : IImageService
+    public class ImageFormControl : AbstractCommunicator,IImageService
     {
         delegate void CloseDelegate();
         private Thread thread;
         public String FileName { get; set; }
         private ImageZoomMainForm imageForm = null;
         private FileManager fileManager;
-
-        public event MessageEvent MessageSent;
-
+        
         public ImageFormControl(String imageFileToOpen)
         {
             FileName = imageFileToOpen;

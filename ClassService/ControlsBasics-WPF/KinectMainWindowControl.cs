@@ -11,14 +11,12 @@ using System.Windows.Media;
 
 namespace KinectPowerPointControl
 {
-    public class KinectMainWindowControl : IKinectService
+    public class KinectMainWindowControl : AbstractCommunicator, IKinectService
     {
         delegate void CloseDelegate();
         private PRESENTATION_MODE mode = PRESENTATION_MODE.POWERPOINT;
         private Thread thread = null;
         private Window window = null;
-
-        public event MessageEvent MessageSent;
 
         public KinectMainWindowControl()
         {

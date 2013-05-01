@@ -208,6 +208,7 @@ namespace KinectPowerPointControl
             else if (gesture == GestureEvents.JOIN_HANDS)
             {
                 ProcessCloseImage();
+                ProcessClosePresentation();
             }
         }
 
@@ -305,8 +306,10 @@ namespace KinectPowerPointControl
 
         public void ProcessClosePresentation()
         {
-            System.Windows.Forms.SendKeys.SendWait("{ESC}");
-            this.Close();
+            if (this.MessageSent != null)
+            {
+                this.MessageSent.BeginInvoke("closepresentation", null, null);
+            }
         }
 
         public void ProcessCloseImage()

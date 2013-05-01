@@ -45,6 +45,10 @@ namespace ClassService
             {
                 CloseCurrentImage();
             }
+            else if (message == "closepresentation")
+            {
+                ClosePresentation();
+            }
         }
 
         public Result PresentationCommand(PresentationAction action)
@@ -135,13 +139,14 @@ namespace ClassService
         {
             try
             {
-                PresentationControl.ClosePresentation();
                 KinectWindow.StopThread();
+                PresentationControl.ClosePresentation();
                 return new Result("Presentation was closed");
             }
             catch(Exception e)
             {
-                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+                if(WebOperationContext.Current != null)
+                    WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
                 return new Result(e.Message);
             }
         }

@@ -5,12 +5,10 @@ using System.Text;
 
 namespace ServiceCore
 {
-    public delegate void MessageEvent(string message);
-    public interface IWindowThreadControl
+    public interface IWindowThreadControl: ISpeaker, IListener
     {
         void StartThread();
         void StopThread();
         Boolean IsThreadRunning();
-        event MessageEvent MessageSent;
     }
 }

@@ -10,28 +10,23 @@ using CommonUtils;
 
 namespace KinectPowerPointControl
 {
-    public class KinectWindowControl : IKinectService
+    public class KinectWindowControl : AbstractCommunicator, IKinectService
     {
         delegate void CloseDelegate();
         private PRESENTATION_MODE mode = PRESENTATION_MODE.POWERPOINT;
         private Thread thread = null;
         private MainWindow window = null;
-        
-        public event MessageEvent MessageSent;
 
         public KinectWindowControl()
         {
 
         }
 
-        public void MessageEvent(string message)
+        public override void ReceiveMessage(string message)
         {
             Output.Debug("KinectWindowControl", message);
 
-            if (this.MessageSent != null)
-            {
-                this.MessageSent.BeginInvoke(message, null, null);
-            }
+            base.SendMessage(message);
         }
 
         public void StartThread()
@@ -61,7 +56,7 @@ namespace KinectPowerPointControl
         public void StartWindow()
         {
             window = new MainWindow(mode);
-            window.MessageSent += this.MessageEvent;
+            window.MessageSent += this.ReceiveMessage;
             window.Show();
             System.Windows.Threading.Dispatcher.Run();
         }
