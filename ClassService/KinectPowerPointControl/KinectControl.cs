@@ -20,7 +20,15 @@ namespace KinectPowerPointControl
     public class KinectControl
     {
         KinectSensor sensor;
-        public AbstractKinectGestureRecognition GestureRecognition { get; set; }
+
+        private AbstractKinectGestureRecognition gestureRecognition;
+        public AbstractKinectGestureRecognition GestureRecognition { 
+            get { return this.gestureRecognition; } 
+            set { 
+                    this.gestureRecognition = value;
+                    if (this.gestureRecognition != null && this.kinectInteraction != null) this.kinectInteraction.GestureRecognition = this.gestureRecognition;
+                } 
+        }
 
         //For Image 
         byte[] colorBytes;
@@ -54,7 +62,7 @@ namespace KinectPowerPointControl
         {
             this.GestureRecognition = gestureRecognition;
             this.SpeechGrammar = speechGrammar;
-            this.kinectInteraction = new KinectInteractionEvents();
+            this.kinectInteraction = new KinectInteractionEvents(GestureRecognition);
         }
 
         public void StartKinect()

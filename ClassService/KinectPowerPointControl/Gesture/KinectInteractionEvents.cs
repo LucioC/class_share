@@ -12,12 +12,32 @@ namespace KinectPowerPointControl.Gesture
     {
         private UserInfo[] userInfos;
 
+        public AbstractKinectGestureRecognition GestureRecognition {get; set;}
+
+        public KinectInteractionEvents()
+        {
+            this.GestureRecognition = null;
+        }
+
+        public KinectInteractionEvents(AbstractKinectGestureRecognition gestureRecognition)
+        {
+            this.GestureRecognition = gestureRecognition;
+        }
+
         public void AllocateUserInfos(int size)
         {
             this.userInfos = new UserInfo[size];
         }
 
         int pressState = 0;
+
+        protected void notifyGestureRecognition(string gesture)
+        {
+            if (GestureRecognition != null)
+            {
+                this.GestureRecognition.TriggerGestureEvent(gesture);
+            }
+        }
 
         /// <summary>
         /// Event handler for InteractionStream's InteractionFrameReady event
@@ -77,11 +97,11 @@ namespace KinectPowerPointControl.Gesture
 
                                 pressState = 1;
                             }
-
-
+                        
                         if (handPointer.HandEventType == InteractionHandEventType.Grip)
                         {
                             Output.Debug("KinectControl", "Hand Grip");
+                            notifyGestureRecognition(GestureEvents.CLOSE_HAND);
                         }
                     }
                 }

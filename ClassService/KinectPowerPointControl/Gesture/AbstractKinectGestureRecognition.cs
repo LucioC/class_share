@@ -72,7 +72,7 @@ namespace KinectPowerPointControl.Gesture
             }
         }
 
-        protected virtual void TriggerGestureEvent(String gesture)
+        public virtual void TriggerGestureEvent(String gesture)
         {
             //Trigger event so the recognized gesture can be processed and generate some action outside of this class
             if (this.GestureRecognized != null)

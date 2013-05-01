@@ -25,5 +25,6 @@ namespace KinectPowerPointControl.Gesture
         public const String OPEN_ARMS = "openarms";
 
         public const String OUTSTRETCHED_ARM = "outstretchedarm";
+        public const String CLOSE_HAND = "closehand";
     }
 }

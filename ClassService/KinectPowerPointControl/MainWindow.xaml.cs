@@ -202,6 +202,10 @@ namespace KinectPowerPointControl
             {
                 ProcessRotateLeft();
             }
+            else if (gesture == GestureEvents.JOIN_HANDS)
+            {
+                ProcessCloseImage();
+            }
         }
 
         private void Minimize()
@@ -304,8 +308,8 @@ namespace KinectPowerPointControl
 
         public void ProcessCloseImage()
         {
-            System.Windows.Forms.SendKeys.SendWait("{ESC}");
-            this.Close();
+            //System.Windows.Forms.SendKeys.SendWait("{ESC}");
+            //this.Close();
         }
 
         #region imageControl
