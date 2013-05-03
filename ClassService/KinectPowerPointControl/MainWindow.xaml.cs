@@ -151,6 +151,7 @@ namespace KinectPowerPointControl
         void Current_Exit(object sender, System.EventArgs e)
         {
             //kinectControl.StopSensor();
+            kinectControl.StopListeningKinect();
             Application.Current.Shutdown();
         }
 

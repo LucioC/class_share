@@ -95,15 +95,22 @@ namespace KinectPowerPointControl
             sensor.Start();
 
             sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
-            sensor.ColorFrameReady += new EventHandler<ColorImageFrameReadyEventArgs>(ColorFrameReady);
+            sensor.ColorFrameReady += this.ColorFrameReady;
 
             sensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
             sensor.SkeletonStream.Enable();
-            sensor.SkeletonFrameReady += new EventHandler<SkeletonFrameReadyEventArgs>(SkeletonFrameReady);
+            sensor.SkeletonFrameReady += this.SkeletonFrameReady;
 
             sensor.DepthFrameReady += this.SensorDepthFrameReady;
 
             sensor.ElevationAngle = 0;
+        }
+
+        public void StopListeningKinect()
+        {
+            sensor.DepthFrameReady -= this.SensorDepthFrameReady;
+            sensor.SkeletonFrameReady -= this.SkeletonFrameReady;
+            sensor.ColorFrameReady -= this.ColorFrameReady;
         }
 
         protected static RecognizerInfo GetKinectRecognizer()

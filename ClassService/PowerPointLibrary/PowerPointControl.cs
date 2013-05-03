@@ -73,12 +73,18 @@ namespace PowerPointPresentation
 
         public void ClosePresentation()
         {
-            presentation.Close();
-            Marshal.FinalReleaseComObject(presentation);
+            try
+            {
+                presentation.Close();
+                Marshal.FinalReleaseComObject(presentation);
 
-            application.Quit();
-            Marshal.FinalReleaseComObject(application);
-            GC.Collect();
+                application.Quit();
+                Marshal.FinalReleaseComObject(application);
+                GC.Collect();
+            }
+            catch (Exception e)
+            {
+            }
 
             application = null;
             presentation = null;
