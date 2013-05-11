@@ -83,6 +83,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefaultCommunicatorTest.cs" />
     <Compile Include="CommonTest.cs" />
     <Compile Include="unit\GestureUtilsTest.cs" />
     <Compile Include="integration\ImageUtilsTest.cs" />

@@ -11,7 +11,7 @@ using System.Windows.Media;
 
 namespace KinectPowerPointControl
 {
-    public class KinectMainWindowControl : AbstractCommunicator, IKinectService
+    public class KinectMainWindowControl : DefaultCommunicator, IKinectService
     {
         delegate void CloseDelegate();
         private PRESENTATION_MODE mode = PRESENTATION_MODE.POWERPOINT;

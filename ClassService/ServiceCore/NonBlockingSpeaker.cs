@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ServiceCore
 {
-    public class AbstractNonBlockingSpeaker: ISpeaker
+    public class NonBlockingSpeaker: ISpeaker
     {
         public event MessageEvent MessageSent;
 

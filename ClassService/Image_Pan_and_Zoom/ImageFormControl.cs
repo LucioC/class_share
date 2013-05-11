@@ -11,7 +11,7 @@ using ServiceCore;
 
 namespace ImageZoom
 {
-    public class ImageFormControl : AbstractCommunicator,IImageService
+    public class ImageFormControl : DefaultCommunicator,IImageService
     {
         delegate void CloseDelegate();
         private Thread thread;

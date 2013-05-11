@@ -40,8 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractCommunicator.cs" />
-    <Compile Include="AbstractNonBlockingSpeaker.cs" />
+    <Compile Include="DefaultCommunicator.cs" />
+    <Compile Include="NonBlockingSpeaker.cs" />
     <Compile Include="IListener.cs" />
     <Compile Include="IKinectService.cs" />
     <Compile Include="IPowerPointControl.cs" />

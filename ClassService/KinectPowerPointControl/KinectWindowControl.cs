@@ -10,7 +10,7 @@ using CommonUtils;
 
 namespace KinectPowerPointControl
 {
-    public class KinectWindowControl : AbstractCommunicator, IKinectService
+    public class KinectWindowControl : DefaultCommunicator, IKinectService
     {
         delegate void CloseDelegate();
         private PRESENTATION_MODE mode = PRESENTATION_MODE.POWERPOINT;
