@@ -52,6 +52,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FileKinectButton.cs" />
     <Compile Include="KinectHoverButton.cs" />
     <Compile Include="KinectMainWindowControl.cs" />
     <Compile Include="SelectionDisplay.xaml.cs">

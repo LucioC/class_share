@@ -17,6 +17,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     using ServiceCore;
     using System.Windows.Input;
     using CommonUtils;
+    using ClassService.MainWindow;
 
     /// <summary>
     /// Interaction logic for MainWindow
@@ -34,6 +35,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private const int PixelScrollByAmount = 20;
 
         private readonly KinectSensorChooser sensorChooser;
+
+        public event MessageEvent MessageSent;
 
         private InterceptKeyboard interceptor;
 
@@ -97,9 +100,10 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             for (int i = 0; i < filePaths.Length; ++i)
             {
                 string file = filePaths[i];
-                KinectTileButton tile = new KinectTileButton();
+                FileKinectButton tile = new FileKinectButton();
                 tile.Width = 350;
                 tile.Label = i.ToString() + " " + System.IO.Path.GetFileName(file);
+                tile.FilePath = file;
                 this.wrapPanel.Children.Add(tile);
             }
 
@@ -205,12 +209,14 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         /// <param name="e">Event arguments</param>
         private void KinectTileButtonClick(object sender, RoutedEventArgs e)
         {
-            var button = (KinectTileButton)e.OriginalSource;
-            var selectionDisplay = new SelectionDisplay(button.Label as string);
+            var button = (FileKinectButton)e.OriginalSource;
+            var selectionDisplay = new SelectionDisplay(button.FilePath as string);
             this.kinectRegionGrid.Children.Add(selectionDisplay);
-
+            
             e.Handled = true;
         }
+
+
 
         /// <summary>
         /// Handle paging right (next button).
