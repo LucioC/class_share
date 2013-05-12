@@ -13,5 +13,15 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     /// </summary>
     public partial class App : Application
     {
+        public App(): base()
+        {
+        }
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            MainWindow window = new MainWindow();
+            Application.Current.MainWindow = window;
+            this.MainWindow.Show();
+        }
     }
 }

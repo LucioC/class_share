@@ -8,15 +8,16 @@ using System.Windows.Threading;
 using ServiceCore;
 using Microsoft.Samples.Kinect.ControlsBasics;
 using System.Windows.Media;
+using CommonUtils;
 
 namespace KinectPowerPointControl
 {
-    public class KinectMainWindowControl : DefaultCommunicator, IKinectService
+    public class KinectMainWindowControl : DefaultCommunicator, IWindowThreadControl
     {
         delegate void CloseDelegate();
-        private PRESENTATION_MODE mode = PRESENTATION_MODE.POWERPOINT;
+        public string FilesFolder { get; set; }
         private Thread thread = null;
-        private Window window = null;
+        private MainWindow window = null;
 
         public KinectMainWindowControl()
         {
@@ -49,21 +50,32 @@ namespace KinectPowerPointControl
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "4.0.0.0")]
         public void StartWindow()
-        {            
+        {
             Microsoft.Samples.Kinect.ControlsBasics.App app = new Microsoft.Samples.Kinect.ControlsBasics.App();
             app.InitializeComponent();
+            //Listen to the startup event
+            app.Startup += this.WindowStartup;
             app.Run();
+        }
+
+        private void WindowStartup( Object sender,  StartupEventArgs e)
+        {
+            //Get the main windows after created on startup
+            this.window = (MainWindow)((App)sender).MainWindow;
+            this.window.LoadFilesFromFolder(FilesFolder);
+            this.window.MessageSent += this.ReceiveMessage;
+        }
+
+        public virtual void ReceiveMessage(string message)
+        {
+            Output.Debug("Control", message);
+            SendMessage(message);
         }
 
         public bool IsThreadRunning()
         {
             if (thread == null || window == null || !thread.IsAlive) return false;
             return true;
-        }
-
-        public void setMode(PRESENTATION_MODE mode)
-        {
-            this.mode = mode;
         }
     }
 }

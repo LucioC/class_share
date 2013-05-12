@@ -8,6 +8,6 @@ namespace ClassService.MainWindow
 {
     public class FileKinectButton : KinectTileButton
     {
-        public String FilePath { get; set; }
+        public String FileName { get; set; }
     }
 }

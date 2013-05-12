@@ -27,7 +27,10 @@ namespace ClassService
         public Service()
         {
             fileManager = new ServiceFileManager();
+            mainWindow.FilesFolder = fileManager.FilesPath;
+            mainWindow.StartThread();
             KinectWindow.MessageSent += this.MessageReceived;
+            mainWindow.MessageSent += this.ReceiveCommand;
         }
 
         static Service()
@@ -36,7 +39,32 @@ namespace ClassService
             ImageForm = new ImageFormControl();
             PresentationControl = new PowerPointControl();
             mainWindow = new KinectMainWindowControl();
-            mainWindow.StartThread();
+        }
+
+        private void ReceiveCommand(string message)
+        {
+            string command = message;
+            int index = message.IndexOf(":");
+            if (index >= 0)
+            {
+                command = message.Substring(0, index);
+            }
+
+            if (command == "open")
+            {
+                string filename = message.Substring(index+1);
+
+                string extension = System.IO.Path.GetExtension(filename);
+
+                if (extension == ".jpg" || extension == ".jpeg" || extension == ".png")
+                {
+                    OpenImage(filename);
+                }
+                else if(extension == ".pptx" || extension == ".ppt")
+                {
+                    StartPresentation(filename);
+                }
+            }
         }
 
         public void MessageReceived(string message)
@@ -62,18 +90,19 @@ namespace ClassService
                 case PresentationAction.CLOSE: ClosePresentation();
                     break;
                 default:
-                    WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                    if (WebOperationContext.Current != null)
+                        WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
                     return new Result("wrong command argument option");
             }
 
             return new Result("Command Executed");
         }
-        
-        public Result StartPresentation(File file)
+
+        public Result StartPresentation(string filename)
         {
             try
             {
-                String localPath = fileManager.GetFilePath(file.FileName);
+                String localPath = fileManager.GetFilePath(filename);
 
                 //Open power point presentation
                 PresentationControl.PreparePresentation(localPath);
@@ -85,11 +114,17 @@ namespace ClassService
 
                 return new Result("Presentation has been started");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                if (WebOperationContext.Current != null)
+                    WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
                 return new Result("Something went wrong. Verify if the file name is corrected");
             }
+        }
+
+        public Result StartPresentation(File file)
+        {
+            return this.StartPresentation(file.FileName);
         }
 
         public Result NextSlide()
@@ -101,7 +136,8 @@ namespace ClassService
             }
             catch (Exception e)
             {
-                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+                if (WebOperationContext.Current != null)
+                    WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
                 return new Result(e.Message);
             }
         }
@@ -115,7 +151,8 @@ namespace ClassService
             }
             catch (Exception e)
             {
-                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+                if (WebOperationContext.Current != null)
+                    WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
                 return new Result(e.Message);
             }
         }
@@ -130,7 +167,8 @@ namespace ClassService
             }
             catch (Exception e)
             {
-                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                if (WebOperationContext.Current != null)
+                    WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
                 return new Result(e.Message);
             }
         }
@@ -176,21 +214,22 @@ namespace ClassService
                 return stream;
             }
         }
-        
-        public Result OpenImage(File fileName)
+
+        public Result OpenImage(string filename)
         {
             try
             {
                 Output.WriteToDebugOrConsole("open image function");
 
-                fileName.FileName = fileManager.GetFilePath(fileName.FileName);
+                filename = fileManager.GetFilePath(filename);
 
                 if (ImageForm.IsThreadRunning())
                 {
                     ImageForm.StopThread();
                 }
+
                 //Run image output window
-                ImageForm.SetFilePath(fileName.FileName);
+                ImageForm.SetFilePath(filename);
                 ImageForm.StartThread();
 
                 //Initialize Kinect windows for gesture and speech recognition
@@ -201,10 +240,16 @@ namespace ClassService
             }
             catch (Exception e)
             {
-                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
+                if (WebOperationContext.Current != null)
+                    WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.InternalServerError;
                 Output.WriteToDebugOrConsole(e.Message);
                 return new Result(e.Message);
             }
+        }
+
+        public Result OpenImage(File fileName)
+        {
+            return OpenImage(fileName.FileName);
         }
 
         public void ImageRotateRight()

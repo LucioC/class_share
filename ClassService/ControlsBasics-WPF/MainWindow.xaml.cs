@@ -40,6 +40,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
         private InterceptKeyboard interceptor;
 
+        public string FilesFolder { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class. 
         /// </summary>
@@ -73,8 +75,6 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
             this.WindowState = System.Windows.WindowState.Maximized;
 
-            LoadFilesFromFolder(@"C:\Users\lucioc\Dropbox\Public\Mestrado\Dissertacao\PrototypeFiles");
-
             interceptor = new InterceptKeyboard();
             InterceptKeyboard.SetHook(interceptor.hook);
             interceptor.KeyEvent += KeyDown;
@@ -102,12 +102,13 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                 string file = filePaths[i];
                 FileKinectButton tile = new FileKinectButton();
                 tile.Width = 350;
+                tile.Height = 200;
                 tile.Label = i.ToString() + " " + System.IO.Path.GetFileName(file);
-                tile.FilePath = file;
+                tile.FileName = System.IO.Path.GetFileName(file);
                 this.wrapPanel.Children.Add(tile);
             }
 
-            this.wrapPanel.Height = (filePaths.Length / 3) * 350;
+            this.wrapPanel.Height = ( (filePaths.Length + 2) / 3) * 220;
         }
 
         /// <summary>
@@ -192,6 +193,14 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             }
         }
 
+        private void SendMessage(string message)
+        {
+            if (this.MessageSent != null)
+            {
+                this.MessageSent(message);
+            }
+        }
+
         /// <summary>
         /// Execute shutdown tasks
         /// </summary>
@@ -210,13 +219,13 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private void KinectTileButtonClick(object sender, RoutedEventArgs e)
         {
             var button = (FileKinectButton)e.OriginalSource;
-            var selectionDisplay = new SelectionDisplay(button.FilePath as string);
-            this.kinectRegionGrid.Children.Add(selectionDisplay);
+            //var selectionDisplay = new SelectionDisplay(button.FilePath as string);
+            //this.kinectRegionGrid.Children.Add(selectionDisplay);
+
+            this.SendMessage("open:"+button.FileName);
             
             e.Handled = true;
         }
-
-
 
         /// <summary>
         /// Handle paging right (next button).
