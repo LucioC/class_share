@@ -152,8 +152,7 @@ namespace ImageZoom
             
             e.Graphics.DrawImage(i, imgx, imgy);
         }
-
-
+        
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             const int WM_KEYDOWN = 0x100;
@@ -201,6 +200,10 @@ namespace ImageZoom
                     case Keys.Home:
                         angle -= 90F;
                         pictureBox.Refresh();
+                        break;
+
+                    case Keys.Escape:
+                        this.Close();
                         break;
                 }
             }
