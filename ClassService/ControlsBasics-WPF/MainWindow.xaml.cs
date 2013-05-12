@@ -14,6 +14,9 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     using Microsoft.Kinect.Toolkit;
     using Microsoft.Kinect.Toolkit.Controls;
     using System.IO;
+    using ServiceCore;
+    using System.Windows.Input;
+    using CommonUtils;
 
     /// <summary>
     /// Interaction logic for MainWindow
@@ -31,6 +34,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private const int PixelScrollByAmount = 20;
 
         private readonly KinectSensorChooser sensorChooser;
+
+        private InterceptKeyboard interceptor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class. 
@@ -66,6 +71,22 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             this.WindowState = System.Windows.WindowState.Maximized;
 
             LoadFilesFromFolder(@"C:\Users\lucioc\Dropbox\Public\Mestrado\Dissertacao\PrototypeFiles");
+
+            interceptor = new InterceptKeyboard();
+            InterceptKeyboard.SetHook(interceptor.hook);
+            interceptor.KeyEvent += KeyDown;
+        }
+
+        public void KeyDown(int keyCode)
+        {
+            if (this.IsKeyboardFocused)
+            {
+                Output.Debug("MainWindow", "focused");
+            }
+            else
+            {
+                Output.Debug("MainWindow", keyCode.ToString());
+            }
         }
 
         public void LoadFilesFromFolder(string folderPath)
