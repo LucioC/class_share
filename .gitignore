@@ -42,3 +42,4 @@ obj/
 /ClassService/ControlsBasics-WPF/AnyCPU.Debug/*.pdb
 /ClassService/ControlsBasics-WPF/AnyCPU.Debug/*.dll
 /ClassService/ControlsBasics-WPF/AnyCPU.Debug/*.pdb
+/ClassService/TestResults/*.trx

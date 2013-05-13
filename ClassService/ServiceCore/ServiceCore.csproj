@@ -46,9 +46,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefaultCommunicator.cs" />
+    <Compile Include="Engine\ActionDependency.cs" />
+    <Compile Include="Engine\ActionState.cs" />
+    <Compile Include="Engine\ActionType.cs" />
+    <Compile Include="Engine\CommandTrigger.cs" />
     <Compile Include="GlobalSkeletonState.cs" />
+    <Compile Include="Engine\IModalityAction.cs" />
     <Compile Include="InterceptKeyboard.cs" />
     <Compile Include="IServiceCommands.cs" />
+    <Compile Include="Engine\MultimodalEngine.cs" />
     <Compile Include="NonBlockingSpeaker.cs" />
     <Compile Include="IListener.cs" />
     <Compile Include="IKinectService.cs" />
