@@ -96,6 +96,8 @@
     <Compile Include="KinectNotFoundException.cs" />
     <Compile Include="KinectSpeechRecognitionInitializationException.cs" />
     <Compile Include="KinectUtils.cs" />
+    <Compile Include="ServiceCommandsLocalActivation.cs" />
+    <Compile Include="ServiceCommandToKeyEvent.cs" />
     <Compile Include="Speech\AbstractGrammar.cs" />
     <Compile Include="Speech\PowerPointGrammar.cs" />
     <Compile Include="Gesture\PowerPointKinectGestureRecognition.cs" />

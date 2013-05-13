@@ -1,20 +1,18 @@
-﻿using ServiceCore;
+﻿using KinectPowerPointControl;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Threading;
+using ServiceCore;
 using Moq;
 using ServiceTest;
 
 namespace TestProject1
 {
-    
-    
     /// <summary>
-    ///This is a test class for AbstractCommunicatorTest and is intended
-    ///to contain all AbstractCommunicatorTest Unit Tests
+    ///This is a test class for ServiceCommandsLocalActivationTest and is intended
+    ///to contain all ServiceCommandsLocalActivationTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class DefaultCommunicatorTest
+    public class ServiceCommandsLocalActivationTest
     {
         private TestContext testContextInstance;
 
@@ -66,22 +64,39 @@ namespace TestProject1
 
 
         /// <summary>
-        ///A test for ReceiveMessage
+        ///A test for ProcessCloseImage
         ///</summary>
         [TestMethod()]
-        public void ReceiveMessageTest()
+        public void ProcessCloseImageTest()
         {
-            DefaultCommunicator speaker = new DefaultCommunicator();
             var listener = new Mock<DefaultCommunicator>();
+            MessageEvent messagesListeners = null;
+            messagesListeners += listener.Object.ReceiveMessage;
 
-            speaker.RegisterListener(listener.Object);
-
-            string message = "a message";
-            speaker.SendMessage(message);
+            ServiceCommandsLocalActivation target = new ServiceCommandsLocalActivation(messagesListeners);
+            target.ProcessCloseImage();
 
             CommonTest.WaitForEventAsyncInvoke();
 
-            listener.Verify(foo => foo.ReceiveMessage(message));
+            listener.Verify(foo => foo.ReceiveMessage(ServiceCommands.CLOSE_IMAGE));
+        }
+
+        /// <summary>
+        ///A test for ProcessClosePresentation
+        ///</summary>
+        [TestMethod()]
+        public void ProcessClosePresentationTest()
+        {
+            var listener = new Mock<DefaultCommunicator>();
+            MessageEvent messagesListeners = null;
+            messagesListeners += listener.Object.ReceiveMessage;
+
+            ServiceCommandsLocalActivation target = new ServiceCommandsLocalActivation(messagesListeners); // TODO: Initialize to an appropriate value
+            target.ProcessClosePresentation();
+
+            CommonTest.WaitForEventAsyncInvoke();
+
+            listener.Verify(foo => foo.ReceiveMessage(ServiceCommands.CLOSE_PRESENTATION));
         }
     }
 }

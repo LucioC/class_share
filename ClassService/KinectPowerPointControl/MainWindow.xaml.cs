@@ -40,14 +40,18 @@ namespace KinectPowerPointControl
         SolidColorBrush activeBrush = new SolidColorBrush(Colors.Green);
         SolidColorBrush inactiveBrush = new SolidColorBrush(Colors.DarkRed);
 
+        private ServiceCommandsLocalActivation commands;
+
         public MainWindow():this(PRESENTATION_MODE.IMAGE)
         {
-
+            
         }
 
         public MainWindow(PRESENTATION_MODE mode)
         {
             InitializeComponent();
+
+            commands = new ServiceCommandsLocalActivation(MessageSent);
 
             //Runtime initialization is handled when the window is opened. When the window
             //is closed, the runtime MUST be unitialized.
@@ -58,6 +62,13 @@ namespace KinectPowerPointControl
 
             this.mode = mode;
 
+            CreateGestureRecognition(mode);
+
+            Minimize();
+        }
+
+        private void CreateGestureRecognition(PRESENTATION_MODE mode)
+        {
             if (mode == PRESENTATION_MODE.POWERPOINT)
             {
                 gestureRecognition = new PowerPointKinectGestureRecognition();
@@ -67,8 +78,6 @@ namespace KinectPowerPointControl
                 gestureRecognition = new ImagePresentationKinectGestureRecognition();
             }
             gestureRecognition.GestureRecognized += this.GestureRecognized;
-
-            Minimize();
         }
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -94,6 +103,14 @@ namespace KinectPowerPointControl
 
             kinectControl.SpeechRecognized += this.SpeechRecognized;
 
+            CreateGrammar();
+            kinectControl.SpeechGrammar = grammar;
+
+            kinectControl.InitializeSpeechRecognition();
+        }
+
+        private void CreateGrammar()
+        {
             if (mode == PRESENTATION_MODE.POWERPOINT)
             {
                 grammar = new PowerPointGrammar();
@@ -102,9 +119,6 @@ namespace KinectPowerPointControl
             {
                 grammar = new ImagePresentationGrammar();
             }
-            kinectControl.SpeechGrammar = grammar;
-
-            kinectControl.InitializeSpeechRecognition();
         }
 
         public void SkeletonReady(Skeleton skeleton)
@@ -162,54 +176,54 @@ namespace KinectPowerPointControl
                 ToggleCircles();
             }
         }
-
-        
+                
         private void GestureRecognized(String gesture)
         {
             if (gesture == GestureEvents.SWIPE_RIGHT)
             {
-                ProcessPreviousSlide();
+                commands.ProcessPreviousSlide();
             }
             else if (gesture == GestureEvents.SWIPE_LEFT)
             {
-                ProcessNextSlide();
+                commands.ProcessNextSlide();
             }
             else if (gesture == GestureEvents.ZOOM_IN)
             {
-                ProcessZoomIn();
+                commands.ProcessZoomIn();
             }
             else if (gesture == GestureEvents.ZOOM_OUT)
             {
-                ProcessZoomOut();
+                commands.ProcessZoomOut();
             }
             else if (gesture == GestureEvents.MOVE_RIGHT)
             {
-                ProcessMoveRight();
+                commands.ProcessMoveRight();
             }
             else if (gesture == GestureEvents.MOVE_LEFT)
             {
-                ProcessMoveLeft();
+                commands.ProcessMoveLeft();
             }
             else if (gesture == GestureEvents.MOVE_UP)
             {
-                ProcessMoveUp();
+                commands.ProcessMoveUp();
             }
             else if (gesture == GestureEvents.MOVE_DOWN)
             {
-                ProcessMoveDown();
+                commands.ProcessMoveDown();
             }
             else if (gesture == GestureEvents.ROTATE_RIGHT)
             {
-                ProcessRotateRight();
+                commands.ProcessRotateRight();
             }
             else if (gesture == GestureEvents.ROTATE_LEFT)
             {
-                ProcessRotateLeft();
+                commands.ProcessRotateLeft();
             }
             else if (gesture == GestureEvents.JOIN_HANDS)
             {
-                ProcessCloseImage();
-                ProcessClosePresentation();
+                //FIXME closing both, may need to verify which is being used and close it only
+                commands.ProcessCloseImage();
+                commands.ProcessClosePresentation();
             }
         }
 
@@ -257,127 +271,53 @@ namespace KinectPowerPointControl
             }
             else if (grammar.IsCommand(PowerPointGrammar.NEXT_SLIDE, speech))
             {
-                ProcessNextSlide();
+                commands.ProcessNextSlide();
             }
             else if (grammar.IsCommand(PowerPointGrammar.PREVIOUS_SLIDE, speech))
             {
-                ProcessPreviousSlide();
+                commands.ProcessPreviousSlide();
             }
             else if (grammar.IsCommand(PowerPointGrammar.CLOSE_PRESENTATION, speech))
             {
-                ProcessClosePresentation();
+                commands.ProcessClosePresentation();
             }
             else if (grammar.IsCommand(ImagePresentationGrammar.MOVE_RIGHT, speech))
             {
-                ProcessMoveRight();
+                commands.ProcessMoveRight();
             }
             else if (grammar.IsCommand(ImagePresentationGrammar.MOVE_LEFT, speech))
             {
-                ProcessMoveLeft();
+                commands.ProcessMoveLeft();
             }
             else if (grammar.IsCommand(ImagePresentationGrammar.MOVE_UP, speech))
             {
-                ProcessMoveUp();
+                commands.ProcessMoveUp();
             }
             else if (grammar.IsCommand(ImagePresentationGrammar.MOVE_DOWN, speech))
             {
-                ProcessMoveDown();
+                commands.ProcessMoveDown();
             }
             else if (grammar.IsCommand(ImagePresentationGrammar.ROTATE_RIGHT, speech))
             {
-                ProcessRotateRight();
+                commands.ProcessRotateRight();
             }
             else if (grammar.IsCommand(ImagePresentationGrammar.ROTATE_LEFT, speech))
             {
-                ProcessRotateLeft();
+                commands.ProcessRotateLeft();
             }
             else if (grammar.IsCommand(ImagePresentationGrammar.ZOOM_IN, speech))
             {
-                ProcessZoomIn();
+                commands.ProcessZoomIn();
             }
             else if (grammar.IsCommand(ImagePresentationGrammar.ZOOM_OUT, speech))
             {
-                ProcessZoomOut();
+                commands.ProcessZoomOut();
             }
             else if (grammar.IsCommand(ImagePresentationGrammar.CLOSE_IMAGE, speech))
             {
-                ProcessCloseImage();
+                commands.ProcessCloseImage();
             }
         }
-
-        public void ProcessClosePresentation()
-        {
-            if (this.MessageSent != null)
-            {
-                this.MessageSent.BeginInvoke("closepresentation", null, null);
-            }
-        }
-
-        public void ProcessCloseImage()
-        {
-            if (this.MessageSent != null)
-            {
-                this.MessageSent.BeginInvoke("closeimage", null, null);
-            }
-        }
-
-        #region imageControl
-        
-        private void ProcessMoveRight()
-        {
-            System.Windows.Forms.SendKeys.SendWait("{Right}");
-        }
-
-        private void ProcessMoveLeft()
-        {
-            System.Windows.Forms.SendKeys.SendWait("{Left}");
-        }
-
-        private void ProcessMoveUp()
-        {
-            System.Windows.Forms.SendKeys.SendWait("{UP}");
-        }
-
-        private void ProcessMoveDown()
-        {
-            System.Windows.Forms.SendKeys.SendWait("{Down}");
-        }
-
-        private void ProcessRotateRight()
-        {
-            System.Windows.Forms.SendKeys.SendWait("{END}");
-        }
-
-        private void ProcessRotateLeft()
-        {
-            System.Windows.Forms.SendKeys.SendWait("{HOME}");
-        }
-            
-        private void ProcessZoomOut()
-        {
-            System.Windows.Forms.SendKeys.SendWait("{PGDN}");
-        }
-        
-        private void ProcessZoomIn()
-        {
-            System.Windows.Forms.SendKeys.SendWait("{PGUP}");
-        }
-
-        #endregion
-
-        #region slideControl
-
-        private void ProcessNextSlide()
-        {
-            System.Windows.Forms.SendKeys.SendWait("{Right}");
-        }
-
-        private void ProcessPreviousSlide()
-        {
-            System.Windows.Forms.SendKeys.SendWait("{Left}");
-        }
-
-        #endregion
 
         //This method is used to position the ellipses on the canvas
         //according to correct movements of the tracked joints.

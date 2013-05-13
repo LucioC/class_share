@@ -12,5 +12,11 @@ namespace ServiceTest
             String testLocalPath = AppDomain.CurrentDomain.BaseDirectory + "\\resources\\" + fileName;
             return testLocalPath;
         }
+
+        public static void WaitForEventAsyncInvoke()
+        {
+            //Better way to wait for assynchronous event?
+            System.Threading.Thread.Sleep(200);
+        }
     }
 }
