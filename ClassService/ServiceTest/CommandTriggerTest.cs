@@ -66,8 +66,8 @@ namespace TestProject1
         [TestMethod()]
         public void CommandTriggerReady()
         {
-            CommandTrigger target = new CommandTrigger();
-            var action = new Mock<IModalityAction>();
+            EffectTrigger target = new EffectTrigger();
+            var action = new Mock<ModalityEvent>();
 
             //ActionDependency dependency = new ActionDependency(action.Object.Type);
 

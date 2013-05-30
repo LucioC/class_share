@@ -5,8 +5,8 @@ using System.Text;
 
 namespace ServiceCore.Engine
 {
-    public interface IModalityAction
+    public interface IEffect
     {
-        ActionType Type { get; }
+        void execute();
     }
 }

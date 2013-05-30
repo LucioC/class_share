@@ -69,11 +69,82 @@ namespace TestProject1
         public void AddNewEvent()
         {
             MultimodalEngine target = new MultimodalEngine();
-            var action = new Mock<IModalityAction>();
+            var action = new Mock<ModalityEvent>();
 
-            target.NewEvent(action.Object);
+            target.NewInputModalityEvent(action.Object);
 
-            Assert.IsTrue(target.actions.Contains(action.Object));            
+            Assert.IsTrue(target.Actions.Contains(action.Object));            
+        }
+
+        [TestMethod()]
+        public void AddOneEffectTrigger()
+        {
+            MultimodalEngine target = new MultimodalEngine();
+
+            var modalityEvent = new Mock<ModalityEvent>();
+            var effect = new Mock<IEffect>();
+
+            EffectTrigger effectTrigger = new EffectTrigger();
+
+            target.addNewTrigger(effectTrigger);
+
+            Assert.IsTrue(target.Triggers.Contains(effectTrigger));
+        }
+
+        [TestMethod()]
+        public void AddOneEffectTriggerAndTriggerIt()
+        {
+            MultimodalEngine target = new MultimodalEngine();
+
+            ModalityEvent modalityEvent = new ModalityEvent();
+            modalityEvent.Type = ActionType.HAND_SWIPE_LEFT;
+
+            var effect = new Mock<IEffect>();
+
+            //Define trigger with one input modality event that triggers one effect
+            EffectTrigger effectTrigger = new EffectTrigger();
+            effectTrigger.Effects.Add(effect.Object);
+            effectTrigger.Triggers.Add(modalityEvent);
+
+            target.addNewTrigger(effectTrigger);
+
+            //Prepare future event
+            ModalityEvent action = new ModalityEvent();
+            action.Type = ActionType.HAND_SWIPE_LEFT;
+            
+            //trigger it
+            target.NewInputModalityEvent(action);
+
+            //Verify triggering
+            effect.Verify(foo => foo.execute());
+        }
+
+        [TestMethod()]
+        public void AddOneEffectTriggerAndDontTriggerIt()
+        {
+            MultimodalEngine target = new MultimodalEngine();
+
+            ModalityEvent modalityEvent = new ModalityEvent();
+            modalityEvent.Type = ActionType.HAND_SWIPE_LEFT;
+
+            var effect = new Mock<IEffect>();
+
+            //Define trigger with one input modality event that triggers one effect
+            EffectTrigger effectTrigger = new EffectTrigger();
+            effectTrigger.Effects.Add(effect.Object);
+            effectTrigger.Triggers.Add(modalityEvent);
+
+            target.addNewTrigger(effectTrigger);
+
+            //Prepare future event
+            ModalityEvent action = new ModalityEvent();
+            action.Type = ActionType.HAND_SWIPE_RIGHT;
+
+            //add event
+            target.NewInputModalityEvent(action);
+
+            //Verify that wasnt triggered
+            effect.Verify(foo => foo.execute(), Times.Never());
         }
     }
 }

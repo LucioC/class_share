@@ -5,8 +5,8 @@ using System.Text;
 
 namespace ServiceCore.Engine
 {
-    public class CommandTrigger
+    public class ModalityEvent
     {
-        public List<IModalityAction> Actions { get; set; }
+        public ActionType Type { get; set; }
     }
 }

@@ -7,17 +7,33 @@ namespace ServiceCore.Engine
 {
     public class MultimodalEngine
     {
-        public List<IModalityAction> actions { get; protected set;}
+        public List<ModalityEvent> Actions { get; protected set;}
+        public List<EffectTrigger> Triggers { get; protected set; }
 
         public MultimodalEngine()
         {
-            actions = new List<IModalityAction>();
+            Actions = new List<ModalityEvent>();
+            Triggers = new List<EffectTrigger>();
         }
 
-        public void NewEvent(IModalityAction modalityAction)
+        public void NewInputModalityEvent(ModalityEvent modalityAction)
         {
-            actions.Add(modalityAction);
+            Actions.Add(modalityAction);
+            Triggers[0].Effects[0].execute();
         }
 
+        public List<EffectTrigger> SearchTriggers(ModalityEvent modalityEvent)
+        {
+            List<EffectTrigger> results = null;
+
+            //results = Triggers.Where();
+
+            return results;
+        }
+
+        public void addNewTrigger(EffectTrigger effectTrigger)
+        {
+            Triggers.Add(effectTrigger);
+        }
     }
 }
