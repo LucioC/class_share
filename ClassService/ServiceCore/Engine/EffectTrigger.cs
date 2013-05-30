@@ -15,5 +15,36 @@ namespace ServiceCore.Engine
             Triggers = new List<ModalityEvent>();
             Effects = new List<IEffect>();
         }
+
+        public Boolean HasEvent(ModalityEvent modalityEvent)
+        {
+            foreach(var trigger in Triggers)
+            {
+                if (modalityEvent.Type == trigger.Type)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void SetNewEvent(ModalityEvent modalityEvent)
+        {
+            foreach (var trigger in Triggers)
+            {
+                if (modalityEvent.Type == trigger.Type)
+                {
+                    modalityEvent.State = ActionState.HAPPENED;
+                }
+            }
+        }
+
+        public void clearStates()
+        {
+            foreach (var trigger in Triggers)
+            {
+                trigger.State = ActionState.WAITING;
+            }
+        }
     }
 }

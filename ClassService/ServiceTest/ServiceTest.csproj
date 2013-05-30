@@ -93,6 +93,7 @@
     <Compile Include="CommandTriggerTest.cs" />
     <Compile Include="DefaultCommunicatorTest.cs" />
     <Compile Include="CommonTest.cs" />
+    <Compile Include="EffectTriggerTest.cs" />
     <Compile Include="MultimodalEngineTest.cs" />
     <Compile Include="ServiceCommandsLocalActivationTest.cs" />
     <Compile Include="unit\GestureUtilsTest.cs" />

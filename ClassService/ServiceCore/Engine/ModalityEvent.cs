@@ -8,5 +8,11 @@ namespace ServiceCore.Engine
     public class ModalityEvent
     {
         public ActionType Type { get; set; }
+        public ActionState State { get; set; }
+
+        public ModalityEvent()
+        {
+            State = ActionState.WAITING;
+        }
     }
 }

@@ -146,5 +146,44 @@ namespace TestProject1
             //Verify that wasnt triggered
             effect.Verify(foo => foo.execute(), Times.Never());
         }
+
+        [TestMethod()]
+        public void AddComposedTriggerEffectAndTriggerIt()
+        {
+            MultimodalEngine target = new MultimodalEngine();
+
+            ModalityEvent modalityEvent1 = new ModalityEvent();
+            modalityEvent1.Type = ActionType.HAND_SWIPE_LEFT;
+
+            ModalityEvent modalityEvent2 = new ModalityEvent();
+            modalityEvent2.Type = ActionType.HAND_SWIPE_RIGHT;
+
+            var effect = new Mock<IEffect>();
+
+            //Define trigger with one input modality event that triggers one effect
+            EffectTrigger effectTrigger = new EffectTrigger();
+            effectTrigger.Effects.Add(effect.Object);
+            effectTrigger.Triggers.Add(modalityEvent1);
+            effectTrigger.Triggers.Add(modalityEvent2);
+
+            target.addNewTrigger(effectTrigger);
+
+            //Prepare future event1
+            ModalityEvent action1 = new ModalityEvent();
+            action1.Type = ActionType.HAND_SWIPE_LEFT;
+
+            target.NewInputModalityEvent(action1);
+
+            //Was not trigger yet
+            effect.Verify(foo => foo.execute(), Times.Never());
+
+            //Prepare future event2
+            ModalityEvent action2 = new ModalityEvent();
+            action2.Type = ActionType.HAND_SWIPE_LEFT;
+
+            target.NewInputModalityEvent(action2);
+
+            effect.Verify(foo => foo.execute());
+        }
     }
 }
