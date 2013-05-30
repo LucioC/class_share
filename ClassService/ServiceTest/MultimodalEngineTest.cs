@@ -177,7 +177,7 @@ namespace TestProject1
 
             //Prepare future event2
             ModalityEvent action2 = new ModalityEvent();
-            action2.Type = ActionType.HAND_SWIPE_LEFT;
+            action2.Type = ActionType.HAND_SWIPE_RIGHT;
 
             target.NewInputModalityEvent(action2);
 

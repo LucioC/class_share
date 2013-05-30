@@ -35,7 +35,7 @@ namespace ServiceCore.Engine
             }
         }
 
-        public List<EffectTrigger> SearchTriggers(ModalityEvent modalityEvent)
+        public List<EffectTrigger> SearchTriggers(ModalityEvent newModalityEvent)
         {
             List<EffectTrigger> results = new List<EffectTrigger>();
 
@@ -45,7 +45,7 @@ namespace ServiceCore.Engine
                 {
                     if (trigger.HasEvent(modality))
                     {
-                        trigger.SetNewEvent(modality);
+                        trigger.SetNewEvent(newModalityEvent);
 
                         if(trigger.IsReadyToTrigger())
                         {
