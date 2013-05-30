@@ -12,6 +12,8 @@ namespace KinectPowerPointControl.Gesture
         private long lastZoomTrigged = 0;
         private System.Object lockInterval = new System.Object();
 
+        private Time time = new Time();
+
         private Boolean ZoomStarted = false;
         public float HandsDistance { get; set; }
         public float HandsDistanceErrorIgnored { get; set; }
@@ -85,7 +87,7 @@ namespace KinectPowerPointControl.Gesture
         {
             lock (lockInterval)
             {
-                long now = Time.CurrentTimeMillis();
+                long now = time.CurrentTimeInMillis();
                 if (now - lastZoomTrigged > Interval)
                 {
                     lastZoomTrigged = now;

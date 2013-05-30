@@ -9,6 +9,7 @@ namespace KinectPowerPointControl.Gesture
     public class IntervalControl
     {
         protected long lastTrigged = 0;
+        protected Time time = new Time();
 
         public long Interval { get; set; }
 
@@ -19,7 +20,7 @@ namespace KinectPowerPointControl.Gesture
 
         public bool HasIntervalPassed()
         {
-            long now = Time.CurrentTimeMillis();
+            long now = time.CurrentTimeInMillis();
             if (now - lastTrigged > Interval)
             {
                 return true;
@@ -32,7 +33,7 @@ namespace KinectPowerPointControl.Gesture
 
         public void TriggerIt()
         {
-            long now = Time.CurrentTimeMillis();
+            long now = time.CurrentTimeInMillis();
             lastTrigged = now;
         }
     }
