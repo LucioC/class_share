@@ -43,9 +43,14 @@ namespace ServiceCore.Engine
             {
                 foreach (var modality in trigger.Triggers)
                 {
-                    if (modality.Type == modalityEvent.Type)
+                    if (trigger.HasEvent(modality))
                     {
-                        results.Add(trigger);
+                        trigger.SetNewEvent(modality);
+
+                        if(trigger.IsReadyToTrigger())
+                        {
+                            results.Add(trigger);
+                        }
                     }
                 }
             }

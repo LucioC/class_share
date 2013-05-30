@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PowerPointPresentation;
+using ServiceTest;
 
-namespace ServiceTest
+namespace TestProject.Integration
 {
     [TestClass]
     public class PowerPointPresentationTest

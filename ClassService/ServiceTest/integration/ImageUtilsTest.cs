@@ -4,7 +4,7 @@ using System;
 using System.Drawing;
 using ServiceTest;
 
-namespace TestProject1
+namespace TestProject.Integration
 {
     
     

@@ -34,7 +34,7 @@ namespace ServiceCore.Engine
             {
                 if (modalityEvent.Type == trigger.Type)
                 {
-                    modalityEvent.State = ActionState.HAPPENED;
+                    trigger.State = ActionState.HAPPENED;
                 }
             }
         }
@@ -45,6 +45,19 @@ namespace ServiceCore.Engine
             {
                 trigger.State = ActionState.WAITING;
             }
+        }
+
+        public Boolean IsReadyToTrigger()
+        {
+            foreach(var trigger in Triggers)
+            {
+                if (trigger.State == ActionState.WAITING)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

@@ -98,5 +98,97 @@ namespace TestProject1
 
             Assert.AreEqual(false, target.HasEvent(newModalityEvent));
         }
+
+        [TestMethod()]
+        public void SetOneEventTriggerAndIsAbleToTrigger()
+        {
+            EffectTrigger target = new EffectTrigger();
+
+            ModalityEvent modalityEvent = new ModalityEvent();
+            modalityEvent.Type = ActionType.HAND_SWIPE_LEFT;
+
+            target.Triggers.Add(modalityEvent);
+
+            ModalityEvent newModalityEvent = new ModalityEvent();
+            newModalityEvent.Type = ActionType.HAND_SWIPE_LEFT;
+
+            Assert.AreEqual(true, target.HasEvent(newModalityEvent));
+            target.SetNewEvent(newModalityEvent);
+
+            Assert.AreEqual(true, target.IsReadyToTrigger());
+        }
+
+        [TestMethod()]
+        public void SetOneEventTriggerAndIsNotAbleToTrigger()
+        {
+            EffectTrigger target = new EffectTrigger();
+
+            ModalityEvent modalityEvent = new ModalityEvent();
+            modalityEvent.Type = ActionType.HAND_SWIPE_LEFT;
+
+            target.Triggers.Add(modalityEvent);
+
+            ModalityEvent newModalityEvent = new ModalityEvent();
+            newModalityEvent.Type = ActionType.HAND_SWIPE_RIGHT;
+
+            Assert.AreEqual(false, target.HasEvent(newModalityEvent));
+            target.SetNewEvent(newModalityEvent);
+
+            Assert.AreEqual(false, target.IsReadyToTrigger());
+        }
+
+        [TestMethod()]
+        public void SetTwoEventsTriggerAndIsAbleToTrigger()
+        {
+            EffectTrigger target = new EffectTrigger();
+
+            ModalityEvent modalityEvent1 = new ModalityEvent();
+            modalityEvent1.Type = ActionType.HAND_SWIPE_LEFT;
+            ModalityEvent modalityEvent2 = new ModalityEvent();
+            modalityEvent2.Type = ActionType.HAND_SWIPE_RIGHT;
+            target.Triggers.Add(modalityEvent1);
+            target.Triggers.Add(modalityEvent2);
+
+            ModalityEvent newModalityEvent1 = new ModalityEvent();
+            newModalityEvent1.Type = ActionType.HAND_SWIPE_LEFT;
+            ModalityEvent newModalityEvent2 = new ModalityEvent();
+            newModalityEvent2.Type = ActionType.HAND_SWIPE_RIGHT;
+
+            Assert.AreEqual(true, target.HasEvent(newModalityEvent1));
+            Assert.AreEqual(true, target.HasEvent(newModalityEvent2));
+
+            target.SetNewEvent(newModalityEvent1);
+            Assert.AreEqual(false, target.IsReadyToTrigger());
+
+            target.SetNewEvent(newModalityEvent2);
+            Assert.AreEqual(true, target.IsReadyToTrigger());
+        }
+
+        [TestMethod()]
+        public void SetTwoEventsTriggerAndIsNotAbleToTrigger()
+        {
+            EffectTrigger target = new EffectTrigger();
+
+            ModalityEvent modalityEvent1 = new ModalityEvent();
+            modalityEvent1.Type = ActionType.HAND_SWIPE_LEFT;
+            ModalityEvent modalityEvent2 = new ModalityEvent();
+            modalityEvent2.Type = ActionType.HAND_SWIPE_RIGHT;
+            target.Triggers.Add(modalityEvent1);
+            target.Triggers.Add(modalityEvent2);
+
+            ModalityEvent newModalityEvent1 = new ModalityEvent();
+            newModalityEvent1.Type = ActionType.HAND_SWIPE_LEFT;
+            ModalityEvent newModalityEvent2 = new ModalityEvent();
+            newModalityEvent2.Type = ActionType.SPEECH_NEXT;
+
+            Assert.AreEqual(true, target.HasEvent(newModalityEvent1));
+            Assert.AreEqual(false, target.HasEvent(newModalityEvent2));
+
+            target.SetNewEvent(newModalityEvent1);
+            Assert.AreEqual(false, target.IsReadyToTrigger());
+
+            target.SetNewEvent(newModalityEvent2);
+            Assert.AreEqual(false, target.IsReadyToTrigger());
+        }
     }
 }

@@ -3,8 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using CommonUtils;
+using ServiceTest;
 
-namespace ServiceTest
+namespace TestProject.Integration
 {   
     /// <summary>
     ///This is a test class for PowerPointControlTest and is intended

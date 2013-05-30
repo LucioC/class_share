@@ -15,8 +15,6 @@ namespace TestProject1
     [TestClass()]
     public class MultimodalEngineTest
     {
-
-
         private TestContext testContextInstance;
 
         /// <summary>
