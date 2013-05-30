@@ -19,14 +19,36 @@ namespace ServiceCore.Engine
         public void NewInputModalityEvent(ModalityEvent modalityAction)
         {
             Actions.Add(modalityAction);
-            Triggers[0].Effects[0].execute();
+
+            List<EffectTrigger> matchingTriggers = SearchTriggers(modalityAction);
+            TriggerEffects(matchingTriggers);
+        }
+
+        private static void TriggerEffects(List<EffectTrigger> matchingTriggers)
+        {
+            foreach (var trigger in matchingTriggers)
+            {
+                foreach (var effect in trigger.Effects)
+                {
+                    effect.execute();
+                }
+            }
         }
 
         public List<EffectTrigger> SearchTriggers(ModalityEvent modalityEvent)
         {
-            List<EffectTrigger> results = null;
+            List<EffectTrigger> results = new List<EffectTrigger>();
 
-            //results = Triggers.Where();
+            foreach (var trigger in Triggers)
+            {
+                foreach (var modality in trigger.Triggers)
+                {
+                    if (modality.Type == modalityEvent.Type)
+                    {
+                        results.Add(trigger);
+                    }
+                }
+            }
 
             return results;
         }
