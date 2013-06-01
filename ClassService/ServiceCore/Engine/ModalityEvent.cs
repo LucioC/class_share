@@ -9,10 +9,12 @@ namespace ServiceCore.Engine
     {
         public ActionType Type { get; set; }
         public ActionState State { get; set; }
+        public long EventTime { get; set; }
 
         public ModalityEvent()
         {
             State = ActionState.WAITING;
         }
+
     }
 }

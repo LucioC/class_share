@@ -9,7 +9,7 @@ namespace KinectPowerPointControl.Gesture
     public class IntervalControl
     {
         protected long lastTrigged = 0;
-        protected Time time = new Time();
+        protected Clock time = new Clock();
 
         public long Interval { get; set; }
 

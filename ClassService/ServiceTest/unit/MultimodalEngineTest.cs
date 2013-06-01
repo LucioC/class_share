@@ -192,7 +192,7 @@ namespace TestProject1
         public void AddOneTriggerAndTriggersOnCorrectTimePassed()
         {
             //Create a mock for time, that returns 0,5 seconds more for each call
-            var mock = new Mock<Time>();
+            var mock = new Mock<Clock>();
             var timeInMilliseconds = 0;
             mock.Setup(foo => foo.CurrentTimeInMillis())
                 .Returns(() => timeInMilliseconds)

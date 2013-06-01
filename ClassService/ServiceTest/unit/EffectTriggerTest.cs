@@ -193,31 +193,65 @@ namespace TestProject1
         }
 
         [TestMethod()]
-        public void SetOneEventTriggerAndIsAbleToTriggerOnCorrectTimeWindow()
+        public void SetTwoEventTriggerWithTimeWindowAndIsAbleToTriggerOnCorrectTimeTest()
         {
-            //Create a mock for time, that returns 0,5 seconds more for each call
-            var mock = new Mock<Time>();
-            var timeInMilliseconds = 0;
-            mock.Setup(foo => foo.CurrentTimeInMillis())
-                .Returns(() => timeInMilliseconds );
-
             EffectTrigger target = new EffectTrigger();
-
-            ModalityEvent modalityEvent = new ModalityEvent();
-            modalityEvent.Type = ActionType.HAND_SWIPE_LEFT;
-            target.Triggers.Add(modalityEvent);
+            
+            ModalityEvent modalityEvent1 = new ModalityEvent();
+            modalityEvent1.Type = ActionType.HAND_SWIPE_LEFT;
+            ModalityEvent modalityEvent2 = new ModalityEvent();
+            modalityEvent2.Type = ActionType.HAND_SWIPE_RIGHT;
+            target.Triggers.Add(modalityEvent1);
+            target.Triggers.Add(modalityEvent2);
             //Set the time windows constraint
             target.TimeWindow = 2000;
 
-            target.Clock = mock.Object;
+            ModalityEvent newModalityEvent1 = new ModalityEvent();
+            newModalityEvent1.Type = ActionType.HAND_SWIPE_LEFT;
+            newModalityEvent1.EventTime = 1000;
+            ModalityEvent newModalityEvent2 = new ModalityEvent();
+            newModalityEvent2.Type = ActionType.HAND_SWIPE_RIGHT;
+            newModalityEvent2.EventTime = 2000;
 
-            ModalityEvent newModalityEvent = new ModalityEvent();
-            newModalityEvent.Type = ActionType.HAND_SWIPE_LEFT;
+            Assert.AreEqual(true, target.HasEvent(newModalityEvent1));
+            Assert.AreEqual(true, target.HasEvent(newModalityEvent2));
 
-            Assert.AreEqual(true, target.HasEvent(newModalityEvent));
-            target.SetNewEvent(newModalityEvent);
+            target.SetNewEvent(newModalityEvent1);
+            Assert.AreEqual(false, target.IsReadyToTrigger());
 
+            target.SetNewEvent(newModalityEvent2);
             Assert.AreEqual(true, target.IsReadyToTrigger());
+        }
+
+        [TestMethod()]
+        public void SetTwoEventTriggerWithTimeWindowAndIsNotAbleToTriggerOnIncorrectTimeTest()
+        {
+            EffectTrigger target = new EffectTrigger();
+
+            ModalityEvent modalityEvent1 = new ModalityEvent();
+            modalityEvent1.Type = ActionType.HAND_SWIPE_LEFT;
+            ModalityEvent modalityEvent2 = new ModalityEvent();
+            modalityEvent2.Type = ActionType.HAND_SWIPE_RIGHT;
+            target.Triggers.Add(modalityEvent1);
+            target.Triggers.Add(modalityEvent2);
+            //Set the time windows constraint
+            target.TimeWindow = 2000;
+
+            ModalityEvent newModalityEvent1 = new ModalityEvent();
+            newModalityEvent1.Type = ActionType.HAND_SWIPE_LEFT;
+            newModalityEvent1.EventTime = 1000;
+            ModalityEvent newModalityEvent2 = new ModalityEvent();
+            newModalityEvent2.Type = ActionType.HAND_SWIPE_RIGHT;
+            newModalityEvent2.EventTime = 3001;
+
+            Assert.AreEqual(true, target.HasEvent(newModalityEvent1));
+            Assert.AreEqual(true, target.HasEvent(newModalityEvent2));
+
+            target.SetNewEvent(newModalityEvent1);
+            Assert.AreEqual(false, target.IsReadyToTrigger());
+
+            target.SetNewEvent(newModalityEvent2);
+            Assert.AreEqual(false, target.IsReadyToTrigger());
         }
     }
 }

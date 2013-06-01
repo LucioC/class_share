@@ -62,8 +62,6 @@ namespace ServiceCore.Engine.Triggers
             return true;
         }
 
-        public int TimeWindow { get; set; }
-
-        public Time Clock { get; set; }
+        public long TimeWindow { get; set; }
     }
 }

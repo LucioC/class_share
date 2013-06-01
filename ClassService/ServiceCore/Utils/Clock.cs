@@ -5,9 +5,9 @@ using System.Text;
 
 namespace ServiceCore.Utils
 {
-    public class Time
+    public class Clock
     {
-        public Time()
+        public Clock()
         {
 
         }
