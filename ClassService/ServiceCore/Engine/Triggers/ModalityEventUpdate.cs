@@ -23,6 +23,7 @@ namespace ServiceCore.Engine.Triggers
 
         public static void UpdateEventsState(List<ModalityEvent> events, long timeWindows, long currentTime)
         {
+            if (timeWindows == 0) return;
             foreach (var modalityEvent in events)
             {
                 long passed = currentTime - modalityEvent.EventTime;

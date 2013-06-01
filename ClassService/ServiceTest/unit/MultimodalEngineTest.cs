@@ -171,6 +171,7 @@ namespace TestProject1
             //Prepare future event1
             ModalityEvent action1 = new ModalityEvent();
             action1.Type = ActionType.HAND_SWIPE_LEFT;
+            action1.EventTime = 1000;
 
             target.NewInputModalityEvent(action1);
 
@@ -184,20 +185,11 @@ namespace TestProject1
             target.NewInputModalityEvent(action2);
 
             effect.Verify(foo => foo.execute());
-
-
         }
 
         [TestMethod()]
         public void AddOneTriggerAndTriggersOnCorrectTimePassed()
-        {
-            //Create a mock for time, that returns 0,5 seconds more for each call
-            var mock = new Mock<Clock>();
-            var timeInMilliseconds = 0;
-            mock.Setup(foo => foo.CurrentTimeInMillis())
-                .Returns(() => timeInMilliseconds)
-                .Callback(() => timeInMilliseconds += 500);
-            
+        {            
             MultimodalEngine target = new MultimodalEngine();
             
             ModalityEvent modalityEvent = new ModalityEvent();
@@ -219,5 +211,181 @@ namespace TestProject1
             //add event
             target.NewInputModalityEvent(action);
         }
+
+        [TestMethod()]
+        public void AddOneEffectTriggerAndTriggerItWithTimeConstraints()
+        {
+            //Create a mock for time, that returns 0,5 seconds more for each call
+            var mock = new Mock<Clock>();
+            var timeInMilliseconds = 0;
+            mock.Setup(foo => foo.CurrentTimeInMillis())
+                .Returns(() => timeInMilliseconds);
+
+            MultimodalEngine target = new MultimodalEngine();
+            target.ClockInstance = mock.Object;
+
+            ModalityEvent modalityEvent = new ModalityEvent();
+            modalityEvent.Type = ActionType.HAND_SWIPE_LEFT;
+
+            var effect = new Mock<IEffect>();
+
+            //Define trigger with one input modality event that triggers one effect
+            EffectTrigger effectTrigger = new EffectTrigger();
+            effectTrigger.Effects.Add(effect.Object);
+            effectTrigger.Triggers.Add(modalityEvent);
+            effectTrigger.TimeWindow = 1000;
+
+            target.addNewTrigger(effectTrigger);
+
+            //Prepare future event
+            ModalityEvent action = new ModalityEvent();
+            action.Type = ActionType.HAND_SWIPE_LEFT;
+            action.EventTime = 1000;
+
+            //trigger it
+            timeInMilliseconds = 100;
+            target.NewInputModalityEvent(action);
+
+            //Verify triggering
+            effect.Verify(foo => foo.execute());
+        }
+
+        [TestMethod()]
+        public void AddOneEffectTriggerAndDontTriggerItTimeHasPassed()
+        {
+            var mock = new Mock<Clock>();
+            var timeInMilliseconds = 0;
+            mock.Setup(foo => foo.CurrentTimeInMillis())
+                .Returns(() => timeInMilliseconds);
+
+            MultimodalEngine target = new MultimodalEngine();
+            target.ClockInstance = mock.Object;
+
+            ModalityEvent modalityEvent = new ModalityEvent();
+            modalityEvent.Type = ActionType.HAND_SWIPE_LEFT;
+
+            var effect = new Mock<IEffect>();
+
+            //Define trigger with one input modality event that triggers one effect
+            EffectTrigger effectTrigger = new EffectTrigger();
+            effectTrigger.Effects.Add(effect.Object);
+            effectTrigger.Triggers.Add(modalityEvent);
+            effectTrigger.TimeWindow = 1000;
+
+            target.addNewTrigger(effectTrigger);
+
+            //Prepare future event
+            ModalityEvent action = new ModalityEvent();
+            action.Type = ActionType.HAND_SWIPE_LEFT;
+            action.EventTime = 1000;
+
+            //trigger it
+            timeInMilliseconds = 3000;
+            target.NewInputModalityEvent(action);
+
+            //Verify triggering
+            effect.Verify(foo => foo.execute(), Times.Never());
+        }
+
+        [TestMethod()]
+        public void AddComposedTriggerEffectAndTriggerItWithTimeContrainst()
+        {
+            var mock = new Mock<Clock>();
+            var timeInMilliseconds = 0;
+            mock.Setup(foo => foo.CurrentTimeInMillis())
+                .Returns(() => timeInMilliseconds);
+
+            MultimodalEngine target = new MultimodalEngine();
+            target.ClockInstance = mock.Object;
+
+            ModalityEvent modalityEvent1 = new ModalityEvent();
+            modalityEvent1.Type = ActionType.HAND_SWIPE_LEFT;
+
+            ModalityEvent modalityEvent2 = new ModalityEvent();
+            modalityEvent2.Type = ActionType.HAND_SWIPE_RIGHT;
+
+            var effect = new Mock<IEffect>();
+
+            //Define trigger with one input modality event that triggers one effect
+            EffectTrigger effectTrigger = new EffectTrigger();
+            effectTrigger.Effects.Add(effect.Object);
+            effectTrigger.Triggers.Add(modalityEvent1);
+            effectTrigger.Triggers.Add(modalityEvent2);
+            effectTrigger.TimeWindow = 1000;
+
+            target.addNewTrigger(effectTrigger);
+
+            //Prepare future event1
+            ModalityEvent action1 = new ModalityEvent();
+            action1.Type = ActionType.HAND_SWIPE_LEFT;
+            action1.EventTime = 1001;
+
+            timeInMilliseconds = 1002;
+            target.NewInputModalityEvent(action1);
+
+            //Was not trigger yet
+            effect.Verify(foo => foo.execute(), Times.Never());
+
+            //Prepare future event2
+            ModalityEvent action2 = new ModalityEvent();
+            action2.Type = ActionType.HAND_SWIPE_RIGHT;
+            action2.EventTime = 2000;
+
+            timeInMilliseconds = 2001;
+            target.NewInputModalityEvent(action2);
+
+            effect.Verify(foo => foo.execute());
+        }
+
+        [TestMethod()]
+        public void AddComposedTriggerEffectAndDontTriggerItWithTimeContrainst()
+        {
+            var mock = new Mock<Clock>();
+            var timeInMilliseconds = 0;
+            mock.Setup(foo => foo.CurrentTimeInMillis())
+                .Returns(() => timeInMilliseconds);
+
+            MultimodalEngine target = new MultimodalEngine();
+            target.ClockInstance = mock.Object;
+
+            ModalityEvent modalityEvent1 = new ModalityEvent();
+            modalityEvent1.Type = ActionType.HAND_SWIPE_LEFT;
+
+            ModalityEvent modalityEvent2 = new ModalityEvent();
+            modalityEvent2.Type = ActionType.HAND_SWIPE_RIGHT;
+
+            var effect = new Mock<IEffect>();
+
+            //Define trigger with one input modality event that triggers one effect
+            EffectTrigger effectTrigger = new EffectTrigger();
+            effectTrigger.Effects.Add(effect.Object);
+            effectTrigger.Triggers.Add(modalityEvent1);
+            effectTrigger.Triggers.Add(modalityEvent2);
+            effectTrigger.TimeWindow = 1000;
+
+            target.addNewTrigger(effectTrigger);
+
+            //Prepare future event1
+            ModalityEvent action1 = new ModalityEvent();
+            action1.Type = ActionType.HAND_SWIPE_LEFT;
+            action1.EventTime = 1000;
+
+            timeInMilliseconds = 1001;
+            target.NewInputModalityEvent(action1);
+
+            //Was not trigger yet
+            effect.Verify(foo => foo.execute(), Times.Never());
+
+            //Prepare future event2
+            ModalityEvent action2 = new ModalityEvent();
+            action2.Type = ActionType.HAND_SWIPE_RIGHT;
+            action2.EventTime = 3001;
+
+            timeInMilliseconds = 3001;
+            target.NewInputModalityEvent(action2);
+
+            effect.Verify(foo => foo.execute(), Times.Never());
+        }
+
     }
 }
