@@ -116,7 +116,7 @@ namespace TestProject1
             Assert.AreEqual(true, target.HasEvent(newModalityEvent));
             target.SetNewEvent(newModalityEvent);
 
-            Assert.AreEqual(true, target.IsReadyToTrigger());
+            Assert.AreEqual(true, target.IsReadyToTrigger(0));
         }
 
         [TestMethod()]
@@ -135,7 +135,7 @@ namespace TestProject1
             Assert.AreEqual(false, target.HasEvent(newModalityEvent));
             target.SetNewEvent(newModalityEvent);
 
-            Assert.AreEqual(false, target.IsReadyToTrigger());
+            Assert.AreEqual(false, target.IsReadyToTrigger(0));
         }
 
         [TestMethod()]
@@ -159,10 +159,10 @@ namespace TestProject1
             Assert.AreEqual(true, target.HasEvent(newModalityEvent2));
 
             target.SetNewEvent(newModalityEvent1);
-            Assert.AreEqual(false, target.IsReadyToTrigger());
+            Assert.AreEqual(false, target.IsReadyToTrigger(0));
 
             target.SetNewEvent(newModalityEvent2);
-            Assert.AreEqual(true, target.IsReadyToTrigger());
+            Assert.AreEqual(true, target.IsReadyToTrigger(0));
         }
 
         [TestMethod()]
@@ -186,10 +186,10 @@ namespace TestProject1
             Assert.AreEqual(false, target.HasEvent(newModalityEvent2));
 
             target.SetNewEvent(newModalityEvent1);
-            Assert.AreEqual(false, target.IsReadyToTrigger());
+            Assert.AreEqual(false, target.IsReadyToTrigger(0));
 
             target.SetNewEvent(newModalityEvent2);
-            Assert.AreEqual(false, target.IsReadyToTrigger());
+            Assert.AreEqual(false, target.IsReadyToTrigger(0));
         }
 
         [TestMethod()]
@@ -217,10 +217,10 @@ namespace TestProject1
             Assert.AreEqual(true, target.HasEvent(newModalityEvent2));
 
             target.SetNewEvent(newModalityEvent1);
-            Assert.AreEqual(false, target.IsReadyToTrigger());
+            Assert.AreEqual(false, target.IsReadyToTrigger(1001));
 
             target.SetNewEvent(newModalityEvent2);
-            Assert.AreEqual(true, target.IsReadyToTrigger());
+            Assert.AreEqual(true, target.IsReadyToTrigger(2001));
         }
 
         [TestMethod()]
@@ -248,10 +248,76 @@ namespace TestProject1
             Assert.AreEqual(true, target.HasEvent(newModalityEvent2));
 
             target.SetNewEvent(newModalityEvent1);
-            Assert.AreEqual(false, target.IsReadyToTrigger());
+            Assert.AreEqual(false, target.IsReadyToTrigger(1001));
 
             target.SetNewEvent(newModalityEvent2);
-            Assert.AreEqual(false, target.IsReadyToTrigger());
+            Assert.AreEqual(false, target.IsReadyToTrigger(3002));
+        }
+        
+        [TestMethod()]
+        public void NewEventUpdateTimeAndStateTest()
+        {
+            EffectTrigger target = new EffectTrigger();
+
+            ModalityEvent modalityEvent = new ModalityEvent();
+            modalityEvent.Type = ActionType.HAND_SWIPE_LEFT;
+            target.Triggers.Add(modalityEvent);
+
+            ModalityEvent newModalityEvent = new ModalityEvent();
+            newModalityEvent.Type = ActionType.HAND_SWIPE_LEFT;
+            newModalityEvent.EventTime = 1000;
+            target.SetNewEvent(newModalityEvent);
+
+            Assert.AreEqual(target.Triggers[0].EventTime, 1000);
+
+            newModalityEvent = new ModalityEvent();
+            newModalityEvent.Type = ActionType.HAND_SWIPE_LEFT;
+            newModalityEvent.EventTime = 2500;
+            target.SetNewEvent(newModalityEvent);
+
+            Assert.AreEqual(target.Triggers[0].EventTime, 2500);
+        }
+
+
+        [TestMethod()]
+        public void SetThreeEventsTriggerWithTimeWindowAndIsAbleToTriggerIncorrectTimeTest()
+        {
+            EffectTrigger target = new EffectTrigger();
+
+            ModalityEvent modalityEvent1 = new ModalityEvent();
+            modalityEvent1.Type = ActionType.HAND_SWIPE_LEFT;
+            ModalityEvent modalityEvent2 = new ModalityEvent();
+            modalityEvent2.Type = ActionType.HAND_SWIPE_RIGHT;
+            ModalityEvent modalityEvent3 = new ModalityEvent();
+            modalityEvent3.Type = ActionType.POSTURE_DIRECTION_KINECT;
+            target.Triggers.Add(modalityEvent1);
+            target.Triggers.Add(modalityEvent2);
+            target.Triggers.Add(modalityEvent3);
+            //Set the time windows constraint
+            target.TimeWindow = 1500;
+
+            ModalityEvent newModalityEvent1 = new ModalityEvent();
+            newModalityEvent1.Type = ActionType.HAND_SWIPE_LEFT;
+            newModalityEvent1.EventTime = 1000;
+            ModalityEvent newModalityEvent2 = new ModalityEvent();
+            newModalityEvent2.Type = ActionType.HAND_SWIPE_RIGHT;
+            newModalityEvent2.EventTime = 1500;
+            ModalityEvent newModalityEvent3 = new ModalityEvent();
+            newModalityEvent3.Type = ActionType.POSTURE_DIRECTION_KINECT;
+            newModalityEvent3.EventTime = 3000;
+
+            Assert.AreEqual(true, target.HasEvent(newModalityEvent1));
+            Assert.AreEqual(true, target.HasEvent(newModalityEvent2));
+            Assert.AreEqual(true, target.HasEvent(newModalityEvent3));
+
+            target.SetNewEvent(newModalityEvent1);
+            Assert.AreEqual(false, target.IsReadyToTrigger(1001));
+
+            target.SetNewEvent(newModalityEvent2);
+            Assert.AreEqual(false, target.IsReadyToTrigger(1550));
+
+            target.SetNewEvent(newModalityEvent3);
+            Assert.AreEqual(false, target.IsReadyToTrigger(3001));
         }
     }
 }

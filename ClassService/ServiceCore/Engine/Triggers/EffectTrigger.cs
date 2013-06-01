@@ -37,6 +37,7 @@ namespace ServiceCore.Engine.Triggers
                 if (modalityEvent.Type == trigger.Type)
                 {
                     trigger.State = ActionState.HAPPENED;
+                    trigger.EventTime = modalityEvent.EventTime;
                 }
             }
         }
@@ -49,8 +50,9 @@ namespace ServiceCore.Engine.Triggers
             }
         }
 
-        public Boolean IsReadyToTrigger()
+        public Boolean IsReadyToTrigger(long currentTime)
         {
+            ModalityEventParallelControl.UpdateEventsState(Triggers, this.TimeWindow, currentTime);
             foreach(var trigger in Triggers)
             {
                 if (trigger.State == ActionState.WAITING)

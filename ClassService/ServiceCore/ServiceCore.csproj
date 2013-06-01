@@ -51,7 +51,7 @@
     <Compile Include="Engine\ActionType.cs" />
     <Compile Include="Engine\Triggers\EffectTrigger.cs" />
     <Compile Include="Engine\IEffect.cs" />
-    <Compile Include="Engine\Triggers\TriggerEventsUpdate.cs" />
+    <Compile Include="Engine\Triggers\ModalityEventUpdate.cs" />
     <Compile Include="GlobalSkeletonState.cs" />
     <Compile Include="Engine\ModalityEvent.cs" />
     <Compile Include="InterceptKeyboard.cs" />

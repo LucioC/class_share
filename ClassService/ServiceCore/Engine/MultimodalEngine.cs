@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ServiceCore.Engine.Triggers;
+using ServiceCore.Utils;
 
 namespace ServiceCore.Engine
 {
@@ -10,11 +11,13 @@ namespace ServiceCore.Engine
     {
         public List<ModalityEvent> Actions { get; protected set;}
         public List<EffectTrigger> Triggers { get; protected set; }
+        public Clock ClockInstance { get; set; }
 
         public MultimodalEngine()
         {
             Actions = new List<ModalityEvent>();
             Triggers = new List<EffectTrigger>();
+            ClockInstance = new Clock();
         }
 
         public void NewInputModalityEvent(ModalityEvent modalityAction)
@@ -48,7 +51,7 @@ namespace ServiceCore.Engine
                     {
                         trigger.SetNewEvent(newModalityEvent);
 
-                        if(trigger.IsReadyToTrigger())
+                        if(trigger.IsReadyToTrigger(ClockInstance.CurrentTimeInMillis()))
                         {
                             results.Add(trigger);
                         }
