@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using CommonUtils;
+using ServiceCore.Utils;
 
 namespace KinectPowerPointControl.Gesture
 {

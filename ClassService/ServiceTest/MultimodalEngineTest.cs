@@ -3,6 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Moq;
 using ServiceCore.Engine;
+using ServiceCore.Engine.Triggers;
+using ServiceCore.Utils;
 
 namespace TestProject1
 {
@@ -182,6 +184,40 @@ namespace TestProject1
             target.NewInputModalityEvent(action2);
 
             effect.Verify(foo => foo.execute());
+
+
+        }
+
+        [TestMethod()]
+        public void AddOneTriggerAndTriggersOnCorrectTimePassed()
+        {
+            //Create a mock for time, that returns 0,5 seconds more for each call
+            var mock = new Mock<Time>();
+            var timeInMilliseconds = 0;
+            mock.Setup(foo => foo.CurrentTimeInMillis())
+                .Returns(() => timeInMilliseconds)
+                .Callback(() => timeInMilliseconds += 500);
+            
+            MultimodalEngine target = new MultimodalEngine();
+            
+            ModalityEvent modalityEvent = new ModalityEvent();
+            modalityEvent.Type = ActionType.HAND_SWIPE_LEFT;
+
+            var effect = new Mock<IEffect>();
+
+            //Define trigger with one input modality event that triggers one effect
+            EffectTrigger effectTrigger = new EffectTrigger();
+            effectTrigger.Effects.Add(effect.Object);
+            effectTrigger.Triggers.Add(modalityEvent);
+
+            target.addNewTrigger(effectTrigger);
+
+            //Prepare future event
+            ModalityEvent action = new ModalityEvent();
+            action.Type = ActionType.HAND_SWIPE_RIGHT;
+
+            //add event
+            target.NewInputModalityEvent(action);
         }
     }
 }

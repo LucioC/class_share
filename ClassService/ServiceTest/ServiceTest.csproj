@@ -90,7 +90,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionDependencyTest.cs" />
-    <Compile Include="CommandTriggerTest.cs" />
     <Compile Include="DefaultCommunicatorTest.cs" />
     <Compile Include="CommonTest.cs" />
     <Compile Include="EffectTriggerTest.cs" />
@@ -114,10 +113,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CommonUtils\CommonUtils.csproj">
-      <Project>{FE1F7F9D-FD82-4820-A939-C65FC7360F68}</Project>
-      <Name>CommonUtils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Image_Pan_and_Zoom\ImageZoom.csproj">
       <Project>{8241A955-C8E4-4CFD-BA28-EEAB34F6C00C}</Project>
       <Name>ImageZoom</Name>

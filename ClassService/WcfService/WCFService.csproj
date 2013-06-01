@@ -92,10 +92,6 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CommonUtils\CommonUtils.csproj">
-      <Project>{FE1F7F9D-FD82-4820-A939-C65FC7360F68}</Project>
-      <Name>CommonUtils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ControlsBasics-WPF\DesktopMainWindow.csproj">
       <Project>{69BB0E72-9FA9-43B7-9673-1BCB6F7F3877}</Project>
       <Name>DesktopMainWindow</Name>

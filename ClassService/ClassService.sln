@@ -19,8 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFService", "WcfService\WC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceHost", "ServiceHost\ServiceHost.csproj", "{95773702-20CF-498D-BF28-D9F7E818506F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonUtils", "CommonUtils\CommonUtils.csproj", "{FE1F7F9D-FD82-4820-A939-C65FC7360F68}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectPowerPointControl", "KinectPowerPointControl\KinectPowerPointControl.csproj", "{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageZoom", "Image_Pan_and_Zoom\ImageZoom.csproj", "{8241A955-C8E4-4CFD-BA28-EEAB34F6C00C}"
@@ -92,16 +90,6 @@ Global
 		{95773702-20CF-498D-BF28-D9F7E818506F}.Release|Mixed Platforms.Build.0 = Release|x86
 		{95773702-20CF-498D-BF28-D9F7E818506F}.Release|x86.ActiveCfg = Release|x86
 		{95773702-20CF-498D-BF28-D9F7E818506F}.Release|x86.Build.0 = Release|x86
-		{FE1F7F9D-FD82-4820-A939-C65FC7360F68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE1F7F9D-FD82-4820-A939-C65FC7360F68}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE1F7F9D-FD82-4820-A939-C65FC7360F68}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{FE1F7F9D-FD82-4820-A939-C65FC7360F68}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{FE1F7F9D-FD82-4820-A939-C65FC7360F68}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{FE1F7F9D-FD82-4820-A939-C65FC7360F68}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE1F7F9D-FD82-4820-A939-C65FC7360F68}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FE1F7F9D-FD82-4820-A939-C65FC7360F68}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{FE1F7F9D-FD82-4820-A939-C65FC7360F68}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{FE1F7F9D-FD82-4820-A939-C65FC7360F68}.Release|x86.ActiveCfg = Release|Any CPU
 		{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{9679A6CD-3B32-4B9C-9C0B-989EE1C070E1}.Debug|Mixed Platforms.Build.0 = Debug|x86

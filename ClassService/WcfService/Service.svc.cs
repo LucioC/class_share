@@ -8,10 +8,10 @@ using System.Text;
 using Microsoft.Office.Interop.PowerPoint;
 using PowerPointPresentation;
 using System.IO;
-using CommonUtils;
 using ImageZoom;
 using KinectPowerPointControl;
 using ServiceCore;
+using ServiceCore.Utils;
 
 namespace ClassService
 {

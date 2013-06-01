@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
-using CommonUtils;
 using ServiceTest;
 
 namespace TestProject.Integration

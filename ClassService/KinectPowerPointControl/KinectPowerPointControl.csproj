@@ -136,10 +136,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CommonUtils\CommonUtils.csproj">
-      <Project>{FE1F7F9D-FD82-4820-A939-C65FC7360F68}</Project>
-      <Name>CommonUtils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ServiceCore\ServiceCore.csproj">
       <Project>{7EF09EFE-213E-4589-BA79-2071302C67A9}</Project>
       <Name>ServiceCore</Name>

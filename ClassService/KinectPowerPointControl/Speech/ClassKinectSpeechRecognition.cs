@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Windows.Threading;
 using Microsoft.Kinect;
 using Microsoft.Speech.AudioFormat;
-using CommonUtils;
+using ServiceCore.Utils;
 
 namespace KinectPowerPointControl.Speech
 {

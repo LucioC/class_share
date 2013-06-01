@@ -1,8 +1,8 @@
-﻿using CommonUtils;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Text;
+using ServiceCore.Utils;
 
 namespace TestProject.Integration
 {    

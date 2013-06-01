@@ -1,6 +1,9 @@
 ﻿using ServiceCore.Engine;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Moq;
+using ServiceCore.Engine.Triggers;
+using ServiceCore.Utils;
 
 namespace TestProject1
 {
@@ -13,8 +16,6 @@ namespace TestProject1
     [TestClass()]
     public class EffectTriggerTest
     {
-
-
         private TestContext testContextInstance;
 
         /// <summary>
@@ -189,6 +190,34 @@ namespace TestProject1
 
             target.SetNewEvent(newModalityEvent2);
             Assert.AreEqual(false, target.IsReadyToTrigger());
+        }
+
+        [TestMethod()]
+        public void SetOneEventTriggerAndIsAbleToTriggerOnCorrectTimeWindow()
+        {
+            //Create a mock for time, that returns 0,5 seconds more for each call
+            var mock = new Mock<Time>();
+            var timeInMilliseconds = 0;
+            mock.Setup(foo => foo.CurrentTimeInMillis())
+                .Returns(() => timeInMilliseconds );
+
+            EffectTrigger target = new EffectTrigger();
+
+            ModalityEvent modalityEvent = new ModalityEvent();
+            modalityEvent.Type = ActionType.HAND_SWIPE_LEFT;
+            target.Triggers.Add(modalityEvent);
+            //Set the time windows constraint
+            target.TimeWindow = 2000;
+
+            target.Clock = mock.Object;
+
+            ModalityEvent newModalityEvent = new ModalityEvent();
+            newModalityEvent.Type = ActionType.HAND_SWIPE_LEFT;
+
+            Assert.AreEqual(true, target.HasEvent(newModalityEvent));
+            target.SetNewEvent(newModalityEvent);
+
+            Assert.AreEqual(true, target.IsReadyToTrigger());
         }
     }
 }

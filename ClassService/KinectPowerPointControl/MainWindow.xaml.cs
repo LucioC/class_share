@@ -18,10 +18,10 @@ using System.IO;
 using Microsoft.Speech.AudioFormat;
 using System.Diagnostics;
 using System.Windows.Threading;
-using CommonUtils;
 using KinectPowerPointControl.Speech;
 using KinectPowerPointControl.Gesture;
 using ServiceCore;
+using ServiceCore.Utils;
 
 namespace KinectPowerPointControl
 {

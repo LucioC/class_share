@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Kinect.Toolkit.Interaction;
-using CommonUtils;
+using ServiceCore.Utils;
 
 namespace KinectPowerPointControl.Gesture
 {

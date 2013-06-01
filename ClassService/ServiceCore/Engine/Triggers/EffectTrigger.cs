@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ServiceCore.Utils;
 
-namespace ServiceCore.Engine
+namespace ServiceCore.Engine.Triggers
 {
     public class EffectTrigger
     {
         public List<ModalityEvent> Triggers { get; set; }
         public List<IEffect> Effects { get; set; }
+
 
         public EffectTrigger()
         {
@@ -59,5 +61,9 @@ namespace ServiceCore.Engine
 
             return true;
         }
+
+        public int TimeWindow { get; set; }
+
+        public Time Clock { get; set; }
     }
 }

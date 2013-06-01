@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Kinect;
-using CommonUtils;
 using KinectPowerPointControl.Gesture;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
@@ -14,6 +13,7 @@ using Microsoft.Speech.AudioFormat;
 using System.Diagnostics;
 using Microsoft.Kinect.Toolkit.Interaction;
 using System.Diagnostics.CodeAnalysis;
+using ServiceCore.Utils;
 
 namespace KinectPowerPointControl
 {

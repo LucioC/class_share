@@ -16,8 +16,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     using System.IO;
     using ServiceCore;
     using System.Windows.Input;
-    using CommonUtils;
     using ClassService.MainWindow;
+    using ServiceCore.Utils;
 
     /// <summary>
     /// Interaction logic for MainWindow

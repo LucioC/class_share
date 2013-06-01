@@ -8,7 +8,7 @@ using System.Windows.Threading;
 using ServiceCore;
 using Microsoft.Samples.Kinect.ControlsBasics;
 using System.Windows.Media;
-using CommonUtils;
+using ServiceCore.Utils;
 
 namespace KinectPowerPointControl
 {

@@ -6,7 +6,7 @@ using System.Windows;
 using System.Threading;
 using System.Windows.Threading;
 using ServiceCore;
-using CommonUtils;
+using ServiceCore.Utils;
 
 namespace KinectPowerPointControl
 {
