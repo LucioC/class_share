@@ -387,5 +387,93 @@ namespace TestProject1
             effect.Verify(foo => foo.execute(), Times.Never());
         }
 
+        [TestMethod()]
+        public void AVoiceCommandTriggersTogetherWithPostureDirectionTest()
+        {
+            var mock = new Mock<Clock>();
+            var timeInMilliseconds = 0;
+            mock.Setup(foo => foo.CurrentTimeInMillis())
+                .Returns(() => timeInMilliseconds);
+
+            MultimodalEngine target = new MultimodalEngine();
+            target.ClockInstance = mock.Object;
+
+            ModalityEvent modalityEvent1 = new ModalityEvent();
+            modalityEvent1.Type = ActionType.POSTURE_DIRECTION_KINECT;
+
+            ModalityEvent modalityEvent2 = new ModalityEvent();
+            modalityEvent2.Type = ActionType.SPEECH_NEXT;
+
+            var effect = new Mock<IEffect>();
+
+            //Define trigger with one input modality event that triggers one effect
+            EffectTrigger effectTrigger = new EffectTrigger();
+            effectTrigger.Effects.Add(effect.Object);
+            effectTrigger.Triggers.Add(modalityEvent1);
+            effectTrigger.Triggers.Add(modalityEvent2);
+            effectTrigger.TimeWindow = 1000;
+
+            target.addNewTrigger(effectTrigger);
+
+            //Prepare future event1
+            ModalityEvent action1 = new ModalityEvent();
+            action1.Type = ActionType.POSTURE_DIRECTION_KINECT;
+            action1.EventTime = 1000;
+
+            timeInMilliseconds = 1001;
+            target.NewInputModalityEvent(action1);
+
+            //Was not trigger yet
+            effect.Verify(foo => foo.execute(), Times.Never());
+
+            //Prepare future event2
+            ModalityEvent action2 = new ModalityEvent();
+            action2.Type = ActionType.SPEECH_NEXT;
+            action2.EventTime = 1500;
+
+            timeInMilliseconds = 1600;
+            target.NewInputModalityEvent(action2);
+
+            effect.Verify(foo => foo.execute());
+        }
+
+        [TestMethod()]
+        public void AVoiceCommandShouldNotTriggerWithoutPostureDirectionTest()
+        {
+            var mock = new Mock<Clock>();
+            var timeInMilliseconds = 0;
+            mock.Setup(foo => foo.CurrentTimeInMillis())
+                .Returns(() => timeInMilliseconds);
+
+            MultimodalEngine target = new MultimodalEngine();
+            target.ClockInstance = mock.Object;
+
+            ModalityEvent modalityEvent1 = new ModalityEvent();
+            modalityEvent1.Type = ActionType.POSTURE_DIRECTION_KINECT;
+
+            ModalityEvent modalityEvent2 = new ModalityEvent();
+            modalityEvent2.Type = ActionType.SPEECH_NEXT;
+
+            var effect = new Mock<IEffect>();
+
+            //Define trigger with one input modality event that triggers one effect
+            EffectTrigger effectTrigger = new EffectTrigger();
+            effectTrigger.Effects.Add(effect.Object);
+            effectTrigger.Triggers.Add(modalityEvent1);
+            effectTrigger.Triggers.Add(modalityEvent2);
+            effectTrigger.TimeWindow = 1000;
+
+            target.addNewTrigger(effectTrigger);
+
+            ModalityEvent action2 = new ModalityEvent();
+            action2.Type = ActionType.SPEECH_NEXT;
+            action2.EventTime = 1500;
+
+            timeInMilliseconds = 1600;
+            target.NewInputModalityEvent(action2);
+
+            effect.Verify(foo => foo.execute(), Times.Never());
+        }
+
     }
 }
