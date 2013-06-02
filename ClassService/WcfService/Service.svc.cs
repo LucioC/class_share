@@ -330,6 +330,12 @@ namespace ClassService
 
             return new Result("Command Executed");
         }
+
+
+        public Result NewEvent(ModalityEvent modalityEvent)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
