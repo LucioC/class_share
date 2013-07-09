@@ -9,7 +9,8 @@ namespace ClassService
 {
     public class ServiceFileManager
     {
-        public static String filesFolder = "files";
+        private static String filesFolder = "files";
+        private static String currentPresentationFolder = "presentation";
 
         private FileManager fileManager;
 
@@ -18,9 +19,16 @@ namespace ClassService
             fileManager = new FileManager();
 
             FilesPath = Directory.GetCurrentDirectory() + "\\" + filesFolder + "\\";
+
+            CurrentPresentationFolder = Directory.GetCurrentDirectory() + "\\" + currentPresentationFolder + "\\";
+
+            System.IO.Directory.CreateDirectory(CurrentPresentationFolder);
+            System.IO.Directory.CreateDirectory(FilesPath);
         }
 
         public String FilesPath { get; protected set; }
+
+        public String CurrentPresentationFolder { get; protected set; }
 
         public String GetFilePath(String fileName)
         {

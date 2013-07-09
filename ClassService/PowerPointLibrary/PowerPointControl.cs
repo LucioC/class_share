@@ -89,5 +89,14 @@ namespace PowerPointPresentation
             application = null;
             presentation = null;
         }
+
+        public void SaveSlidesAsPNG(string directory)
+        {
+            for (int i=1; i<=presentation.Slides.Count; i++)
+            {
+                Slide pptSlide = presentation.Slides[i];
+                pptSlide.Export(directory + i.ToString() + ".png", "PNG", 1024, 768);
+            }
+        }
     }
 }

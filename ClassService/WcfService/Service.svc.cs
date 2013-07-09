@@ -112,6 +112,8 @@ namespace ClassService
                 KinectWindow.setMode(PRESENTATION_MODE.POWERPOINT);
                 KinectWindow.StartThread();
 
+                PresentationControl.SaveSlidesAsPNG(fileManager.CurrentPresentationFolder);
+
                 return new Result("Presentation has been started");
             }
             catch (Exception e)
