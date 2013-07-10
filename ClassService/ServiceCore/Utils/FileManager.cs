@@ -8,6 +8,32 @@ namespace ServiceCore.Utils
 {
     public class FileManager
     {
+        public List<String> GetFileNamesFromPaths(List<String> filePaths)
+        {
+            List<String> files = new List<string>();
+
+            foreach(String filePath in filePaths )
+            {
+                files.Add(Path.GetFileName(filePath));
+            }
+
+            return files;
+        }
+
+        public List<String> GetFileList(String directory, String extension)
+        {
+            List<String> files = new List<string>();
+            if (extension == null || extension == String.Empty)
+            {
+                files.AddRange(Directory.GetFiles(directory));
+            }
+            else
+            {
+                files.AddRange(Directory.GetFiles(directory, extension));
+            }
+            return files;
+        }
+
         public Boolean FileExists(String fileName)
         {
             return System.IO.File.Exists(fileName);

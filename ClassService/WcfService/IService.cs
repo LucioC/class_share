@@ -24,6 +24,14 @@ namespace ClassService
         Stream GetFile(String fileName);
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "/files?type={type}",
+            Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare)]
+        ListOfFiles GetFiles(String type);
+
+        [OperationContract]
         [WebInvoke(UriTemplate = "/presentation/slides/{slideNumber}",
             Method = "GET")]
         Stream ReturnPresentationSlideAsImage(String slideNumber);
@@ -100,7 +108,18 @@ namespace ClassService
         }
 
         [DataMember(Order = 1, Name = "images")]
-        public List<String> Uris { get; set; }
+        public List<String> Names { get; set; }
+    }
+
+    [DataContract(Namespace = "http://yournamespace.com")]
+    public class ListOfFiles
+    {
+        public ListOfFiles()
+        {
+        }
+
+        [DataMember(Order = 1, Name = "files")]
+        public List<String> Names { get; set; }
     }
 
     [DataContract(Namespace = "http://yournamespace.com")]

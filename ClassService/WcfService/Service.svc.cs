@@ -82,6 +82,8 @@ namespace ClassService
             }
         }
 
+        #region presentation
+
         public Result PresentationCommand(PresentationAction action)
         {
             switch (action.Command)
@@ -209,6 +211,8 @@ namespace ClassService
             }
         }
 
+        #endregion
+
         public Result UploadFile(string fileName, Stream fileContents)
         {
             Output.WriteToDebugOrConsole("Entered uploadFile call");
@@ -233,6 +237,15 @@ namespace ClassService
                 MemoryStream stream = new MemoryStream(byteArray);
                 return stream;
             }
+        }
+
+        public ListOfFiles GetFiles(String type)
+        {
+            ListOfFiles files = new ListOfFiles();
+            List<String> fileNames = fileManager.GetFiles(type);
+
+            files.Names = fileNames;
+            return files;
         }
 
         public Result OpenImage(string filename)
@@ -360,14 +373,14 @@ namespace ClassService
         public ListOfImages ReturnListOfPresentationImages()
         {
             ListOfImages images = new ListOfImages();
-            images.Uris = new List<string>();
+            images.Names = new List<string>();
 
             string serviceUrl = urlManager.CurrentPresentationUrl();
             List<String> imageNames = urlManager.NameOfImages(PresentationControl);
 
             foreach(String imageName in imageNames)
             {
-                images.Uris.Add(imageName);
+                images.Names.Add(imageName);
             }
             
             return images;

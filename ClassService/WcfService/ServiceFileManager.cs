@@ -26,6 +26,26 @@ namespace ClassService
             System.IO.Directory.CreateDirectory(FilesPath);
         }
 
+        public List<String> GetFiles(string type)
+        {
+            List<String> files = new List<string>();
+            if (type == null || type == String.Empty)
+            {
+                files.AddRange(fileManager.GetFileList(FilesPath, null));
+            }
+            else if (type == "image")
+            {
+                files.AddRange(fileManager.GetFileList(FilesPath, "*.jpg"));
+                files.AddRange(fileManager.GetFileList(FilesPath, "*.png"));
+            }
+            else if (type == "presentation")
+            {
+                files.AddRange(fileManager.GetFileList(FilesPath, "*.ppt"));
+            }
+
+            return fileManager.GetFileNamesFromPaths(files);
+        }
+
         public String FilesPath { get; protected set; }
 
         public String CurrentPresentationFolder { get; protected set; }
