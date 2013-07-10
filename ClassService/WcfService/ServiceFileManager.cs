@@ -7,7 +7,7 @@ using ServiceCore.Utils;
 
 namespace ClassService
 {
-    public class ServiceFileManager
+    public class ServiceFileManager : ClassService.IServiceFileManager
     {
         private static String filesFolder = "files";
         private static String currentPresentationFolder = "presentation";
@@ -32,8 +32,7 @@ namespace ClassService
 
         public String GetFilePath(String fileName)
         {
-            //Get current directory and look for file
-            
+            //Get current directory and look for file            
             String localPath = FilesPath;
             localPath = localPath + fileName;
 
@@ -42,6 +41,12 @@ namespace ClassService
                 throw new FileNotFoundException("File " + fileName + " doesn't exist at server path " + FilesPath);
             }
 
+            return localPath;
+        }
+
+        public String GetPresentationSlideImageFilePath(String slideNumber)
+        {
+            String localPath = CurrentPresentationFolder + slideNumber + ".png";
             return localPath;
         }
 

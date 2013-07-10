@@ -23,6 +23,27 @@ namespace ClassService
             Method = "GET")]
         Stream GetFile(String fileName);
 
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/presentation/slides/{slideNumber}",
+            Method = "GET")]
+        Stream ReturnPresentationSlideAsImage(String slideNumber);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/presentation/info",
+            Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare)]
+        PresentationInfo GetPresentationInfo();
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/presentation",
+            Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare)]
+        ListOfImages ReturnListOfPresentationImages();
+
         [OperationContract(Name = "StartPresentation")]
         [WebInvoke(UriTemplate = "/presentation",
             Method = "PUT",
@@ -61,6 +82,28 @@ namespace ClassService
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare)]
         Result NewEvent(ModalityEvent modalityEvent);
+    }
+
+    [DataContract(Namespace = "http://yournamespace.com")]
+    public class ListOfImages
+    {
+        public ListOfImages()
+        {
+        }
+
+        [DataMember(Order = 1, Name = "uris")]
+        public List<String> Uris { get; set; }
+    }
+
+    [DataContract(Namespace = "http://yournamespace.com")]
+    public class PresentationInfo
+    {
+        public PresentationInfo()
+        {
+        }
+
+        [DataMember(Order = 1, Name = "slidesNumber")]
+        public int slidesNumber { get; set; }
     }
     
     [DataContract(Namespace = "http://yournamespace.com")]

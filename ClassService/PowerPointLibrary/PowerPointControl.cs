@@ -98,5 +98,11 @@ namespace PowerPointPresentation
                 pptSlide.Export(directory + i.ToString() + ".png", "PNG", 1024, 768);
             }
         }
+
+        public Boolean IsActive()
+        {
+            if (presentation != null) return true;
+            return false;
+        }
     }
 }

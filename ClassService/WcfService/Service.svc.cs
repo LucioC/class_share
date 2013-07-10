@@ -21,8 +21,9 @@ namespace ClassService
         public static IPowerPointControl PresentationControl;
         public static IImageService ImageForm;
         public static IKinectService KinectWindow;
-        private ServiceFileManager fileManager;
+        public static IServiceFileManager fileManager;
         private static KinectMainWindowControl mainWindow;
+        private static ServiceUrlManager urlManager;
 
         public Service()
         {
@@ -31,6 +32,7 @@ namespace ClassService
             mainWindow.StartThread();
             KinectWindow.MessageSent += this.MessageReceived;
             mainWindow.MessageSent += this.ReceiveCommand;
+            urlManager = new ServiceUrlManager();
         }
 
         static Service()
@@ -337,6 +339,56 @@ namespace ClassService
         public Result NewEvent(ModalityEvent modalityEvent)
         {
             throw new NotImplementedException();
+        }
+
+        public ListOfImages ReturnListOfPresentationImages()
+        {
+            ListOfImages images = new ListOfImages();
+            images.Uris = new List<string>();
+
+            string serviceUrl = urlManager.CurrentPresentationUrl();
+            List<String> imageNames = urlManager.NameOfImages(PresentationControl);
+
+            foreach(String imageName in imageNames)
+            {
+                images.Uris.Add(imageName);
+            }
+            
+            return images;
+        }
+
+        public Stream ReturnPresentationSlideAsImage(String slideNumber)
+        {
+            int slide = Int32.Parse(slideNumber);
+
+            string fileName;
+            Stream fileStream;
+            try
+            {
+                fileName = fileManager.GetPresentationSlideImageFilePath(slideNumber);
+                fileStream = new FileStream(fileName, FileMode.Open);
+
+                if (WebOperationContext.Current != null)
+                    WebOperationContext.Current.OutgoingResponse.ContentType = "image/png";
+
+                return fileStream;
+            }
+            catch (Exception e)
+            {
+                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                byte[] byteArray = Encoding.ASCII.GetBytes(e.Message);
+                MemoryStream stream = new MemoryStream(byteArray);
+                return stream;
+            }
+        }
+
+        public PresentationInfo GetPresentationInfo()
+        {
+            PresentationInfo info = new PresentationInfo();
+
+            if(PresentationControl.IsActive()) info.slidesNumber = PresentationControl.TotalSlides();
+
+            return info;
         }
     }
 }

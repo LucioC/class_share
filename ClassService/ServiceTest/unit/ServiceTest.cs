@@ -90,9 +90,11 @@ namespace TestProject1
 
             var imageControlMock = new Mock<IImageService>();
             var kinectControlMock = new Mock<IKinectService>();
+            var fileManagerMock = new Mock<IServiceFileManager>();
 
             Service.ImageForm = imageControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
+            Service.fileManager = fileManagerMock.Object;
             
             target.CloseCurrentImage();
 
@@ -107,9 +109,11 @@ namespace TestProject1
 
             var imageControlMock = new Mock<IImageService>();
             var kinectControlMock = new Mock<IKinectService>();
+            var fileManagerMock = new Mock<IServiceFileManager>();
 
             Service.ImageForm = imageControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
+            Service.fileManager = fileManagerMock.Object;
 
             ImageAction action = new ImageAction("moveright");
             target.ImageCommand(action);
@@ -124,9 +128,11 @@ namespace TestProject1
 
             var imageControlMock = new Mock<IImageService>();
             var kinectControlMock = new Mock<IKinectService>();
+            var fileManagerMock = new Mock<IServiceFileManager>();
                  
             Service.ImageForm = imageControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
+            Service.fileManager = fileManagerMock.Object;
 
             target.OpenImage(new ClassService.File(""));
 
@@ -141,12 +147,14 @@ namespace TestProject1
 
             var imageControlMock = new Mock<IImageService>();
             var kinectControlMock = new Mock<IKinectService>();
+            var fileManagerMock = new Mock<IServiceFileManager>();
 
             //If a thread is already running, it should be closed
             imageControlMock.Setup(foo => foo.IsThreadRunning()).Returns(true);
 
             Service.ImageForm = imageControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
+            Service.fileManager = fileManagerMock.Object;
 
             target.OpenImage(new ClassService.File(""));
 
@@ -163,9 +171,11 @@ namespace TestProject1
 
             var imageControlMock = new Mock<IImageService>();
             var kinectControlMock = new Mock<IKinectService>();
+            var fileManagerMock = new Mock<IServiceFileManager>();
 
             Service.ImageForm = imageControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
+            Service.fileManager = fileManagerMock.Object;
 
             ImageAction action = new ImageAction(ImageAction.ZOOMIN);
             target.ImageCommand(action);
@@ -182,9 +192,11 @@ namespace TestProject1
 
             var presentationControlMock = new Mock<IPowerPointControl>();
             var kinectControlMock = new Mock<IKinectService>();
+            var fileManagerMock = new Mock<IServiceFileManager>();
 
             Service.PresentationControl = presentationControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
+            Service.fileManager = fileManagerMock.Object;
 
             ClassService.File file = new ClassService.File("");
             target.StartPresentation(file);
@@ -201,9 +213,11 @@ namespace TestProject1
 
             var presentationControlMock = new Mock<IPowerPointControl>();
             var kinectControlMock = new Mock<IKinectService>();
+            var fileManagerMock = new Mock<IServiceFileManager>();
 
             Service.PresentationControl = presentationControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
+            Service.fileManager = fileManagerMock.Object;
 
             target.ClosePresentation();
 
@@ -218,9 +232,11 @@ namespace TestProject1
 
             var presentationControlMock = new Mock<IPowerPointControl>();
             var kinectControlMock = new Mock<IKinectService>();
+            var fileManagerMock = new Mock<IServiceFileManager>();
 
             Service.PresentationControl = presentationControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
+            Service.fileManager = fileManagerMock.Object;
 
             ClassService.PresentationAction action = new ClassService.PresentationAction(ClassService.PresentationAction.NEXT);
             target.PresentationCommand(action);
@@ -235,9 +251,11 @@ namespace TestProject1
 
             var presentationControlMock = new Mock<IPowerPointControl>();
             var kinectControlMock = new Mock<IKinectService>();
+            var fileManagerMock = new Mock<IServiceFileManager>();
 
             Service.PresentationControl = presentationControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
+            Service.fileManager = fileManagerMock.Object;
 
             ClassService.PresentationAction action = new ClassService.PresentationAction(ClassService.PresentationAction.PREVIOUS);
             target.PresentationCommand(action);
@@ -252,9 +270,11 @@ namespace TestProject1
 
             var presentationControlMock = new Mock<IPowerPointControl>();
             var kinectControlMock = new Mock<IKinectService>();
+            var fileManagerMock = new Mock<IServiceFileManager>();
 
             Service.PresentationControl = presentationControlMock.Object;
             Service.KinectWindow = kinectControlMock.Object;
+            Service.fileManager = fileManagerMock.Object;
 
             ClassService.PresentationAction action = new ClassService.PresentationAction(ClassService.PresentationAction.CLOSE);
             target.PresentationCommand(action);

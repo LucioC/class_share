@@ -71,11 +71,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IService.cs" />
+    <Compile Include="IServiceFileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service.svc.cs">
       <DependentUpon>Service.svc</DependentUpon>
     </Compile>
     <Compile Include="ServiceFileManager.cs" />
+    <Compile Include="ServiceUrlManager.cs" />
+    <Compile Include="WCFUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -17,5 +17,6 @@ namespace ServiceCore
         void StartPresentation();
         int TotalSlides();
         void SaveSlidesAsPNG(string directory);
+        Boolean IsActive();
     }
 }
