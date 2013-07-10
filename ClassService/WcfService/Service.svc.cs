@@ -64,7 +64,8 @@ namespace ClassService
                 }
                 else if(extension == ".pptx" || extension == ".ppt")
                 {
-                    StartPresentation(filename);
+                    PreparePresentation(filename);
+                    StartPresentation();
                 }
             }
         }
@@ -100,21 +101,15 @@ namespace ClassService
             return new Result("Command Executed");
         }
 
-        public Result StartPresentation(string filename)
+        public Result StartPresentation()
         {
             try
-            {
-                String localPath = fileManager.GetFilePath(filename);
-
-                //Open power point presentation
-                PresentationControl.PreparePresentation(localPath);
+            {                
                 PresentationControl.StartPresentation();
 
                 //Initialize Kinect windows for gesture and speech recognition
                 KinectWindow.setMode(PRESENTATION_MODE.POWERPOINT);
                 KinectWindow.StartThread();
-
-                PresentationControl.SaveSlidesAsPNG(fileManager.CurrentPresentationFolder);
 
                 return new Result("Presentation has been started");
             }
@@ -126,9 +121,30 @@ namespace ClassService
             }
         }
 
-        public Result StartPresentation(File file)
+        public Result PreparePresentation(string filename)
         {
-            return this.StartPresentation(file.FileName);
+            try
+            {                
+                String localPath = fileManager.GetFilePath(filename);
+
+                //Open power point presentation
+                PresentationControl.PreparePresentation(localPath);
+
+                PresentationControl.SaveSlidesAsPNG(fileManager.CurrentPresentationFolder);
+
+                return new Result("Presentation has been prepared");
+            }
+            catch (Exception e)
+            {
+                if (WebOperationContext.Current != null)
+                    WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                return new Result("Something went wrong. Verify if the file name is corrected");
+            }
+        }
+
+        public Result PreparePresentation(File fileName)
+        {
+            return this.PreparePresentation(fileName.FileName);
         }
 
         public Result NextSlide()

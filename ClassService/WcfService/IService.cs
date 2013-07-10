@@ -50,7 +50,15 @@ namespace ClassService
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare)]
-        Result StartPresentation(File fileName);
+        Result StartPresentation();
+
+        [OperationContract(Name = "PreparePresentation")]
+        [WebInvoke(UriTemplate = "/presentation/prepare",
+            Method = "PUT",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare)]
+        Result PreparePresentation(File fileName);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/presentation/action",
@@ -91,7 +99,7 @@ namespace ClassService
         {
         }
 
-        [DataMember(Order = 1, Name = "uris")]
+        [DataMember(Order = 1, Name = "images")]
         public List<String> Uris { get; set; }
     }
 

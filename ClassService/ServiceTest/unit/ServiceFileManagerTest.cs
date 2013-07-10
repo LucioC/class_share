@@ -4,7 +4,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting.Web;
 using System.IO;
 
-namespace TestProject1
+namespace TestProject.Units
 {
     
     

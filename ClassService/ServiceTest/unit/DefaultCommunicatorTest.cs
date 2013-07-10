@@ -5,7 +5,7 @@ using System.Threading;
 using Moq;
 using ServiceTest;
 
-namespace TestProject1
+namespace TestProject.Units
 {
     
     

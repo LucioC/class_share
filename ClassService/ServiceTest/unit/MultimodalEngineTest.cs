@@ -6,7 +6,7 @@ using ServiceCore.Engine;
 using ServiceCore.Engine.Triggers;
 using ServiceCore.Utils;
 
-namespace TestProject1
+namespace TestProject.Units
 {
     
     
