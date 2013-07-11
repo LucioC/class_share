@@ -94,6 +94,8 @@ namespace ClassService
                     break;
                 case PresentationAction.CLOSE: ClosePresentation();
                     break;
+                case PresentationAction.GOTOSLIDE: GoToSlideNumber(action.Arg);
+                    break;
                 default:
                     if (WebOperationContext.Current != null)
                         WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
@@ -415,7 +417,7 @@ namespace ClassService
         {
             PresentationInfo info = new PresentationInfo();
 
-            if(PresentationControl.IsActive()) info.slidesNumber = PresentationControl.TotalSlides();
+            if(PresentationControl.IsActive()) info.SlidesNumber = PresentationControl.TotalSlides();
 
             return info;
         }

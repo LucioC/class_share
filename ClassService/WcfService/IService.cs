@@ -130,7 +130,7 @@ namespace ClassService
         }
 
         [DataMember(Order = 1, Name = "slidesNumber")]
-        public int slidesNumber { get; set; }
+        public int SlidesNumber { get; set; }
     }
     
     [DataContract(Namespace = "http://yournamespace.com")]
@@ -155,10 +155,14 @@ namespace ClassService
 
         public const String NEXT = "next";
         public const String PREVIOUS = "previous";
+        public const String GOTOSLIDE = "gotoslide";
         public const String CLOSE = "close";
         
         [DataMember(Order = 1, Name = "command")]
         public string Command { get; set; }
+
+        [DataMember(Order = 1, Name = "arg")]
+        public string Arg { get; set; }
     }
 
     [DataContract(Namespace = "http://yournamespace.com")]
