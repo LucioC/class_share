@@ -33,6 +33,7 @@ namespace PowerPointPresentation
         {
             SlideShowSettings sst = presentation.SlideShowSettings;
             sst.ShowType = Microsoft.Office.Interop.PowerPoint.PpSlideShowType.ppShowTypeSpeaker;
+            sst.ShowWithAnimation = MsoTriState.msoFalse;
             sst.Run();
         }
 
