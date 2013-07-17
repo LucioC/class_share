@@ -78,6 +78,11 @@ namespace ClassService
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/image",
+            Method = "GET")]
+        Stream GetCurrentImage();
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/image",
             Method = "PUT",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]

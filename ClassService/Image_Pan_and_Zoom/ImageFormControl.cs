@@ -31,7 +31,7 @@ namespace ImageZoom
         }
 
         //Throws exception if dont exist or cant be converted to an Image
-        public virtual void CheckIfImageExit()
+        public virtual void CheckIfImageExist()
         {
             if (fileManager.FileExists(FileName))
             {
@@ -52,7 +52,7 @@ namespace ImageZoom
 
         public void StartThread()
         {
-            CheckIfImageExit();
+            CheckIfImageExist();
             thread = new Thread(this.InitializeForm);
             thread.Start();
         }
@@ -76,6 +76,18 @@ namespace ImageZoom
         public void SetFilePath(string fileName)
         {
             FileName = fileName;
+        }
+
+        public String GetImageFilePath()
+        {
+            if (this.IsThreadRunning())
+            {
+                return FileName;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public void SendCommand(string command)

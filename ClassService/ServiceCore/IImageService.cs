@@ -8,6 +8,7 @@ namespace ServiceCore
     public interface IImageService: IWindowThreadControl
     {
         void SetFilePath(String fileName);
+        String GetImageFilePath();
         void SendCommand(String command);
     }
 }

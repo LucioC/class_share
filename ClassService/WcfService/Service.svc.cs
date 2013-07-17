@@ -388,6 +388,30 @@ namespace ClassService
             return images;
         }
 
+
+        public Stream GetCurrentImage()
+        {
+            string fileName;
+            Stream fileStream;
+            try
+            {
+                fileName = ImageForm.GetImageFilePath();
+                fileStream = new FileStream(fileName, FileMode.Open);
+
+                if (WebOperationContext.Current != null)
+                    WebOperationContext.Current.OutgoingResponse.ContentType = "image/png";
+
+                return fileStream;
+            }
+            catch (Exception e)
+            {
+                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                byte[] byteArray = Encoding.ASCII.GetBytes(e.Message);
+                MemoryStream stream = new MemoryStream(byteArray);
+                return stream;
+            }
+        }
+
         public Stream ReturnPresentationSlideAsImage(String slideNumber)
         {
             int slide = Int32.Parse(slideNumber);
