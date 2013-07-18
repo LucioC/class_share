@@ -92,8 +92,58 @@ namespace ImageZoom
 
         public void SendCommand(string command)
         {
+            String[] paramArray = command.Split(Char.Parse(":"));
+
+            command = paramArray[0];
+
+            int x = 0;
+            int y = 0;
             switch (command)
             {
+                case "move":
+                    x = 50;
+                    y = 50;
+                    if (paramArray.Length > 1)
+                    {
+                        x = Int32.Parse(paramArray[1]);
+                        y = Int32.Parse(paramArray[2]);
+                    }
+                    imageForm.Invoke((MethodInvoker)delegate
+                    {
+                        imageForm.addToX(x);
+                        imageForm.addToY(y);
+                    });
+                    break;
+                case "zoom":
+                    float zoom = 0.1F;
+                    Point center = new Point(imageForm.Width/ 2,
+                          (imageForm.Height/2));
+                    if (paramArray.Length > 1)
+                    {
+                        zoom = float.Parse(paramArray[1]);
+                        if (paramArray.Length > 2)
+                        {
+                            x = Int32.Parse(paramArray[2]);
+                            y = Int32.Parse(paramArray[3]);
+                            center = new Point(x, y);
+                        }
+                    }
+                    imageForm.Invoke((MethodInvoker)delegate
+                    {
+                        imageForm.zoomPicture(zoom, center);
+                    });
+                    break;
+                case "rotation":
+                    float angle = 0F;
+                    if (paramArray.Length > 1)
+                    {
+                        angle = float.Parse(paramArray[1]);
+                    }
+                    imageForm.Invoke((MethodInvoker)delegate
+                    {
+                        imageForm.setAngle(angle);
+                    });
+                    break;
                 case "moveright":
                     SendKeys.SendWait("{RIGHT}");
                     break;

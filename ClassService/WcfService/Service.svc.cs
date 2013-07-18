@@ -287,46 +287,6 @@ namespace ClassService
             return OpenImage(fileName.FileName);
         }
 
-        public void ImageRotateRight()
-        {
-            ImageForm.SendCommand("rotateright");
-        }
-
-        public void ImageRotateLeft()
-        {
-            ImageForm.SendCommand("rotateleft");
-        }
-
-        public void ImageZoomIn()
-        {
-            ImageForm.SendCommand("zoomin");
-        }
-
-        public void ImageZoomOut()
-        {
-            ImageForm.SendCommand("zoomout");
-        }
-
-        public void ImageMoveRight()
-        {
-            ImageForm.SendCommand("moveright");
-        }
-
-        public void ImageMoveUp()
-        {
-            ImageForm.SendCommand("moveup");
-        }
-
-        public void ImageMoveDown()
-        {
-            ImageForm.SendCommand("movedown");
-        }
-
-        public void ImageMoveLeft()
-        {
-            ImageForm.SendCommand("moveleft");
-        }
-
         public Result CloseCurrentImage()
         {
             ImageForm.StopThread();
@@ -340,21 +300,27 @@ namespace ClassService
         {
             switch (action.Command)
             {
-                case ImageAction.ZOOMIN: ImageZoomIn();
+                case ImageAction.ZOOM: ImageForm.SendCommand(action.Command + ":" + action.Param);
                     break;
-                case ImageAction.ZOOMOUT: ImageZoomOut();
+                case ImageAction.ROTATION: ImageForm.SendCommand(action.Command + ":" + action.Param);
                     break;
-                case ImageAction.ROTATERIGHT: ImageRotateRight();
+                case ImageAction.MOVE: ImageForm.SendCommand(action.Command + ":" + action.Param);
                     break;
-                case ImageAction.ROTATELEFT: ImageRotateLeft();
+                case ImageAction.ZOOMIN: ImageForm.SendCommand(action.Command);
                     break;
-                case ImageAction.MOVERIGHT: ImageMoveRight();
+                case ImageAction.ZOOMOUT: ImageForm.SendCommand(action.Command);
                     break;
-                case ImageAction.MOVELEFT: ImageMoveLeft();
+                case ImageAction.ROTATERIGHT: ImageForm.SendCommand(action.Command);
                     break;
-                case ImageAction.MOVEUP: ImageMoveUp();
+                case ImageAction.ROTATELEFT: ImageForm.SendCommand(action.Command);
                     break;
-                case ImageAction.MOVEDOWN: ImageMoveDown();
+                case ImageAction.MOVERIGHT: ImageForm.SendCommand(action.Command);
+                    break;
+                case ImageAction.MOVELEFT: ImageForm.SendCommand(action.Command);
+                    break;
+                case ImageAction.MOVEUP: ImageForm.SendCommand(action.Command);
+                    break;
+                case ImageAction.MOVEDOWN: ImageForm.SendCommand(action.Command);
                     break;
                 case ImageAction.CLOSE: CloseCurrentImage();
                     break;

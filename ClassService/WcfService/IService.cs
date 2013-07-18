@@ -186,10 +186,16 @@ namespace ClassService
         public const String MOVEUP = "moveup";
         public const String MOVEDOWN = "movedown";
         public const String MOVELEFT = "moveleft";
+        public const String MOVE = "move";
+        public const String ZOOM = "zoom";
+        public const String ROTATION = "rotation";
         public const String CLOSE = "close";
 
         [DataMember(Order = 1, Name = "command")]
         public string Command { get; set; }
+        
+        [DataMember(Order = 2, Name = "param")]
+        public string Param { get; set; }
     }
 
     [DataContract(Namespace = "http://yournamespace.com")]

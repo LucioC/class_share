@@ -30,30 +30,39 @@ namespace ImageZoom
 
             //FromFile function was locking image file to be used a second time
             //img = Image.FromFile(imagefilename);
-            using (var bmpTemp = new Bitmap(imagefilename))
+            Image image = Image.FromFile(imagefilename);
+
+            float factorX = (image.Width > 1024) ? (float)image.Width/1024 : 1;
+            float factorY = (image.Height > 740) ? (float)image.Height/740 : 1;
+            float factor = Math.Max(factorX, factorY);
+
+            int newWidth = (int)(image.Width / factor);
+            int newHeight = (int)(image.Height / factor);
+
+            using (var bmpTemp = new Bitmap(image, newWidth, newHeight))
             {
                 img = new Bitmap(bmpTemp);
             }
-
-            Graphics g = this.CreateGraphics();
-
-            // Fit whole image
-            zoom = Math.Min(
-                ((float)pictureBox.Height / (float)img.Height) * (img.VerticalResolution / g.DpiY),
-                ((float)pictureBox.Width / (float)img.Width) * (img.HorizontalResolution / g.DpiX)
-            );
-
-            // Fit width
-            //zoom = ((float)pictureBox.Width / (float)img.Width) * (img.HorizontalResolution / g.DpiX);
-
+                        
             pictureBox.Paint += new PaintEventHandler(imageBox_Paint);
 
             imageUtils = new ImageUtils();
 
-            //this.WindowState = FormWindowState.Minimized;
             this.Show();
             this.WindowState = FormWindowState.Maximized;
             this.Activate();
+
+            Graphics g = this.CreateGraphics();
+            centralizeImage(g.DpiX, g.DpiY);
+        }
+
+        private void centralizeImage(float dpiy, float dpix)
+        {
+            int centerX = pictureBox.Width / 2 - img.Width / 2;
+            int centery = pictureBox.Height / 2 - img.Height / 2;
+            imgx += centerX;
+            imgy += centery;
+            pictureBox.Refresh();
         }
 
         private void pictureBox_MouseMove(object sender, EventArgs e)
@@ -97,22 +106,38 @@ namespace ImageZoom
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
-            float oldzoom = zoom;
-
-            if (e.Delta > 0)
-            {
-                zoom += 0.1F;
-            }
-            else if (e.Delta < 0)
-            {
-                zoom = Math.Max(zoom - 0.1F, 0.01F);
-            }
-
             MouseEventArgs mouse = e as MouseEventArgs;
             Point mousePosNow = mouse.Location;
+            zoomPicture(e.Delta, mousePosNow);
+        }
 
-            int x = mousePosNow.X - pictureBox.Location.X;    // Where location of the mouse in the pictureframe
-            int y = mousePosNow.Y - pictureBox.Location.Y;
+        public void addToX(int x)
+        {
+            imgx += x;
+            pictureBox.Refresh();
+        }
+
+        public void addToY(int y)
+        {
+            imgy += y;
+            pictureBox.Refresh();
+        }
+
+        public void zoomPicture(float zoomDelta, Point pointerPosition)
+        {
+            float oldzoom = zoom;
+
+            if (zoomDelta > 0)
+            {
+                zoom = Math.Min(zoom + 0.1F, 10F);
+            }
+            else if (zoomDelta < 0)
+            {
+                zoom = Math.Max(zoom - 0.1F, 0.5F);
+            }
+
+            int x = pointerPosition.X - pictureBox.Location.X;    // Where location of the mouse in the pictureframe
+            int y = pointerPosition.Y - pictureBox.Location.Y;
 
             int oldimagex = (int)(x / oldzoom);  // Where in the IMAGE is it now
             int oldimagey = (int)(y / oldzoom);
@@ -126,20 +151,10 @@ namespace ImageZoom
             pictureBox.Refresh();  // calls imageBox_Paint
         }
 
-        protected void zoomPicture(float zoomDelta)
+        public void setAngle(float newAngle)
         {
-            float oldzoom = zoom;
-
-            if (zoomDelta > 0)
-            {
-                zoom += zoomDelta;
-            }
-            else if (zoomDelta < 0)
-            {
-                zoom = Math.Max(zoom + zoomDelta, 0.01F);
-            }
-
-            pictureBox.Refresh();  // calls imageBox_Paint
+            this.angle = newAngle;
+            pictureBox.Refresh();
         }
 
         private void imageBox_Paint(object sender, PaintEventArgs e)
@@ -183,12 +198,12 @@ namespace ImageZoom
                         break;
 
                     case Keys.PageDown:
-                        zoomPicture(-0.1f);
+                        zoomPicture(-0.1f, new Point(imgx, imgy));
                         pictureBox.Refresh();
                         break;
 
                     case Keys.PageUp:
-                        zoomPicture(0.1f);
+                        zoomPicture(0.1f, new Point(imgx, imgy));
                         pictureBox.Refresh();
                         break;
 
