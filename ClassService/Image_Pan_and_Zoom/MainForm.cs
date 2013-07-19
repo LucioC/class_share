@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.IO;
+using ServiceCore.Utils;
 
 namespace ImageZoom
 {
@@ -59,7 +60,7 @@ namespace ImageZoom
 
             Graphics g = this.CreateGraphics();
 
-            setViewMinimumBounds(0,0,img.Width, img.Height);
+            setViewMinimumBounds(0,0,img.Width, img.Height, img.Height, img.Width);
         }
 
         private void centralizeImage(float dpiy, float dpix)
@@ -266,8 +267,19 @@ namespace ImageZoom
 
         }
 
-        public void setViewMinimumBounds(int left, int top, int right, int bottom)
+        public void setViewMinimumBounds(int left, int top, int right, int bottom, int otherImageHeight, int otherImageWidth)
         {
+            //Adjust difference in sizes from this and image source
+            float otherImageScaleH = ((float)otherImageHeight / (float)img.Height);
+            float otherImageScaleW = ((float)otherImageWidth / (float)img.Width);
+            left = (int)(left / otherImageScaleW);
+            right = (int)(right / otherImageScaleW);
+            top = (int)(top / otherImageScaleH);
+            bottom = (int)(bottom / otherImageScaleH);
+
+            Output.Debug("RECEIVED", left + ":" + top + ":" + right + ":" + bottom);
+            Output.Debug("IMAGE", img.Width + ":" + img.Height);
+
             int width = right - left;
             int height = bottom - top;
 
@@ -307,6 +319,10 @@ namespace ImageZoom
                 extraheight = (extraheight > 0) ? extraheight / minScale : 0;
                 if (extraheight > 0) imgy += (int)extraheight;
             }
+
+            Output.Debug("POSITION", imgx + ":" + imgy);
+            Output.Debug("EXTRA", extrawidth + ":" + extraheight);
+            Output.Debug("SCALE", zoom + "");
 
             pictureBox.Refresh();
 

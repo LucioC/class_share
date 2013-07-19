@@ -109,16 +109,20 @@ namespace ImageZoom
                     int bottom = 0;
                     int right = 0;
                     int top = 0;
+                    int imageH = 0;
+                    int imageW = 0;
                     if (paramArray.Length > 1)
                     {
                         left = Int32.Parse(paramArray[1]);
                         top = Int32.Parse(paramArray[2]);
                         right = Int32.Parse(paramArray[3]);
                         bottom = Int32.Parse(paramArray[4]);
+                        imageH = Int32.Parse(paramArray[5]);
+                        imageW = Int32.Parse(paramArray[6]);
                     }
                     imageForm.Invoke((MethodInvoker)delegate
                     {
-                        imageForm.setViewMinimumBounds(left, top, right, bottom);
+                        imageForm.setViewMinimumBounds(left, top, right, bottom, imageH, imageW);
                     });
                     break;
                 case "movezoom":
