@@ -25,16 +25,21 @@ namespace ImageZoom
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
-
+            
             string imagefilename = imagePath;
 
             //FromFile function was locking image file to be used a second time
             //img = Image.FromFile(imagefilename);
-            Image image = Image.FromFile(imagefilename);
+            Bitmap image = null;
+            using (var bmpTemp = new Bitmap(imagefilename))
+            {
+                image = new Bitmap(bmpTemp);
+            }
 
-            float factorX = (image.Width > 1024) ? (float)image.Width/1024 : 1;
-            float factorY = (image.Height > 740) ? (float)image.Height/740 : 1;
+            float factorX = (image.Width > 1024) ? (float)image.Width / 1024 : 1;
+            float factorY = (image.Height > 768) ? (float)image.Height / 768 : 1;
             float factor = Math.Max(factorX, factorY);
+            factor = (float)(int)(factor);
 
             int newWidth = (int)(image.Width / factor);
             int newHeight = (int)(image.Height / factor);
@@ -53,7 +58,8 @@ namespace ImageZoom
             this.Activate();
 
             Graphics g = this.CreateGraphics();
-            centralizeImage(g.DpiX, g.DpiY);
+
+            setViewMinimumBounds(0,0,img.Width, img.Height);
         }
 
         private void centralizeImage(float dpiy, float dpix)
@@ -111,6 +117,19 @@ namespace ImageZoom
             zoomPicture(e.Delta, mousePosNow);
         }
 
+        public void setPositionAndZoom(int x, int y, float zoom)
+        {
+            setZoom(zoom);
+            imgx = x;
+            imgy = y;
+            pictureBox.Refresh();
+        }
+
+        public Point getCenterPoint()
+        {
+            return new Point(Width / 2, Height / 2);
+        }
+
         public void addToX(int x)
         {
             imgx += x;
@@ -121,6 +140,11 @@ namespace ImageZoom
         {
             imgy += y;
             pictureBox.Refresh();
+        }
+
+        public void setZoom(float newZoom)
+        {
+            zoom = newZoom;
         }
 
         public void zoomPicture(float zoomDelta, Point pointerPosition)
@@ -161,11 +185,12 @@ namespace ImageZoom
         {
             e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
             e.Graphics.ScaleTransform(zoom, zoom);
+            e.Graphics.TranslateTransform(imgx, imgy);
 
             Image i = (Image)img.Clone();
-            i = imageUtils.RotateImage(i, angle);           
+            i = imageUtils.RotateImage(i, angle);
             
-            e.Graphics.DrawImage(i, imgx, imgy);
+            e.Graphics.DrawImage(i, 1, 1);
         }
         
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -239,6 +264,54 @@ namespace ImageZoom
         private void pictureBox_Click(object sender, EventArgs e)
         {
 
+        }
+
+        public void setViewMinimumBounds(int left, int top, int right, int bottom)
+        {
+            int width = right - left;
+            int height = bottom - top;
+
+            if (width > img.Width) width = img.Width;
+            if (height > img.Height) height = img.Height;
+
+            float scaleh = (float)pictureBox.Height / height;
+            float scalew = (float)pictureBox.Width / width;
+
+            float minScale = Math.Min(scaleh, scalew);
+            //float minScale = scalew;
+
+            Point center = getCenterPoint();
+
+            var screenPosition = pictureBox.PointToScreen(new Point(0, 0));
+
+            zoom = minScale;
+            imgx = -left;// +screenPosition.X + pictureBox.Margin.Left;
+            imgy = -top;// +screenPosition.Y + pictureBox.Margin.Top;
+
+            int scaledWidth = (int)(width * minScale);
+            int scaledHeight = (int)(height * minScale);
+
+            int imageWidth = (int)(zoom * img.Width);
+
+            float extrawidth = 0;
+            float extraheight = 0;
+            if (pictureBox.Width > scaledWidth)
+            {
+                extrawidth = (pictureBox.Width - scaledWidth) / 2;
+                extrawidth = (extrawidth > 0) ? extrawidth / minScale : 0;
+                if (extrawidth > 0) imgx += (int)extrawidth;
+            }
+            if (pictureBox.Height > scaledHeight)
+            {
+                extraheight = (pictureBox.Height - scaledHeight) / 2;
+                extraheight = (extraheight > 0) ? extraheight / minScale : 0;
+                if (extraheight > 0) imgy += (int)extraheight;
+            }
+
+            pictureBox.Refresh();
+
+            //pictureBox.Width;
+            //pictureBox.Height;
         }
     }
 }

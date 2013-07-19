@@ -8,6 +8,7 @@ using System.IO;
 using System.Windows.Forms;
 using ServiceCore;
 using ServiceCore.Utils;
+using System.Globalization;
 
 namespace ImageZoom
 {
@@ -98,8 +99,40 @@ namespace ImageZoom
 
             int x = 0;
             int y = 0;
+            float zoom = 1f;
+            
+            if(IsThreadRunning())
             switch (command)
             {
+                case "visiblepart":
+                    int left = 0;
+                    int bottom = 0;
+                    int right = 0;
+                    int top = 0;
+                    if (paramArray.Length > 1)
+                    {
+                        left = Int32.Parse(paramArray[1]);
+                        top = Int32.Parse(paramArray[2]);
+                        right = Int32.Parse(paramArray[3]);
+                        bottom = Int32.Parse(paramArray[4]);
+                    }
+                    imageForm.Invoke((MethodInvoker)delegate
+                    {
+                        imageForm.setViewMinimumBounds(left, top, right, bottom);
+                    });
+                    break;
+                case "movezoom":
+                    if (paramArray.Length > 1)
+                    {
+                        x = Int32.Parse(paramArray[1]);
+                        y = Int32.Parse(paramArray[2]);
+                        zoom = float.Parse(paramArray[3], CultureInfo.InvariantCulture);
+                    }
+                    imageForm.Invoke((MethodInvoker)delegate
+                    {
+                        imageForm.setPositionAndZoom(x, y, zoom);
+                    });
+                    break;
                 case "move":
                     x = 50;
                     y = 50;
@@ -113,26 +146,7 @@ namespace ImageZoom
                         imageForm.addToX(x);
                         imageForm.addToY(y);
                     });
-                    break;
-                case "zoom":
-                    float zoom = 0.1F;
-                    Point center = new Point(imageForm.Width/ 2,
-                          (imageForm.Height/2));
-                    if (paramArray.Length > 1)
-                    {
-                        zoom = float.Parse(paramArray[1]);
-                        if (paramArray.Length > 2)
-                        {
-                            x = Int32.Parse(paramArray[2]);
-                            y = Int32.Parse(paramArray[3]);
-                            center = new Point(x, y);
-                        }
-                    }
-                    imageForm.Invoke((MethodInvoker)delegate
-                    {
-                        imageForm.zoomPicture(zoom, center);
-                    });
-                    break;
+                    break;               
                 case "rotation":
                     float angle = 0F;
                     if (paramArray.Length > 1)

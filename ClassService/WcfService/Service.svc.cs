@@ -300,11 +300,13 @@ namespace ClassService
         {
             switch (action.Command)
             {
-                case ImageAction.ZOOM: ImageForm.SendCommand(action.Command + ":" + action.Param);
-                    break;
                 case ImageAction.ROTATION: ImageForm.SendCommand(action.Command + ":" + action.Param);
                     break;
+                case ImageAction.VIEWBOUNDS: ImageForm.SendCommand(action.Command + ":" + action.Param);
+                    break;
                 case ImageAction.MOVE: ImageForm.SendCommand(action.Command + ":" + action.Param);
+                    break;
+                case ImageAction.MOVEZOOM: ImageForm.SendCommand(action.Command + ":" + action.Param);
                     break;
                 case ImageAction.ZOOMIN: ImageForm.SendCommand(action.Command);
                     break;
@@ -353,7 +355,6 @@ namespace ClassService
             
             return images;
         }
-
 
         public Stream GetCurrentImage()
         {
