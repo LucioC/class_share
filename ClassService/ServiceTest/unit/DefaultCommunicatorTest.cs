@@ -73,7 +73,7 @@ namespace TestProject.Units
         {
             DefaultCommunicator speaker = new DefaultCommunicator();
             var listener = new Mock<DefaultCommunicator>();
-
+            
             speaker.RegisterListener(listener.Object);
 
             string message = "a message";
