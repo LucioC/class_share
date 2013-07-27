@@ -38,11 +38,11 @@ namespace ImageZoom
             return returnBitmap;
         }
 
-        public Image TargetImage { get; set; }
-        public PictureBox Box { get; set; }
+        public Size ImageSize { get; set; }
+        public Size BoxSize { get; set; }
         public Point Center { get; set; }
 
-        public ImageState adjustPositionAndScale(ref int left, ref int top, ref int right, ref int bottom, float otherImageScaleH, float otherImageScaleW)
+        public ImageState AdjustPositionAndScale(ref int left, ref int top, ref int right, ref int bottom, float otherImageScaleH, float otherImageScaleW)
         {
             left = (int)(left / otherImageScaleW);
             right = (int)(right / otherImageScaleW);
@@ -50,16 +50,16 @@ namespace ImageZoom
             bottom = (int)(bottom / otherImageScaleH);
 
             Output.Debug("RECEIVED", left + ":" + top + ":" + right + ":" + bottom);
-            Output.Debug("IMAGE", TargetImage.Width + ":" + TargetImage.Height);
+            Output.Debug("IMAGE", ImageSize.Width + ":" + ImageSize.Height);
 
             int width = right - left;
             int height = bottom - top;
 
-            if (width > TargetImage.Width) width = TargetImage.Width;
-            if (height > TargetImage.Height) height = TargetImage.Height;
+            if (width > ImageSize.Width) width = ImageSize.Width;
+            if (height > ImageSize.Height) height = ImageSize.Height;
 
-            float scaleh = (float)Box.Height / height;
-            float scalew = (float)Box.Width / width;
+            float scaleh = (float)BoxSize.Height / height;
+            float scalew = (float)BoxSize.Width / width;
 
             float minScale = Math.Min(scaleh, scalew);
             //float minScale = scalew;
@@ -75,7 +75,7 @@ namespace ImageZoom
             int scaledWidth = (int)(width * minScale);
             int scaledHeight = (int)(height * minScale);
 
-            int imageWidth = (int)(imageState.Zoom * TargetImage.Width);
+            int imageWidth = (int)(imageState.Zoom * ImageSize.Width);
             imageState = adjustCenter(minScale, scaledWidth, scaledHeight, imageState);
 
             return imageState;
@@ -83,8 +83,8 @@ namespace ImageZoom
 
         private ImageState adjustCenter(float minScale, int scaledWidth, int scaledHeight, ImageState imageState)
         {
-            int pictureWidth = Box.Width;
-            int pictureHeight = Box.Height;
+            int pictureWidth = BoxSize.Width;
+            int pictureHeight = BoxSize.Height;
 
             float extrawidth = 0;
             float extraheight = 0;

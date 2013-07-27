@@ -17,7 +17,6 @@ namespace ImageZoom
         ImageState imageState;
 
         bool mousepressed = false;  // true as long as left mousebutton is pressed
-        float angle = 0;
 
         ImageUtils imageUtils;
 
@@ -30,21 +29,21 @@ namespace ImageZoom
             imageState.Zoom = 1f;
             imageState.X = 0;
             imageState.Y = 0;
+            imageState.Angle = 0f;
                         
             string imagefilename = imagePath;
             loadImage(imagefilename);
-
-            imageUtils = new ImageUtils();
-
-            imageUtils.Center = getCenterPoint();
-            imageUtils.Box = pictureBox;
-            imageUtils.TargetImage = img;
                         
             pictureBox.Paint += new PaintEventHandler(imageBox_Paint);
 
             this.Show();
             this.WindowState = FormWindowState.Maximized;
             this.Activate();
+            
+            imageUtils = new ImageUtils();
+            imageUtils.Center = getCenterPoint();
+            imageUtils.BoxSize = pictureBox.Size;
+            imageUtils.ImageSize = img.Size;
 
             Graphics g = this.CreateGraphics();
 
@@ -190,7 +189,7 @@ namespace ImageZoom
 
         public void setAngle(float newAngle)
         {
-            this.angle = newAngle;
+            imageState.Angle = newAngle;
             pictureBox.Refresh();
         }
 
@@ -201,7 +200,7 @@ namespace ImageZoom
             e.Graphics.TranslateTransform(imageState.X, imageState.Y);
 
             Image i = (Image)img.Clone();
-            i = imageUtils.RotateImage(i, angle);
+            i = imageUtils.RotateImage(i, imageState.Angle);
             
             e.Graphics.DrawImage(i, 1, 1);
         }
@@ -246,12 +245,12 @@ namespace ImageZoom
                         break;
 
                     case Keys.End:
-                        angle += 90F;
+                        imageState.Angle += 90F;
                         pictureBox.Refresh();
                         break;
 
                     case Keys.Home:
-                        angle -= 90F;
+                        imageState.Angle -= 90F;
                         pictureBox.Refresh();
                         break;
 
@@ -289,11 +288,11 @@ namespace ImageZoom
             
             if (rotation == 0 || rotation == 180)
             {
-                imageState = imageUtils.adjustPositionAndScale(ref left, ref top, ref right, ref bottom, otherImageScaleH, otherImageScaleW);
+                imageState = imageUtils.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, otherImageScaleH, otherImageScaleW);
             }
             else
             {
-                imageState = imageUtils.adjustPositionAndScale(ref left, ref top, ref right, ref bottom, otherImageScaleW, otherImageScaleH);
+                imageState = imageUtils.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, otherImageScaleW, otherImageScaleH);
             }
 
             pictureBox.Refresh();
@@ -310,11 +309,11 @@ namespace ImageZoom
 
             if (rotation == 180)
             {
-                this.angle = 180;
+                imageState.Angle = 180;
             }
             else if (rotation == 90 || rotation == 270)
             {
-                this.angle = rotation;
+                imageState.Angle = rotation;
             }
             return rotation;
         }

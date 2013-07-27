@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionDependencyTest.cs" />
+    <Compile Include="ImageUtilsTest.cs" />
     <Compile Include="unit\ServiceImageTest.cs" />
     <Compile Include="unit\ServiceFileManagerTest.cs" />
     <Compile Include="unit\DefaultCommunicatorTest.cs" />
@@ -113,6 +114,7 @@
     <None Include="resources\test.pptx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Shadow Include="Test References\ImageZoom.accessor" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ControlsBasics-WPF\DesktopMainWindow.csproj">
@@ -153,9 +155,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Test References\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
