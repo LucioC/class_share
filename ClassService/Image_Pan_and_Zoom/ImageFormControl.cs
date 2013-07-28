@@ -154,10 +154,10 @@ namespace ImageZoom
                     });
                     break;               
                 case "rotation":
-                    float angle = 0F;
+                    int angle = 0;
                     if (paramArray.Length > 1)
                     {
-                        angle = float.Parse(paramArray[1]);
+                        angle = Int32.Parse(paramArray[1]);
                     }
                     imageForm.Invoke((MethodInvoker)delegate
                     {

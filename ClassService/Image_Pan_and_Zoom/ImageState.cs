@@ -10,6 +10,6 @@ namespace ImageZoom
         public float Zoom { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        public float Angle { get; set; }
+        public int Angle { get; set; }
     }
 }

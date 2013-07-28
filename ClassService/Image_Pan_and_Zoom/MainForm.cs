@@ -29,7 +29,7 @@ namespace ImageZoom
             imageState.Zoom = 1f;
             imageState.X = 0;
             imageState.Y = 0;
-            imageState.Angle = 0f;
+            imageState.Angle = 0;
                         
             string imagefilename = imagePath;
             loadImage(imagefilename);
@@ -187,7 +187,7 @@ namespace ImageZoom
             pictureBox.Refresh();  // calls imageBox_Paint
         }
 
-        public void setAngle(float newAngle)
+        public void setAngle(int newAngle)
         {
             imageState.Angle = newAngle;
             pictureBox.Refresh();
@@ -245,12 +245,12 @@ namespace ImageZoom
                         break;
 
                     case Keys.End:
-                        imageState.Angle += 90F;
+                        imageState.Angle += 90;
                         pictureBox.Refresh();
                         break;
 
                     case Keys.Home:
-                        imageState.Angle -= 90F;
+                        imageState.Angle -= 90;
                         pictureBox.Refresh();
                         break;
 
@@ -280,42 +280,18 @@ namespace ImageZoom
 
         public void setViewMinimumBounds(int left, int top, int right, int bottom, int otherImageHeight, int otherImageWidth, int rotation)
         {
-            //Adjust difference in sizes from this and image source
-            float otherImageScaleH = ((float)otherImageHeight / (float)img.Height);
-            float otherImageScaleW = ((float)otherImageWidth / (float)img.Width);
-            rotation = adjustAngle(rotation);
+            Size otherImageSize = new Size(otherImageWidth, otherImageHeight);
 
-            
-            if (rotation == 0 || rotation == 180)
-            {
-                imageState = imageUtils.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, otherImageScaleH, otherImageScaleW);
-            }
-            else
-            {
-                imageState = imageUtils.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, otherImageScaleW, otherImageScaleH);
-            }
+            imageState = imageUtils.adjustAngle(rotation, imageState);
+
+            float[] dimensionMultiplier = imageUtils.MultipliersToSameSize(img.Size, otherImageSize, imageState.Angle);
+            imageState = imageUtils.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, dimensionMultiplier[0], dimensionMultiplier[1], rotation);
 
             pictureBox.Refresh();
 
             //Output.Debug("POSITION", imgx + ":" + imgy);
             //Output.Debug("EXTRA", extrawidth + ":" + extraheight);
             //Output.Debug("SCALE", zoom + "");
-        }
-
-        private int adjustAngle(int rotation)
-        {
-            while (rotation < 0) rotation += 360;
-            while (rotation > 360) rotation -= 360;
-
-            if (rotation == 180)
-            {
-                imageState.Angle = 180;
-            }
-            else if (rotation == 90 || rotation == 270)
-            {
-                imageState.Angle = rotation;
-            }
-            return rotation;
         }
     }
 }

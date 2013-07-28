@@ -42,8 +42,11 @@ namespace ImageZoom
         public Size BoxSize { get; set; }
         public Point Center { get; set; }
 
-        public ImageState AdjustPositionAndScale(ref int left, ref int top, ref int right, ref int bottom, float otherImageScaleH, float otherImageScaleW)
+        public ImageState AdjustPositionAndScale(ref int left, ref int top, ref int right, ref int bottom, float otherImageScaleH, float otherImageScaleW, int angle=0)
         {
+            ImageState imageState = new ImageState();
+            imageState = adjustAngle(angle, imageState);
+
             left = (int)(left / otherImageScaleW);
             right = (int)(right / otherImageScaleW);
             top = (int)(top / otherImageScaleH);
@@ -55,8 +58,8 @@ namespace ImageZoom
             int width = right - left;
             int height = bottom - top;
 
-            if (width > ImageSize.Width) width = ImageSize.Width;
-            if (height > ImageSize.Height) height = ImageSize.Height;
+           // if (width < ImageSize.Width) width = ImageSize.Width;
+           // if (height < ImageSize.Height) height = ImageSize.Height;
 
             float scaleh = (float)BoxSize.Height / height;
             float scalew = (float)BoxSize.Width / width;
@@ -65,8 +68,6 @@ namespace ImageZoom
             //float minScale = scalew;
 
             Point center = Center;
-
-            ImageState imageState = new ImageState();
 
             imageState.Zoom = minScale;
             imageState.X = -left;// +screenPosition.X + pictureBox.Margin.Left;
@@ -102,6 +103,54 @@ namespace ImageZoom
             }
 
             return imageState;
+        }
+
+        public ImageState adjustAngle(int rotation, ImageState imageState)
+        {
+            while (rotation < 0) rotation += 360;
+            while (rotation > 360) rotation -= 360;
+
+            if (rotation == 0)
+            {
+                imageState.Angle = 0;
+            }
+            else if (Math.Abs(rotation) == 180)
+            {
+                imageState.Angle = 180;
+            }
+            else if (Math.Abs(rotation) == 90 || Math.Abs(rotation) == 270)
+            {
+                imageState.Angle = rotation;
+            }
+            return imageState;
+        }
+
+        public float MultiplierToSameWidth(int imageWidth, int otherImageWidth)
+        {
+            return ((float)otherImageWidth / (float)imageWidth);
+        }
+
+        public float MultiplierToSameHeight(int imageHeight, int otherImageHeight)
+        {
+            return ((float)otherImageHeight / (float)imageHeight);
+        }
+
+        public float[] MultipliersToSameSize(Size imageSize, Size otherImageSize, int otherImageAngle)
+        {
+            float[] multipliers = new float[2];
+
+            if (otherImageAngle == 0 || Math.Abs(otherImageAngle) == 180)
+            {
+                multipliers[0] = MultiplierToSameHeight(imageSize.Height, otherImageSize.Height);
+                multipliers[1] = MultiplierToSameWidth(imageSize.Width, otherImageSize.Width);
+            }
+            else if (Math.Abs(otherImageAngle) == 90 || Math.Abs(otherImageAngle) == 270)
+            {
+                multipliers[0] = MultiplierToSameHeight(imageSize.Height, otherImageSize.Width);
+                multipliers[1] = MultiplierToSameWidth(imageSize.Width, otherImageSize.Height);
+            }
+
+            return multipliers;
         }
     }
 }
