@@ -7,6 +7,7 @@ using ImageZoom;
 using KinectPowerPointControl;
 using Moq;
 using ServiceCore;
+using ServiceTest;
 
 namespace TestProject.Units
 {    
@@ -83,7 +84,7 @@ namespace TestProject.Units
         [TestMethod()]
         public void StartPresentationTest()
         {
-            Service target = new Service();
+            Service target = CommonTest.CreateAMockedService();
 
             var presentationControlMock = new Mock<IPowerPointControl>();
             var kinectControlMock = new Mock<IKinectService>();
@@ -105,7 +106,7 @@ namespace TestProject.Units
         [TestMethod()]
         public void StopPresentationTest()
         {
-            Service target = new Service();
+            Service target = CommonTest.CreateAMockedService();
 
             var presentationControlMock = new Mock<IPowerPointControl>();
             var kinectControlMock = new Mock<IKinectService>();
@@ -124,7 +125,7 @@ namespace TestProject.Units
         [TestMethod()]
         public void PresentationNextCommand()
         {
-            Service target = new Service();
+            Service target = CommonTest.CreateAMockedService();
 
             var presentationControlMock = new Mock<IPowerPointControl>();
             var kinectControlMock = new Mock<IKinectService>();
@@ -143,7 +144,7 @@ namespace TestProject.Units
         [TestMethod()]
         public void PresentationPreviousCommand()
         {
-            Service target = new Service();
+            Service target = CommonTest.CreateAMockedService();
 
             var presentationControlMock = new Mock<IPowerPointControl>();
             var kinectControlMock = new Mock<IKinectService>();
@@ -162,7 +163,7 @@ namespace TestProject.Units
         [TestMethod()]
         public void PresentationCloseCommand()
         {
-            Service target = new Service();
+            Service target = CommonTest.CreateAMockedService();
 
             var presentationControlMock = new Mock<IPowerPointControl>();
             var kinectControlMock = new Mock<IKinectService>();

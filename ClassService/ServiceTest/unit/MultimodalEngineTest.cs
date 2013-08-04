@@ -215,7 +215,7 @@ namespace TestProject.Units
         [TestMethod()]
         public void AddOneEffectTriggerAndTriggerItWithTimeConstraints()
         {
-            //Create a mock for time, that returns 0,5 seconds more for each call
+            //Create a mock for time
             var mock = new Mock<Clock>();
             var timeInMilliseconds = 0;
             mock.Setup(foo => foo.CurrentTimeInMillis())

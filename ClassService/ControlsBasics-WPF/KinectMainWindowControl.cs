@@ -12,7 +12,7 @@ using ServiceCore.Utils;
 
 namespace KinectPowerPointControl
 {
-    public class KinectMainWindowControl : DefaultCommunicator, IWindowThreadControl
+    public class KinectMainWindowControl : DefaultCommunicator, IKinectMainWindowControl
     {
         delegate void CloseDelegate();
         public string FilesFolder { get; set; }
@@ -49,7 +49,7 @@ namespace KinectPowerPointControl
         [STAThread]
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "4.0.0.0")]
-        public void StartWindow()
+        private void StartWindow()
         {
             Microsoft.Samples.Kinect.ControlsBasics.App app = new Microsoft.Samples.Kinect.ControlsBasics.App();
             app.InitializeComponent();

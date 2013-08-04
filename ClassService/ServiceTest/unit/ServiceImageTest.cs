@@ -6,11 +6,10 @@ using System.IO;
 using Moq;
 using ServiceCore;
 using KinectPowerPointControl;
+using ServiceTest;
 
 namespace TestProject.Units
-{
-    
-    
+{    
     /// <summary>
     ///This is a test class for ServiceTest and is intended
     ///to contain all ServiceTest Unit Tests
@@ -74,7 +73,7 @@ namespace TestProject.Units
         [TestMethod()]
         public void CloseImageWindowTest()
         {
-            Service target = new Service();
+            Service target = CommonTest.CreateAMockedService();
 
             var imageControlMock = new Mock<IImageService>();
             var kinectControlMock = new Mock<IKinectService>();
@@ -93,7 +92,7 @@ namespace TestProject.Units
         [TestMethod()]
         public void SendCommandTest()
         {
-            Service target = new Service();
+            Service target = CommonTest.CreateAMockedService();
 
             var imageControlMock = new Mock<IImageService>();
             var kinectControlMock = new Mock<IKinectService>();
@@ -112,7 +111,7 @@ namespace TestProject.Units
         [TestMethod()]
         public void OpenImageTest()
         {
-            Service target = new Service();
+            Service target = CommonTest.CreateAMockedService();
 
             var imageControlMock = new Mock<IImageService>();
             var kinectControlMock = new Mock<IKinectService>();
@@ -131,7 +130,7 @@ namespace TestProject.Units
         [TestMethod()]
         public void OpenSecondImageShouldCloseFirstTest()
         {
-            Service target = new Service();
+            Service target = CommonTest.CreateAMockedService();
 
             var imageControlMock = new Mock<IImageService>();
             var kinectControlMock = new Mock<IKinectService>();
@@ -155,7 +154,7 @@ namespace TestProject.Units
         [TestMethod()]
         public void ImageCommandTest()
         {
-            Service target = new Service();
+            Service target = CommonTest.CreateAMockedService();
 
             var imageControlMock = new Mock<IImageService>();
             var kinectControlMock = new Mock<IKinectService>();

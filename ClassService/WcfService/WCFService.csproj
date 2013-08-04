@@ -59,6 +59,7 @@
     <Content Include="bin\ClientAccessPolicy.xml" />
     <Content Include="ClientAccessPolicy.xml" />
     <Content Include="Service.svc" />
+    <Content Include="ServiceWCF.svc" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -70,11 +71,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Service.svc.cs">
+      <DependentUpon>Service.svc</DependentUpon>
+    </Compile>
     <Compile Include="IService.cs" />
     <Compile Include="IServiceFileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service.svc.cs">
-      <DependentUpon>Service.svc</DependentUpon>
+    <Compile Include="ServiceWCF.svc.cs">
+      <DependentUpon>ServiceWCF.svc</DependentUpon>
     </Compile>
     <Compile Include="ServiceFileManager.cs" />
     <Compile Include="ServiceUrlManager.cs" />

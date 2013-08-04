@@ -15,6 +15,12 @@ using ServiceCore.Utils;
 
 namespace ClassService
 {
+    /// <summary>
+    /// This class implements the functionalities of the WCF class service.
+    /// It uses collaborators to control the different parts of the system. 
+    /// For purposes of the WCF implementation, they are static methods and should be initialized before the use of the Service.
+    /// Since WCF does not provide an easy DI, the initialization should be done outside and before the use of this class setting the static instances. 
+    /// </summary>
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class Service : IService
     {
@@ -22,25 +28,20 @@ namespace ClassService
         public static IImageService ImageForm;
         public static IKinectService KinectWindow;
         public static IServiceFileManager fileManager;
-        private static KinectMainWindowControl mainWindow;
-        private static ServiceUrlManager urlManager;
+        public static IKinectMainWindowControl mainWindow;
+        public static ServiceUrlManager urlManager;
 
         public Service()
         {
-            fileManager = new ServiceFileManager();
+
+        }
+
+        public void prepareService()
+        {
             mainWindow.FilesFolder = fileManager.FilesPath;
             mainWindow.StartThread();
             KinectWindow.MessageSent += this.MessageReceived;
             mainWindow.MessageSent += this.ReceiveCommand;
-            urlManager = new ServiceUrlManager();
-        }
-
-        static Service()
-        {        
-            KinectWindow = new KinectWindowControl();
-            ImageForm = new ImageFormControl();
-            PresentationControl = new PowerPointControl();
-            mainWindow = new KinectMainWindowControl();
         }
 
         private void ReceiveCommand(string message)
