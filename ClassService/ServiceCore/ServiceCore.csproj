@@ -52,7 +52,7 @@
     <Compile Include="Engine\Triggers\EffectTrigger.cs" />
     <Compile Include="Engine\IEffect.cs" />
     <Compile Include="Engine\Triggers\ModalityEventUpdate.cs" />
-    <Compile Include="GlobalSkeletonState.cs" />
+    <Compile Include="SkeletonStateRepository.cs" />
     <Compile Include="Engine\ModalityEvent.cs" />
     <Compile Include="IKinectMainWindowControl.cs" />
     <Compile Include="InterceptKeyboard.cs" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Kinect;
+using ServiceCore;
 
 namespace KinectPowerPointControl.Gesture
 {
@@ -13,10 +14,13 @@ namespace KinectPowerPointControl.Gesture
         public delegate void GestureRecognizedEvent(String gesture);
         public event GestureRecognizedEvent GestureRecognized;
 
+        protected SkeletonStateRepository skeletonRepository { get; set; }
+
         public Skeleton BestSkeleton { get; protected set; }
 
-        public AbstractKinectGestureRecognition()
+        public AbstractKinectGestureRecognition(SkeletonStateRepository skeletonRepository)
         {
+            this.skeletonRepository = skeletonRepository;
             gestureRecognizers = new List<IGestureRecognizer>();
             BestSkeleton = null;
         }
@@ -50,19 +54,20 @@ namespace KinectPowerPointControl.Gesture
             }
 
             BestSkeleton = closestSkeleton;
+            skeletonRepository.FirstUser.Skeleton = BestSkeleton;
 
-            VerifyGestures(closestSkeleton);
+            VerifyGestures(skeletonRepository.FirstUser);
         }
 
         /// <summary>
         /// Find the first gesture that is identified and then stop searching
         /// </summary>
         /// <param name="closestSkeleton"></param>
-        protected virtual void VerifyGestures(Skeleton closestSkeleton)
+        protected virtual void VerifyGestures(UserSkeletonState skeletonState)
         {
             foreach (IGestureRecognizer recognizer in gestureRecognizers)
             {
-                if (recognizer.IdentifyGesture(closestSkeleton))
+                if (recognizer.IdentifyGesture(skeletonState))
                 {
                     //Assume the recognizer has a name globally identifiable
                     TriggerGestureEvent(recognizer.Name);

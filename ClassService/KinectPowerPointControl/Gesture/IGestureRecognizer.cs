@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Kinect;
+using ServiceCore;
 
 namespace KinectPowerPointControl.Gesture
 {
@@ -24,6 +25,6 @@ namespace KinectPowerPointControl.Gesture
         /// </summary>
         /// <param name="skeleton"></param>
         /// <returns></returns>
-        bool IdentifyGesture(Skeleton skeleton);
+        bool IdentifyGesture(UserSkeletonState userSkeletonState);
     }
 }

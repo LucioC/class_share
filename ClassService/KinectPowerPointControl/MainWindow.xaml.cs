@@ -31,6 +31,8 @@ namespace KinectPowerPointControl
         AbstractKinectGestureRecognition gestureRecognition;
         ISpeechGrammar grammar;
 
+        SkeletonStateRepository skeletonRepository { get; set; }
+
         public event MessageEvent MessageSent;
 
         public PRESENTATION_MODE mode { get; set; }
@@ -50,6 +52,8 @@ namespace KinectPowerPointControl
         public MainWindow(PRESENTATION_MODE mode)
         {
             InitializeComponent();
+
+            skeletonRepository = new SkeletonStateRepository();
 
             commands = new ServiceCommandsLocalActivation(MessageSent);
 
@@ -71,20 +75,20 @@ namespace KinectPowerPointControl
         {
             if (mode == PRESENTATION_MODE.POWERPOINT)
             {
-                gestureRecognition = new PowerPointKinectGestureRecognition();
+                gestureRecognition = new PowerPointKinectGestureRecognition(skeletonRepository);
             }
             else if (mode == PRESENTATION_MODE.IMAGE)
             {
-                gestureRecognition = new ImagePresentationKinectGestureRecognition();
+                gestureRecognition = new ImagePresentationKinectGestureRecognition(skeletonRepository);
             }
             gestureRecognition.GestureRecognized += this.GestureRecognized;
         }
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            kinectControl = new KinectControl();
+            grammar = CreateGrammar();
+            kinectControl = new KinectControl(gestureRecognition, grammar, skeletonRepository);
 
-            kinectControl.GestureRecognition = gestureRecognition;
             kinectControl.ColorFrameGot += this.UpdateImage;
             kinectControl.SkeletonRecognized += SkeletonReady;
 
@@ -102,14 +106,11 @@ namespace KinectPowerPointControl
             this.Closed += Current_Exit;
 
             kinectControl.SpeechRecognized += this.SpeechRecognized;
-
-            CreateGrammar();
-            kinectControl.SpeechGrammar = grammar;
-
+            
             kinectControl.InitializeSpeechRecognition();
         }
 
-        private void CreateGrammar()
+        private ISpeechGrammar CreateGrammar()
         {
             if (mode == PRESENTATION_MODE.POWERPOINT)
             {
@@ -119,6 +120,8 @@ namespace KinectPowerPointControl
             {
                 grammar = new ImagePresentationGrammar();
             }
+
+            return grammar;
         }
 
         public void SkeletonReady(Skeleton skeleton)

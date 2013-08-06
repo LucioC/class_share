@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Kinect;
 using ServiceCore.Utils;
+using ServiceCore;
 
 namespace KinectPowerPointControl.Gesture
 {
@@ -16,8 +17,9 @@ namespace KinectPowerPointControl.Gesture
 
         int state = 0;
 
-        public bool IdentifyGesture(Skeleton skeleton)
+        public bool IdentifyGesture(UserSkeletonState userState)
         {
+            Skeleton skeleton = userState.Skeleton;
             var rightHand = skeleton.Joints[JointType.HandRight];
             var leftHand = skeleton.Joints[JointType.HandLeft];
             var spine = skeleton.Joints[JointType.Spine];
@@ -29,15 +31,25 @@ namespace KinectPowerPointControl.Gesture
             }
 
             //Gesture already executed
-            if (state == 1) return false;
+            if (state == 2) return false;
 
             float handsDifferenceX = rightHand.Position.X - leftHand.Position.X;
             float handsDifferenceY = rightHand.Position.Y - leftHand.Position.Y;
 
+            //separate hands
+            if (Math.Abs(handsDifferenceX) > 0.5 )
+            {
+                //Gesture started
+                state = 1;
+                return false;
+            }
+
+            //join hands after separated
+            if( state == 1)
             if (Math.Abs(handsDifferenceX) <= 0.05 && Math.Abs(handsDifferenceY) <= 0.05)
             {
                 //Gesture executed
-                state = 1;
+                state = 2;
                 Output.Debug("JoinHandsGesture", "Joins Hand Event");
                 return true;
             }

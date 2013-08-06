@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Kinect;
 using ServiceCore.Utils;
+using ServiceCore;
 
 namespace KinectPowerPointControl.Gesture
 {
@@ -16,8 +17,9 @@ namespace KinectPowerPointControl.Gesture
 
         int state = 0;
 
-        public bool IdentifyGesture(Skeleton skeleton)
+        public bool IdentifyGesture(UserSkeletonState userState)
         {
+            Skeleton skeleton = userState.Skeleton;
             var rightHand = skeleton.Joints[JointType.HandRight];
             var leftHand = skeleton.Joints[JointType.HandLeft];
             var spine = skeleton.Joints[JointType.Spine];

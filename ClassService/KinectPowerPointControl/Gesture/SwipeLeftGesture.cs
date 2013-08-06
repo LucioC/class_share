@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Kinect;
 using ServiceCore.Utils;
+using ServiceCore;
 
 namespace KinectPowerPointControl.Gesture
 {
@@ -17,21 +18,15 @@ namespace KinectPowerPointControl.Gesture
         private int state = 0;
         private SkeletonPoint initialPosition;
 
-        public bool IdentifyGesture(Skeleton skeleton)
+        public bool IdentifyGesture(UserSkeletonState userState)
         {
+            Skeleton skeleton = userState.Skeleton;
             var rightHand = skeleton.Joints[JointType.HandRight];
             var leftHand = skeleton.Joints[JointType.HandLeft];
             var head = skeleton.Joints[JointType.Head];
             var centerShoulder = skeleton.Joints[JointType.ShoulderCenter];
 
-            //If hand is lower than center shoulder minus 10 centimers then reset gesture
-            if (rightHand.Position.Y < centerShoulder.Position.Y - 0.1)
-            {
-                state = 0;
-                return false;
-            }
-
-            if (state == 0)
+            if (state == 0 && userState.IsRightHandGripped && !IsBelowMinimumHeight(rightHand,centerShoulder))
             {
                 state = 1;
                 initialPosition = rightHand.Position;
@@ -48,27 +43,39 @@ namespace KinectPowerPointControl.Gesture
                 //If hand went right then reset state
                 if (nextPoint.X > initialPosition.X + 0.1)
                 {
+                    Output.Debug("SwipeLeft", "Went right, reset");
                     state = 0;
                     return false;
                 }
 
-                //If hand went left 30cm then swipe occured
-                if (nextPoint.X < initialPosition.X - 0.3)
+                if ((IsAtLeft(nextPoint) && !userState.IsRightHandGripped) || (IsAtLeft(nextPoint) && IsBelowMinimumHeight(rightHand, centerShoulder)))
                 {
-                    //Mark as state 2, it means "already executed" so it will reset only when hand are down
-                    state = 2;
+                    state = 0;
                     Output.Debug("SwipeLeft", "Left Gesture Executed");
                     return true;
+                }
+                else if (!userState.IsRightHandGripped)
+                {
+                    Output.Debug("SwipeLeft", "Hand Open and not moved to gesture, reseting state");
+                    state = 0;
+                    return false;
                 }
 
                 return false;
             }
 
-            //Gesture if finished already, it need to be reset by hand positioning
-            if (state == 2) return false;
-
             state = 0;
             return false;
+        }
+
+        private static bool IsBelowMinimumHeight(Joint rightHand, Joint centerShoulder)
+        {
+            return rightHand.Position.Y < centerShoulder.Position.Y - 0.1;
+        }
+
+        private bool IsAtLeft(SkeletonPoint nextPoint)
+        {
+            return nextPoint.X < initialPosition.X - 0.2;
         }
 
         public string Name

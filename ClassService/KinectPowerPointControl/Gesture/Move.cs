@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Kinect;
+using ServiceCore;
 
 namespace KinectPowerPointControl.Gesture
 {
@@ -16,8 +17,10 @@ namespace KinectPowerPointControl.Gesture
             Interval = 500;
         }
 
-        public bool IdentifyGesture(Skeleton skeleton)
+        public bool IdentifyGesture(UserSkeletonState userState)
         {
+            Skeleton skeleton = userState.Skeleton;
+
             intervalControl.Interval = Interval;
 
             if (!intervalControl.HasIntervalPassed()) return false;

@@ -78,6 +78,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Gesture\AbstractKinectGestureRecognition.cs" />
+    <Compile Include="Gesture\HandsUtil.cs" />
     <Compile Include="Gesture\OutstretchedArmMovementGesture.cs" />
     <Compile Include="Gesture\OpenArmsGesture.cs" />
     <Compile Include="Gesture\JoinHandsGesture.cs" />

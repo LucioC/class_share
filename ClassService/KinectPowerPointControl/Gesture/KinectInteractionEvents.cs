@@ -5,6 +5,7 @@ using System.Text;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Kinect.Toolkit.Interaction;
 using ServiceCore.Utils;
+using ServiceCore;
 
 namespace KinectPowerPointControl.Gesture
 {
@@ -14,14 +15,12 @@ namespace KinectPowerPointControl.Gesture
 
         public AbstractKinectGestureRecognition GestureRecognition {get; set;}
 
-        public KinectInteractionEvents()
-        {
-            this.GestureRecognition = null;
-        }
-
-        public KinectInteractionEvents(AbstractKinectGestureRecognition gestureRecognition)
+        protected SkeletonStateRepository skeletonRepository { get; set; }
+        
+        public KinectInteractionEvents(AbstractKinectGestureRecognition gestureRecognition, SkeletonStateRepository skeletonRepository)
         {
             this.GestureRecognition = gestureRecognition;
+            this.skeletonRepository = skeletonRepository;
         }
 
         public void AllocateUserInfos(int size)
@@ -75,36 +74,82 @@ namespace KinectPowerPointControl.Gesture
 
             if (localUserInfos != null)
             {
-                for (int userIndex = 0; userIndex < localUserInfos.Length; ++userIndex)
-                {
-                    var user = localUserInfos[userIndex];
-                    foreach (var handPointer in user.HandPointers)
-                    {
-                        if (handPointer.IsPressed)
-                        {   
-                            //Do not repeat output
-                            if(pressState != 2)
-                                Output.Debug("KinectControl", "Hand Pressed " + handPointer.PressExtent.ToString());
-                            
-                            pressState = 2;
-                        }
-                        else
-                            if (handPointer.PressExtent > 0.5d)
-                            {
-                                //Do not repeat output
-                                if(pressState != 1)
-                                    Output.Debug("KinectControl", "Hand Almost Pressed " + handPointer.PressExtent.ToString());
+                HandleUsersInfo(localUserInfos);
+            }
+        }
 
-                                pressState = 1;
-                            }
-                        
-                        if (handPointer.HandEventType == InteractionHandEventType.Grip)
-                        {
-                            Output.Debug("KinectControl", "Hand Grip");
-                            notifyGestureRecognition(GestureEvents.CLOSE_HAND);
-                        }
-                    }
+        /// <summary>
+        /// Only process one user
+        /// </summary>
+        /// <param name="localUserInfos"></param>
+        private void HandleUsersInfo(UserInfo[] localUserInfos)
+        {
+            UserInfo userInfo = null;
+            for (int userIndex = 0; userIndex < localUserInfos.Length; ++userIndex)
+            {
+                userInfo = localUserInfos[userIndex];
+                if (userInfo.HandPointers[0].HandType != InteractionHandType.None) 
+                    break;
+
+                userInfo = null;
+            }
+
+            if (userInfo == null) return;
+
+            UserSkeletonState skeletonState = this.skeletonRepository.FirstUser;
+            skeletonState.UserState = userInfo;
+
+            var rightHandPointer = HandsUtil.GetRightHand(userInfo);
+            var leftHandPointer = HandsUtil.GetLeftHand(userInfo);
+            if (rightHandPointer != null)
+                trackRightHandState(skeletonState, rightHandPointer);
+            if (leftHandPointer != null)
+                trackLeftHandState(skeletonState, leftHandPointer);
+        }
+
+        private void trackLeftHandState(UserSkeletonState skeletonState, InteractionHandPointer handPointer)
+        {
+            if (handPointer.HandEventType == InteractionHandEventType.Grip)
+            {
+                //Output.Debug("KinectControl", "Hand Grip");
+                notifyGestureRecognition(GestureEvents.CLOSE_HAND);
+                skeletonState.IsLeftHandGripped = true;
+            }
+            else if (handPointer.HandEventType == InteractionHandEventType.GripRelease)
+            {
+                skeletonState.IsLeftHandGripped = false;
+            }
+        }
+
+        private void trackRightHandState(UserSkeletonState skeletonState, InteractionHandPointer handPointer)
+        {
+            if (handPointer.IsPressed)
+            {
+                //Do not repeat output
+                //if (pressState != 2)
+                    //Output.Debug("KinectControl", "Hand Pressed " + handPointer.PressExtent.ToString());
+
+                pressState = 2;
+            }
+            else
+                if (handPointer.PressExtent > 0.5d)
+                {
+                    //Do not repeat output
+                    //if (pressState != 1)
+                        //Output.Debug("KinectControl", "Hand Almost Pressed " + handPointer.PressExtent.ToString());
+
+                    pressState = 1;
                 }
+
+            if (handPointer.HandEventType == InteractionHandEventType.Grip)
+            {
+                //Output.Debug("KinectControl", "Hand Grip");
+                notifyGestureRecognition(GestureEvents.CLOSE_HAND);
+                skeletonState.IsRightHandGripped = true;
+            }
+            else if (handPointer.HandEventType == InteractionHandEventType.GripRelease)
+            {
+                skeletonState.IsRightHandGripped = false;
             }
         }
     }

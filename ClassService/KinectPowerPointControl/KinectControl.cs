@@ -14,6 +14,7 @@ using System.Diagnostics;
 using Microsoft.Kinect.Toolkit.Interaction;
 using System.Diagnostics.CodeAnalysis;
 using ServiceCore.Utils;
+using ServiceCore;
 
 namespace KinectPowerPointControl
 {
@@ -51,18 +52,15 @@ namespace KinectPowerPointControl
         private KinectInteractionEvents kinectInteraction;
         
         public IInteractionClient InteractionClient { get; set; }
-        public KinectControl()
-        {
-            SpeechGrammar = null;
-            GestureRecognition = null;
-            this.kinectInteraction = new KinectInteractionEvents();
-        }
 
-        public KinectControl(AbstractKinectGestureRecognition gestureRecognition, ISpeechGrammar speechGrammar)
+        public SkeletonStateRepository UserStateRepository { get; set; }
+
+        public KinectControl(AbstractKinectGestureRecognition gestureRecognition, ISpeechGrammar speechGrammar, SkeletonStateRepository skeletonRepository)
         {
             this.GestureRecognition = gestureRecognition;
             this.SpeechGrammar = speechGrammar;
-            this.kinectInteraction = new KinectInteractionEvents(GestureRecognition);
+            this.UserStateRepository = skeletonRepository;
+            this.kinectInteraction = new KinectInteractionEvents(GestureRecognition, UserStateRepository);
         }
 
         public void StartKinect()
