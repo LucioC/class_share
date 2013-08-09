@@ -26,8 +26,20 @@ namespace KinectPowerPointControl.Gesture
             var head = skeleton.Joints[JointType.Head];
             var centerShoulder = skeleton.Joints[JointType.ShoulderCenter];
 
+            if(IsBelowMinimumHeight(rightHand,centerShoulder))
+            {
+                if (state == 1 && IsAtRight(rightHand.Position))
+                {
+                    state = 0;
+                    return true;
+                }
+
+                state = 0;
+                return false;
+            }
+
             //If hand is above minimun height and is closed then advance to next state
-            if (state == 0 && userState.IsRightHandGripped && !IsBelowMinimumHeight(rightHand, centerShoulder))
+            if (state == 0 && userState.IsRightHandGripped)
             {
                 state = 1;
                 initialPosition = rightHand.Position;
@@ -42,15 +54,7 @@ namespace KinectPowerPointControl.Gesture
             {
                 SkeletonPoint nextPoint = rightHand.Position;
 
-                //If hand went left then reset state
-                if (nextPoint.X < initialPosition.X - 0.1)
-                {
-                    Output.Debug("SwipeRight", "Went Left, reset");
-                    state = 0;
-                    return false;
-                }
-
-                if ((IsAtRight(nextPoint) && !userState.IsRightHandGripped) || (IsAtRight(nextPoint) && IsBelowMinimumHeight(rightHand, centerShoulder)))
+                if ((IsAtRight(nextPoint) && !userState.IsRightHandGripped))
                 {
                     state = 0;
                     Output.Debug("SwipeRight", "Right Gesture Executed");
@@ -72,12 +76,12 @@ namespace KinectPowerPointControl.Gesture
 
         private bool IsAtRight(SkeletonPoint nextPoint)
         {
-            return nextPoint.X > initialPosition.X + 0.2;
+            return nextPoint.X > initialPosition.X + 0.15;
         }
 
         private static bool IsBelowMinimumHeight(Joint rightHand, Joint centerShoulder)
         {
-            return rightHand.Position.Y < centerShoulder.Position.Y - 0.1;
+            return rightHand.Position.Y < centerShoulder.Position.Y - 0.2;
         }
 
         public string Name

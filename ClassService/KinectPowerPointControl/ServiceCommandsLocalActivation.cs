@@ -16,13 +16,21 @@ namespace KinectPowerPointControl
             communicator.MessageSent += messagesListeners;
         }
 
+        public void setListeners(MessageEvent messagesListeners)
+        {
+            communicator.MessageSent += messagesListeners;
+        }
+
         public void ProcessClosePresentation()
         {
             this.communicator.SendMessage(ServiceCommands.CLOSE_PRESENTATION);
+            //TODO
+            //System.Windows.Forms.SendKeys.SendWait("{ESC}");
         }
 
         public void ProcessCloseImage()
         {
+            //TODO
             this.communicator.SendMessage(ServiceCommands.CLOSE_IMAGE);
         }
     }

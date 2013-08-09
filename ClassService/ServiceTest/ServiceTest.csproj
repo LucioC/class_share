@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="ActionDependencyTest.cs" />
     <Compile Include="ImageUtilsTest.cs" />
+    <Compile Include="SwipeLeftGestureTest.cs" />
     <Compile Include="unit\ServiceImageTest.cs" />
     <Compile Include="unit\ServiceFileManagerTest.cs" />
     <Compile Include="unit\DefaultCommunicatorTest.cs" />

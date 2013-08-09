@@ -224,6 +224,8 @@ namespace KinectPowerPointControl
             }
             else if (gesture == GestureEvents.JOIN_HANDS)
             {
+                Output.Debug("MainWindow", "Received Close gesture");
+                commands.setListeners(this.MessageSent);
                 //FIXME closing both, may need to verify which is being used and close it only
                 commands.ProcessCloseImage();
                 commands.ProcessClosePresentation();

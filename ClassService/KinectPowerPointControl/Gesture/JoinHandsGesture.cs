@@ -10,9 +10,12 @@ namespace KinectPowerPointControl.Gesture
 {
     public class JoinHandsGesture: IGestureRecognizer
     {
+        private IntervalControl openJoinHandsIntervalControl = new IntervalControl();
+
         public JoinHandsGesture()
         {
             Name = GestureEvents.JOIN_HANDS;
+            openJoinHandsIntervalControl.Interval = 1500;
         }
 
         int state = 0;
@@ -37,17 +40,28 @@ namespace KinectPowerPointControl.Gesture
             float handsDifferenceY = rightHand.Position.Y - leftHand.Position.Y;
 
             //separate hands
+            if(state == 0)
             if (Math.Abs(handsDifferenceX) > 0.5 )
             {
                 //Gesture started
                 state = 1;
+                Output.Debug("JointHandsGesture", "Hands are separated");
+
+                openJoinHandsIntervalControl.TriggerIt();
                 return false;
             }
 
             //join hands after separated
-            if( state == 1)
-            if (Math.Abs(handsDifferenceX) <= 0.05 && Math.Abs(handsDifferenceY) <= 0.05)
+            if( state == 1 )
+            if (Math.Abs(handsDifferenceX) <= 0.1 && Math.Abs(handsDifferenceY) <= 0.1)
             {
+                //If took to long, is not a join hands gesture
+                if (openJoinHandsIntervalControl.HasIntervalPassed())
+                {
+                    state = 2;
+                    return false;
+                }
+
                 //Gesture executed
                 state = 2;
                 Output.Debug("JoinHandsGesture", "Joins Hand Event");

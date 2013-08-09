@@ -26,7 +26,19 @@ namespace KinectPowerPointControl.Gesture
             var head = skeleton.Joints[JointType.Head];
             var centerShoulder = skeleton.Joints[JointType.ShoulderCenter];
 
-            if (state == 0 && userState.IsRightHandGripped && !IsBelowMinimumHeight(rightHand,centerShoulder))
+            if (IsBelowMinimumHeight(rightHand, centerShoulder))
+            {
+                if (state == 1 && IsAtLeft(rightHand.Position))
+                {
+                    state = 0;
+                    return true;
+                }
+
+                state = 0;
+                return false;
+            }
+
+            if (state == 0 && userState.IsRightHandGripped )
             {
                 state = 1;
                 initialPosition = rightHand.Position;
@@ -39,16 +51,8 @@ namespace KinectPowerPointControl.Gesture
             if (state == 1)
             {
                 SkeletonPoint nextPoint = rightHand.Position;
-
-                //If hand went right then reset state
-                if (nextPoint.X > initialPosition.X + 0.1)
-                {
-                    Output.Debug("SwipeLeft", "Went right, reset");
-                    state = 0;
-                    return false;
-                }
-
-                if ((IsAtLeft(nextPoint) && !userState.IsRightHandGripped) || (IsAtLeft(nextPoint) && IsBelowMinimumHeight(rightHand, centerShoulder)))
+                
+                if ((IsAtLeft(nextPoint) && !userState.IsRightHandGripped))
                 {
                     state = 0;
                     Output.Debug("SwipeLeft", "Left Gesture Executed");
@@ -75,7 +79,7 @@ namespace KinectPowerPointControl.Gesture
 
         private bool IsAtLeft(SkeletonPoint nextPoint)
         {
-            return nextPoint.X < initialPosition.X - 0.2;
+            return nextPoint.X < initialPosition.X - 0.15;
         }
 
         public string Name
