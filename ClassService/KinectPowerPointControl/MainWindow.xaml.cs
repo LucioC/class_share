@@ -105,9 +105,9 @@ namespace KinectPowerPointControl
             //Application.Current.Exit += new ExitEventHandler(Current_Exit);
             this.Closed += Current_Exit;
 
-            kinectControl.SpeechRecognized += this.SpeechRecognized;
-            
-            kinectControl.InitializeSpeechRecognition();
+            //TODO SPEECH DISABLED
+            //kinectControl.SpeechRecognized += this.SpeechRecognized;            
+            //kinectControl.InitializeSpeechRecognition();
         }
 
         private ISpeechGrammar CreateGrammar()
