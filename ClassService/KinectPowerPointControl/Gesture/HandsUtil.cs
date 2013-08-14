@@ -24,16 +24,16 @@ namespace KinectPowerPointControl.Gesture
 
         public static InteractionHandPointer GetLeftHand(UserInfo userInfo)
         {
-            InteractionHandPointer rightHand = null;
+            InteractionHandPointer leftHand = null;
             try
             {
-                rightHand = userInfo.HandPointers.Single(t => t.HandType == InteractionHandType.Left);
+                leftHand = userInfo.HandPointers.Single(t => t.HandType == InteractionHandType.Left);
             }
             catch (Exception e)
             {
                 return null;
             }
-            return rightHand;
+            return leftHand;
         }
 
         public static Boolean IsInGrip(InteractionHandPointer hand)

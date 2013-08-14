@@ -8,7 +8,7 @@ using ServiceCore;
 
 namespace KinectPowerPointControl.Gesture
 {
-    public class ZoomGesture: IGestureRecognizer
+    public class ZoomGripGesture: IGestureRecognizer
     {
         private long lastZoomTrigged = 0;
         private System.Object lockInterval = new System.Object();
@@ -16,11 +16,10 @@ namespace KinectPowerPointControl.Gesture
         private int state = 0;
         private Clock time = new Clock();
 
-        private Boolean ZoomStarted = false;
         public float HandsDistance { get; set; }
         public float HandsDistanceErrorIgnored { get; set; }
 
-        public ZoomGesture()
+        public ZoomGripGesture()
         {
             HandsDistance = 0f;
             HandsDistanceErrorIgnored = 0.05f;
@@ -33,17 +32,10 @@ namespace KinectPowerPointControl.Gesture
             var rightHand = skeleton.Joints[JointType.HandRight];
             var leftHand = skeleton.Joints[JointType.HandLeft];
             var head = skeleton.Joints[JointType.Head];
+            var spine = skeleton.Joints[JointType.Spine];
 
-            var shoulderCenter = skeleton.Joints[JointType.ShoulderCenter];
-
-            //If hands are below shouldcenter dont track gesture 
-            if (rightHand.Position.Y < shoulderCenter.Position.Y || leftHand.Position.Y < shoulderCenter.Position.Y)
-            {
-                ZoomStarted = false;
-                state = 0;
-                return false;
-            }
-            if (!CanTriggerZoom())
+            //If hands are below spine dont track gesture 
+            if (rightHand.Position.Y < spine.Position.Y || leftHand.Position.Y < spine.Position.Y)
             {
                 state = 0;
                 return false;
@@ -52,6 +44,11 @@ namespace KinectPowerPointControl.Gesture
             {
                 state = 0;
                 return false;
+            }
+
+            if (userState.IsLeftHandGripped && userState.IsRightHandGripped)
+            {
+                Output.Debug("ZoomGesture","Both Hand gripped");
             }
             
             //Calculate and update hands distance
@@ -81,23 +78,6 @@ namespace KinectPowerPointControl.Gesture
                 return true;
             }
             return false;
-        }
-
-        private Boolean CanTriggerZoom()
-        {
-            lock (lockInterval)
-            {
-                long now = time.CurrentTimeInMillis();
-                if (now - lastZoomTrigged > Interval)
-                {
-                    lastZoomTrigged = now;
-                    return true;
-                }
-                else //Dont trigger it so quickly
-                {
-                    return false;
-                }
-            }
         }
         
         public string Name

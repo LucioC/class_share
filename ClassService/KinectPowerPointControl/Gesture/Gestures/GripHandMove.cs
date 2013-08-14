@@ -17,7 +17,7 @@ namespace KinectPowerPointControl.Gesture
 
         public float DistanceToTriggerMove { get; set; }
 
-        private SkeletonPoint lastHandPosition { get; set; }
+        private SkeletonPoint lastHandPosition;
 
         private int state { get; set; }
 
@@ -25,8 +25,13 @@ namespace KinectPowerPointControl.Gesture
         {
             Skeleton skeleton = userState.Skeleton;
 
-            //Should be in grip mode
+            //Should be in grip mode only for left hand
             if (!userState.IsRightHandGripped)
+            {
+                state = 0;
+                return false;
+            }
+            if (userState.IsLeftHandGripped)
             {
                 state = 0;
                 return false;
@@ -49,11 +54,13 @@ namespace KinectPowerPointControl.Gesture
             if (xd > 0 && xd > DistanceToTriggerMove)
             {
                 Name = GestureEvents.MOVE_RIGHT;
+                lastHandPosition.X += DistanceToTriggerMove;
                 return true;
             }
             if (xd < 0 && Math.Abs(xd) > DistanceToTriggerMove)
             {
                 Name = GestureEvents.MOVE_LEFT;
+                lastHandPosition.X -= DistanceToTriggerMove;
                 return true;
             }
                         
@@ -61,11 +68,13 @@ namespace KinectPowerPointControl.Gesture
             if (xy > 0 && xy > DistanceToTriggerMove)
             {
                 Name = GestureEvents.MOVE_UP;
+                lastHandPosition.Y += DistanceToTriggerMove;
                 return true;
             }
             if (xy < 0 && Math.Abs(xy) < DistanceToTriggerMove)
             {
                 Name = GestureEvents.MOVE_DOWN;
+                lastHandPosition.Y -= DistanceToTriggerMove;
                 return true;
             }
             return false;

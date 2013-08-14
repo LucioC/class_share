@@ -11,10 +11,10 @@ namespace KinectPowerPointControl.Gesture
         public ImagePresentationKinectGestureRecognition(SkeletonStateRepository skeletonRepository)
             : base(skeletonRepository)
         {
-            gestureRecognizers.Add(new ZoomGesture());
-            gestureRecognizers.Add(new RotationGesture());
+            gestureRecognizers.Add(new ZoomGripGesture());
+            //gestureRecognizers.Add(new RotationGesture());
             gestureRecognizers.Add(new JoinHandsGesture());
-            gestureRecognizers.Add(new OutstretchedArmMovementGesture());
+            gestureRecognizers.Add(new GripHandMove());
         }
     }
 }

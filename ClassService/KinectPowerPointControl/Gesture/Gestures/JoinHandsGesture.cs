@@ -62,6 +62,12 @@ namespace KinectPowerPointControl.Gesture
                     return false;
                 }
 
+                if (userState.IsRightHandGripped || userState.IsLeftHandGripped)
+                {
+                    state = 2;
+                    return false;
+                }
+
                 //Gesture executed
                 state = 2;
                 Output.Debug("JoinHandsGesture", "Joins Hand Event");
