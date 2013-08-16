@@ -12,7 +12,7 @@ namespace KinectPowerPointControl.Gesture
         /// <summary>
         /// Name of the gesture that was recognized, after identify gesture returned true
         /// </summary>
-        String Name { get; set; }
+        String Name { get; }
 
         /// <summary>
         /// Time interval in miliseconds between triggering the identified gesture event a second time
@@ -26,5 +26,7 @@ namespace KinectPowerPointControl.Gesture
         /// <param name="skeleton"></param>
         /// <returns></returns>
         bool IdentifyGesture(UserSkeletonState userSkeletonState);
+
+        int State { get; }
     }
 }

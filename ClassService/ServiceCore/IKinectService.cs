@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using ServiceCore;
 
-namespace KinectPowerPointControl
+namespace ServiceCore
 {
     public interface IKinectService : IWindowThreadControl
     {

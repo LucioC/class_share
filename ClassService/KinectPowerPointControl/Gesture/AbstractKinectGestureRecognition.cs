@@ -54,7 +54,7 @@ namespace KinectPowerPointControl.Gesture
             }
 
             BestSkeleton = closestSkeleton;
-            skeletonRepository.FirstUser.Skeleton = BestSkeleton;
+            skeletonRepository.FirstUser.Skeleton = new KinectSkeletonWrapper(BestSkeleton);
 
             VerifyGestures(skeletonRepository.FirstUser);
         }

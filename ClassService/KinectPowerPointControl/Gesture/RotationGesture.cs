@@ -11,7 +11,7 @@ namespace KinectPowerPointControl.Gesture
     public class RotationGesture: IGestureRecognizer
     {
         private float handsYDistanceToStart = 0.03f;
-        private int state = 0;
+        public int State { get; set; }
 
         private double initialRightHeight = 0;
         private double initialLeftHeight = 0;
@@ -20,23 +20,24 @@ namespace KinectPowerPointControl.Gesture
 
         public RotationGesture()
         {
+            State = 0;
         }
 
         public bool IdentifyGesture(UserSkeletonState userState)
         {
-            Skeleton skeleton = userState.Skeleton;
-            var rightHand = skeleton.Joints[JointType.HandRight];
-            var leftHand = skeleton.Joints[JointType.HandLeft];
-            var spine = skeleton.Joints[JointType.Spine];
-            var rightShoulder = skeleton.Joints[JointType.ShoulderRight];
-            var leftShoulder = skeleton.Joints[JointType.ShoulderLeft];
+            ISkeleton skeleton = userState.Skeleton;
+            var rightHand = skeleton.HandRight;
+            var leftHand = skeleton.HandLeft;
+            var spine = skeleton.Spine;
+            var rightShoulder = skeleton.ShoulderRight;
+            var leftShoulder = skeleton.ShoulderLeft;
 
             if( 
                 rightHand.Position.Y <= spine.Position.Y
                 || leftHand.Position.Y <= spine.Position.Y 
                 )
             {
-                state = 0;
+                State = 0;
                 return false;
             }
 
@@ -45,16 +46,16 @@ namespace KinectPowerPointControl.Gesture
                 isClose(rightHand.Position.Y, leftHand.Position.Y, handsYDistanceToStart)
                 )
             {
-                if (state != 1)
+                if (State != 1)
                     Output.Debug("RotationGesture", "hand at same height");
                 //Gesture was started. Hands are at the same height
                 initialRightHeight = rightHand.Position.Y;
                 initialLeftHeight = leftHand.Position.Y;
-                state = 1;
+                State = 1;
                 return false;
             }
 
-            if (state == 1)
+            if (State == 1)
             {
                 //Output.Debug("RotationGesture", "initial right " + initialRightHeight.ToString() + " " + rightHand.Position.Y);
                 //Output.Debug("RotationGesture", "initial left " + initialLeftHeight.ToString() + " " + leftHand.Position.Y);
@@ -63,7 +64,7 @@ namespace KinectPowerPointControl.Gesture
                 if (rightHand.Position.Y > initialRightHeight + heightDelta && leftHand.Position.Y < initialLeftHeight - heightDelta)
                 {
                     Name = GestureEvents.ROTATE_LEFT;
-                    state = 2;
+                    State = 2;
                     Output.Debug("RotationGesture", "Rotate Left " + initialRightHeight.ToString() + " " + initialLeftHeight.ToString());
                     return true;
                 }
@@ -71,7 +72,7 @@ namespace KinectPowerPointControl.Gesture
                     if (rightHand.Position.Y < initialRightHeight - heightDelta && leftHand.Position.Y > initialLeftHeight + heightDelta)
                     {
                         Name = GestureEvents.ROTATE_RIGHT;
-                        state = 2;
+                        State = 2;
                         Output.Debug("RotationGesture", "Rotate Right " + initialRightHeight.ToString() + " " + initialLeftHeight.ToString());
                         return true;
                     }
@@ -79,7 +80,7 @@ namespace KinectPowerPointControl.Gesture
                 return false;
             }
 
-            state = 0;
+            State = 0;
             return false;
         }
 

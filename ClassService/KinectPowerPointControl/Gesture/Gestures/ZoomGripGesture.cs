@@ -10,10 +10,9 @@ namespace KinectPowerPointControl.Gesture
 {
     public class ZoomGripGesture: IGestureRecognizer
     {
-        private long lastZoomTrigged = 0;
         private System.Object lockInterval = new System.Object();
 
-        private int state = 0;
+        public int State { get; set; }
         private Clock time = new Clock();
 
         public float HandsDistance { get; set; }
@@ -24,25 +23,26 @@ namespace KinectPowerPointControl.Gesture
             HandsDistance = 0f;
             HandsDistanceErrorIgnored = 0.05f;
             Interval = 100;
+            State = 0;
         }
 
         public bool IdentifyGesture(UserSkeletonState userState)
         {
-            Skeleton skeleton = userState.Skeleton;
-            var rightHand = skeleton.Joints[JointType.HandRight];
-            var leftHand = skeleton.Joints[JointType.HandLeft];
-            var head = skeleton.Joints[JointType.Head];
-            var spine = skeleton.Joints[JointType.Spine];
+            ISkeleton skeleton = userState.Skeleton;
+            var rightHand = skeleton.HandRight;
+            var leftHand = skeleton.HandLeft;
+            var head = skeleton.Head;
+            var spine = skeleton.Spine;
 
             //If hands are below spine dont track gesture 
             if (rightHand.Position.Y < spine.Position.Y || leftHand.Position.Y < spine.Position.Y)
             {
-                state = 0;
+                State = 0;
                 return false;
             }
             if (!userState.IsLeftHandGripped || !userState.IsRightHandGripped)
             {
-                state = 0;
+                State = 0;
                 return false;
             }
 
@@ -56,9 +56,9 @@ namespace KinectPowerPointControl.Gesture
             float deltaDistance = distance - HandsDistance;
             deltaDistance = GestureUtils.normalizeDistance(deltaDistance, HandsDistanceErrorIgnored);
 
-            if (state == 0)
+            if (State == 0)
             {
-                state = 1;
+                State = 1;
                 HandsDistance = distance;
                 return false;
             }

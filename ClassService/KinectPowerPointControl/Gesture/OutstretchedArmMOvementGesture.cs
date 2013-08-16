@@ -13,9 +13,10 @@ namespace KinectPowerPointControl.Gesture
         public OutstretchedArmMovementGesture()
         {
             Name = GestureEvents.OUTSTRETCHED_ARM;
+            State = 0;
         }
 
-        private int state = 0;
+        public int State { get; set; }
         private SkeletonPoint initialPoint;
         
         private float percentage = 0.7f;
@@ -24,14 +25,14 @@ namespace KinectPowerPointControl.Gesture
 
         public bool IdentifyGesture(UserSkeletonState userState)
         {
-            Skeleton skeleton = userState.Skeleton;
-            var rightHand = skeleton.Joints[JointType.HandRight];
-            var leftHand = skeleton.Joints[JointType.HandLeft];
-            var rightElbow = skeleton.Joints[JointType.ElbowRight];
-            var leftElbow = skeleton.Joints[JointType.ElbowLeft];
-            var rightShoulder = skeleton.Joints[JointType.ShoulderRight];
-            var leftShoulder = skeleton.Joints[JointType.ShoulderLeft];
-            var spine = skeleton.Joints[JointType.Spine];
+            ISkeleton skeleton = userState.Skeleton;
+            var rightHand = skeleton.HandRight;
+            var leftHand = skeleton.HandLeft;
+            var rightElbow = skeleton.ElbowRight;
+            var leftElbow = skeleton.ElbowLeft;
+            var rightShoulder = skeleton.ShoulderRight;
+            var leftShoulder = skeleton.ShoulderLeft;
+            var spine = skeleton.Spine;
 
             Double distanceRightShoulderAndElbow = KinectUtils.DistanceBetweenSkeletonPoints(rightShoulder.Position,rightElbow.Position);
             distanceRightShoulderAndElbow = Math.Abs(distanceRightShoulderAndElbow);
@@ -48,9 +49,9 @@ namespace KinectPowerPointControl.Gesture
             if (distanceZRightShoulderAndElbow > distanceRightShoulderAndElbow * percentage
                 && distanceZRightElbowAndHand > distanceRightElbowAndHand * percentage)
             {
-                if (state != 1)
+                if (State != 1)
                 {
-                    state = 1;
+                    State = 1;
                     Output.Debug("OutstretchedArmMovement", "Is Stresched");
                     initialPoint = rightHand.Position;
                     return true;
@@ -58,11 +59,11 @@ namespace KinectPowerPointControl.Gesture
             }
             else
             {
-                state = 0;
+                State = 0;
                 return false;
             }
 
-            if (state == 1)
+            if (State == 1)
             {
                 double deltaX = rightHand.Position.X - initialPoint.X;
                 double deltaY = rightHand.Position.Y - initialPoint.Y;
@@ -97,10 +98,10 @@ namespace KinectPowerPointControl.Gesture
                 }
             }
             
-            if (state != 0)
+            if (State != 0)
                 Output.Debug("OutstretchedArmMovement", "Arm not stretched");
 
-            state = 0;
+            State = 0;
             return false;
         }
 

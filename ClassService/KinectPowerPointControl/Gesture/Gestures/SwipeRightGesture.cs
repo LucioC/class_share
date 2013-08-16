@@ -13,35 +13,36 @@ namespace KinectPowerPointControl.Gesture
         public SwipeRightGesture()
         {
             Name = GestureEvents.SWIPE_RIGHT;
+            State = 0;
         }
 
-        int state = 0;
+        public int State { get; set; }
         SkeletonPoint initialPosition;
 
         public bool IdentifyGesture(UserSkeletonState userState)
         {
-            Skeleton skeleton = userState.Skeleton;
-            var rightHand = skeleton.Joints[JointType.HandRight];
-            var leftHand = skeleton.Joints[JointType.HandLeft];
-            var head = skeleton.Joints[JointType.Head];
-            var centerShoulder = skeleton.Joints[JointType.ShoulderCenter];
+            ISkeleton skeleton = userState.Skeleton;
+            var rightHand = skeleton.HandRight;
+            var leftHand = skeleton.HandLeft;
+            var head = skeleton.Head;
+            var centerShoulder = skeleton.ShoulderCenter;
 
             if(IsBelowMinimumHeight(rightHand,centerShoulder))
             {
-                if (state == 1 && IsAtRight(rightHand.Position))
+                if (State == 1 && IsAtRight(rightHand.Position))
                 {
-                    state = 0;
+                    State = 0;
                     return true;
                 }
 
-                state = 0;
+                State = 0;
                 return false;
             }
 
             //If hand is above minimun height and is closed then advance to next state
-            if (state == 0 && userState.IsRightHandGripped)
+            if (State == 0 && userState.IsRightHandGripped)
             {
-                state = 1;
+                State = 1;
                 initialPosition = rightHand.Position;
 
                 Output.Debug("SwipeRight", "Identifyed hand above shoudler");
@@ -50,27 +51,27 @@ namespace KinectPowerPointControl.Gesture
             }
 
             //If hands was swipe to the right
-            if (state == 1)
+            if (State == 1)
             {
                 SkeletonPoint nextPoint = rightHand.Position;
 
                 if ((IsAtRight(nextPoint) && !userState.IsRightHandGripped))
                 {
-                    state = 0;
+                    State = 0;
                     Output.Debug("SwipeRight", "Right Gesture Executed");
                     return true;
                 }
                 else if (!userState.IsRightHandGripped)
                 {
                     Output.Debug("SwipeRight", "Hand Open and not moved to gesture, reseting state");
-                    state = 0;
+                    State = 0;
                     return false;
                 }
 
                 return false;
             }
 
-            state = 0;
+            State = 0;
             return false;
         }
 

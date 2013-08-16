@@ -19,33 +19,33 @@ namespace KinectPowerPointControl.Gesture
 
         private SkeletonPoint lastHandPosition;
 
-        private int state { get; set; }
+        public int State { get; set; }
 
         public bool IdentifyGesture(UserSkeletonState userState)
         {
-            Skeleton skeleton = userState.Skeleton;
+            ISkeleton skeleton = userState.Skeleton;
 
             //Should be in grip mode only for left hand
             if (!userState.IsRightHandGripped)
             {
-                state = 0;
+                State = 0;
                 return false;
             }
             if (userState.IsLeftHandGripped)
             {
-                state = 0;
+                State = 0;
                 return false;
             }
 
-            var rightHand = skeleton.Joints[JointType.HandRight];
-            if (state == 0)
+            var rightHand = skeleton.HandRight;
+            if (State == 0)
             {
                 lastHandPosition = rightHand.Position;
-                state = 1;
+                State = 1;
             }
 
-            var leftHand = skeleton.Joints[JointType.HandLeft];
-            var spine = skeleton.Joints[JointType.Spine];
+            var leftHand = skeleton.HandLeft;
+            var spine = skeleton.Spine;
 
             SkeletonPoint currentPoint = rightHand.Position;
 

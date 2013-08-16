@@ -13,46 +13,47 @@ namespace KinectPowerPointControl.Gesture
         public OpenArmsGesture()
         {
             Name = GestureEvents.OPEN_ARMS;
+            State = 0;
         }
 
-        int state = 0;
+        public int State { get; set; }
 
         public bool IdentifyGesture(UserSkeletonState userState)
         {
-            Skeleton skeleton = userState.Skeleton;
-            var rightHand = skeleton.Joints[JointType.HandRight];
-            var leftHand = skeleton.Joints[JointType.HandLeft];
-            var spine = skeleton.Joints[JointType.Spine];
+            ISkeleton skeleton = userState.Skeleton;
+            var rightHand = skeleton.HandRight;
+            var leftHand = skeleton.HandLeft;
+            var spine = skeleton.Spine;
 
             //If hands are to low then reset state
             if (rightHand.Position.Y < spine.Position.Y || leftHand.Position.Y < spine.Position.Y)
             {
-                state = 0;
+                State = 0;
                 return false;
             }
 
-            if (state == 2) return false;
+            if (State == 2) return false;
 
             float handsDistance = rightHand.Position.X - leftHand.Position.X;
             handsDistance = Math.Abs(handsDistance);
 
-            if (state == 0)
+            if (State == 0)
             {
                 //Hands are close, so can start movement
                 if ( handsDistance < 0.2)
                 {
-                    state = 1;
+                    State = 1;
                     Output.Debug("OpenArmsGesture","Hands are close.");
                 }
                 return false;
             }
 
-            if (state == 1)
+            if (State == 1)
             {
                 if (handsDistance > 0.8)
                 {
                     Output.Debug("OpenArmsGesture", "Arms are open.");
-                    state = 2;
+                    State = 2;
                     return true;
                 }
             }

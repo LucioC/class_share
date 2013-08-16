@@ -13,34 +13,35 @@ namespace KinectPowerPointControl.Gesture
         public SwipeLeftGesture()
         {
             Name = GestureEvents.SWIPE_LEFT;
+            State = 0;
         }
 
-        private int state = 0;
+        public int State { get; set; }
         private SkeletonPoint initialPosition;
 
         public bool IdentifyGesture(UserSkeletonState userState)
         {
-            Skeleton skeleton = userState.Skeleton;
-            var rightHand = skeleton.Joints[JointType.HandRight];
-            var leftHand = skeleton.Joints[JointType.HandLeft];
-            var head = skeleton.Joints[JointType.Head];
-            var centerShoulder = skeleton.Joints[JointType.ShoulderCenter];
+            ISkeleton skeleton = userState.Skeleton;
+            var rightHand = skeleton.HandRight;
+            var leftHand = skeleton.HandLeft;
+            var head = skeleton.Head;
+            var centerShoulder = skeleton.ShoulderCenter;
 
             if (IsBelowMinimumHeight(rightHand, centerShoulder))
             {
-                if (state == 1 && IsAtLeft(rightHand.Position))
+                if (State == 1 && IsAtLeft(rightHand.Position))
                 {
-                    state = 0;
+                    State = 0;
                     return true;
                 }
 
-                state = 0;
+                State = 0;
                 return false;
             }
 
-            if (state == 0 && userState.IsRightHandGripped )
+            if (State == 0 && userState.IsRightHandGripped )
             {
-                state = 1;
+                State = 1;
                 initialPosition = rightHand.Position;
 
                 Output.Debug("SwipeLeft", "Identifyed hand above shoudler");
@@ -48,27 +49,27 @@ namespace KinectPowerPointControl.Gesture
                 return false;
             }
 
-            if (state == 1)
+            if (State == 1)
             {
                 SkeletonPoint nextPoint = rightHand.Position;
                 
                 if ((IsAtLeft(nextPoint) && !userState.IsRightHandGripped))
                 {
-                    state = 0;
+                    State = 0;
                     Output.Debug("SwipeLeft", "Left Gesture Executed");
                     return true;
                 }
                 else if (!userState.IsRightHandGripped)
                 {
                     Output.Debug("SwipeLeft", "Hand Open and not moved to gesture, reseting state");
-                    state = 0;
+                    State = 0;
                     return false;
                 }
 
                 return false;
             }
 
-            state = 0;
+            State = 0;
             return false;
         }
 

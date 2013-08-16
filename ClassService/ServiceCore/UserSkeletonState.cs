@@ -10,8 +10,9 @@ namespace ServiceCore
     public class UserSkeletonState
     {
         Object skeletonLock = new Object();
-        private Skeleton skeleton;
-        public Skeleton Skeleton {
+        private ISkeleton skeleton;
+        public ISkeleton Skeleton
+        {
             get 
             {
                 lock (skeletonLock)
@@ -94,7 +95,7 @@ namespace ServiceCore
 
         public UserSkeletonState()
         {
-            skeleton = new Skeleton();
+            skeleton = new KinectSkeletonWrapper(new Skeleton());
             userState = null;
             isLeftHandGripped = false;
             isRightHandGripped = false;

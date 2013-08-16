@@ -16,35 +16,36 @@ namespace KinectPowerPointControl.Gesture
         {
             Name = GestureEvents.JOIN_HANDS;
             openJoinHandsIntervalControl.Interval = 1500;
+            State = 0;
         }
 
-        int state = 0;
+        public int State { get; set; }
 
         public bool IdentifyGesture(UserSkeletonState userState)
         {
-            Skeleton skeleton = userState.Skeleton;
-            var rightHand = skeleton.Joints[JointType.HandRight];
-            var leftHand = skeleton.Joints[JointType.HandLeft];
-            var spine = skeleton.Joints[JointType.Spine];
+            ISkeleton skeleton = userState.Skeleton;
+            var rightHand = skeleton.HandRight;
+            var leftHand = skeleton.HandLeft;
+            var spine = skeleton.Spine;
 
             if (rightHand.Position.Y < spine.Position.Y && leftHand.Position.Y < spine.Position.Y)
             {
-                state = 0;
+                State = 0;
                 return false;
             }
 
             //Gesture already executed
-            if (state == 2) return false;
+            if (State == 2) return false;
 
             float handsDifferenceX = rightHand.Position.X - leftHand.Position.X;
             float handsDifferenceY = rightHand.Position.Y - leftHand.Position.Y;
 
             //separate hands
-            if(state == 0)
+            if(State == 0)
             if (Math.Abs(handsDifferenceX) > 0.5 )
             {
                 //Gesture started
-                state = 1;
+                State = 1;
                 Output.Debug("JointHandsGesture", "Hands are separated");
 
                 openJoinHandsIntervalControl.TriggerIt();
@@ -52,24 +53,24 @@ namespace KinectPowerPointControl.Gesture
             }
 
             //join hands after separated
-            if( state == 1 )
+            if( State == 1 )
             if (Math.Abs(handsDifferenceX) <= 0.1 && Math.Abs(handsDifferenceY) <= 0.1)
             {
                 //If took to long, is not a join hands gesture
                 if (openJoinHandsIntervalControl.HasIntervalPassed())
                 {
-                    state = 2;
+                    State = 2;
                     return false;
                 }
 
                 if (userState.IsRightHandGripped || userState.IsLeftHandGripped)
                 {
-                    state = 2;
+                    State = 2;
                     return false;
                 }
 
                 //Gesture executed
-                state = 2;
+                State = 2;
                 Output.Debug("JoinHandsGesture", "Joins Hand Event");
                 return true;
             }
