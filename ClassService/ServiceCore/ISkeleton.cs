@@ -8,25 +8,25 @@ namespace ServiceCore
 {
     public interface ISkeleton
     {
-        Joint HandRight { get; }
-        Joint HandLeft { get; }
-        Joint AnkleLeft { get; }
-        Joint AnkleRight { get; }
-        Joint ElbowRight { get; }
-        Joint ElbowLeft { get; }
-        Joint Spine { get; }
-        Joint Head { get; }
-        Joint FootLeft { get; }
-        Joint FootRight { get; }
-        Joint HipCenter { get; }
-        Joint HipRight { get; }
-        Joint HipLeft { get; }
-        Joint KneeRight { get; }
-        Joint KneeLeft { get; }
-        Joint ShoulderCenter { get; }
-        Joint ShoulderRight { get; }
-        Joint ShoulderLeft { get; }
-        Joint WristLeft { get; }
-        Joint WristRight { get; }
+        IJoint HandRight { get; }
+        IJoint HandLeft { get; }
+        IJoint AnkleLeft { get; }
+        IJoint AnkleRight { get; }
+        IJoint ElbowRight { get; }
+        IJoint ElbowLeft { get; }
+        IJoint Spine { get; }
+        IJoint Head { get; }
+        IJoint FootLeft { get; }
+        IJoint FootRight { get; }
+        IJoint HipCenter { get; }
+        IJoint HipRight { get; }
+        IJoint HipLeft { get; }
+        IJoint KneeRight { get; }
+        IJoint KneeLeft { get; }
+        IJoint ShoulderCenter { get; }
+        IJoint ShoulderRight { get; }
+        IJoint ShoulderLeft { get; }
+        IJoint WristLeft { get; }
+        IJoint WristRight { get; }
     }
 }

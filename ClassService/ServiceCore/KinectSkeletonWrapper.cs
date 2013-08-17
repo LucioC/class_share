@@ -14,104 +14,104 @@ namespace ServiceCore
             kinectSkeleton = skeleton;
         }
 
-        public Joint HandRight
+        public IJoint HandRight
         {
-            get { return kinectSkeleton.Joints[JointType.HandRight]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.HandRight]); }
         }
 
-        public Joint HandLeft
+        public IJoint HandLeft
         {
-            get { return kinectSkeleton.Joints[JointType.HandLeft]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.HandLeft]); }
         }
 
-        public Joint AnkleLeft
+        public IJoint AnkleLeft
         {
-            get { return kinectSkeleton.Joints[JointType.AnkleLeft]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.AnkleLeft]); }
         }
 
-        public Joint AnkleRight
+        public IJoint AnkleRight
         {
-            get { return kinectSkeleton.Joints[JointType.AnkleRight]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.AnkleRight]); }
         }
 
-        public Joint ElbowRight
+        public IJoint ElbowRight
         {
-            get { return kinectSkeleton.Joints[JointType.ElbowRight]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.ElbowRight]); }
         }
 
-        public Joint ElbowLeft
+        public IJoint ElbowLeft
         {
-            get { return kinectSkeleton.Joints[JointType.ElbowLeft]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.ElbowLeft]); }
         }
 
-        public Joint Spine
+        public IJoint Spine
         {
-            get { return kinectSkeleton.Joints[JointType.Spine]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.Spine]); }
         }
 
-        public Joint Head
+        public IJoint Head
         {
-            get { return kinectSkeleton.Joints[JointType.Head]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.Head]); }
         }
 
-        public Joint FootLeft
+        public IJoint FootLeft
         {
-            get { return kinectSkeleton.Joints[JointType.FootLeft]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.FootLeft]); }
         }
 
-        public Joint FootRight
+        public IJoint FootRight
         {
-            get { return kinectSkeleton.Joints[JointType.FootRight]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.FootRight]); }
         }
 
-        public Joint HipCenter
+        public IJoint HipCenter
         {
-            get { return kinectSkeleton.Joints[JointType.HipCenter]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.HipCenter]); }
         }
 
-        public Joint HipRight
+        public IJoint HipRight
         {
-            get { return kinectSkeleton.Joints[JointType.HipRight]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.HipRight]); }
         }
 
-        public Joint HipLeft
+        public IJoint HipLeft
         {
-            get { return kinectSkeleton.Joints[JointType.HipLeft]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.HipLeft]); }
         }
 
-        public Joint KneeRight
+        public IJoint KneeRight
         {
-            get { return kinectSkeleton.Joints[JointType.KneeRight]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.KneeRight]); }
         }
 
-        public Joint KneeLeft
+        public IJoint KneeLeft
         {
-            get { return kinectSkeleton.Joints[JointType.KneeLeft]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.KneeLeft]); }
         }
 
-        public Joint ShoulderCenter
+        public IJoint ShoulderCenter
         {
-            get { return kinectSkeleton.Joints[JointType.ShoulderCenter]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.ShoulderCenter]); }
         }
 
-        public Joint ShoulderRight
+        public IJoint ShoulderRight
         {
-            get { return kinectSkeleton.Joints[JointType.ShoulderRight]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.ShoulderRight]); }
         }
 
-        public Joint ShoulderLeft
+        public IJoint ShoulderLeft
         {
-            get { return kinectSkeleton.Joints[JointType.ShoulderLeft]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.ShoulderLeft]); }
         }
 
-        public Joint WristLeft
+        public IJoint WristLeft
         {
-            get { return kinectSkeleton.Joints[JointType.WristLeft]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.WristLeft]); }
         }
 
-        public Joint WristRight
+        public IJoint WristRight
         {
-            get { return kinectSkeleton.Joints[JointType.WristRight]; }
+            get { return new KinectJointWrapper(kinectSkeleton.Joints[JointType.WristRight]); }
         }
     }
 }

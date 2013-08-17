@@ -80,7 +80,7 @@ namespace KinectPowerPointControl.Gesture
             return nextPoint.X > initialPosition.X + 0.15;
         }
 
-        private static bool IsBelowMinimumHeight(Joint rightHand, Joint centerShoulder)
+        private static bool IsBelowMinimumHeight(IJoint rightHand, IJoint centerShoulder)
         {
             return rightHand.Position.Y < centerShoulder.Position.Y - 0.2;
         }
