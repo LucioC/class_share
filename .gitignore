@@ -44,3 +44,5 @@ obj/
 /ClassService/ControlsBasics-WPF/AnyCPU.Debug/*.pdb
 /ClassService/TestResults/*.trx
 /ClassService/ClassService.suo
+/ClassService/TestResults
+/ClassService/testimpactdata.sdf

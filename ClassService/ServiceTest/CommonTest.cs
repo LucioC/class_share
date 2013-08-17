@@ -6,6 +6,7 @@ using ClassService;
 using Moq;
 using ServiceCore;
 using KinectPowerPointControl;
+using Microsoft.Kinect;
 
 namespace ServiceTest
 {
@@ -43,6 +44,23 @@ namespace ServiceTest
             Service service = new Service();
             MockServiceMembers();
             return service;
+        }
+
+        public static SkeletonPoint CreateSkeletonPoint(float x, float y, float z)
+        {
+            SkeletonPoint point = new SkeletonPoint();
+            point.X = x;
+            point.Y = y;
+            point.Z = z;
+            return point;
+        }
+
+        public static IJoint CreateDummyJointWithSkeletonPoint(float x, float y, float z)
+        {
+            SkeletonPoint point = CreateSkeletonPoint(x, y, z);
+
+            IJoint joint = new DummyJoint(point);
+            return joint;
         }
     }
 }

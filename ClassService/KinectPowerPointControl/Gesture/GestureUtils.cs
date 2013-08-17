@@ -15,6 +15,16 @@ namespace KinectPowerPointControl.Gesture
             return distance;
         }
 
+        public static float angleBetweenPoints(SkeletonPoint p1, SkeletonPoint p2)
+        {
+            float deltaY = p2.Y - p1.Y;
+            float deltaX = p2.X - p1.X;
+
+            float angleInDegrees = (float)(Math.Atan2(deltaY, deltaX) * 180 / Math.PI);
+
+            return angleInDegrees;
+        }
+
         //From diferent frames an error may occur, eliminate error perception
         public static float normalizeDistance(float deltaDistance, float errorExpected)
         {
