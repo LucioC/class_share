@@ -40,11 +40,6 @@ namespace KinectPowerPointControl.Gesture
                 return false;
             }
 
-            if (isLeftHandGripped && isRightHandGripped)
-            {
-                Output.Debug("ZoomGesture", "Both Hand gripped");
-            }
-
             //Calculate and update hands distance
             float distance = GestureUtils.calculateDistanceX(rightHand.Position, leftHand.Position);
             float deltaDistance = distance - HandsDistance;
@@ -60,15 +55,14 @@ namespace KinectPowerPointControl.Gesture
             //If got here than distance was updated and changed from last frame. Trigger gesture event to listeners.
             if (deltaDistance > 0)
             {
-                //TriggerGestureEvent(ZoomOut);
                 Name = GestureEvents.ZOOM_IN;
                 HandsDistance = distance;
                 return true;
             }
             else if (deltaDistance < 0)
             {
-                //TriggerGestureEvent(ZoomIn);
-                Name = GestureEvents.ZOOM_OUT; HandsDistance = distance;
+                Name = GestureEvents.ZOOM_OUT; 
+                HandsDistance = distance;
                 return true;
             }
             return false;

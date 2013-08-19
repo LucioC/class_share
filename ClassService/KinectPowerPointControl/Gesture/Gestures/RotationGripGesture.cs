@@ -21,8 +21,6 @@ namespace KinectPowerPointControl.Gesture
 
         public float CurrentAngleDelta { get; set; }
 
-        private double heightDelta = 0.05;
-
         public RotationGripGesture()
         {
             State = 0;
@@ -30,6 +28,9 @@ namespace KinectPowerPointControl.Gesture
 
         public bool IdentifyRotationGesture(IJoint rightHand, IJoint leftHand, IJoint spine, bool isLeftHandGripped, bool isRightHandGripped)
         {
+            //Output.Debug("RotationGesture", "right hand " + rightHand.Position.X + ":" + rightHand.Position.Y);
+            //Output.Debug("RotationGesture", "left hand " + leftHand.Position.X + ":" + leftHand.Position.Y);
+            //Output.Debug("RotationGesture", "is left gripped?" + isLeftHandGripped + " || and right? " + isRightHandGripped);
 
             if (
                 rightHand.Position.Y <= spine.Position.Y
@@ -37,6 +38,7 @@ namespace KinectPowerPointControl.Gesture
                 )
             {
                 State = 0;
+                CurrentAngleDelta = 0;
                 return false;
             }
             if (
@@ -47,12 +49,15 @@ namespace KinectPowerPointControl.Gesture
                 initialRightHand = rightHand.Position;
                 initialLeftHand = leftHand.Position;
                 initialAngle = GestureUtils.angleBetweenPoints(initialLeftHand, initialRightHand);
+                CurrentAngleDelta = 0;
                 State = 1;
+                Output.Debug("RotationGesture","Initial position");
                 return false;
             }
             else if ( !isLeftHandGripped || !isRightHandGripped)
             {
                 State = 0;
+                CurrentAngleDelta = 0;
                 return false;
             }
 
@@ -67,8 +72,11 @@ namespace KinectPowerPointControl.Gesture
                 float currentAngle = GestureUtils.angleBetweenPoints(leftHand.Position, rightHand.Position);
                 CurrentAngleDelta = initialAngle - currentAngle;
 
+                //Output.Debug("RotationGesture", "Right hand was up ? " + rightWasUp + " and now? " + isRightUpNow );
+
                 if (rightWasUp != isRightUpNow)
                 {
+                    Output.Debug("RotationGesture", "One hand above other. Right hand was up ? " + rightWasUp);
                     if (rightWasUp)
                     {
                         Name = GestureEvents.ROTATE_RIGHT;
@@ -108,7 +116,6 @@ namespace KinectPowerPointControl.Gesture
                 return false;
             }
 
-            State = 0;
             return false;
         }
 

@@ -84,11 +84,11 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         {
             if (this.IsKeyboardFocused)
             {
-                Output.Debug("MainWindow", "focused");
+                //Output.Debug("MainWindow", "focused");
             }
             else
             {
-                Output.Debug("MainWindow", keyCode.ToString());
+                //Output.Debug("MainWindow", keyCode.ToString());
             }
         }
 

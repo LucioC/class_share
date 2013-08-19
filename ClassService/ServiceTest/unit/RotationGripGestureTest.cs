@@ -62,7 +62,7 @@ namespace TestProject.Units
         #endregion
 
         [TestMethod()]
-        public void GivenRightHandStartAboveLeftWhenItGoBelowLeftThenRightRotationIsIdentifiedTest()
+        public void GivenRightHandStartAboveLeftWhenItGoBelowLeftThenRightRotationIsIdentifiedAndStateShouldStayAsExecutedTest()
         {
             RotationGripGesture target = new RotationGripGesture();
             bool expected = false;
@@ -85,6 +85,16 @@ namespace TestProject.Units
             Assert.AreEqual(expected, actual);
 
             Assert.AreEqual(GestureEvents.ROTATE_RIGHT, target.Name);
+            Assert.AreEqual(2, target.State);
+
+            rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1f, 0.95f, 0);
+            leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(0f, 1.25f, 0);
+            actual = target.IdentifyRotationGesture(rightHand, leftHand, spine, true, true);
+            expected = false;
+            Assert.AreEqual(expected, actual);
+
+            Assert.AreEqual(GestureEvents.ROTATE_RIGHT, target.Name);
+            Assert.AreEqual(2, target.State);
         }
 
         [TestMethod()]
