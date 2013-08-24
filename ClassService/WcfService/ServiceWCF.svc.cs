@@ -33,7 +33,7 @@ namespace ClassService
             KinectWindow = new KinectWindowControl();
             ImageForm = new ImageFormControl();
             PresentationControl = new PowerPointControl();
-            mainWindow = new KinectMainWindowControl();
+            mainWindow = new DesktopMainWindowControl();
             urlManager = new ServiceUrlManager();
         }        
     }

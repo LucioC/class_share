@@ -12,14 +12,14 @@ using ServiceCore.Utils;
 
 namespace KinectPowerPointControl
 {
-    public class KinectMainWindowControl : DefaultCommunicator, IKinectMainWindowControl
+    public class DesktopMainWindowControl : DefaultCommunicator, IKinectMainWindowControl
     {
         delegate void CloseDelegate();
         public string FilesFolder { get; set; }
         private Thread thread = null;
         private DesktopMainWindow window = null;
 
-        public KinectMainWindowControl()
+        public DesktopMainWindowControl()
         {
         }
 

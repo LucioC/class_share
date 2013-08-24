@@ -54,7 +54,7 @@
     </ApplicationDefinition>
     <Compile Include="FileKinectButton.cs" />
     <Compile Include="KinectHoverButton.cs" />
-    <Compile Include="KinectMainWindowControl.cs" />
+    <Compile Include="DesktopMainWindowControl.cs" />
     <Compile Include="SelectionDisplay.xaml.cs">
       <DependentUpon>SelectionDisplay.xaml</DependentUpon>
     </Compile>

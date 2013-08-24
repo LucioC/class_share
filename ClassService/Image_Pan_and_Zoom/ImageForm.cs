@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.IO;
 using ServiceCore.Utils;
+using ServiceCore;
 
 namespace ImageZoom
 {
@@ -19,6 +20,8 @@ namespace ImageZoom
         bool mousepressed = false;  // true as long as left mousebutton is pressed
 
         ImageUtils imageUtils;
+
+        InterceptKeyboard interceptor;
 
         public ImageZoomMainForm(String imagePath)
         {
@@ -48,6 +51,20 @@ namespace ImageZoom
             Graphics g = this.CreateGraphics();
 
             setViewMinimumBounds(0,0,img.Width, img.Height, img.Height, img.Width, 0);
+
+            interceptor = new InterceptKeyboard();
+            InterceptKeyboard.SetHook(interceptor.hook);
+            interceptor.KeyEvent += keyDown;
+        }
+
+        public void keyDown(int keyCode)
+        {
+            if(!this.Focused)
+            {
+                Message msg = new Message();
+                msg.Msg = 0x100;
+                ProcessCmdKey(ref msg, (Keys)keyCode);
+            }
         }
 
         private void loadImage(string imagefilename)
