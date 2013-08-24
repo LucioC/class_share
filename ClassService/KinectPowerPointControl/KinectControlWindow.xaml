@@ -11,13 +11,13 @@
                    Height="480"></Image>
             <Canvas Background="Transparent">
                 <Ellipse Fill="Lime"
-                         Height="10"
-                         Width="10"
+                         Height="20"
+                         Width="20"
                          Name="ellipseLeftHand"
                          Stroke="White" />
                 <Ellipse Fill="#FF950000"
-                         Height="10"
-                         Width="10"
+                         Height="20"
+                         Width="20"
                          Name="ellipseRightHand"
                          Stroke="White" />
                 <Ellipse Fill="#FF950000"

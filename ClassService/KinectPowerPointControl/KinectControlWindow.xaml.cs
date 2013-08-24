@@ -39,7 +39,7 @@ namespace KinectPowerPointControl
         
         bool isCirclesVisible = true;
 
-        SolidColorBrush activeBrush = new SolidColorBrush(Colors.Green);
+        SolidColorBrush activeBrush = new SolidColorBrush(Colors.Yellow);
         SolidColorBrush inactiveBrush = new SolidColorBrush(Colors.DarkRed);
 
         private ServiceCommandsLocalActivation commands;
@@ -151,8 +151,9 @@ namespace KinectPowerPointControl
             SetEllipsePosition(ellipseHead, Head, false);
 
             //Original version change color when a gesture is active (last parameter true)
-            SetEllipsePosition(ellipseLeftHand, LeftHand, false);
-            SetEllipsePosition(ellipseRightHand, RightHand, false);
+            SetEllipsePosition(ellipseLeftHand, LeftHand, this.skeletonRepository.FirstUser.IsLeftHandGripped);
+            SetEllipsePosition(ellipseRightHand, RightHand, this.skeletonRepository.FirstUser.IsRightHandGripped);
+            
             SetEllipsePosition(ellipseCenterShoulder, CenterShoulder, false);
 
             SetEllipsePosition(ellipseRightWrist, RightWrist, false);
@@ -340,14 +341,14 @@ namespace KinectPowerPointControl
 
             if (isHighlighted)
             {
-                ellipse.Width = 60;
-                ellipse.Height = 60;
+                ellipse.Width = 30;
+                ellipse.Height = 30;
                 ellipse.Fill = activeBrush;
             }
             else
             {
-                ellipse.Width = 10;
-                ellipse.Height = 10;
+                ellipse.Width = 15;
+                ellipse.Height = 15;
                 ellipse.Fill = inactiveBrush;                
             }
 
