@@ -19,7 +19,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            MainWindow window = new MainWindow();
+            DesktopMainWindow window = new DesktopMainWindow();
             Application.Current.MainWindow = window;
             this.MainWindow.Show();
         }

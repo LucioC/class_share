@@ -22,13 +22,13 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     /// <summary>
     /// Interaction logic for MainWindow
     /// </summary>
-    public partial class MainWindow
+    public partial class DesktopMainWindow
     {
         public static readonly DependencyProperty PageLeftEnabledProperty = DependencyProperty.Register(
-            "PageLeftEnabled", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
+            "PageLeftEnabled", typeof(bool), typeof(DesktopMainWindow), new PropertyMetadata(false));
 
         public static readonly DependencyProperty PageRightEnabledProperty = DependencyProperty.Register(
-            "PageRightEnabled", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
+            "PageRightEnabled", typeof(bool), typeof(DesktopMainWindow), new PropertyMetadata(false));
 
         private const double ScrollErrorMargin = 0.001;
 
@@ -43,9 +43,9 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         public string FilesFolder { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MainWindow"/> class. 
+        /// Initializes a new instance of the <see cref="DesktopMainWindow"/> class. 
         /// </summary>
-        public MainWindow()
+        public DesktopMainWindow()
         {
             this.InitializeComponent();
 

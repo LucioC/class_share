@@ -17,7 +17,7 @@ namespace KinectPowerPointControl
         delegate void CloseDelegate();
         public string FilesFolder { get; set; }
         private Thread thread = null;
-        private MainWindow window = null;
+        private DesktopMainWindow window = null;
 
         public KinectMainWindowControl()
         {
@@ -61,7 +61,7 @@ namespace KinectPowerPointControl
         private void WindowStartup( Object sender,  StartupEventArgs e)
         {
             //Get the main windows after created on startup
-            this.window = (MainWindow)((App)sender).MainWindow;
+            this.window = (DesktopMainWindow)((App)sender).MainWindow;
             this.window.LoadFilesFromFolder(FilesFolder);
             this.window.MessageSent += this.ReceiveMessage;
         }

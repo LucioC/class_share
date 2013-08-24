@@ -68,7 +68,8 @@ namespace KinectPowerPointControl
 
             CreateGestureRecognition(mode);
 
-            Minimize();
+            //Minimize();
+            UnMinimize();
         }
 
         private void CreateGestureRecognition(PRESENTATION_MODE mode)
