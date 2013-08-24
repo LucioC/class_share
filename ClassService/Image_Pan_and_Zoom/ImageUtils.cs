@@ -70,8 +70,8 @@ namespace ImageZoom
             Point center = Center;
 
             imageState.Zoom = minScale;
-            imageState.X = -left;// +screenPosition.X + pictureBox.Margin.Left;
-            imageState.Y = -top;// +screenPosition.Y + pictureBox.Margin.Top;
+            imageState.X = -left;
+            imageState.Y = -top;
 
             int scaledWidth = (int)(width * minScale);
             int scaledHeight = (int)(height * minScale);

@@ -52,24 +52,31 @@ namespace KinectPowerPointControl
         public KinectControlWindow(PRESENTATION_MODE mode)
         {
             InitializeComponent();
+            setWindowPosition();
 
             skeletonRepository = new SkeletonStateRepository();
-
             commands = new ServiceCommandsLocalActivation(MessageSent);
 
             //Runtime initialization is handled when the window is opened. When the window
             //is closed, the runtime MUST be unitialized.
             this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
             //Handle the content obtained from the video camera, once received.
-
             this.KeyDown += new KeyEventHandler(MainWindow_KeyDown);
 
             this.mode = mode;
 
             CreateGestureRecognition(mode);
 
-            //Minimize();
+            Minimize();
             UnMinimize();
+        }
+
+        private void setWindowPosition()
+        {
+            int top = (int)(System.Windows.SystemParameters.PrimaryScreenHeight - this.Height);
+            int left = (int)(System.Windows.SystemParameters.PrimaryScreenWidth - this.Width);
+            this.Top = top;
+            this.Left = left;
         }
 
         private void CreateGestureRecognition(PRESENTATION_MODE mode)
