@@ -193,11 +193,11 @@ namespace KinectPowerPointControl
         {
             if (gesture == GestureEvents.SWIPE_RIGHT)
             {
-                commands.ProcessPreviousSlide();
+                commands.ProcessMoveRight();
             }
             else if (gesture == GestureEvents.SWIPE_LEFT)
             {
-                commands.ProcessNextSlide();
+                commands.ProcessMoveLeft();
             }
             else if (gesture == GestureEvents.ZOOM_IN)
             {

@@ -73,13 +73,21 @@ namespace ClassService
 
         public void MessageReceived(string message)
         {
-            if (message == "closeimage")
+            if (message == ServiceCommands.CLOSE_IMAGE)
             {
                 CloseCurrentImage();
             }
-            else if (message == "closepresentation")
+            else if (message == ServiceCommands.CLOSE_PRESENTATION)
             {
                 ClosePresentation();
+            }
+            else if (message == ServiceCommands.NEXT_SLIDE)
+            {
+                NextSlide();
+            }
+            else if (message == ServiceCommands.PREVIOUS_SLIDE)
+            {
+                PreviousSlide();
             }
         }
 

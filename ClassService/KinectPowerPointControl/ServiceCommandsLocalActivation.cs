@@ -24,14 +24,21 @@ namespace KinectPowerPointControl
         public void ProcessClosePresentation()
         {
             this.communicator.SendMessage(ServiceCommands.CLOSE_PRESENTATION);
-            //TODO
-            //System.Windows.Forms.SendKeys.SendWait("{ESC}");
         }
 
         public void ProcessCloseImage()
         {
-            //TODO
             this.communicator.SendMessage(ServiceCommands.CLOSE_IMAGE);
+        }
+        
+        public void ProcessNextSlide()
+        {
+            this.communicator.SendMessage(ServiceCommands.NEXT_SLIDE);
+        }
+
+        public void ProcessPreviousSlide()
+        {
+            this.communicator.SendMessage(ServiceCommands.PREVIOUS_SLIDE);
         }
     }
 }
