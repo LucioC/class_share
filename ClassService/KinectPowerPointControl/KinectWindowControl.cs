@@ -15,7 +15,7 @@ namespace KinectPowerPointControl
         delegate void CloseDelegate();
         private PRESENTATION_MODE mode = PRESENTATION_MODE.POWERPOINT;
         private Thread thread = null;
-        private MainWindow window = null;
+        private KinectControlWindow window = null;
 
         public KinectWindowControl()
         {
@@ -55,7 +55,7 @@ namespace KinectPowerPointControl
         [STAThread]
         public void StartWindow()
         {
-            window = new MainWindow(mode);
+            window = new KinectControlWindow(mode);
             window.MessageSent += this.ReceiveMessage;
             window.Show();
             System.Windows.Threading.Dispatcher.Run();

@@ -25,7 +25,7 @@ using ServiceCore.Utils;
 
 namespace KinectPowerPointControl
 {
-    public partial class MainWindow : Window
+    public partial class KinectControlWindow : Window
     {
         KinectControl kinectControl;
         AbstractKinectGestureRecognition gestureRecognition;
@@ -44,12 +44,12 @@ namespace KinectPowerPointControl
 
         private ServiceCommandsLocalActivation commands;
 
-        public MainWindow():this(PRESENTATION_MODE.IMAGE)
+        public KinectControlWindow():this(PRESENTATION_MODE.IMAGE)
         {
             
         }
 
-        public MainWindow(PRESENTATION_MODE mode)
+        public KinectControlWindow(PRESENTATION_MODE mode)
         {
             InitializeComponent();
 

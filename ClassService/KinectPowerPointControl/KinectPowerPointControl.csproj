@@ -69,7 +69,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Page Include="KinectControlWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -109,8 +109,8 @@
     <Compile Include="Speech\ImagePresentationGrammar.cs" />
     <Compile Include="Speech\ISpeechGrammar.cs" />
     <Compile Include="KinectWindowControl.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="KinectControlWindow.xaml.cs">
+      <DependentUpon>KinectControlWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
