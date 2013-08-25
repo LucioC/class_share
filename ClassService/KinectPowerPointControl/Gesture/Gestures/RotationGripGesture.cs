@@ -28,10 +28,6 @@ namespace KinectPowerPointControl.Gesture
 
         public bool IdentifyRotationGesture(IJoint rightHand, IJoint leftHand, IJoint spine, bool isLeftHandGripped, bool isRightHandGripped)
         {
-            //Output.Debug("RotationGesture", "right hand " + rightHand.Position.X + ":" + rightHand.Position.Y);
-            //Output.Debug("RotationGesture", "left hand " + leftHand.Position.X + ":" + leftHand.Position.Y);
-            //Output.Debug("RotationGesture", "is left gripped?" + isLeftHandGripped + " || and right? " + isRightHandGripped);
-
             if (
                 rightHand.Position.Y <= spine.Position.Y
                 || leftHand.Position.Y <= spine.Position.Y
@@ -60,21 +56,25 @@ namespace KinectPowerPointControl.Gesture
                 CurrentAngleDelta = 0;
                 return false;
             }
+            if (Math.Abs(GestureUtils.CalculateDistanceZ(rightHand.Position, leftHand.Position)) > 0.1)
+            {
+                State = 0;
+                CurrentAngleDelta = 0;
+                return false;
+            }
 
             if (State == 1)
             {
-                //Output.Debug("RotationGesture", "initial right " + initialRightHeight.ToString() + " " + rightHand.Position.Y);
-                //Output.Debug("RotationGesture", "initial left " + initialLeftHeight.ToString() + " " + leftHand.Position.Y);
-
+                //Verify in start position hands were distant in Y
+                bool wereDistantInY = (GestureUtils.CalculateDistanceY(initialRightHand, initialLeftHand) > 0.1) ? true : false;
                 bool rightWasUp = (initialRightHand.Y > initialLeftHand.Y) ? true : false;
                 bool isRightUpNow = (rightHand.Position.Y > leftHand.Position.Y) ? true : false;
 
                 float currentAngle = GestureUtils.angleBetweenPoints(leftHand.Position, rightHand.Position);
                 CurrentAngleDelta = initialAngle - currentAngle;
-
-                //Output.Debug("RotationGesture", "Right hand was up ? " + rightWasUp + " and now? " + isRightUpNow );
-
-                if (rightWasUp != isRightUpNow)
+                
+                //If hands were significantly distant and changed heights then rotation happened
+                if (rightWasUp != isRightUpNow && wereDistantInY)
                 {
                     Output.Debug("RotationGesture", "One hand above other. Right hand was up ? " + rightWasUp);
                     if (rightWasUp)

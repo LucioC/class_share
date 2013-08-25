@@ -24,16 +24,15 @@ namespace KinectPowerPointControl.Gesture
 
         public bool IdentifyGrippedMove(IJoint rightHand, IJoint leftHand, IJoint spine, bool isRightHandGripped)
         {
-            //Output.Debug("Move", rightHand.Position.X + ":" + rightHand.Position.Y);
-
             //Should be in grip mode only for left hand
             if (!isRightHandGripped)
             {
                 State = 0;
                 return false;
             }
-                //if left hand is on front of the body
-            else if(leftHand.Position.Z < spine.Position.Z - 0.1f)
+            float allowedDistance = (rightHand.Position.Z - spine.Position.Z)/2;
+            //if left hand is close in Z to right hand
+            if(leftHand.Position.Z < rightHand.Position.Z - allowedDistance)
             {
                 State = 0;
                 return false;

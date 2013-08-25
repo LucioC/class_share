@@ -9,9 +9,21 @@ namespace KinectPowerPointControl.Gesture
     public class GestureUtils
     {
         //Calculate distance of X axis
-        public static float calculateDistanceX(SkeletonPoint rightHandPosition, SkeletonPoint leftHandPosition)
+        public static float CalculateDistanceX(SkeletonPoint rightHandPosition, SkeletonPoint leftHandPosition)
         {
             float distance = Math.Abs(rightHandPosition.X - leftHandPosition.X);
+            return distance;
+        }
+
+        public static float CalculateDistanceZ(SkeletonPoint rightHandPosition, SkeletonPoint leftHandPosition)
+        {
+            float distance = Math.Abs(rightHandPosition.Z- leftHandPosition.Z);
+            return distance;
+        }
+
+        public static float CalculateDistanceY(SkeletonPoint rightHandPosition, SkeletonPoint leftHandPosition)
+        {
+            float distance = Math.Abs(rightHandPosition.Y - leftHandPosition.Y);
             return distance;
         }
 

@@ -39,9 +39,14 @@ namespace KinectPowerPointControl.Gesture
                 State = 0;
                 return false;
             }
+            if(Math.Abs(GestureUtils.CalculateDistanceZ(rightHand.Position, leftHand.Position)) > 0.1)
+            {
+                State = 0;
+                return false;
+            }
 
             //Calculate and update hands distance
-            float distance = GestureUtils.calculateDistanceX(rightHand.Position, leftHand.Position);
+            float distance = GestureUtils.CalculateDistanceX(rightHand.Position, leftHand.Position);
             float deltaDistance = distance - HandsDistance;
             deltaDistance = GestureUtils.normalizeDistance(deltaDistance, HandsDistanceErrorIgnored);
 

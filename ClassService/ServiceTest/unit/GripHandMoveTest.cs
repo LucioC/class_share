@@ -82,20 +82,38 @@ namespace TestProject.Units
         }
         
         [TestMethod()]
-        public void WhenRightHandIsGrippedAndLeftHandIsOnFrontThenMoveCantHappen()
+        public void WhenRightHandIsGrippedAndLeftHandIsCloseInZThenMoveCantHappen()
         {
             GripHandMove target = new GripHandMove();
 
             bool actual;
             bool expected = false;
 
-            var rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1f, 1, -0.2f);
-            var leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(0f, 1, -0.2f);
+            var rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1f, 1, -0.4f);
+            var leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(0f, 1, -0.4f);
             var spine = CommonTest.CreateDummyJointWithSkeletonPoint(0.5f, 0.5f, 0);
 
             actual = target.IdentifyGrippedMove(rightHand, leftHand, spine, true);
             Assert.AreEqual(expected, actual);
             Assert.AreEqual(0, target.State);
+        }
+
+
+        [TestMethod()]
+        public void WhenRightHandIsGrippedAndLeftHandIsNotSoCloseInZThenMoveCanHappen()
+        {
+            GripHandMove target = new GripHandMove();
+
+            bool actual;
+            bool expected = false;
+
+            var rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1f, 1, -0.4f);
+            var leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(0f, 1, -0.2f);
+            var spine = CommonTest.CreateDummyJointWithSkeletonPoint(0.5f, 0.5f, 0);
+
+            actual = target.IdentifyGrippedMove(rightHand, leftHand, spine, true);
+            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(1, target.State);
         }
 
         [TestMethod()]
@@ -177,7 +195,7 @@ namespace TestProject.Units
             Assert.AreEqual(expected, actual);
             Assert.AreEqual(1, target.State);
 
-            rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1f, 1.1f, 0.2f);
+            rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1f, 1.1f, -0.2f);
             expected = true;
             actual = target.IdentifyGrippedMove(rightHand, leftHand, spine, true);
             Assert.AreEqual(expected, actual);

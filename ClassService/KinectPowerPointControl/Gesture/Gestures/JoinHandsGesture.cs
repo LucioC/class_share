@@ -33,6 +33,11 @@ namespace KinectPowerPointControl.Gesture
                 State = 0;
                 return false;
             }
+            else if(rightHand.Position.Z > spine.Position.Z - 0.1 || leftHand.Position.Z > spine.Position.Z - 0.1)
+            {
+                State = 0;
+                return false;
+            }
 
             //Gesture already executed
             if (State == 2) return false;
