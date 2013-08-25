@@ -9,22 +9,26 @@ namespace KinectPowerPointControl
     {
         public void ProcessMoveRight()
         {
-            System.Windows.Forms.SendKeys.SendWait("{Right}");
+            //Window go left image go right
+            System.Windows.Forms.SendKeys.SendWait("{Left}");
         }
 
         public void ProcessMoveLeft()
         {
-            System.Windows.Forms.SendKeys.SendWait("{Left}");
+            //window go right image go left
+            System.Windows.Forms.SendKeys.SendWait("{Right}");
         }
 
         public void ProcessMoveUp()
         {
-            System.Windows.Forms.SendKeys.SendWait("{UP}");
+            //Window go down image go up
+            System.Windows.Forms.SendKeys.SendWait("{Down}");
         }
 
         public void ProcessMoveDown()
         {
-            System.Windows.Forms.SendKeys.SendWait("{Down}");
+            //window go up image go down
+            System.Windows.Forms.SendKeys.SendWait("{UP}");
         }
 
         public void ProcessRotateRight()

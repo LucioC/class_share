@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Kinect;
 using ServiceCore;
+using ServiceCore.Utils;
 
 namespace KinectPowerPointControl.Gesture
 {
@@ -21,31 +22,28 @@ namespace KinectPowerPointControl.Gesture
 
         public int State { get; set; }
 
-        public bool IdentifyGesture(UserSkeletonState userState)
+        public bool IdentifyGrippedMove(IJoint rightHand, IJoint leftHand, IJoint spine, bool isRightHandGripped)
         {
-            ISkeleton skeleton = userState.Skeleton;
+            //Output.Debug("Move", rightHand.Position.X + ":" + rightHand.Position.Y);
 
             //Should be in grip mode only for left hand
-            if (!userState.IsRightHandGripped)
+            if (!isRightHandGripped)
             {
                 State = 0;
                 return false;
             }
-            if (userState.IsLeftHandGripped)
+                //if left hand is on front of the body
+            else if(leftHand.Position.Z < spine.Position.Z - 0.1f)
             {
                 State = 0;
                 return false;
             }
 
-            var rightHand = skeleton.HandRight;
             if (State == 0)
             {
                 lastHandPosition = rightHand.Position;
                 State = 1;
             }
-
-            var leftHand = skeleton.HandLeft;
-            var spine = skeleton.Spine;
 
             SkeletonPoint currentPoint = rightHand.Position;
 
@@ -53,31 +51,42 @@ namespace KinectPowerPointControl.Gesture
 
             if (xd > 0 && xd > DistanceToTriggerMove)
             {
-                Name = GestureEvents.MOVE_LEFT;
+                Name = GestureEvents.MOVE_RIGHT;
                 lastHandPosition.X += DistanceToTriggerMove;
                 return true;
             }
             if (xd < 0 && Math.Abs(xd) > DistanceToTriggerMove)
             {
-                Name = GestureEvents.MOVE_RIGHT;
+                Name = GestureEvents.MOVE_LEFT;
                 lastHandPosition.X -= DistanceToTriggerMove;
                 return true;
             }
-                        
-            float xy = currentPoint.Y - lastHandPosition.Y;
-            if (xy > 0 && xy > DistanceToTriggerMove)
+
+            float yd = currentPoint.Y - lastHandPosition.Y;
+            if (yd > 0 && yd > DistanceToTriggerMove)
             {
-                Name = GestureEvents.MOVE_DOWN;
+                Name = GestureEvents.MOVE_UP;
                 lastHandPosition.Y += DistanceToTriggerMove;
                 return true;
             }
-            if (xy < 0 && Math.Abs(xy) < DistanceToTriggerMove)
+            if (yd < 0 && Math.Abs(yd) > DistanceToTriggerMove)
             {
-                Name = GestureEvents.MOVE_UP;
+                Name = GestureEvents.MOVE_DOWN;
                 lastHandPosition.Y -= DistanceToTriggerMove;
                 return true;
             }
             return false;
+        }
+
+        public bool IdentifyGesture(UserSkeletonState userState)
+        {
+            ISkeleton skeleton = userState.Skeleton;
+
+            var rightHand = skeleton.HandRight;
+            var leftHand = skeleton.HandLeft;
+            var spine = skeleton.Spine;
+
+            return IdentifyGrippedMove(rightHand, leftHand, spine, userState.IsRightHandGripped);
         }
 
         public string Name
