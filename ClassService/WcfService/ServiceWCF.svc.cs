@@ -12,6 +12,7 @@ using ImageZoom;
 using KinectPowerPointControl;
 using ServiceCore;
 using ServiceCore.Utils;
+using Microsoft.Samples.Kinect.ControlsBasics;
 
 namespace ClassService
 {

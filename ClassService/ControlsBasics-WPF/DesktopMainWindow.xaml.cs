@@ -18,6 +18,12 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     using System.Windows.Input;
     using ClassService.MainWindow;
     using ServiceCore.Utils;
+    using System.Linq;
+    using System.Text;
+    using Microsoft.Speech.Recognition;
+    using System.Diagnostics;
+    using Microsoft.Speech.AudioFormat;
+    using KinectPowerPointControl;
 
     /// <summary>
     /// Interaction logic for MainWindow
@@ -42,6 +48,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
         public string FilesFolder { get; set; }
 
+        KinectSpeechControl speechControl;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DesktopMainWindow"/> class. 
         /// </summary>
@@ -54,7 +62,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             this.sensorChooser.KinectChanged += SensorChooserOnKinectChanged;
             this.sensorChooserUi.KinectSensorChooser = this.sensorChooser;
             this.sensorChooser.Start();
-
+            
             // Bind the sensor chooser's current sensor to the KinectRegion
             var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
             BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
@@ -78,8 +86,12 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             interceptor = new InterceptKeyboard();
             InterceptKeyboard.SetHook(interceptor.hook);
             interceptor.KeyEvent += KeyDown;
-        }
 
+            speechControl = new KinectSpeechControl(this.sensorChooser.Kinect);
+            Grammar grammar = speechControl.CreateGrammarFromResource(Properties.Resources.WindowGrammar);
+            speechControl.InitializeSpeechRecognition(grammar);
+        }
+        
         public void KeyDown(int keyCode)
         {
             if (this.IsKeyboardFocused)

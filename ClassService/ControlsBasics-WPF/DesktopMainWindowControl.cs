@@ -10,7 +10,7 @@ using Microsoft.Samples.Kinect.ControlsBasics;
 using System.Windows.Media;
 using ServiceCore.Utils;
 
-namespace KinectPowerPointControl
+namespace Microsoft.Samples.Kinect.ControlsBasics
 {
     public class DesktopMainWindowControl : DefaultCommunicator, IKinectMainWindowControl
     {

@@ -41,10 +41,6 @@ namespace KinectPowerPointControl
         public event SkeletonReadyEvent SkeletonRecognized;
 
         //Speech Recognition
-        private DispatcherTimer readyTimer;
-        private SpeechRecognitionEngine speechRecognizer;
-        public delegate void SpeechRecognizedEvent(String speech);
-        public event SpeechRecognizedEvent SpeechRecognized;
         public ISpeechGrammar SpeechGrammar { get; set; }
 
         private Skeleton[] skeletons;
@@ -75,6 +71,11 @@ namespace KinectPowerPointControl
             StartImageSensor();
 
             StartInteractionProcessing();
+        }
+
+        public KinectSpeechControl ReturnSpeechControl()
+        {
+            return new KinectSpeechControl(this.sensor);
         }
 
         private InteractionStream interactionStream;
@@ -110,64 +111,7 @@ namespace KinectPowerPointControl
             sensor.SkeletonFrameReady -= this.SkeletonFrameReady;
             sensor.ColorFrameReady -= this.ColorFrameReady;
         }
-
-        protected static RecognizerInfo GetKinectRecognizer()
-        {
-            Func<RecognizerInfo, bool> matchingFunc = r =>
-            {
-                string value;
-                r.AdditionalInfo.TryGetValue("Kinect", out value);
-                return "True".Equals(value, StringComparison.InvariantCultureIgnoreCase) && "en-US".Equals(r.Culture.Name, StringComparison.InvariantCultureIgnoreCase);
-            };
-            return SpeechRecognitionEngine.InstalledRecognizers().Where(matchingFunc).FirstOrDefault();
-        }
-
-        public void InitializeSpeechRecognition()
-        {
-            if (SpeechGrammar == null) return;
-
-            RecognizerInfo recognizer = GetKinectRecognizer();
-            RecognizerInfo ri = recognizer;
-            if (ri == null)
-            {
-                throw new KinectSpeechRecognitionInitializationException();
-            }
-
-            try
-            {
-                speechRecognizer = new SpeechRecognitionEngine(ri.Id);
-            }
-            catch
-            {
-                throw new KinectSpeechRecognitionInitializationException();
-            }
-
-            var phrases = new Choices();
-
-            foreach (String word in SpeechGrammar.GrammarWords())
-            {
-                phrases.Add(word);
-            }
-
-            var gb = new GrammarBuilder();
-            //Specify the culture to match the recognizer in case we are running in a different culture.                                 
-            gb.Culture = ri.Culture;
-            gb.Append(phrases);
-
-            // Create the actual Grammar instance, and then load it into the speech recognizer.
-            var g = new Grammar(gb);
-
-            speechRecognizer.LoadGrammar(g);
-            speechRecognizer.SpeechRecognized += SreSpeechRecognized;
-            speechRecognizer.SpeechHypothesized += SreSpeechHypothesized;
-            speechRecognizer.SpeechRecognitionRejected += SreSpeechRecognitionRejected;
-
-            this.readyTimer = new DispatcherTimer();
-            this.readyTimer.Tick += this.ReadyTimerTick;
-            this.readyTimer.Interval = new TimeSpan(0, 0, 4);
-            this.readyTimer.Start();
-        }
-
+        
         //when color frame is ready
         protected void ColorFrameReady(object sender, ColorImageFrameReadyEventArgs e)
         {
@@ -265,75 +209,11 @@ namespace KinectPowerPointControl
                 sensor = null;
             }
         }
-        
+
         public void StopGestureRecognition()
         {
 
         }
-
-        private void ReadyTimerTick(object sender, EventArgs e)
-        {
-            this.StartSpeechRecognition();
-            this.readyTimer.Stop();
-            this.readyTimer = null;
-        }
-
-        void SreSpeechRecognitionRejected(object sender, SpeechRecognitionRejectedEventArgs e)
-        {
-            Trace.WriteLine("\nSpeech Rejected, confidence: " + e.Result.Confidence);
-        }
-
-        void SreSpeechHypothesized(object sender, SpeechHypothesizedEventArgs e)
-        {
-            Trace.Write("\rSpeech Hypothesized: \t{0}", e.Result.Text);
-        }
-
-        void SreSpeechRecognized(object sender, SpeechRecognizedEventArgs e)
-        {
-            //This first release of the Kinect language pack doesn't have a reliable confidence model, so 
-            //we don't use e.Result.Confidence here.
-            if (e.Result.Confidence < 0.70)
-            {
-                Trace.WriteLine("\nSpeech Rejected filtered, confidence: " + e.Result.Confidence);
-                return;
-            }
-
-            Trace.WriteLine("\nSpeech Recognized, confidence: " + e.Result.Confidence + ": \t{0}", e.Result.Text);
-
-            //Trigger event so the recognized text can be processed and generate some action outside of this class
-            if (this.SpeechRecognized != null)
-            {
-                this.SpeechRecognized(e.Result.Text);
-            }
-        }
-
-        private void StartSpeechRecognition()
-        {
-            if (sensor == null || speechRecognizer == null)
-                return;
-
-            try
-            {
-                var audioSource = this.sensor.AudioSource;
-                audioSource.BeamAngleMode = BeamAngleMode.Adaptive;
-                var kinectStream = audioSource.Start();
-
-                speechRecognizer.SetInputToAudioStream(
-                        kinectStream, new SpeechAudioFormatInfo(EncodingFormat.Pcm, 16000, 16, 1, 32000, 2, null));
-                speechRecognizer.RecognizeAsync(RecognizeMode.Multiple);
-            }
-            catch (Exception e)
-            {
-                Output.WriteToDebugOrConsole(e.Message);
-            }
-
-        }
-
-        public void StopSpeechRecognition()
-        {
-            speechRecognizer.RecognizeAsyncCancel();
-            speechRecognizer.RecognizeAsyncStop();
-        }        
 
         /// <summary>
         /// Handler for the Kinect sensor's DepthFrameReady event
