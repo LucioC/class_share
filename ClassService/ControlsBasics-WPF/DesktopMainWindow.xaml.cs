@@ -24,6 +24,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     using System.Diagnostics;
     using Microsoft.Speech.AudioFormat;
     using KinectPowerPointControl;
+    using System.Windows.Media;
 
     /// <summary>
     /// Interaction logic for MainWindow
@@ -44,8 +45,6 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
         public event MessageEvent MessageSent;
 
-        private InterceptKeyboard interceptor;
-
         public string FilesFolder { get; set; }
 
         KinectSpeechControl speechControl;
@@ -64,44 +63,49 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             this.sensorChooser.Start();
             
             // Bind the sensor chooser's current sensor to the KinectRegion
-            var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
-            BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
-
-            // Clear out placeholder content
-            this.wrapPanel.Children.Clear();
-
-            // Add in display content
-            for (var index = 0; index < 300; ++index)
-            {
-                var button = new KinectTileButton { Label = (index + 1).ToString(CultureInfo.CurrentCulture) };
-                this.wrapPanel.Children.Add(button);
-            }
-
+            //var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
+            //BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
+            
             // Bind listner to scrollviwer scroll position change, and check scroll viewer position
             this.UpdatePagingButtonState();
             scrollViewer.ScrollChanged += (o, e) => this.UpdatePagingButtonState();
 
             this.WindowState = System.Windows.WindowState.Maximized;
-
-            interceptor = new InterceptKeyboard();
-            InterceptKeyboard.SetHook(interceptor.hook);
-            interceptor.KeyEvent += KeyDown;
-
+            
             speechControl = new KinectSpeechControl(this.sensorChooser.Kinect);
             Grammar grammar = speechControl.CreateGrammarFromResource(Properties.Resources.WindowGrammar);
             speechControl.InitializeSpeechRecognition(grammar);
+
+            StartEvents();
         }
-        
-        public void KeyDown(int keyCode)
+
+        public void StartEvents()
         {
-            if (this.IsKeyboardFocused)
-            {
-                //Output.Debug("MainWindow", "focused");
-            }
-            else
-            {
-                //Output.Debug("MainWindow", keyCode.ToString());
-            }
+            speechControl.SpeechRecognized += this.SpeechRecognized;
+            this.wrapPanel.AddHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new System.Windows.RoutedEventHandler(this.KinectTileButtonClick));
+            var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
+            BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
+        }
+
+        public void PauseEvents()
+        {
+            this.wrapPanel.RemoveHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new System.Windows.RoutedEventHandler(this.KinectTileButtonClick));
+
+            speechControl.SpeechRecognized -= this.SpeechRecognized;
+
+            BindingOperations.ClearBinding(this.kinectRegion, KinectRegion.KinectSensorProperty);
+        }
+
+        public void SpeechRecognized(RecognitionResult speech)
+        {
+            SemanticValue semanticValue = speech.Semantics["number"];
+            int fileNumber = Int32.Parse((string)semanticValue.Value);
+            
+            var button = this.wrapPanel.Children[fileNumber - 1];
+
+            Output.Debug("SpeechRecognizedOnFileSelection","File number chosen was " + fileNumber);
+
+            clickButton((FileKinectButton)button);
         }
 
         public void LoadFilesFromFolder(string folderPath)
@@ -113,14 +117,28 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             {
                 string file = filePaths[i];
                 FileKinectButton tile = new FileKinectButton();
-                tile.Width = 350;
-                tile.Height = 200;
                 tile.Label = i.ToString() + " " + System.IO.Path.GetFileName(file);
                 tile.FileName = System.IO.Path.GetFileName(file);
+                setTileAsNormal(tile);
                 this.wrapPanel.Children.Add(tile);
             }
 
             this.wrapPanel.Height = ( (filePaths.Length + 2) / 3) * 220;
+        }
+
+        public void setTileAsNormal(KinectTileButton button)
+        {
+            button.Width = 350;
+            button.Height = 200;
+            button.Margin = new Thickness(5);
+        }
+
+        public void setTileAsSelected(KinectTileButton button)
+        {
+            button.Width = 350;
+            button.Height = 200;
+            button.Margin = new Thickness(5);
+            button.Background = Brushes.DarkGray;
         }
 
         /// <summary>
@@ -233,10 +251,15 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             var button = (FileKinectButton)e.OriginalSource;
             //var selectionDisplay = new SelectionDisplay(button.FilePath as string);
             //this.kinectRegionGrid.Children.Add(selectionDisplay);
-
-            this.SendMessage("open:"+button.FileName);
+            
+            clickButton(button);
             
             e.Handled = true;
+        }
+
+        private void clickButton(FileKinectButton button)
+        {
+            this.SendMessage("open:" + button.FileName);
         }
 
         /// <summary>

@@ -58,17 +58,34 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             app.Run();
         }
 
+        private delegate void Event();
+        private Event pauseEventsDelegate;
+        private Event startEventsDelegate;
+
+        public void PauseEvents()
+        {
+            this.window.Dispatcher.BeginInvoke((Action)(() => { window.PauseEvents(); }));
+        }
+
+        public void RestartEvents()
+        {
+            this.window.Dispatcher.BeginInvoke((Action)(() => { window.StartEvents(); }));
+        }
+
         private void WindowStartup( Object sender,  StartupEventArgs e)
         {
             //Get the main windows after created on startup
             this.window = (DesktopMainWindow)((App)sender).MainWindow;
             this.window.LoadFilesFromFolder(FilesFolder);
             this.window.MessageSent += this.ReceiveMessage;
+           
+            pauseEventsDelegate += this.window.PauseEvents;
+            startEventsDelegate += this.window.StartEvents;
         }
 
         public virtual void ReceiveMessage(string message)
         {
-            Output.Debug("Control", message);
+            //Output.Debug("Control", message);
             SendMessage(message);
         }
 

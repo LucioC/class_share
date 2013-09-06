@@ -18,7 +18,7 @@ namespace KinectPowerPointControl
         private DispatcherTimer readyTimer;
         private SpeechRecognitionEngine speechRecognizer;
         private KinectSensor sensor;
-        public delegate void SpeechRecognizedEvent(String speech);
+        public delegate void SpeechRecognizedEvent(RecognitionResult speech);
         public event SpeechRecognizedEvent SpeechRecognized;
 
         public KinectSpeechControl(KinectSensor sensor)
@@ -101,7 +101,7 @@ namespace KinectPowerPointControl
             this.readyTimer.Interval = new TimeSpan(0, 0, 4);
             this.readyTimer.Start();
         }
-
+        
         public void StopSpeechRecognition()
         {
             speechRecognizer.RecognizeAsyncCancel();
@@ -163,7 +163,7 @@ namespace KinectPowerPointControl
             //Trigger event so the recognized text can be processed and generate some action outside of this class
             if (this.SpeechRecognized != null)
             {
-                this.SpeechRecognized(e.Result.Text);
+                this.SpeechRecognized(e.Result);
             }
         }
     }

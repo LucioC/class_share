@@ -260,8 +260,10 @@ namespace KinectPowerPointControl
             });
         }
 
-        private void SpeechRecognized(String speech)
+        private void SpeechRecognized(RecognitionResult speechRecognized)
         {
+            string speech = speechRecognized.Text;
+
             if (grammar.IsCommand(PowerPointGrammar.SHOW_WINDOW, speech))
             {
                 UnMinimize();

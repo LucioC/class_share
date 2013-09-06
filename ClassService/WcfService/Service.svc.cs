@@ -117,12 +117,14 @@ namespace ClassService
         public Result StartPresentation()
         {
             try
-            {                
+            {   
                 PresentationControl.StartPresentation();
 
                 //Initialize Kinect windows for gesture and speech recognition
                 KinectWindow.setMode(PRESENTATION_MODE.POWERPOINT);
                 KinectWindow.StartThread();
+
+                mainWindow.PauseEvents();
 
                 return new Result("Presentation has been started");
             }
@@ -212,6 +214,7 @@ namespace ClassService
             {
                 KinectWindow.StopThread();
                 PresentationControl.ClosePresentation();
+                mainWindow.RestartEvents();
                 return new Result("Presentation was closed");
             }
             catch(Exception e)
@@ -279,6 +282,7 @@ namespace ClassService
                 //Initialize Kinect windows for gesture and speech recognition
                 KinectWindow.setMode(PRESENTATION_MODE.IMAGE);
                 KinectWindow.StartThread();
+                mainWindow.PauseEvents();
 
                 return new Result("Image Opened");
             }
@@ -301,6 +305,7 @@ namespace ClassService
             ImageForm.StopThread();
 
             KinectWindow.StopThread();
+            mainWindow.RestartEvents();
 
             return new Result("Image Closed");
         }
