@@ -16,7 +16,7 @@ namespace KinectPowerPointControl
     public class KinectSpeechControl
     {
         private DispatcherTimer readyTimer;
-        private SpeechRecognitionEngine speechRecognizer;
+        private SpeechRecognitionEngine speechRecognizer = null;
         private KinectSensor sensor;
         public delegate void SpeechRecognizedEvent(RecognitionResult speech);
         public event SpeechRecognizedEvent SpeechRecognized;
@@ -84,14 +84,24 @@ namespace KinectPowerPointControl
 
             try
             {
-                speechRecognizer = new SpeechRecognitionEngine(ri.Id);
+                if(speechRecognizer == null)
+                    speechRecognizer = new SpeechRecognitionEngine(ri.Id);
             }
             catch
             {
                 throw new KinectSpeechRecognitionInitializationException();
             }
 
-            speechRecognizer.LoadGrammar(grammar);
+            if (grammar.Loaded) speechRecognizer.UnloadGrammar(grammar);
+
+            try
+            {
+                speechRecognizer.LoadGrammar(grammar);
+            }
+            catch (InvalidOperationException e)
+            {
+
+            }
             speechRecognizer.SpeechRecognized += SreSpeechRecognized;
             speechRecognizer.SpeechHypothesized += SreSpeechHypothesized;
             speechRecognizer.SpeechRecognitionRejected += SreSpeechRecognitionRejected;
@@ -106,8 +116,7 @@ namespace KinectPowerPointControl
         {
             speechRecognizer.RecognizeAsyncCancel();
             speechRecognizer.RecognizeAsyncStop();
-        }        
-
+        }
 
         private void ReadyTimerTick(object sender, EventArgs e)
         {

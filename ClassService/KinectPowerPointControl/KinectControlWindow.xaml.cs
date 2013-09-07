@@ -29,15 +29,17 @@ namespace KinectPowerPointControl
     {
         KinectControl kinectControl;
         AbstractKinectGestureRecognition gestureRecognition;
-        ISpeechGrammar grammar;
+        Grammar grammar;
 
         SkeletonStateRepository skeletonRepository { get; set; }
 
         public event MessageEvent MessageSent;
 
         public PRESENTATION_MODE mode { get; set; }
-        
+
         bool isCirclesVisible = true;
+
+        KinectSpeechControl speechControl;
 
         SolidColorBrush activeBrush = new SolidColorBrush(Colors.Yellow);
         SolidColorBrush inactiveBrush = new SolidColorBrush(Colors.DarkRed);
@@ -94,8 +96,7 @@ namespace KinectPowerPointControl
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            grammar = CreateGrammar();
-            kinectControl = new KinectControl(gestureRecognition, grammar, skeletonRepository);
+            kinectControl = new KinectControl(gestureRecognition, skeletonRepository);
 
             kinectControl.ColorFrameGot += this.UpdateImage;
             kinectControl.SkeletonRecognized += SkeletonReady;
@@ -113,23 +114,25 @@ namespace KinectPowerPointControl
             //Application.Current.Exit += new ExitEventHandler(Current_Exit);
             this.Closed += Current_Exit;
 
-            //TODO SPEECH DISABLED
-            //kinectControl.SpeechRecognized += this.SpeechRecognized;            
-            //kinectControl.InitializeSpeechRecognition();
+            speechControl = kinectControl.ReturnSpeechControl();
+            grammar = createGrammar(mode);
+            speechControl.InitializeSpeechRecognition(grammar);
+            speechControl.SpeechRecognized += this.SpeechRecognized;
 
             commands.setListeners(this.MessageSent);
 
         }
 
-        private ISpeechGrammar CreateGrammar()
+        private Grammar createGrammar(PRESENTATION_MODE mode)
         {
-            if (mode == PRESENTATION_MODE.POWERPOINT)
+            Grammar grammar = null;
+            if (mode == PRESENTATION_MODE.IMAGE)
             {
-                grammar = new PowerPointGrammar();
+                grammar = speechControl.CreateGrammarFromResource(Properties.Resources.image_presentation);
             }
-            else if (mode == PRESENTATION_MODE.IMAGE)
+            else if (mode == PRESENTATION_MODE.POWERPOINT)
             {
-                grammar = new ImagePresentationGrammar();
+                grammar = speechControl.CreateGrammarFromResource(Properties.Resources.slide_presentation);
             }
 
             return grammar;
@@ -262,75 +265,55 @@ namespace KinectPowerPointControl
 
         private void SpeechRecognized(RecognitionResult speechRecognized)
         {
-            string speech = speechRecognized.Text;
+            SemanticValue semanticValue = speechRecognized.Semantics["command"];
 
-            if (grammar.IsCommand(PowerPointGrammar.SHOW_WINDOW, speech))
-            {
-                UnMinimize();
-            }
-            else if (grammar.IsCommand(PowerPointGrammar.HIDE_WINDOW, speech))
-            {
-                Minimize();
-            }
-            else if (grammar.IsCommand(PowerPointGrammar.HIDE_CIRCLES, speech))
-            {
-                this.Dispatcher.BeginInvoke((Action)delegate
-                {
-                    this.HideCircles();
-                });
-            }
-            else if (grammar.IsCommand(PowerPointGrammar.SHOW_CIRCLES, speech))
-            {
-                this.Dispatcher.BeginInvoke((Action)delegate
-                {
-                    this.ShowCircles();
-                });
-            }
-            else if (grammar.IsCommand(PowerPointGrammar.NEXT_SLIDE, speech))
+            string speech = (string)semanticValue.Value;
+
+            if (PowerPointGrammar.NEXT_SLIDE.Equals(speech))
             {
                 commands.ProcessNextSlide();
             }
-            else if (grammar.IsCommand(PowerPointGrammar.PREVIOUS_SLIDE, speech))
+            else if (PowerPointGrammar.PREVIOUS_SLIDE.Equals(speech))
             {
                 commands.ProcessPreviousSlide();
             }
-            else if (grammar.IsCommand(PowerPointGrammar.CLOSE_PRESENTATION, speech))
+            else if (PowerPointGrammar.CLOSE_PRESENTATION.Equals(speech))
             {
                 commands.ProcessClosePresentation();
             }
-            else if (grammar.IsCommand(ImagePresentationGrammar.MOVE_RIGHT, speech))
+            else if (ImagePresentationGrammar.MOVE_RIGHT.Equals(speech))
             {
                 commands.ProcessMoveRight();
             }
-            else if (grammar.IsCommand(ImagePresentationGrammar.MOVE_LEFT, speech))
+            else if (ImagePresentationGrammar.MOVE_LEFT.Equals(speech))
             {
                 commands.ProcessMoveLeft();
             }
-            else if (grammar.IsCommand(ImagePresentationGrammar.MOVE_UP, speech))
+            else if (ImagePresentationGrammar.MOVE_UP.Equals(speech))
             {
                 commands.ProcessMoveUp();
             }
-            else if (grammar.IsCommand(ImagePresentationGrammar.MOVE_DOWN, speech))
+            else if (ImagePresentationGrammar.MOVE_DOWN.Equals(speech))
             {
                 commands.ProcessMoveDown();
             }
-            else if (grammar.IsCommand(ImagePresentationGrammar.ROTATE_RIGHT, speech))
+            else if (ImagePresentationGrammar.ROTATE_RIGHT.Equals(speech))
             {
                 commands.ProcessRotateRight();
             }
-            else if (grammar.IsCommand(ImagePresentationGrammar.ROTATE_LEFT, speech))
+            else if (ImagePresentationGrammar.ROTATE_LEFT.Equals(speech))
             {
                 commands.ProcessRotateLeft();
             }
-            else if (grammar.IsCommand(ImagePresentationGrammar.ZOOM_IN, speech))
+            else if (ImagePresentationGrammar.ZOOM_IN.Equals(speech))
             {
                 commands.ProcessZoomIn();
             }
-            else if (grammar.IsCommand(ImagePresentationGrammar.ZOOM_OUT, speech))
+            else if (ImagePresentationGrammar.ZOOM_OUT.Equals(speech))
             {
                 commands.ProcessZoomOut();
             }
-            else if (grammar.IsCommand(ImagePresentationGrammar.CLOSE_IMAGE, speech))
+            else if (ImagePresentationGrammar.CLOSE_IMAGE.Equals(speech))
             {
                 commands.ProcessCloseImage();
             }

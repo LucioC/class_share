@@ -49,6 +49,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
         KinectSpeechControl speechControl;
 
+        Grammar grammar;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DesktopMainWindow"/> class. 
         /// </summary>
@@ -61,11 +63,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             this.sensorChooser.KinectChanged += SensorChooserOnKinectChanged;
             this.sensorChooserUi.KinectSensorChooser = this.sensorChooser;
             this.sensorChooser.Start();
-            
-            // Bind the sensor chooser's current sensor to the KinectRegion
-            //var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
-            //BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
-            
+
             // Bind listner to scrollviwer scroll position change, and check scroll viewer position
             this.UpdatePagingButtonState();
             scrollViewer.ScrollChanged += (o, e) => this.UpdatePagingButtonState();
@@ -73,26 +71,25 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             this.WindowState = System.Windows.WindowState.Maximized;
             
             speechControl = new KinectSpeechControl(this.sensorChooser.Kinect);
-            Grammar grammar = speechControl.CreateGrammarFromResource(Properties.Resources.WindowGrammar);
-            speechControl.InitializeSpeechRecognition(grammar);
 
+            grammar = speechControl.CreateGrammarFromResource(Properties.Resources.WindowGrammar);
             StartEvents();
         }
 
         public void StartEvents()
         {
-            speechControl.SpeechRecognized += this.SpeechRecognized;
             this.wrapPanel.AddHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new System.Windows.RoutedEventHandler(this.KinectTileButtonClick));
             var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
             BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
+            speechControl.InitializeSpeechRecognition(grammar);
+            speechControl.SpeechRecognized += this.SpeechRecognized;
         }
 
         public void PauseEvents()
         {
+            //speechControl.StopSpeechRecognition();
             this.wrapPanel.RemoveHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new System.Windows.RoutedEventHandler(this.KinectTileButtonClick));
-
             speechControl.SpeechRecognized -= this.SpeechRecognized;
-
             BindingOperations.ClearBinding(this.kinectRegion, KinectRegion.KinectSensorProperty);
         }
 
@@ -101,7 +98,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             SemanticValue semanticValue = speech.Semantics["number"];
             int fileNumber = Int32.Parse((string)semanticValue.Value);
             
-            var button = this.wrapPanel.Children[fileNumber - 1];
+            var button = this.wrapPanel.Children[fileNumber];
 
             Output.Debug("SpeechRecognizedOnFileSelection","File number chosen was " + fileNumber);
 

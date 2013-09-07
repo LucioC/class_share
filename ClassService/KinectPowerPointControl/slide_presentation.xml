@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<grammar version="1.0" xml:lang="en-US" mode="voice" root= "Expression"
+xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0">
+
+  <rule id="Expression" scope="public">
+    <one-of>
+      <item>
+        <ruleref uri ="#Forward" type="application/srgs+xml"/>
+        <tag>out.command=rules.latest();</tag>
+      </item>
+      <item>
+        <ruleref uri ="#Backward" type="application/srgs+xml"/>
+        <tag>out.command=rules.latest();</tag>
+      </item>
+      <item>
+        <ruleref uri ="#Close" type="application/srgs+xml"/>
+        <tag>out.command=rules.latest();</tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="Forward">
+    <one-of>
+      <item>
+        next slide <tag>out = "next slide"; </tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="Backward">
+    <one-of>
+      <item>
+        previous slide <tag>out = "previous slide"; </tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="Close">
+    <one-of>
+      <item>
+        close <tag>out = "close presentation"; </tag>
+      </item>
+    </one-of>
+  </rule>
+</grammar>

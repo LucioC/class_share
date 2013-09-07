@@ -39,10 +39,6 @@ namespace KinectPowerPointControl
 
         public delegate void SkeletonReadyEvent(Skeleton skeleton);
         public event SkeletonReadyEvent SkeletonRecognized;
-
-        //Speech Recognition
-        public ISpeechGrammar SpeechGrammar { get; set; }
-
         private Skeleton[] skeletons;
 
         private KinectInteractionEvents kinectInteraction;
@@ -51,10 +47,9 @@ namespace KinectPowerPointControl
 
         public SkeletonStateRepository UserStateRepository { get; set; }
 
-        public KinectControl(AbstractKinectGestureRecognition gestureRecognition, ISpeechGrammar speechGrammar, SkeletonStateRepository skeletonRepository)
+        public KinectControl(AbstractKinectGestureRecognition gestureRecognition, SkeletonStateRepository skeletonRepository)
         {
             this.GestureRecognition = gestureRecognition;
-            this.SpeechGrammar = speechGrammar;
             this.UserStateRepository = skeletonRepository;
             this.kinectInteraction = new KinectInteractionEvents(GestureRecognition, UserStateRepository);
         }

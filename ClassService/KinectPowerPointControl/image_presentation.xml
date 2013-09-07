@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<grammar version="1.0" xml:lang="en-US" mode="voice" root= "Expression"
+xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0">
+
+  <rule id="Expression" scope="public">
+    <one-of>
+      <item>
+        <ruleref uri ="#Move" type="application/srgs+xml"/>
+        <tag>out.command=rules.latest();</tag>
+      </item>
+      <item>
+        <ruleref uri ="#Rotation" type="application/srgs+xml"/>
+        <tag>out.command=rules.latest();</tag>
+      </item>
+      <item>
+        <ruleref uri ="#Zoom" type="application/srgs+xml"/>
+        <tag>out.command=rules.latest();</tag>
+      </item>
+      <item>
+        <ruleref uri ="#Close" type="application/srgs+xml"/>
+        <tag>out.command=rules.latest();</tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="Zoom">
+    zoom
+    <one-of>
+      <item>
+        in <tag>out = "zoomin"; </tag>
+      </item>
+      <item>
+        out <tag>out = "zoomout"; </tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="Close">
+    <one-of>
+      <item>
+        close <tag>out = "closeimage"; </tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="Rotation">
+    rotate
+    <one-of>
+      <item>
+        right <tag>out = "rotateright"; </tag>
+      </item>
+      <item>
+        left <tag>out = "rotateleft"; </tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="Move">
+    move
+    <one-of>
+      <item>
+        right <tag>out = "moveright"; </tag>
+      </item>
+      <item>
+        left <tag>out = "moveleft"; </tag>
+      </item>
+      <item>
+        up <tag>out = "moveup"; </tag>
+      </item>
+      <item>
+        down <tag>out = "movedown"; </tag>
+      </item>
+    </one-of>
+  </rule>
+</grammar>
