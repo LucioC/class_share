@@ -111,6 +111,25 @@ namespace KinectPowerPointControl
             this.readyTimer.Interval = new TimeSpan(0, 0, 4);
             this.readyTimer.Start();
         }
+
+        public void StopEvents()
+        {
+            speechRecognizer.SpeechRecognized -= SreSpeechRecognized;
+            speechRecognizer.SpeechHypothesized -= SreSpeechHypothesized;
+            speechRecognizer.SpeechRecognitionRejected -= SreSpeechRecognitionRejected;
+        }
+
+        public void UnloadGrammar(Grammar grammar)
+        {
+            try
+            {
+                speechRecognizer.UnloadGrammar(grammar);
+            }
+            catch (InvalidOperationException e)
+            {
+
+            }
+        }
         
         public void StopSpeechRecognition()
         {

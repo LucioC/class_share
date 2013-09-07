@@ -89,20 +89,26 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         {
             //speechControl.StopSpeechRecognition();
             this.wrapPanel.RemoveHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new System.Windows.RoutedEventHandler(this.KinectTileButtonClick));
+            
             speechControl.SpeechRecognized -= this.SpeechRecognized;
             BindingOperations.ClearBinding(this.kinectRegion, KinectRegion.KinectSensorProperty);
+            speechControl.UnloadGrammar(grammar);
+            speechControl.StopEvents();
         }
 
         public void SpeechRecognized(RecognitionResult speech)
         {
             SemanticValue semanticValue = speech.Semantics["number"];
             int fileNumber = Int32.Parse((string)semanticValue.Value);
-            
-            var button = this.wrapPanel.Children[fileNumber];
 
-            Output.Debug("SpeechRecognizedOnFileSelection","File number chosen was " + fileNumber);
+            if (fileNumber < this.wrapPanel.Children.Count && fileNumber >= 0)
+            {
+                var button = this.wrapPanel.Children[fileNumber];
 
-            clickButton((FileKinectButton)button);
+                Output.Debug("SpeechRecognizedOnFileSelection", "File number chosen was " + fileNumber);
+
+                clickButton((FileKinectButton)button);
+            }
         }
 
         public void LoadFilesFromFolder(string folderPath)

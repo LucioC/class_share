@@ -184,6 +184,7 @@ namespace KinectPowerPointControl
         {
             //kinectControl.StopSensor();
             kinectControl.StopListeningKinect();
+            speechControl.UnloadGrammar(grammar);
             Application.Current.Shutdown();
         }
 
