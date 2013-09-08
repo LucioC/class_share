@@ -112,9 +112,11 @@
             <k:KinectUserViewer k:KinectRegion.KinectRegion="{Binding ElementName=kinectRegion}" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" />
             <k:KinectSensorChooserUI HorizontalAlignment="Center" VerticalAlignment="Top" Name="sensorChooserUi" />
             <TextBlock HorizontalAlignment="Right" Margin="0 0 -1 0" VerticalAlignment="Bottom" Foreground="{StaticResource MediumGreyBrush}" FontSize="18">Files</TextBlock>
+            <ListBox Name="listbox1" Height="94" Margin="0,6,914,0">
+            </ListBox>
         </Grid>
 
-        <k:KinectRegion Grid.Row="1" x:Name="kinectRegion">
+        <local:KinectRegionUpdateFacingForward Grid.Row="1" x:Name="kinectRegion">
             <Grid x:Name="kinectRegionGrid" Margin="0,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="496*" />
@@ -136,6 +138,6 @@
                     </WrapPanel>
                 </k:KinectScrollViewer>
             </Grid>
-        </k:KinectRegion>
+        </local:KinectRegionUpdateFacingForward>
     </Grid>
 </Window>

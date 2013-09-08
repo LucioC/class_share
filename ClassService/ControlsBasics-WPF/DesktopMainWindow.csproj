@@ -61,6 +61,7 @@
     <Compile Include="FileKinectButton.cs" />
     <Compile Include="KinectHoverButton.cs" />
     <Compile Include="DesktopMainWindowControl.cs" />
+    <Compile Include="KinectRegionUpdateFacingForward.cs" />
     <Compile Include="SelectionDisplay.xaml.cs">
       <DependentUpon>SelectionDisplay.xaml</DependentUpon>
     </Compile>

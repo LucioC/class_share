@@ -25,6 +25,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     using Microsoft.Speech.AudioFormat;
     using KinectPowerPointControl;
     using System.Windows.Media;
+    using System.Windows.Controls;
 
     /// <summary>
     /// Interaction logic for MainWindow
@@ -42,6 +43,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private const int PixelScrollByAmount = 20;
 
         private readonly KinectSensorChooser sensorChooser;
+
+        private SkeletonStateRepository repository;
 
         public event MessageEvent MessageSent;
 
@@ -72,6 +75,9 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             
             speechControl = new KinectSpeechControl(this.sensorChooser.Kinect);
 
+            repository = new SkeletonStateRepository();
+            this.kinectRegion.Repository = repository;
+
             grammar = speechControl.CreateGrammarFromResource(Properties.Resources.WindowGrammar);
             StartEvents();
         }
@@ -83,6 +89,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
             speechControl.InitializeSpeechRecognition(grammar);
             speechControl.SpeechRecognized += this.SpeechRecognized;
+            speechControl.SpeechHypothesized += this.SpeechHypothesized;
         }
 
         public void PauseEvents()
@@ -91,13 +98,45 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             this.wrapPanel.RemoveHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new System.Windows.RoutedEventHandler(this.KinectTileButtonClick));
             
             speechControl.SpeechRecognized -= this.SpeechRecognized;
+            speechControl.SpeechHypothesized -= this.SpeechHypothesized;
             BindingOperations.ClearBinding(this.kinectRegion, KinectRegion.KinectSensorProperty);
             speechControl.UnloadGrammar(grammar);
             speechControl.StopEvents();
         }
 
+        private void SpeechHypothesized(RecognitionResult speechHypothesized)
+        {
+            ListBoxItem item = createDefaultListBoxItem();
+            item.Content = "S:" + speechHypothesized.Text + " C:" + speechHypothesized.Confidence;
+            addToList(item);
+        }
+
+        private void addToList(ListBoxItem item)
+        {
+            listbox1.Items.Add(item);
+
+            if (listbox1.Items.Count > 3) listbox1.Items.RemoveAt(0);
+        }
+
+        private ListBoxItem createDefaultListBoxItem()
+        {
+            ListBoxItem item = new ListBoxItem();
+            item.FontSize = 20;
+            return item;
+        }
+
         public void SpeechRecognized(RecognitionResult speech)
         {
+            if (!repository.FirstUser.IsFacingForward)
+            {
+                Output.Debug("DesktopMainWindow", "User is not facing forward, speech ignored.");
+                return;
+            }
+            
+            ListBoxItem item = createDefaultListBoxItem();
+            item.Content = "S:" + speech.Text + " C:" + speech.Confidence;
+            addToList(item);
+
             SemanticValue semanticValue = speech.Semantics["number"];
             int fileNumber = Int32.Parse((string)semanticValue.Value);
 
@@ -292,6 +331,11 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         {
             this.PageLeftEnabled = scrollViewer.HorizontalOffset > ScrollErrorMargin;
             this.PageRightEnabled = scrollViewer.HorizontalOffset < scrollViewer.ScrollableWidth - ScrollErrorMargin;
+        }
+
+        private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

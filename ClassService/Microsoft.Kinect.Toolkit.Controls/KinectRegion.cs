@@ -15,6 +15,7 @@ namespace Microsoft.Kinect.Toolkit.Controls
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
+    using System.Linq;
 
     using Microsoft.Kinect.Toolkit.Interaction;
 
@@ -884,6 +885,8 @@ namespace Microsoft.Kinect.Toolkit.Controls
 
                         var accelerometerReading = this.KinectSensor.AccelerometerGetCurrentReading();
 
+                        CheckIfUserIsFacingForward(this.skeletons);
+
                         // Hand data to Interaction framework to be processed
                         this.interactionStream.ProcessSkeleton(this.skeletons, accelerometerReading, skeletonFrame.Timestamp);
                     }
@@ -894,6 +897,10 @@ namespace Microsoft.Kinect.Toolkit.Controls
                     }
                 }
             }
+        }
+
+        protected virtual void CheckIfUserIsFacingForward(Skeleton[] skeletons)
+        {
         }
 
         /// <summary>

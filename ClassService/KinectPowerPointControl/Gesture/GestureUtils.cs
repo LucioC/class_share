@@ -15,6 +15,30 @@ namespace KinectPowerPointControl.Gesture
             return distance;
         }
 
+        public static bool IsUserFacingForward(Skeleton skeleton)
+        {
+            bool isFacingForward = false;
+
+            var shoulderRight = skeleton.Joints[JointType.ShoulderRight];
+            var shoulderLeft = skeleton.Joints[JointType.ShoulderLeft];
+
+            if (shoulderRight.TrackingState != JointTrackingState.Tracked || shoulderLeft.TrackingState != JointTrackingState.Tracked)
+            {
+                isFacingForward = false;
+            }
+            else // If user is facing forward
+                if (shoulderRight.Position.X > shoulderLeft.Position.X && GestureUtils.CalculateDistanceZ(shoulderRight.Position, shoulderLeft.Position) < 0.07)
+                {
+                    isFacingForward = true;
+                }
+                else
+                {
+                    isFacingForward = false;
+                }
+
+            return isFacingForward;
+        }
+
         public static float CalculateDistanceZ(SkeletonPoint rightHandPosition, SkeletonPoint leftHandPosition)
         {
             float distance = Math.Abs(rightHandPosition.Z- leftHandPosition.Z);

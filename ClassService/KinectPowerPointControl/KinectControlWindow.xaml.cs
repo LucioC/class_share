@@ -290,6 +290,12 @@ namespace KinectPowerPointControl
         {
             SemanticValue semanticValue = speechRecognized.Semantics["command"];
 
+            if (!skeletonRepository.FirstUser.IsFacingForward)
+            {
+                Output.Debug("KinectControlWindow","User not facing forward, speech ignored.");
+                return;
+            }
+
             this.listBox1.Items.Clear(); 
             ListBoxItem item = createDefaultListBoxItem();
             item.Content = "S:" + speechRecognized.Text + " C:" + speechRecognized.Confidence;
@@ -405,6 +411,11 @@ namespace KinectPowerPointControl
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void listBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

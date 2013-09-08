@@ -54,9 +54,17 @@ namespace KinectPowerPointControl.Gesture
             }
 
             BestSkeleton = closestSkeleton;
-            skeletonRepository.FirstUser.Skeleton = new KinectSkeletonWrapper(BestSkeleton);
+            ISkeleton bestFoundSkeleton = new KinectSkeletonWrapper(BestSkeleton);
+            skeletonRepository.FirstUser.Skeleton = bestFoundSkeleton;
+
+            VerifyIfUserIsFacingForward(BestSkeleton);
 
             VerifyGestures(skeletonRepository.FirstUser);
+        }
+
+        private void VerifyIfUserIsFacingForward(Skeleton bestSkeleton)
+        {
+            skeletonRepository.FirstUser.IsFacingForward = GestureUtils.IsUserFacingForward(bestSkeleton);
         }
 
         /// <summary>

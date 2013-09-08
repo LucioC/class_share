@@ -93,6 +93,26 @@ namespace ServiceCore
             }
         }
 
+        Object facing = new Object();
+        private Boolean isFacingForward = false;
+        public Boolean IsFacingForward
+        {
+            get
+            {
+                lock (facing)
+                {
+                    return isFacingForward;
+                }
+            }
+            set
+            {
+                lock (facing)
+                {
+                    isFacingForward = value;
+                }
+            }
+        }
+
         public UserSkeletonState()
         {
             skeleton = new KinectSkeletonWrapper(new Skeleton());
