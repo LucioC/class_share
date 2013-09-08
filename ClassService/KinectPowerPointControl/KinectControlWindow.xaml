@@ -2,14 +2,14 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Kinect PowerPoint Control"
-        Height="240"
+        Height="300"
         Width="300" Loaded="Window_Loaded">
     <Viewbox Stretch="Uniform">
         <Grid>
             <Image Name="videoImage"
                    Width="640"
                    Height="480"></Image>
-            <Canvas Background="Transparent">
+            <Canvas Background="Transparent" Margin="0,0,0,0">
                 <Ellipse Fill="Lime"
                          Height="20"
                          Width="20"
@@ -71,6 +71,9 @@
                          Name="ellipseCenterHip"
                          Stroke="White" />
             </Canvas>
+            <ListBox Name="listBox1" Margin="0,441,0,-60">
+                <ListBoxItem Content="S:Coffie C:0.5" FontSize="40"></ListBoxItem>
+            </ListBox>
         </Grid>
     </Viewbox>
 </Window>

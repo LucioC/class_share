@@ -118,6 +118,7 @@ namespace KinectPowerPointControl
             grammar = createGrammar(mode);
             speechControl.InitializeSpeechRecognition(grammar);
             speechControl.SpeechRecognized += this.SpeechRecognized;
+            speechControl.SpeechHypothesized += this.SpeechHypothesized;
 
             commands.setListeners(this.MessageSent);
 
@@ -264,10 +265,36 @@ namespace KinectPowerPointControl
             });
         }
 
+        private void SpeechHypothesized(RecognitionResult speechHypothesized)
+        {
+            ListBoxItem item = createDefaultListBoxItem();
+            item.Content = "S:" + speechHypothesized.Text + " C:" + speechHypothesized.Confidence;
+            addToList(item);
+        }
+
+        private ListBoxItem createDefaultListBoxItem()
+        {
+            ListBoxItem item = new ListBoxItem();
+            item.FontSize = 28;
+            return item;
+        }
+
+        private void addToList(ListBoxItem item)
+        {
+            listBox1.Items.Add(item);
+
+            if (listBox1.Items.Count > 3) listBox1.Items.RemoveAt(0);
+        }
+
         private void SpeechRecognized(RecognitionResult speechRecognized)
         {
             SemanticValue semanticValue = speechRecognized.Semantics["command"];
 
+            this.listBox1.Items.Clear(); 
+            ListBoxItem item = createDefaultListBoxItem();
+            item.Content = "S:" + speechRecognized.Text + " C:" + speechRecognized.Confidence;
+            addToList(item);
+            
             string speech = (string)semanticValue.Value;
 
             if (PowerPointGrammar.NEXT_SLIDE.Equals(speech))

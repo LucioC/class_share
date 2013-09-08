@@ -20,6 +20,7 @@ namespace KinectPowerPointControl
         private KinectSensor sensor;
         public delegate void SpeechRecognizedEvent(RecognitionResult speech);
         public event SpeechRecognizedEvent SpeechRecognized;
+        public event SpeechRecognizedEvent SpeechHypothesized;
 
         public KinectSpeechControl(KinectSensor sensor)
         {
@@ -174,6 +175,10 @@ namespace KinectPowerPointControl
         void SreSpeechHypothesized(object sender, SpeechHypothesizedEventArgs e)
         {
             Trace.Write("\rSpeech Hypothesized: \t{0}", e.Result.Text);
+            if (this.SpeechHypothesized != null)
+            {
+                this.SpeechHypothesized(e.Result);
+            }
         }
 
         void SreSpeechRecognized(object sender, SpeechRecognizedEventArgs e)
