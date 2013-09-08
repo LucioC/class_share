@@ -72,7 +72,6 @@
                          Stroke="White" />
             </Canvas>
             <ListBox Name="listBox1" Margin="0,441,0,-60">
-                <ListBoxItem Content="S:Coffie C:0.5" FontSize="40"></ListBoxItem>
             </ListBox>
         </Grid>
     </Viewbox>
