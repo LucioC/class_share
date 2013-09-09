@@ -27,7 +27,7 @@ namespace KinectPowerPointControl.Gesture
                 isFacingForward = false;
             }
             else // If user is facing forward
-                if (shoulderRight.Position.X > shoulderLeft.Position.X && GestureUtils.CalculateDistanceZ(shoulderRight.Position, shoulderLeft.Position) < 0.07)
+                if (shoulderRight.Position.X > shoulderLeft.Position.X && GestureUtils.CalculateDistanceZ(shoulderRight.Position, shoulderLeft.Position) < 0.1)
                 {
                     isFacingForward = true;
                 }

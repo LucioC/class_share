@@ -52,6 +52,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
         KinectSpeechControl speechControl;
 
+        IListBoxHelper listHelper = new ListBoxHelper();
+
         Grammar grammar;
 
         /// <summary>
@@ -106,23 +108,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
         private void SpeechHypothesized(RecognitionResult speechHypothesized)
         {
-            ListBoxItem item = createDefaultListBoxItem();
-            item.Content = "S:" + speechHypothesized.Text + " C:" + speechHypothesized.Confidence;
-            addToList(item);
-        }
-
-        private void addToList(ListBoxItem item)
-        {
-            listbox1.Items.Add(item);
-
-            if (listbox1.Items.Count > 3) listbox1.Items.RemoveAt(0);
-        }
-
-        private ListBoxItem createDefaultListBoxItem()
-        {
-            ListBoxItem item = new ListBoxItem();
-            item.FontSize = 20;
-            return item;
+            listHelper.AddItemToList(speechHypothesized, listbox1, Colors.DarkRed);
         }
 
         public void SpeechRecognized(RecognitionResult speech)
@@ -130,12 +116,13 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             if (!repository.FirstUser.IsFacingForward)
             {
                 Output.Debug("DesktopMainWindow", "User is not facing forward, speech ignored.");
+                this.listbox1.Items.Clear();
+                listHelper.AddItemToList(speech, listbox1, Colors.Red);
                 return;
             }
-            
-            ListBoxItem item = createDefaultListBoxItem();
-            item.Content = "S:" + speech.Text + " C:" + speech.Confidence;
-            addToList(item);
+
+            this.listbox1.Items.Clear();
+            listHelper.AddItemToList(speech, listbox1, Colors.DarkBlue);
 
             SemanticValue semanticValue = speech.Semantics["number"];
             int fileNumber = Int32.Parse((string)semanticValue.Value);

@@ -44,6 +44,8 @@ namespace KinectPowerPointControl
         SolidColorBrush activeBrush = new SolidColorBrush(Colors.Yellow);
         SolidColorBrush inactiveBrush = new SolidColorBrush(Colors.DarkRed);
 
+        IListBoxHelper listHelper = new ListBoxHelper();
+
         private ServiceCommandsLocalActivation commands;
 
         public KinectControlWindow():this(PRESENTATION_MODE.IMAGE)
@@ -267,23 +269,7 @@ namespace KinectPowerPointControl
 
         private void SpeechHypothesized(RecognitionResult speechHypothesized)
         {
-            ListBoxItem item = createDefaultListBoxItem();
-            item.Content = "S:" + speechHypothesized.Text + " C:" + speechHypothesized.Confidence;
-            addToList(item);
-        }
-
-        private ListBoxItem createDefaultListBoxItem()
-        {
-            ListBoxItem item = new ListBoxItem();
-            item.FontSize = 28;
-            return item;
-        }
-
-        private void addToList(ListBoxItem item)
-        {
-            listBox1.Items.Add(item);
-
-            if (listBox1.Items.Count > 3) listBox1.Items.RemoveAt(0);
+            listHelper.AddItemToList(speechHypothesized, listBox1, Colors.DarkRed);
         }
 
         private void SpeechRecognized(RecognitionResult speechRecognized)
@@ -292,14 +278,14 @@ namespace KinectPowerPointControl
 
             if (!skeletonRepository.FirstUser.IsFacingForward)
             {
-                Output.Debug("KinectControlWindow","User not facing forward, speech ignored.");
+                Output.Debug("KinectControlWindow", "User not facing forward, speech ignored.");
+                this.listBox1.Items.Clear();
+                listHelper.AddItemToList(speechRecognized, listBox1, Colors.Red);
                 return;
             }
 
-            this.listBox1.Items.Clear(); 
-            ListBoxItem item = createDefaultListBoxItem();
-            item.Content = "S:" + speechRecognized.Text + " C:" + speechRecognized.Confidence;
-            addToList(item);
+            this.listBox1.Items.Clear();
+            listHelper.AddItemToList(speechRecognized, listBox1, Colors.DarkBlue);
             
             string speech = (string)semanticValue.Value;
 

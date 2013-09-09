@@ -92,6 +92,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="IListBoxHelper.cs" />
+    <Compile Include="ListBoxHelper.cs" />
     <Compile Include="Gesture\AbstractKinectGestureRecognition.cs" />
     <Compile Include="Gesture\Gestures\IRotationGripGesture.cs" />
     <Compile Include="Gesture\Gestures\ZoomAndRotationGesture.cs" />

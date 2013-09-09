@@ -102,17 +102,17 @@
         </Style>
     </Window.Resources>
     
-    <Grid>
+    <Grid Height="674">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0"  Margin="10 0 10 20">
+        <Grid Margin="10,-13,10,1" Height="132">
             <k:KinectUserViewer k:KinectRegion.KinectRegion="{Binding ElementName=kinectRegion}" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" />
             <k:KinectSensorChooserUI HorizontalAlignment="Center" VerticalAlignment="Top" Name="sensorChooserUi" />
             <TextBlock HorizontalAlignment="Right" Margin="0 0 -1 0" VerticalAlignment="Bottom" Foreground="{StaticResource MediumGreyBrush}" FontSize="18">Files</TextBlock>
-            <ListBox Name="listbox1" Height="94" Margin="0,6,914,0">
+            <ListBox Name="listbox1" Margin="0,0,914,0">
             </ListBox>
         </Grid>
 
