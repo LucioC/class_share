@@ -142,7 +142,7 @@ namespace KinectPowerPointControl
         {
             this.StartSpeechRecognition(this.sensor);
             this.readyTimer.Stop();
-            this.readyTimer = null;
+            //this.readyTimer = null;
         }
         
         private void StartSpeechRecognition(KinectSensor sensor)
