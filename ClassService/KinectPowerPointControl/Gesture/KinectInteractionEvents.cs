@@ -111,8 +111,6 @@ namespace KinectPowerPointControl.Gesture
         {
             if (handPointer.HandEventType == InteractionHandEventType.Grip)
             {
-                //Output.Debug("KinectControl", "Hand Grip");
-                notifyGestureRecognition(GestureEvents.CLOSE_HAND);
                 skeletonState.IsLeftHandGripped = true;
             }
             else if (handPointer.HandEventType == InteractionHandEventType.GripRelease)
@@ -143,8 +141,6 @@ namespace KinectPowerPointControl.Gesture
 
             if (handPointer.HandEventType == InteractionHandEventType.Grip)
             {
-                //Output.Debug("KinectControl", "Hand Grip");
-                notifyGestureRecognition(GestureEvents.CLOSE_HAND);
                 skeletonState.IsRightHandGripped = true;
             }
             else if (handPointer.HandEventType == InteractionHandEventType.GripRelease)
