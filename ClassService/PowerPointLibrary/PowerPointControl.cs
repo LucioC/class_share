@@ -103,7 +103,19 @@ namespace PowerPointPresentation
 
         public Boolean IsActive()
         {
-            if (presentation != null) return true;
+            if (presentation != null)
+            {
+                try
+                {
+                    if (presentation.Application != null)
+                        return true;
+                }
+                catch (COMException e)
+                {
+                    return false;
+                }
+            }
+
             return false;
         }
     }
