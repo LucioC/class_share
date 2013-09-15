@@ -31,15 +31,17 @@ namespace ClassService
         public static IServiceFileManager fileManager;
         public static IKinectMainWindowControl mainWindow;
         public static ServiceUrlManager urlManager;
+
+        public static String LastSlidePresentation = "";
         
         private WCFUtils wcfUtils;
 
-        public static List<ClientUpdater> listeners;
+        public static List<ClientUpdater> slidesListeners;
 
         public Service()
         {
             wcfUtils = new WCFUtils();
-            listeners = new List<ClientUpdater>();
+            slidesListeners = new List<ClientUpdater>();
         }
 
         public void prepareService()
@@ -54,21 +56,31 @@ namespace ClassService
         /// Register the user IP in a list so then the user will receive updates from the server.
         /// </summary>
         /// <returns></returns>
-        public Result AddListener()
+        public Result AddListener(PresentationMode presentationMode)
         {
             String userIp = wcfUtils.GetCurrentRequestorIP();
             ClientUpdater newClientListener = new ClientUpdater(new RESTJsonClient());
             newClientListener.ClientIP = userIp;
-            if( !listeners.Contains(newClientListener) )
+
+            if (presentationMode.Mode == PresentationMode.Slides)
             {
-                listeners.Add(newClientListener);
+                if (!slidesListeners.Any(l => l.ClientIP == userIp))
+                {
+                    slidesListeners.Add(newClientListener);
+                    return new Result("New listener added");
+                }
+                else
+                {
+                    return new Result("This Listener is already registered");
+                }
             }
-            return new Result("New listener added");
+
+            return new Result("Wrong mode option");
         }
 
-        private void WarnListeners()
+        private void WarnSlidePresentationListeners()
         {
-            foreach( ClientUpdater client in listeners )
+            foreach( ClientUpdater client in slidesListeners )
             {
                 client.UpdateClient();
             }
@@ -81,8 +93,15 @@ namespace ClassService
         public Result RemoveListener()
         {
             String userIp = wcfUtils.GetCurrentRequestorIP();
-            listeners.Remove(listeners.Where(l => l.ClientIP == userIp).First());
-            return new Result("Listener was removed");
+            if (slidesListeners.Any(l => l.ClientIP == userIp))
+            {
+                slidesListeners.Remove(slidesListeners.Where(l => l.ClientIP == userIp).First());
+                return new Result("Listener was removed");
+            }
+            else
+            {
+                return new Result("No listener with this IP exist");
+            }
         }
 
         public ImageInfo GetImageInfo()
@@ -160,6 +179,7 @@ namespace ClassService
                     return new Result("wrong command argument option");
             }
 
+            WarnSlidePresentationListeners();
             return new Result("Command Executed");
         }
 
@@ -195,6 +215,8 @@ namespace ClassService
                 PresentationControl.PreparePresentation(localPath);
 
                 PresentationControl.SaveSlidesAsPNG(fileManager.CurrentPresentationFolder);
+
+                LastSlidePresentation = filename;
 
                 return new Result("Presentation has been prepared");
             }
@@ -264,6 +286,7 @@ namespace ClassService
                 KinectWindow.StopThread();
                 PresentationControl.ClosePresentation();
                 mainWindow.RestartEvents();
+                WarnSlidePresentationListeners();
                 return new Result("Presentation was closed");
             }
             catch(Exception e)
@@ -475,6 +498,13 @@ namespace ClassService
             {
                 info.SlidesNumber = PresentationControl.TotalSlides();
                 info.CurrentSlide = PresentationControl.CurrentSlide();
+                info.FileName = LastSlidePresentation;
+            }
+            else
+            {
+                info.SlidesNumber = 0;
+                info.CurrentSlide = 0;
+                info.FileName = "";
             }
 
             return info;

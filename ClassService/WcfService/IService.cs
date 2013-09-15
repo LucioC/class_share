@@ -16,7 +16,7 @@ namespace ClassService
         [WebInvoke(UriTemplate = "/listeners",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json)]
-        Result AddListener();
+        Result AddListener(PresentationMode mode);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/listeners",
@@ -157,6 +157,9 @@ namespace ClassService
         
         [DataMember(Order = 2, Name = "currentSlide")]
         public int CurrentSlide { get; set; }
+
+        [DataMember(Order = 3, Name = "fileName")]
+        public String FileName { get; set; }
     }
 
     [DataContract(Namespace = "http://yournamespace.com")]
@@ -261,6 +264,16 @@ namespace ClassService
     {
         [DataMember(Order = 1, Name = "eventName")]
         public String EventName { get; set; }
+    }
+
+    [DataContract(Namespace = "http://yournamespace.com")]
+    public class PresentationMode
+    {
+        public static String Slides = "slides";
+        public static String Image = "image";
+
+        [DataMember(Order = 1, Name = "mode")]
+        public String Mode { get; set; }
     }
 
     [DataContract(Namespace = "http://yournamespace.com")]
