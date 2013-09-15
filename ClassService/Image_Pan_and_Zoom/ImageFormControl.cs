@@ -104,6 +104,7 @@ namespace ImageZoom
             if(IsThreadRunning())
             switch (command)
             {
+                //TODO move this to another class
                 case "visiblepart":
                     int left = 0;
                     int bottom = 0;
@@ -127,7 +128,7 @@ namespace ImageZoom
                         imageForm.setViewMinimumBounds(left, top, right, bottom, imageH, imageW, rotation);
                     });
                     break;
-                case "movezoom":
+                case "zoom":
                     if (paramArray.Length > 1)
                     {
                         x = Int32.Parse(paramArray[1]);

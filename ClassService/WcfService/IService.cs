@@ -13,6 +13,24 @@ namespace ClassService
     public interface IService
     {
         [OperationContract]
+        [WebInvoke(UriTemplate = "/listeners",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json)]
+        Result AddListener();
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/listeners",
+            Method = "DELETE",
+            ResponseFormat = WebMessageFormat.Json)]
+        Result RemoveListener();
+        
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/image/info",
+            Method = "GET",
+            ResponseFormat = WebMessageFormat.Json)]
+        ImageInfo GetImageInfo();
+
+        [OperationContract]
         [WebInvoke(UriTemplate = "/files/{fileName}",
             Method = "PUT",
             ResponseFormat = WebMessageFormat.Json)]
@@ -136,6 +154,38 @@ namespace ClassService
 
         [DataMember(Order = 1, Name = "slidesNumber")]
         public int SlidesNumber { get; set; }
+        
+        [DataMember(Order = 2, Name = "currentSlide")]
+        public int CurrentSlide { get; set; }
+    }
+
+    [DataContract(Namespace = "http://yournamespace.com")]
+    public class ImageInfo
+    {
+        public ImageInfo()
+        {
+        }
+
+        [DataMember(Order = 1, Name = "left")]
+        public int Left { get; set; }
+
+        [DataMember(Order = 2, Name = "top")]
+        public int Top { get; set; }
+
+        [DataMember(Order = 3, Name = "right")]
+        public int Right { get; set; }
+
+        [DataMember(Order = 4, Name = "bottom")]
+        public int Bottom { get; set; }
+
+        [DataMember(Order = 5, Name = "height")]
+        public int Height { get; set; }
+
+        [DataMember(Order = 6, Name = "width")]
+        public int Width { get; set; }
+
+        [DataMember(Order = 7, Name = "rotation")]
+        public int Rotation { get; set; }
     }
     
     [DataContract(Namespace = "http://yournamespace.com")]
@@ -170,6 +220,12 @@ namespace ClassService
         public string Arg { get; set; }
     }
 
+    /// <summary>
+    /// Represents an action to happen to the image.
+    /// The 'Param' variable can have additional parameters to the command.
+    /// The VIEWBOUNDS ('visiblepart') update has the following format:
+    /// left:top:right:bottom:imageH:imageW:rotation
+    /// </summary>
     [DataContract(Namespace = "http://yournamespace.com")]
     public class ImageAction
     {

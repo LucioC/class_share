@@ -12,6 +12,7 @@ using ImageZoom;
 using KinectPowerPointControl;
 using ServiceCore;
 using ServiceCore.Utils;
+using System.ServiceModel.Channels;
 
 namespace ClassService
 {
@@ -30,10 +31,15 @@ namespace ClassService
         public static IServiceFileManager fileManager;
         public static IKinectMainWindowControl mainWindow;
         public static ServiceUrlManager urlManager;
+        
+        private WCFUtils wcfUtils;
+
+        public static List<ClientUpdater> listeners;
 
         public Service()
         {
-
+            wcfUtils = new WCFUtils();
+            listeners = new List<ClientUpdater>();
         }
 
         public void prepareService()
@@ -42,6 +48,49 @@ namespace ClassService
             mainWindow.StartThread();
             KinectWindow.MessageSent += this.MessageReceived;
             mainWindow.MessageSent += this.ReceiveCommand;
+        }
+
+        /// <summary>
+        /// Register the user IP in a list so then the user will receive updates from the server.
+        /// </summary>
+        /// <returns></returns>
+        public Result AddListener()
+        {
+            String userIp = wcfUtils.GetCurrentRequestorIP();
+            ClientUpdater newClientListener = new ClientUpdater(new RESTJsonClient());
+            newClientListener.ClientIP = userIp;
+            if( !listeners.Contains(newClientListener) )
+            {
+                listeners.Add(newClientListener);
+            }
+            return new Result("New listener added");
+        }
+
+        private void WarnListeners()
+        {
+            foreach( ClientUpdater client in listeners )
+            {
+                client.UpdateClient();
+            }
+        }
+
+        /// <summary>
+        /// Remove the user from the list of listeners so he will not receive event updates from the server.
+        /// </summary>
+        /// <returns></returns>
+        public Result RemoveListener()
+        {
+            String userIp = wcfUtils.GetCurrentRequestorIP();
+            listeners.Remove(listeners.Where(l => l.ClientIP == userIp).First());
+            return new Result("Listener was removed");
+        }
+
+        public ImageInfo GetImageInfo()
+        {
+            ImageInfo imageInfo = new ImageInfo();
+
+
+            return imageInfo;
         }
 
         private void ReceiveCommand(string message)
@@ -422,7 +471,11 @@ namespace ClassService
         {
             PresentationInfo info = new PresentationInfo();
 
-            if(PresentationControl.IsActive()) info.SlidesNumber = PresentationControl.TotalSlides();
+            if (PresentationControl.IsActive())
+            {
+                info.SlidesNumber = PresentationControl.TotalSlides();
+                info.CurrentSlide = PresentationControl.CurrentSlide();
+            }
 
             return info;
         }
