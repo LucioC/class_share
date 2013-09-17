@@ -29,7 +29,7 @@ namespace ClassService
         {
             try
             {
-                restClient.Put(new Uri(ClientIP + "/update"), "{}", "application/json");
+                restClient.Put(new Uri("http://" + ClientIP + ":8080/"), "{}", "application/json");
                 LastCallResponse = true;
             }
             catch(Exception e)
