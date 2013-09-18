@@ -211,7 +211,7 @@ namespace ClassService
         [DataMember(Order = 1, Name = "command")]
         public string Command { get; set; }
 
-        [DataMember(Order = 1, Name = "arg")]
+        [DataMember(Order = 2, Name = "arg")]
         public string Arg { get; set; }
     }
 
