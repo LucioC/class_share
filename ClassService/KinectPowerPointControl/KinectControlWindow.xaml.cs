@@ -48,18 +48,24 @@ namespace KinectPowerPointControl
 
         private ServiceCommandsLocalActivation commands;
 
-        public KinectControlWindow():this(PRESENTATION_MODE.IMAGE)
+        public KinectControlWindow():this(PRESENTATION_MODE.IMAGE, null)
         {
             
         }
 
-        public KinectControlWindow(PRESENTATION_MODE mode)
+        public KinectControlWindow(PRESENTATION_MODE mode, MessageEvent MessageReceiver)
         {
             InitializeComponent();
             setWindowPosition();
 
             skeletonRepository = new SkeletonStateRepository();
-            commands = new ServiceCommandsLocalActivation(MessageSent);
+
+            if(MessageReceiver != null)
+            {
+                this.MessageSent += MessageReceiver;
+            }
+
+            commands = new ServiceCommandsLocalActivation(MessageReceiver);
 
             //Runtime initialization is handled when the window is opened. When the window
             //is closed, the runtime MUST be unitialized.

@@ -55,8 +55,7 @@ namespace KinectPowerPointControl
         [STAThread]
         public void StartWindow()
         {
-            window = new KinectControlWindow(mode);
-            window.MessageSent += this.ReceiveMessage;
+            window = new KinectControlWindow(mode, this.ReceiveMessage);
             window.Show();
             System.Windows.Threading.Dispatcher.Run();
         }

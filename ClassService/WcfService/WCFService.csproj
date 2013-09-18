@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientUpdater.cs" />
+    <Compile Include="ListenerList.cs" />
     <Compile Include="RESTJsonClient.cs" />
     <Compile Include="Service.svc.cs">
       <DependentUpon>Service.svc</DependentUpon>

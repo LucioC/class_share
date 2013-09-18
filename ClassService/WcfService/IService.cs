@@ -113,14 +113,6 @@ namespace ClassService
             ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare)]
         Result ImageCommand(ImageAction action);
-
-        [OperationContract]
-        [WebInvoke(UriTemplate = "/events",
-            Method = "POST",
-            RequestFormat = WebMessageFormat.Json,
-            ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.Bare)]
-        Result NewEvent(ModalityEvent modalityEvent);
     }
 
     [DataContract(Namespace = "http://yournamespace.com")]

@@ -19,7 +19,7 @@ namespace ClassService
     /// <summary>
     /// This class implements the functionalities of the WCF class service.
     /// It uses collaborators to control the different parts of the system. 
-    /// For purposes of the WCF implementation, they are static methods and should be initialized before the use of the Service.
+    /// For purposes of the WCF implementation, they are static members and should be initialized before the use of the Service.
     /// Since WCF does not provide an easy DI, the initialization should be done outside and before the use of this class setting the static instances. 
     /// </summary>
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
@@ -36,12 +36,14 @@ namespace ClassService
         
         private WCFUtils wcfUtils;
 
-        public static List<ClientUpdater> slidesListeners;
+        public static ListenerList slidesListeners;
+        public static ListenerList imageListeners;
 
         public Service()
         {
             wcfUtils = new WCFUtils();
-            slidesListeners = new List<ClientUpdater>();
+            slidesListeners = new ListenerList();
+            imageListeners = new ListenerList();
         }
 
         public void prepareService()
@@ -64,9 +66,19 @@ namespace ClassService
 
             if (presentationMode.Mode == PresentationMode.Slides)
             {
-                if (!slidesListeners.Any(l => l.ClientIP == userIp))
+                if (slidesListeners.Add(newClientListener))
                 {
-                    slidesListeners.Add(newClientListener);
+                    return new Result("New listener added");
+                }
+                else
+                {
+                    return new Result("This Listener is already registered");
+                }
+            }
+            else if (presentationMode.Mode == PresentationMode.Image)
+            {
+                if (imageListeners.Add(newClientListener))
+                {
                     return new Result("New listener added");
                 }
                 else
@@ -80,10 +92,27 @@ namespace ClassService
 
         private void WarnSlidePresentationListeners()
         {
-            foreach( ClientUpdater client in slidesListeners )
+            String responsable = GetCurrentEventTriggerResponsable();
+
+            slidesListeners.WarnListenersExcept(responsable);
+        }
+
+        private void WarnImagePresentationListeners()
+        {
+            String responsable = GetCurrentEventTriggerResponsable();
+
+            imageListeners.WarnListenersExcept(responsable);
+        }
+
+        private String GetCurrentEventTriggerResponsable()
+        {
+            String responsable = "internal";
+
+            if (WebOperationContext.Current != null)
             {
-                client.UpdateClient();
+                responsable = wcfUtils.GetCurrentRequestorIP();
             }
+            return responsable;
         }
 
         /// <summary>
@@ -93,9 +122,8 @@ namespace ClassService
         public Result RemoveListener()
         {
             String userIp = wcfUtils.GetCurrentRequestorIP();
-            if (slidesListeners.Any(l => l.ClientIP == userIp))
+            if ( slidesListeners.Remove(userIp) || imageListeners.Remove(userIp) )
             {
-                slidesListeners.Remove(slidesListeners.Where(l => l.ClientIP == userIp).First());
                 return new Result("Listener was removed");
             }
             else
@@ -238,6 +266,7 @@ namespace ClassService
             try
             {
                 PresentationControl.GoToNextSlide();
+                WarnSlidePresentationListeners();
                 return new Result("Advanced one slide");
             }
             catch (Exception e)
@@ -253,6 +282,7 @@ namespace ClassService
             try
             {
                 PresentationControl.GoToPreviousSlide();
+                WarnSlidePresentationListeners();
                 return new Result("Returned one slide");
             }
             catch (Exception e)
@@ -269,6 +299,7 @@ namespace ClassService
             {
                 int slideNumber = Int32.Parse(number);
                 PresentationControl.GoToSlideNumber(slideNumber);
+                WarnSlidePresentationListeners();
                 return new Result("Went to slide number " + number);
             }
             catch (Exception e)
@@ -417,15 +448,10 @@ namespace ClassService
                     return new Result("wrong command argument option");
             }
 
+            WarnImagePresentationListeners();
             return new Result("Command Executed");
         }
-
-
-        public Result NewEvent(ModalityEvent modalityEvent)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public ListOfImages ReturnListOfPresentationImages()
         {
             ListOfImages images = new ListOfImages();
