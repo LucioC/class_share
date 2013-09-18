@@ -38,7 +38,7 @@ namespace ClassService
                 StreamReader reader = new StreamReader(response.GetResponseStream());
 
                 // Console application output  
-                Console.WriteLine(reader.ReadToEnd());
+                //Console.WriteLine(reader.ReadToEnd());
             }
         }
     }

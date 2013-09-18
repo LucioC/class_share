@@ -266,7 +266,6 @@ namespace ClassService
             try
             {
                 PresentationControl.GoToNextSlide();
-                WarnSlidePresentationListeners();
                 return new Result("Advanced one slide");
             }
             catch (Exception e)
@@ -282,7 +281,6 @@ namespace ClassService
             try
             {
                 PresentationControl.GoToPreviousSlide();
-                WarnSlidePresentationListeners();
                 return new Result("Returned one slide");
             }
             catch (Exception e)
@@ -299,7 +297,6 @@ namespace ClassService
             {
                 int slideNumber = Int32.Parse(number);
                 PresentationControl.GoToSlideNumber(slideNumber);
-                WarnSlidePresentationListeners();
                 return new Result("Went to slide number " + number);
             }
             catch (Exception e)
@@ -317,7 +314,6 @@ namespace ClassService
                 KinectWindow.StopThread();
                 PresentationControl.ClosePresentation();
                 mainWindow.RestartEvents();
-                WarnSlidePresentationListeners();
                 return new Result("Presentation was closed");
             }
             catch(Exception e)
