@@ -5,6 +5,7 @@ using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
 using ServiceCore.Utils;
+using ServiceCore;
 
 namespace ImageZoom
 {

@@ -53,6 +53,7 @@
     <Compile Include="Engine\IEffect.cs" />
     <Compile Include="Engine\Triggers\ModalityEventUpdate.cs" />
     <Compile Include="IJoint.cs" />
+    <Compile Include="ImageState.cs" />
     <Compile Include="ISkeleton.cs" />
     <Compile Include="KinectJointWrapper.cs" />
     <Compile Include="KinectSkeletonWrapper.cs" />

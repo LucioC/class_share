@@ -22,6 +22,8 @@ namespace ImageZoom
         ImageUtils imageUtils;
 
         InterceptKeyboard interceptor;
+        delegate void UpdateImageState(ImageState imageState);
+        public event UpdateImageState UpdateImage;
 
         public ImageZoomMainForm(String imagePath)
         {
@@ -201,7 +203,7 @@ namespace ImageZoom
             imageState.X = newimagex - oldimagex + imageState.X;  // Where to move image to keep focus on one point
             imageState.Y = newimagey - oldimagey + imageState.Y;
 
-            pictureBox.Refresh();  // calls imageBox_Paint
+            //pictureBox.Refresh();  // calls imageBox_Paint
         }
 
         public void setAngle(int newAngle)
@@ -277,7 +279,27 @@ namespace ImageZoom
                 }
             }
 
+            this.UpdateImage.BeginInvoke(GetImageState(), null, null);
+
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private ImageState GetImageState()
+        {
+            ImageState imageState = new ImageState();
+
+            imageState = this.imageState;
+
+            int zoomedHeight = (int)(img.Height * imageState.Zoom);
+            int zoomedWidth = (int)(img.Width * imageState.Zoom);
+
+            imageState.Left = (imageState.X >= 0) ? 0 : -imageState.X;
+            imageState.Right = (pictureBox.Width >= zoomedWidth + imageState.Left) ? zoomedWidth : pictureBox.Width - imageState.Left;
+
+            imageState.Top = (imageState.Y >= 0) ? 0 : -imageState.Y;
+            imageState.Bottom = (pictureBox.Height >= zoomedHeight + imageState.Top) ? zoomedHeight : pictureBox.Height - imageState.Top;
+
+            return imageState;
         }
 
         private void ImageZoomMainForm_Load(object sender, EventArgs e)

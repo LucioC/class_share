@@ -29,6 +29,7 @@ namespace ImageZoom
 
         public ImageFormControl(): this(null)
         {            
+
         }
 
         //Throws exception if dont exist or cant be converted to an Image
@@ -51,6 +52,22 @@ namespace ImageZoom
             }
         }
 
+        ImageState ImageState { get; set; }
+
+        public void UpdateImageState(ImageState imageState)
+        {
+            ImageState.Angle = imageState.Angle;
+            ImageState.Bottom = imageState.Bottom;
+            ImageState.Height = imageState.Height;
+            ImageState.Left = imageState.Left;
+            ImageState.Right = imageState.Right;
+            ImageState.Top = imageState.Top;
+            ImageState.Width = imageState.Width;
+            ImageState.X = imageState.X;
+            ImageState.Y = imageState.Y;
+            ImageState.Zoom = imageState.Zoom;
+        }
+
         public void StartThread()
         {
             CheckIfImageExist();
@@ -71,7 +88,9 @@ namespace ImageZoom
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(imageForm = new ImageZoomMainForm(FileName));
+            imageForm = new ImageZoomMainForm(FileName);
+            imageForm.UpdateImage += this.UpdateImageState;
+            Application.Run(imageForm);
         }
 
         public void SetFilePath(string fileName)

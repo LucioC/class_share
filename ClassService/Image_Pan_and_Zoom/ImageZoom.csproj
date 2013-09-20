@@ -87,7 +87,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ImageFormControl.cs" />
-    <Compile Include="ImageState.cs" />
     <Compile Include="ImageUtils.cs" />
     <Compile Include="ImageForm.cs">
       <SubType>Form</SubType>

@@ -136,6 +136,14 @@ namespace ClassService
         {
             ImageInfo imageInfo = new ImageInfo();
 
+            ImageState imageState = ImageForm.ImageState;
+            imageInfo.Bottom = imageState.Bottom;
+            imageInfo.Height = imageState.Height;
+            imageInfo.Left = imageState.Left;
+            imageInfo.Right = imageState.Right;
+            imageInfo.Rotation = imageState.Angle;
+            imageInfo.Top = imageState.Top;
+            imageInfo.Width = imageState.Width;
 
             return imageInfo;
         }
