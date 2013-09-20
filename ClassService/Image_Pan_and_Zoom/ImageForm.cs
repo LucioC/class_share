@@ -325,8 +325,8 @@ namespace ImageZoom
             imageState.Top = (zoomedY >= 0) ? 0 : (int)-imageState.Y;
             imageState.Bottom = (displayArea.Height >= zoomedHeight + zoomedY) ? imageSize.Height : (int)((displayArea.Height - zoomedY)/imageState.Zoom);
 
-            imageState.Height = imageSize.Height;
-            imageState.Width = imageSize.Width;
+            imageState.Height = (int)displayArea.Height;
+            imageState.Width = (int)displayArea.Width;
             
             return imageState;
         }
