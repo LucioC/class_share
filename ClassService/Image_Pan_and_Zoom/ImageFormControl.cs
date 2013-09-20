@@ -25,6 +25,7 @@ namespace ImageZoom
             FileName = imageFileToOpen;
             thread = null;
             fileManager = new FileManager();
+            ImageState = new ImageState();
         }
 
         public ImageFormControl(): this(null)
@@ -52,7 +53,7 @@ namespace ImageZoom
             }
         }
 
-        ImageState ImageState { get; set; }
+        public ImageState ImageState { get; set; }
 
         public void UpdateImageState(ImageState imageState)
         {
@@ -89,7 +90,7 @@ namespace ImageZoom
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             imageForm = new ImageZoomMainForm(FileName);
-            imageForm.UpdateImage += this.UpdateImageState;
+            imageForm.AddListenerForUpdateImageEvent(this.UpdateImageState);
             Application.Run(imageForm);
         }
 

@@ -181,6 +181,9 @@ namespace ClassService
 
         [DataMember(Order = 7, Name = "rotation")]
         public int Rotation { get; set; }
+
+        [DataMember(Order = 8, Name = "fileName")]
+        public String FileName { get; set; }
     }
     
     [DataContract(Namespace = "http://yournamespace.com")]

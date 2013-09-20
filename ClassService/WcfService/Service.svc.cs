@@ -32,7 +32,8 @@ namespace ClassService
         public static IKinectMainWindowControl mainWindow;
         public static ServiceUrlManager urlManager;
 
-        public static String LastSlidePresentation = "";
+        public static String CurrentSlidePresentation = "";
+        public static String CurrentImagePresentation = "";
         
         private WCFUtils wcfUtils;
 
@@ -136,15 +137,18 @@ namespace ClassService
         {
             ImageInfo imageInfo = new ImageInfo();
 
-            ImageState imageState = ImageForm.ImageState;
-            imageInfo.Bottom = imageState.Bottom;
-            imageInfo.Height = imageState.Height;
-            imageInfo.Left = imageState.Left;
-            imageInfo.Right = imageState.Right;
-            imageInfo.Rotation = imageState.Angle;
-            imageInfo.Top = imageState.Top;
-            imageInfo.Width = imageState.Width;
-
+            imageInfo.FileName = CurrentImagePresentation;
+            if (ImageForm.IsThreadRunning())
+            {
+                ImageState imageState = ImageForm.ImageState;
+                imageInfo.Bottom = imageState.Bottom;
+                imageInfo.Height = imageState.Height;
+                imageInfo.Left = imageState.Left;
+                imageInfo.Right = imageState.Right;
+                imageInfo.Rotation = imageState.Angle;
+                imageInfo.Top = imageState.Top;
+                imageInfo.Width = imageState.Width;
+            }
             return imageInfo;
         }
 
@@ -241,6 +245,16 @@ namespace ClassService
             }
         }
 
+        private void setSlidePresentationName(String fileName)
+        {
+            CurrentSlidePresentation = fileName;
+        }
+
+        private void setImagePresentationName(String fileName)
+        {
+            CurrentImagePresentation = fileName;
+        }
+
         public Result PreparePresentation(string filename)
         {
             try
@@ -252,7 +266,7 @@ namespace ClassService
 
                 PresentationControl.SaveSlidesAsPNG(fileManager.CurrentPresentationFolder);
 
-                LastSlidePresentation = filename;
+                setSlidePresentationName(filename);
 
                 return new Result("Presentation has been prepared");
             }
@@ -322,6 +336,7 @@ namespace ClassService
                 KinectWindow.StopThread();
                 PresentationControl.ClosePresentation();
                 mainWindow.RestartEvents();
+                setSlidePresentationName("");
                 return new Result("Presentation was closed");
             }
             catch(Exception e)
@@ -375,7 +390,9 @@ namespace ClassService
             {
                 Output.WriteToDebugOrConsole("open image function");
 
-                filename = fileManager.GetFilePath(filename);
+                String localPath = fileManager.GetFilePath(filename);
+
+                setImagePresentationName(filename);
 
                 if (ImageForm.IsThreadRunning())
                 {
@@ -383,7 +400,7 @@ namespace ClassService
                 }
 
                 //Run image output window
-                ImageForm.SetFilePath(filename);
+                ImageForm.SetFilePath(localPath);
                 ImageForm.StartThread();
 
                 //Initialize Kinect windows for gesture and speech recognition
@@ -413,6 +430,8 @@ namespace ClassService
 
             KinectWindow.StopThread();
             mainWindow.RestartEvents();
+
+            setImagePresentationName("");
 
             return new Result("Image Closed");
         }
@@ -528,7 +547,7 @@ namespace ClassService
             {
                 info.SlidesNumber = PresentationControl.TotalSlides();
                 info.CurrentSlide = PresentationControl.CurrentSlide();
-                info.FileName = LastSlidePresentation;
+                info.FileName = CurrentSlidePresentation;
             }
             else
             {

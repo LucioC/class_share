@@ -22,8 +22,14 @@ namespace ImageZoom
         ImageUtils imageUtils;
 
         InterceptKeyboard interceptor;
-        delegate void UpdateImageState(ImageState imageState);
-        public event UpdateImageState UpdateImage;
+        public delegate void UpdateImageState(ImageState imageState);
+        protected event UpdateImageState UpdateImage;
+
+        public void AddListenerForUpdateImageEvent(UpdateImageState UpdateEventCallback)
+        {
+            this.UpdateImage += UpdateEventCallback;
+            sendImageStateUpdateForListeners();
+        }
 
         public ImageZoomMainForm(String imagePath)
         {
@@ -59,6 +65,14 @@ namespace ImageZoom
             interceptor.KeyEvent += keyDown;
         }
 
+        public void sendImageStateUpdateForListeners()
+        {
+            if (this.UpdateImage != null)
+            {
+                this.UpdateImage.BeginInvoke(GetImageState(), null, null);
+            }
+        }
+
         public void keyDown(int keyCode)
         {
             if(!this.Focused)
@@ -71,8 +85,6 @@ namespace ImageZoom
 
         private void loadImage(string imagefilename)
         {
-            //FromFile function was locking image file to be used a second time
-            //img = Image.FromFile(imagefilename);
             Bitmap image = null;
             using (var bmpTemp = new Bitmap(imagefilename))
             {
@@ -220,7 +232,7 @@ namespace ImageZoom
 
             Image i = (Image)img.Clone();
             i = imageUtils.RotateImage(i, imageState.Angle);
-            
+
             e.Graphics.DrawImage(i, 1, 1);
         }
         
@@ -275,11 +287,12 @@ namespace ImageZoom
 
                     case Keys.Escape:
                         this.Close();
+                        return true;
                         break;
                 }
             }
 
-            this.UpdateImage.BeginInvoke(GetImageState(), null, null);
+            sendImageStateUpdateForListeners();
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
@@ -290,21 +303,36 @@ namespace ImageZoom
 
             imageState = this.imageState;
 
-            int zoomedHeight = (int)(img.Height * imageState.Zoom);
-            int zoomedWidth = (int)(img.Width * imageState.Zoom);
+            Size imageSize = img.Size;
+            //if image is rotated its dimensions are inverted
+            if (imageState.Angle == 90 || imageState.Angle == 270)
+            {
+                imageSize.Height = img.Width;
+                imageSize.Width = img.Height;
+            }
 
-            imageState.Left = (imageState.X >= 0) ? 0 : -imageState.X;
-            imageState.Right = (pictureBox.Width >= zoomedWidth + imageState.Left) ? zoomedWidth : pictureBox.Width - imageState.Left;
+            RectangleF displayArea = pictureBox.CreateGraphics().VisibleClipBounds;
 
-            imageState.Top = (imageState.Y >= 0) ? 0 : -imageState.Y;
-            imageState.Bottom = (pictureBox.Height >= zoomedHeight + imageState.Top) ? zoomedHeight : pictureBox.Height - imageState.Top;
+            int zoomedHeight = (int)(imageSize.Height * imageState.Zoom);
+            int zoomedWidth = (int)(imageSize.Width * imageState.Zoom);
 
+            int zoomedX = (int)(imageState.X * imageState.Zoom);
+            int zoomedY = (int)(imageState.Y * imageState.Zoom);
+
+            imageState.Left = (zoomedX >= 0) ? 0 : (int)-imageState.X;
+            imageState.Right = (displayArea.Width >= zoomedWidth + zoomedX) ? imageSize.Width : (int)((displayArea.Width - zoomedX)/imageState.Zoom);
+
+            imageState.Top = (zoomedY >= 0) ? 0 : (int)-imageState.Y;
+            imageState.Bottom = (displayArea.Height >= zoomedHeight + zoomedY) ? imageSize.Height : (int)((displayArea.Height - zoomedY)/imageState.Zoom);
+
+            imageState.Height = imageSize.Height;
+            imageState.Width = imageSize.Width;
+            
             return imageState;
         }
 
         private void ImageZoomMainForm_Load(object sender, EventArgs e)
         {
-
         }
 
         private void ImageZoomMainForm_FormClosing(object sender, FormClosingEventArgs e)

@@ -86,7 +86,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
         public void StartEvents()
         {
-            this.wrapPanel.AddHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new System.Windows.RoutedEventHandler(this.KinectTileButtonClick));
+            //this.wrapPanel.AddHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new System.Windows.RoutedEventHandler(this.KinectTileButtonClick));
             var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
             BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
             speechControl.InitializeSpeechRecognition(grammar);
@@ -96,8 +96,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
         public void PauseEvents()
         {
-            //speechControl.StopSpeechRecognition();
-            this.wrapPanel.RemoveHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new System.Windows.RoutedEventHandler(this.KinectTileButtonClick));
+            //TODO this probably is not needed anymore, because kinect is disassociated from this window
+            //this.wrapPanel.RemoveHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new System.Windows.RoutedEventHandler(this.KinectTileButtonClick));
             
             speechControl.SpeechRecognized -= this.SpeechRecognized;
             speechControl.SpeechHypothesized -= this.SpeechHypothesized;
