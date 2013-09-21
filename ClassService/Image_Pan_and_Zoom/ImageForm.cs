@@ -22,13 +22,12 @@ namespace ImageZoom
         ImageUtils imageUtils;
 
         InterceptKeyboard interceptor;
-        public delegate void UpdateImageState(ImageState imageState);
         protected event UpdateImageState UpdateImage;
 
         public void AddListenerForUpdateImageEvent(UpdateImageState UpdateEventCallback)
         {
             this.UpdateImage += UpdateEventCallback;
-            sendImageStateUpdateForListeners();
+            sendImageStateUpdateForListeners(GetImageState());
         }
 
         public ImageZoomMainForm(String imagePath)
@@ -65,11 +64,11 @@ namespace ImageZoom
             interceptor.KeyEvent += keyDown;
         }
 
-        public void sendImageStateUpdateForListeners()
+        public void sendImageStateUpdateForListeners(ImageState imageState)
         {
             if (this.UpdateImage != null)
             {
-                this.UpdateImage.BeginInvoke(GetImageState(), null, null);
+                this.UpdateImage.BeginInvoke(imageState, null, null);
             }
         }
 
@@ -287,12 +286,14 @@ namespace ImageZoom
 
                     case Keys.Escape:
                         this.Close();
+                        ImageState closedState = new ImageState();
+                        closedState.Active = false;
+                        sendImageStateUpdateForListeners(closedState);
                         return true;
-                        break;
                 }
             }
 
-            sendImageStateUpdateForListeners();
+            sendImageStateUpdateForListeners(GetImageState());
 
             return base.ProcessCmdKey(ref msg, keyData);
         }

@@ -11,5 +11,6 @@ namespace ServiceCore
         String GetImageFilePath();
         ImageState ImageState { get; }
         void SendCommand(String command);
+        event UpdateImageState ImageUpdate;
     }
 }

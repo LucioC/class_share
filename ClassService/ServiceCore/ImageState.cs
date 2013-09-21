@@ -5,8 +5,14 @@ using System.Text;
 
 namespace ServiceCore
 {
+    public delegate void UpdateImageState(ImageState imageState);
     public class ImageState
     {
+        public ImageState()
+        {
+            Active = true;
+        }
+
         public float Zoom { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
@@ -17,5 +23,6 @@ namespace ServiceCore
         public int Height { get; set; }
         public int Width { get; set; }
         public int Angle { get; set; }
+        public bool Active { get; set; }
     }
 }

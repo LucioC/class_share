@@ -53,6 +53,7 @@ namespace ClassService
             mainWindow.StartThread();
             KinectWindow.MessageSent += this.MessageReceived;
             mainWindow.MessageSent += this.ReceiveCommand;
+            ImageForm.ImageUpdate += this.ImageUpdated;
         }
 
         /// <summary>
@@ -89,6 +90,12 @@ namespace ClassService
             }
 
             return new Result("Wrong mode option");
+        }
+
+        private void ImageUpdated(ImageState imageState)
+        {
+            if (!imageState.Active) this.CloseCurrentImage();
+            WarnImagePresentationListeners();
         }
 
         private void WarnSlidePresentationListeners()
@@ -219,7 +226,7 @@ namespace ClassService
                     return new Result("wrong command argument option");
             }
 
-            WarnSlidePresentationListeners();
+            //WarnSlidePresentationListeners();
             return new Result("Command Executed");
         }
 
@@ -288,6 +295,7 @@ namespace ClassService
             try
             {
                 PresentationControl.GoToNextSlide();
+                WarnSlidePresentationListeners();
                 return new Result("Advanced one slide");
             }
             catch (Exception e)
@@ -303,6 +311,7 @@ namespace ClassService
             try
             {
                 PresentationControl.GoToPreviousSlide();
+                WarnSlidePresentationListeners();
                 return new Result("Returned one slide");
             }
             catch (Exception e)
@@ -319,6 +328,7 @@ namespace ClassService
             {
                 int slideNumber = Int32.Parse(number);
                 PresentationControl.GoToSlideNumber(slideNumber);
+                WarnSlidePresentationListeners();
                 return new Result("Went to slide number " + number);
             }
             catch (Exception e)
@@ -337,6 +347,7 @@ namespace ClassService
                 PresentationControl.ClosePresentation();
                 mainWindow.RestartEvents();
                 setSlidePresentationName("");
+                WarnSlidePresentationListeners();
                 return new Result("Presentation was closed");
             }
             catch(Exception e)
@@ -471,7 +482,7 @@ namespace ClassService
                     return new Result("wrong command argument option");
             }
 
-            WarnImagePresentationListeners();
+            //WarnImagePresentationListeners();
             return new Result("Command Executed");
         }
         

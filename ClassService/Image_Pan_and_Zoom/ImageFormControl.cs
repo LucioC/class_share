@@ -53,8 +53,8 @@ namespace ImageZoom
             }
         }
 
+        public event UpdateImageState ImageUpdate;
         public ImageState ImageState { get; set; }
-
         public void UpdateImageState(ImageState imageState)
         {
             ImageState.Angle = imageState.Angle;
@@ -67,6 +67,12 @@ namespace ImageZoom
             ImageState.X = imageState.X;
             ImageState.Y = imageState.Y;
             ImageState.Zoom = imageState.Zoom;
+            ImageState.Active = imageState.Active;
+
+            if (ImageUpdate != null)
+            {
+                ImageUpdate.BeginInvoke(ImageState, null, null);
+            }
         }
 
         public void StartThread()
