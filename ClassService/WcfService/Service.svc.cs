@@ -149,12 +149,12 @@ namespace ClassService
             {
                 ImageState imageState = ImageForm.ImageState;
                 imageInfo.Bottom = imageState.Bottom;
-                imageInfo.Height = imageState.Height;
+                imageInfo.Height = imageState.ScreenHeight;
                 imageInfo.Left = imageState.Left;
                 imageInfo.Right = imageState.Right;
                 imageInfo.Rotation = imageState.Angle;
                 imageInfo.Top = imageState.Top;
-                imageInfo.Width = imageState.Width;
+                imageInfo.Width = imageState.ScreenWidth;
             }
             return imageInfo;
         }

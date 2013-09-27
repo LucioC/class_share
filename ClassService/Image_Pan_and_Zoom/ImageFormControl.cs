@@ -59,11 +59,11 @@ namespace ImageZoom
         {
             ImageState.Angle = imageState.Angle;
             ImageState.Bottom = imageState.Bottom;
-            ImageState.Height = imageState.Height;
+            ImageState.ScreenHeight = imageState.ScreenHeight;
             ImageState.Left = imageState.Left;
             ImageState.Right = imageState.Right;
             ImageState.Top = imageState.Top;
-            ImageState.Width = imageState.Width;
+            ImageState.ScreenWidth = imageState.ScreenWidth;
             ImageState.X = imageState.X;
             ImageState.Y = imageState.Y;
             ImageState.Zoom = imageState.Zoom;

@@ -22,6 +22,8 @@ namespace ServiceCore
         public int Bottom { get; set; }
         public int Height { get; set; }
         public int Width { get; set; }
+        public int ScreenHeight { get; set; }
+        public int ScreenWidth { get; set; }
         public int Angle { get; set; }
         public bool Active { get; set; }
     }
