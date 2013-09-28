@@ -184,71 +184,6 @@ namespace ImageZoom
         public void addToX(int x)
         {
             imageState.X += x;
-
-            imageState.Width = img.Width;
-            imageState.Height = img.Height;
-            ImageState zoomedImageState = calcHelper.CalculateZoomedAndRotatedImageState(imageState);            
-            //keepXOk(x, zoomedImageState);
-            //keepInsideBounds(zoomedImageState);
-            //pictureBox.Refresh();
-        }
-
-        private void keepXOk(int x, ImageState zoomedImageState)
-        {
-            Graphics graphics = pictureBox.CreateGraphics();
-
-            if (zoomedImageState.Width > pictureBox.Width)
-            {
-                if (x < 0)
-                {
-                    if (zoomedImageState.Width + zoomedImageState.X < graphics.VisibleClipBounds.Width)
-                    {
-                        imageState.X = (int)((graphics.VisibleClipBounds.Width - zoomedImageState.Width) / imageState.Zoom);
-                    }
-                }
-                else if (x > 0)
-                {
-                    if (imageState.X > 0)
-                    {
-                        imageState.X = 0;
-                    }
-                }
-            }
-            else
-            {
-                //If width is less than screen width, keep centralized
-                int excess = (int)((imageState.ScreenWidth - zoomedImageState.Width)/imageState.Zoom);
-                imageState.X = (int)(excess / 2);
-            }
-        }
-
-        private void keepYOk(int y, ImageState zoomedImageState)
-        {
-            Graphics graphics = pictureBox.CreateGraphics();
-
-            if (zoomedImageState.Height > pictureBox.Height)
-            {
-                if (y < 0)
-                {
-                    if (zoomedImageState.Height + zoomedImageState.Y < graphics.VisibleClipBounds.Height)
-                    {
-                        imageState.Y = (int)((graphics.VisibleClipBounds.Height - zoomedImageState.Height) / imageState.Zoom);
-                    }
-                }
-                else if (y > 0)
-                {
-                    if (imageState.Y > 0)
-                    {
-                        imageState.Y = 0;
-                    }
-                }
-            }
-            else
-            {
-                //If height is less than screen width, keep centralized
-                int excess = (int)((imageState.ScreenHeight - zoomedImageState.Height)/imageState.Zoom);
-                imageState.Y = (int)(excess / 2);
-            }
         }
 
         public void keepInsideBounds(ImageState zoomedImageState)
@@ -294,12 +229,6 @@ namespace ImageZoom
         public void addToY(int y)
         {
             imageState.Y += y;
-            
-            ImageState zoomedImageState = calcHelper.CalculateZoomedAndRotatedImageState(imageState);
-            //keepYOk(y, zoomedImageState);
-
-            //keepInsideBounds(zoomedImageState);
-            //pictureBox.Refresh();
         }
 
         public void setZoom(float newZoom)
@@ -313,11 +242,13 @@ namespace ImageZoom
 
             if (zoomDelta > 0)
             {
-                imageState.Zoom = Math.Min(imageState.Zoom + 0.1F, maxZoom);
+                float newZoom = imageState.Zoom + imageState.Zoom * 0.1F;
+                imageState.Zoom = Math.Min(newZoom, maxZoom);
             }
             else if (zoomDelta < 0)
             {
-                imageState.Zoom = Math.Max(imageState.Zoom - 0.1F, minZoom);
+                float newZoom = imageState.Zoom + imageState.Zoom * -0.1F;
+                imageState.Zoom = Math.Max(newZoom, minZoom);
             }
 
             int x = pointerPosition.X - pictureBox.Location.X;    // Where location of the mouse in the pictureframe
@@ -383,22 +314,18 @@ namespace ImageZoom
 
                     case Keys.PageDown:
                         zoomPicture(-0.1f, new Point(imageState.X, imageState.Y));
-                        //pictureBox.Refresh();
                         break;
 
                     case Keys.PageUp:
                         zoomPicture(0.1f, new Point(imageState.X, imageState.Y));
-                        //pictureBox.Refresh();
                         break;
 
                     case Keys.End:
                         imageState.Angle += 90;
-                        //pictureBox.Refresh();
                         break;
 
                     case Keys.Home:
                         imageState.Angle -= 90;
-                        //pictureBox.Refresh();
                         break;
 
                     case Keys.Escape:
