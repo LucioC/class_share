@@ -22,6 +22,7 @@ using KinectPowerPointControl.Speech;
 using KinectPowerPointControl.Gesture;
 using ServiceCore;
 using ServiceCore.Utils;
+using System.Globalization;
 
 namespace KinectPowerPointControl
 {
@@ -197,7 +198,6 @@ namespace KinectPowerPointControl
                 
         private void GestureRecognized(String gesture)
         {
-            //Output.Debug("KinectControlWindow","Gesture event received :" + gesture);
             if (gesture == GestureEvents.SWIPE_RIGHT)
             {
                 commands.ProcessPreviousSlide();
@@ -271,8 +271,15 @@ namespace KinectPowerPointControl
 
         private void SpeechRecognized(RecognitionResult speechRecognized)
         {
-            SemanticValue semanticValue = speechRecognized.Semantics["command"];
+            SemanticValue semanticCommandValue = speechRecognized.Semantics["command"];
 
+            int value = 1;
+            if(speechRecognized.Semantics.ContainsKey("multiplier"))
+            {
+                SemanticValue semanticMultiplierValue = speechRecognized.Semantics["multiplier"];
+                value = Int32.Parse((string)semanticMultiplierValue.Value);
+            }
+            
             if (!skeletonRepository.FirstUser.IsFacingForward)
             {
                 Output.Debug("KinectControlWindow", "User not facing forward, speech ignored.");
@@ -284,7 +291,7 @@ namespace KinectPowerPointControl
             this.listBox1.Items.Clear();
             listHelper.AddItemToList(speechRecognized, listBox1, Colors.DarkBlue);
             
-            string speech = (string)semanticValue.Value;
+            string speech = (string)semanticCommandValue.Value;
 
             if (PowerPointGrammar.NEXT_SLIDE.Equals(speech))
             {
@@ -300,19 +307,19 @@ namespace KinectPowerPointControl
             }
             else if (ImagePresentationGrammar.MOVE_RIGHT.Equals(speech))
             {
-                commands.ProcessMoveRight();
+                commands.ProcessMoveRight(value);
             }
             else if (ImagePresentationGrammar.MOVE_LEFT.Equals(speech))
             {
-                commands.ProcessMoveLeft();
+                commands.ProcessMoveLeft(value);
             }
             else if (ImagePresentationGrammar.MOVE_UP.Equals(speech))
             {
-                commands.ProcessMoveUp();
+                commands.ProcessMoveUp(value);
             }
             else if (ImagePresentationGrammar.MOVE_DOWN.Equals(speech))
             {
-                commands.ProcessMoveDown();
+                commands.ProcessMoveDown(value);
             }
             else if (ImagePresentationGrammar.ROTATE_RIGHT.Equals(speech))
             {
@@ -324,11 +331,11 @@ namespace KinectPowerPointControl
             }
             else if (ImagePresentationGrammar.ZOOM_IN.Equals(speech))
             {
-                commands.ProcessZoomIn();
+                commands.ProcessZoomIn(value);
             }
             else if (ImagePresentationGrammar.ZOOM_OUT.Equals(speech))
             {
-                commands.ProcessZoomOut();
+                commands.ProcessZoomOut(value);
             }
             else if (ImagePresentationGrammar.CLOSE_IMAGE.Equals(speech))
             {

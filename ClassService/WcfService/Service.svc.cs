@@ -156,6 +156,8 @@ namespace ClassService
                 imageInfo.Top = imageState.Top;
                 imageInfo.Width = imageState.ScreenWidth;
             }
+
+            Log("Get Image Info");
             return imageInfo;
         }
 
@@ -250,6 +252,7 @@ namespace ClassService
 
                 mainWindow.PauseEvents();
 
+                Log("Start Presentation Command");
                 return new Result("Presentation has been started");
             }
             catch (Exception e)
@@ -258,6 +261,11 @@ namespace ClassService
                     WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
                 return new Result("Something went wrong. Verify if the file name is corrected");
             }
+        }
+
+        public void Log(String message)
+        {
+            Output.Debug("Service", message);
         }
 
         private void setSlidePresentationName(String fileName)
@@ -283,6 +291,7 @@ namespace ClassService
 
                 setSlidePresentationName(filename);
 
+                Log("Prepare Presentation");
                 return new Result("Presentation has been prepared");
             }
             catch (Exception e)
@@ -304,6 +313,8 @@ namespace ClassService
             {
                 PresentationControl.GoToNextSlide();
                 WarnSlidePresentationListeners();
+
+                Log("Next Slide");
                 return new Result("Advanced one slide");
             }
             catch (Exception e)
@@ -320,6 +331,8 @@ namespace ClassService
             {
                 PresentationControl.GoToPreviousSlide();
                 WarnSlidePresentationListeners();
+
+                Log("Previous slide");
                 return new Result("Returned one slide");
             }
             catch (Exception e)
@@ -337,6 +350,8 @@ namespace ClassService
                 int slideNumber = Int32.Parse(number);
                 PresentationControl.GoToSlideNumber(slideNumber);
                 WarnSlidePresentationListeners();
+
+                Log("Go to slide");
                 return new Result("Went to slide number " + number);
             }
             catch (Exception e)
@@ -356,6 +371,8 @@ namespace ClassService
                 mainWindow.RestartEvents();
                 setSlidePresentationName("");
                 WarnSlidePresentationListeners();
+
+                Log("Close Presentation");
                 return new Result("Presentation was closed");
             }
             catch(Exception e)
@@ -383,6 +400,8 @@ namespace ClassService
             {
                 fileName = fileManager.GetFilePath(fileName);
                 fileStream = new FileStream(fileName, FileMode.Open);
+
+                Log("Get File");
                 return fileStream;
             }
             catch (Exception e)
@@ -398,6 +417,8 @@ namespace ClassService
         {
             ListOfFiles files = new ListOfFiles();
             List<String> fileNames = fileManager.GetFiles(type);
+
+            Log("Get Files");
 
             files.Names = fileNames;
             return files;
@@ -427,6 +448,8 @@ namespace ClassService
                 KinectWindow.StartThread();
                 mainWindow.PauseEvents();
 
+                Log("Open Image");
+
                 return new Result("Image Opened");
             }
             catch (Exception e)
@@ -452,6 +475,8 @@ namespace ClassService
 
             setImagePresentationName("");
 
+            Log("Close Image");
+
             return new Result("Image Closed");
         }
 
@@ -464,7 +489,8 @@ namespace ClassService
                 case ServiceCommands.IMAGE_ROTATE:
                 case ServiceCommands.IMAGE_SET_VISIBLE_PART:
                 case ServiceCommands.IMAGE_ZOOM:
-                    ImageForm.Executor.BeginInvoke(action.Command, action.Param, null, null);
+                    if (ImageForm.Executor != null)
+                        ImageForm.Executor.BeginInvoke(action.Command, action.Param, null, null);
                     break;
                 case ServiceCommands.CLOSE_IMAGE: CloseCurrentImage();
                     break;
@@ -472,6 +498,8 @@ namespace ClassService
                     WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;
                     return new Result("wrong command argument option");
             }
+
+            Log("Image Command: " + action.Command);
 
             //WarnImagePresentationListeners();
             return new Result("Command Executed");
@@ -505,6 +533,8 @@ namespace ClassService
                 if (WebOperationContext.Current != null)
                     WebOperationContext.Current.OutgoingResponse.ContentType = "image/png";
 
+                Log("Get Current Image");
+
                 return fileStream;
             }
             catch (Exception e)
@@ -529,6 +559,8 @@ namespace ClassService
 
                 if (WebOperationContext.Current != null)
                     WebOperationContext.Current.OutgoingResponse.ContentType = "image/png";
+
+                Log("Get slide as image " + slideNumber);
 
                 return fileStream;
             }
@@ -557,6 +589,8 @@ namespace ClassService
                 info.CurrentSlide = 0;
                 info.FileName = "";
             }
+
+            Log("Get presentation info");
 
             return info;
         }

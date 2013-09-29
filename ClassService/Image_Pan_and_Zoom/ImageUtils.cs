@@ -53,9 +53,6 @@ namespace ImageZoom
             top = (int)(top / otherImageScaleH);
             bottom = (int)(bottom / otherImageScaleH);
 
-            Output.Debug("RECEIVED", left + ":" + top + ":" + right + ":" + bottom);
-            Output.Debug("IMAGE", ImageSize.Width + ":" + ImageSize.Height);
-
             int width = right - left;
             int height = bottom - top;
 
