@@ -45,19 +45,12 @@ namespace KinectPowerPointControl
             }
         }
 
-        public event CommandExecutor CommandListeners;
-        public void ExecuteCommand(String command, String param)
-        {
-            if (CommandListeners != null)
-            {
-                CommandListeners.BeginInvoke(command, param, null, null);
-            }
-        }
+        public CommandExecutor Executor { get; set; }
 
         [STAThread]
         public void StartWindow()
         {
-            window = new KinectControlWindow(mode, this.ExecuteCommand);
+            window = new KinectControlWindow(mode, Executor);
             window.Show();
             System.Windows.Threading.Dispatcher.Run();
         }

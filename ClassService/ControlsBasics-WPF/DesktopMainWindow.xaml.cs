@@ -54,7 +54,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
         Grammar grammar;
 
-        public event CommandExecutor Executor;
+        public CommandExecutor Executor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DesktopMainWindow"/> class. 

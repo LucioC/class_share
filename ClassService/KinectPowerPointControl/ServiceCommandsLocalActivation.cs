@@ -47,12 +47,12 @@ namespace KinectPowerPointControl
         
         public void ProcessMoveRight()
         {
-            SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_X, "-0.1");
+            SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_X, "0.1");
         }
 
         public void ProcessMoveLeft()
         {
-            SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_X, "0.1");
+            SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_X, "-0.1");
         }
 
         public void ProcessMoveUp()

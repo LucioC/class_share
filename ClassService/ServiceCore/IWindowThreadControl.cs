@@ -10,6 +10,6 @@ namespace ServiceCore
         void StartThread();
         void StopThread();
         Boolean IsThreadRunning();
-        event CommandExecutor CommandListeners;
+        CommandExecutor Executor { get; set; }
     }
 }

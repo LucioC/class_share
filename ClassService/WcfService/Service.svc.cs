@@ -51,8 +51,8 @@ namespace ClassService
         {
             mainWindow.FilesFolder = fileManager.FilesPath;
             mainWindow.StartThread();
-            KinectWindow.CommandListeners += this.ExecutePresentationCommand;
-            mainWindow.CommandListeners += this.MainWindowCommand;
+            KinectWindow.Executor = this.ExecutePresentationCommand;
+            mainWindow.Executor = this.MainWindowCommand;
             ImageForm.ImageUpdate += this.ImageUpdated;
         }
 
@@ -464,7 +464,7 @@ namespace ClassService
                 case ServiceCommands.IMAGE_ROTATE:
                 case ServiceCommands.IMAGE_SET_VISIBLE_PART:
                 case ServiceCommands.IMAGE_ZOOM:
-                    ImageForm.TriggerCommand(action.Command, action.Param);
+                    ImageForm.Executor.BeginInvoke(action.Command, action.Param, null, null);
                     break;
                 case ServiceCommands.CLOSE_IMAGE: CloseCurrentImage();
                     break;

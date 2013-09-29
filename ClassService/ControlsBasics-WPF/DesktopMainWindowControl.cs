@@ -77,20 +77,13 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             //Get the main windows after created on startup
             this.window = (DesktopMainWindow)((App)sender).MainWindow;
             this.window.LoadFilesFromFolder(FilesFolder);
-            this.window.Executor += this.ExecuteCommand;
+            this.window.Executor += this.Executor;
            
             pauseEventsDelegate += this.window.PauseEvents;
             startEventsDelegate += this.window.StartEvents;
         }
 
-        public event CommandExecutor CommandListeners;
-        public void ExecuteCommand(String command, String param)
-        {
-            if (CommandListeners != null)
-            {
-                CommandListeners.BeginInvoke(command, param, null, null);
-            }
-        }
+        public CommandExecutor Executor { get; set; }
 
         public bool IsThreadRunning()
         {

@@ -12,7 +12,7 @@ using System.Globalization;
 
 namespace ImageZoom
 {
-    public class ImageFormControl : DefaultCommunicator,IImageService
+    public class ImageFormControl : IImageService
     {
         delegate void CloseDelegate();
         private Thread thread;
@@ -75,14 +75,7 @@ namespace ImageZoom
             }
         }
 
-        public event CommandExecutor CommandListeners;
-        public void TriggerCommand(String command, String value)
-        {
-            if (CommandListeners != null)
-            {
-                CommandListeners.BeginInvoke(command, value, null, null);
-            }
-        }
+        public CommandExecutor Executor { get; set; }
 
         public void StartThread()
         {
@@ -95,7 +88,6 @@ namespace ImageZoom
         {
             if (IsThreadRunning())
             {
-                CommandListeners -= imageForm.CommandExecutor;
                 imageForm.Invoke(new CloseDelegate(imageForm.Close));
             }
         }
@@ -107,7 +99,7 @@ namespace ImageZoom
             Application.SetCompatibleTextRenderingDefault(false);
             imageForm = new ImageZoomMainForm(FileName);
             imageForm.AddListenerForUpdateImageEvent(this.UpdateImageState);
-            CommandListeners += imageForm.CommandExecutor;
+            Executor = imageForm.CommandExecutor;
             this.ImageState = imageForm.GetImageState();
             Application.Run(imageForm);
         }
@@ -126,49 +118,6 @@ namespace ImageZoom
             else
             {
                 return null;
-            }
-        }
-
-        public void SendCommand(string command)
-        {
-            String[] paramArray = command.Split(Char.Parse(":"));
-
-            command = paramArray[0];
-
-            int x = 0;
-            int y = 0;
-            float zoom = 1f;
-            
-            if(IsThreadRunning())
-            switch (command)
-            {
-                //TODO move this to another class
-                case "visiblepart":
-                    int left = 0;
-                    int bottom = 0;
-                    int right = 0;
-                    int top = 0;
-                    int imageH = 0;
-                    int imageW = 0;
-                    int rotation = 0;
-                    if (paramArray.Length > 1)
-                    {
-                        left = Int32.Parse(paramArray[1]);
-                        top = Int32.Parse(paramArray[2]);
-                        right = Int32.Parse(paramArray[3]);
-                        bottom = Int32.Parse(paramArray[4]);
-                        imageH = Int32.Parse(paramArray[5]);
-                        imageW = Int32.Parse(paramArray[6]);
-                        rotation = Int32.Parse(paramArray[7]);
-                    }
-                    imageForm.Invoke((MethodInvoker)delegate
-                    {
-                        imageForm.setViewMinimumBounds(left, top, right, bottom, imageH, imageW, rotation);
-                    });
-                    break;        
-                
-                default:
-                    throw new ArgumentException("not valid argument passed");
             }
         }
         

@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.IO;
 using ServiceCore.Utils;
 using ServiceCore;
+using System.Globalization;
 
 namespace ImageZoom
 {
@@ -309,8 +310,9 @@ namespace ImageZoom
             }
             else
             {
-                float value = float.Parse(param);
+                float value = float.Parse(param, CultureInfo.InvariantCulture);
                 ProcessCommand(command, value);
+                Output.Debug("IMAGECOMMAND", command + ":" + value);
             }
         }
 
@@ -338,6 +340,14 @@ namespace ImageZoom
                     //this.Close();
                     break;
             }
+
+            ImageState zoomedImageState = calcHelper.CalculateZoomedAndRotatedImageState(imageState);
+            keepInsideBounds(zoomedImageState);
+            
+            Invoke((MethodInvoker)delegate
+            {
+                pictureBox.Refresh();
+            });         
         }
         
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -393,10 +403,6 @@ namespace ImageZoom
                         return true;
                 }
             }
-
-            ImageState zoomedImageState = calcHelper.CalculateZoomedAndRotatedImageState(imageState);
-            keepInsideBounds(zoomedImageState);
-            pictureBox.Refresh();
 
             sendImageStateUpdateForListeners(GetImageState());
 
