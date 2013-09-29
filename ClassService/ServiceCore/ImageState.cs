@@ -13,6 +13,23 @@ namespace ServiceCore
             Active = true;
         }
 
+        public ImageState(ImageState otherState)
+        {
+            this.Active = otherState.Active;
+            this.Angle = otherState.Angle;
+            this.Bottom = otherState.Bottom;
+            this.Height = otherState.Height;
+            this.Left = otherState.Left;
+            this.Right = otherState.Right;
+            this.ScreenHeight = otherState.ScreenHeight;
+            this.ScreenWidth = otherState.ScreenWidth;
+            this.Top = otherState.Top;
+            this.Width = otherState.Width;
+            this.X = otherState.X;
+            this.Y = otherState.Y;
+            this.Zoom = otherState.Zoom;
+        }
+
         public float Zoom { get; set; }
         public int X { get; set; }
         public int Y { get; set; }

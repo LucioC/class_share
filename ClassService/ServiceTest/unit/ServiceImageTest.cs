@@ -105,7 +105,7 @@ namespace TestProject.Units
             ImageAction action = new ImageAction("moveright");
             target.ImageCommand(action);
 
-            imageControlMock.Verify(x => x.SendCommand(It.IsAny<String>()), Times.Exactly(1));
+            imageControlMock.Verify(x => x.TriggerCommand(It.IsAny<String>(), It.IsAny<String>()), Times.Exactly(1));
         }
 
         [TestMethod()]
@@ -164,7 +164,7 @@ namespace TestProject.Units
             Service.KinectWindow = kinectControlMock.Object;
             Service.fileManager = fileManagerMock.Object;
 
-            ImageAction action = new ImageAction(ImageAction.ZOOMIN);
+            ImageAction action = new ImageAction(ServiceCommands.IMAGE_ZOOM);
             target.ImageCommand(action);
         }
 

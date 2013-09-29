@@ -10,7 +10,7 @@ using ServiceCore.Utils;
 
 namespace KinectPowerPointControl
 {
-    public class KinectWindowControl : DefaultCommunicator, IKinectService
+    public class KinectWindowControl : IKinectService
     {
         delegate void CloseDelegate();
         private PRESENTATION_MODE mode = PRESENTATION_MODE.POWERPOINT;
@@ -20,13 +20,6 @@ namespace KinectPowerPointControl
         public KinectWindowControl()
         {
 
-        }
-
-        public override void ReceiveMessage(string message)
-        {
-            Output.Debug("KinectWindowControl", message);
-
-            base.SendMessage(message);
         }
 
         public void StartThread()
@@ -52,10 +45,19 @@ namespace KinectPowerPointControl
             }
         }
 
+        public event CommandExecutor CommandListeners;
+        public void ExecuteCommand(String command, String param)
+        {
+            if (CommandListeners != null)
+            {
+                CommandListeners.BeginInvoke(command, param, null, null);
+            }
+        }
+
         [STAThread]
         public void StartWindow()
         {
-            window = new KinectControlWindow(mode, this.ReceiveMessage);
+            window = new KinectControlWindow(mode, this.ExecuteCommand);
             window.Show();
             System.Windows.Threading.Dispatcher.Run();
         }

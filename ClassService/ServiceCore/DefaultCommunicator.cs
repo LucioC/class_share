@@ -9,12 +9,12 @@ namespace ServiceCore
     {
         public void RegisterListener(IListener listener)
         {
-            this.MessageSent += listener.ReceiveMessage;
+            this.Listeners += listener.ReceiveMessage;
         }
 
         public void RemoveListener(IListener listener)
         {
-            this.MessageSent -= listener.ReceiveMessage;
+            this.Listeners -= listener.ReceiveMessage;
         }
 
         public virtual void ReceiveMessage(string message)

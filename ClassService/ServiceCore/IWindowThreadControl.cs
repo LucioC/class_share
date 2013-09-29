@@ -5,10 +5,11 @@ using System.Text;
 
 namespace ServiceCore
 {
-    public interface IWindowThreadControl: ISpeaker, IListener
+    public interface IWindowThreadControl
     {
         void StartThread();
         void StopThread();
         Boolean IsThreadRunning();
+        event CommandExecutor CommandListeners;
     }
 }

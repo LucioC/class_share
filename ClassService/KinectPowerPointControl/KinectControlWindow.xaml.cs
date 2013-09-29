@@ -33,8 +33,6 @@ namespace KinectPowerPointControl
 
         SkeletonStateRepository skeletonRepository { get; set; }
 
-        public event MessageEvent MessageSent;
-
         public PRESENTATION_MODE mode { get; set; }
 
         bool isCirclesVisible = true;
@@ -53,19 +51,14 @@ namespace KinectPowerPointControl
             
         }
 
-        public KinectControlWindow(PRESENTATION_MODE mode, MessageEvent MessageReceiver)
+        public KinectControlWindow(PRESENTATION_MODE mode, CommandExecutor Executor)
         {
             InitializeComponent();
             setWindowPosition();
 
             skeletonRepository = new SkeletonStateRepository();
 
-            if(MessageReceiver != null)
-            {
-                this.MessageSent += MessageReceiver;
-            }
-
-            commands = new ServiceCommandsLocalActivation(MessageReceiver);
+            commands = new ServiceCommandsLocalActivation(Executor);
 
             //Runtime initialization is handled when the window is opened. When the window
             //is closed, the runtime MUST be unitialized.
@@ -127,9 +120,6 @@ namespace KinectPowerPointControl
             speechControl.InitializeSpeechRecognition(grammar);
             speechControl.SpeechRecognized += this.SpeechRecognized;
             speechControl.SpeechHypothesized += this.SpeechHypothesized;
-
-            commands.setListeners(this.MessageSent);
-
         }
 
         private Grammar createGrammar(PRESENTATION_MODE mode)
