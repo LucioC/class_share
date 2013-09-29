@@ -198,7 +198,6 @@ namespace KinectPowerPointControl
                 
         private void GestureRecognized(String gesture)
         {
-            //Output.Debug("KinectControlWindow","Gesture event received :" + gesture);
             if (gesture == GestureEvents.SWIPE_RIGHT)
             {
                 commands.ProcessPreviousSlide();

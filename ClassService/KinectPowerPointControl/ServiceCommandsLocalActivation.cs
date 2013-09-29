@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ServiceCore;
 using System.Globalization;
+using ServiceCore.Utils;
 
 namespace KinectPowerPointControl
 {
@@ -23,6 +24,7 @@ namespace KinectPowerPointControl
 
         private void SendCommandAssynchrnously(String command, String value)
         {
+            Output.Debug("ServiceLocalCommand","Command: " + command + " with param " + value);
             this.executor.BeginInvoke(command, value, null, null);
         }
 
