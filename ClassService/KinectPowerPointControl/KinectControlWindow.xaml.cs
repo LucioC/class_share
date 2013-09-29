@@ -200,11 +200,11 @@ namespace KinectPowerPointControl
             //Output.Debug("KinectControlWindow","Gesture event received :" + gesture);
             if (gesture == GestureEvents.SWIPE_RIGHT)
             {
-                commands.ProcessNextSlide();
+                commands.ProcessPreviousSlide();
             }
             else if (gesture == GestureEvents.SWIPE_LEFT)
             {
-                commands.ProcessPreviousSlide();
+                commands.ProcessNextSlide();
             }
             else if (gesture == GestureEvents.ZOOM_IN)
             {
@@ -238,7 +238,7 @@ namespace KinectPowerPointControl
             {
                 commands.ProcessRotateLeft();
             }
-            else if (gesture == GestureEvents.JOIN_HANDS)
+            else if (gesture == GestureEvents.JOIN_HANDS || gesture == GestureEvents.CLOSE_HAND)
             {
                 //FIXME closing both, may need to verify which is being used and close it only
                 commands.ProcessCloseImage();
