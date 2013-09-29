@@ -6,39 +6,83 @@ using ServiceCore;
 
 namespace KinectPowerPointControl
 {
-    public class ServiceCommandsLocalActivation: ServiceCommandToKeyEvent, IServiceCommands
+    public class ServiceCommandsLocalActivation: IServiceCommands
     {
-        private DefaultCommunicator communicator;
+        private CommandExecutor executor;
 
-        public ServiceCommandsLocalActivation(MessageEvent messagesListeners)
+        public ServiceCommandsLocalActivation(CommandExecutor executor)
         {
-            communicator = new DefaultCommunicator();
-            communicator.MessageSent += messagesListeners;
+            this.executor += executor;
         }
 
-        public void setListeners(MessageEvent messagesListeners)
+        public void setListeners(CommandExecutor executors)
         {
-            communicator.MessageSent += messagesListeners;
+            this.executor += executor;
+        }
+
+        private void SendCommandAssynchrnously(String command, String value)
+        {
+            this.executor.BeginInvoke(command, value, null, null);
         }
 
         public void ProcessClosePresentation()
         {
-            this.communicator.SendMessage(ServiceCommands.CLOSE_PRESENTATION);
+            SendCommandAssynchrnously(ServiceCommands.CLOSE_PRESENTATION, "");
         }
 
         public void ProcessCloseImage()
         {
-            this.communicator.SendMessage(ServiceCommands.CLOSE_IMAGE);
+            SendCommandAssynchrnously(ServiceCommands.CLOSE_IMAGE, "");
         }
         
         public void ProcessNextSlide()
         {
-            this.communicator.SendMessage(ServiceCommands.NEXT_SLIDE);
+            SendCommandAssynchrnously(ServiceCommands.NEXT_SLIDE, "");
         }
 
         public void ProcessPreviousSlide()
         {
-            this.communicator.SendMessage(ServiceCommands.PREVIOUS_SLIDE);
+            SendCommandAssynchrnously(ServiceCommands.PREVIOUS_SLIDE, "");
+        }
+        
+        public void ProcessMoveRight()
+        {
+            SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_X, "0.1");
+        }
+
+        public void ProcessMoveLeft()
+        {
+            SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_X, "-0.1");
+        }
+
+        public void ProcessMoveUp()
+        {
+            SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_Y, "-0.1");
+        }
+
+        public void ProcessMoveDown()
+        {
+            SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_Y, "0.1");
+        }
+
+        public void ProcessRotateRight()
+        {
+            SendCommandAssynchrnously(ServiceCommands.IMAGE_ROTATE, "90");
+        }
+
+        public void ProcessRotateLeft()
+        {
+            SendCommandAssynchrnously(ServiceCommands.IMAGE_ROTATE, "-90");
+        }
+
+        public void ProcessZoomOut()
+        {
+            SendCommandAssynchrnously(ServiceCommands.IMAGE_ZOOM, "-0.1");
+        }
+
+        public void ProcessZoomIn()
+        {
+            SendCommandAssynchrnously(ServiceCommands.IMAGE_ZOOM, "0.1");
         }
     }
 }

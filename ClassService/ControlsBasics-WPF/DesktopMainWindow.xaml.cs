@@ -46,8 +46,6 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
         private SkeletonStateRepository repository;
 
-        public event MessageEvent MessageSent;
-
         public string FilesFolder { get; set; }
 
         KinectSpeechControl speechControl;
@@ -55,6 +53,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         IListBoxHelper listHelper = new ListBoxHelper();
 
         Grammar grammar;
+
+        public CommandExecutor Executor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DesktopMainWindow"/> class. 
@@ -251,15 +251,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                 }
             }
         }
-
-        private void SendMessage(string message)
-        {
-            if (this.MessageSent != null)
-            {
-                this.MessageSent(message);
-            }
-        }
-
+        
         /// <summary>
         /// Execute shutdown tasks
         /// </summary>
@@ -288,7 +280,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
         private void clickButton(FileKinectButton button)
         {
-            this.SendMessage("open:" + button.FileName);
+            this.Executor.BeginInvoke("open", button.FileName, null, null);
         }
 
         /// <summary>

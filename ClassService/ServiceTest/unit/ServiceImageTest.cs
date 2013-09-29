@@ -88,26 +88,7 @@ namespace TestProject.Units
             imageControlMock.Verify(x => x.StopThread(), Times.Exactly(1));
             kinectControlMock.Verify(x => x.StopThread(), Times.Exactly(1));
         }
-
-        [TestMethod()]
-        public void SendCommandTest()
-        {
-            Service target = CommonTest.CreateAMockedService();
-
-            var imageControlMock = new Mock<IImageService>();
-            var kinectControlMock = new Mock<IKinectService>();
-            var fileManagerMock = new Mock<IServiceFileManager>();
-
-            Service.ImageForm = imageControlMock.Object;
-            Service.KinectWindow = kinectControlMock.Object;
-            Service.fileManager = fileManagerMock.Object;
-
-            ImageAction action = new ImageAction("moveright");
-            target.ImageCommand(action);
-
-            imageControlMock.Verify(x => x.SendCommand(It.IsAny<String>()), Times.Exactly(1));
-        }
-
+        
         [TestMethod()]
         public void OpenImageTest()
         {
@@ -164,7 +145,7 @@ namespace TestProject.Units
             Service.KinectWindow = kinectControlMock.Object;
             Service.fileManager = fileManagerMock.Object;
 
-            ImageAction action = new ImageAction(ImageAction.ZOOMIN);
+            ImageAction action = new ImageAction(ServiceCommands.IMAGE_ZOOM);
             target.ImageCommand(action);
         }
 

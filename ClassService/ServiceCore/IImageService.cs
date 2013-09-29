@@ -10,7 +10,6 @@ namespace ServiceCore
         void SetFilePath(String fileName);
         String GetImageFilePath();
         ImageState ImageState { get; }
-        void SendCommand(String command);
         event UpdateImageState ImageUpdate;
     }
 }

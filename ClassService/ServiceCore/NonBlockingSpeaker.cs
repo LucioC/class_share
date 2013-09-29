@@ -7,13 +7,13 @@ namespace ServiceCore
 {
     public class NonBlockingSpeaker: ISpeaker
     {
-        public event MessageEvent MessageSent;
+        public event MessageEvent Listeners;
 
         public virtual void SendMessage(string message)
         {
-            if (this.MessageSent != null)
+            if (this.Listeners != null)
             {
-                this.MessageSent.BeginInvoke(message, null, null);
+                this.Listeners.BeginInvoke(message, null, null);
             }
         }
     }

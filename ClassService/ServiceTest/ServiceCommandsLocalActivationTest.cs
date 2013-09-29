@@ -63,40 +63,5 @@ namespace TestProject1
         #endregion
 
 
-        /// <summary>
-        ///A test for ProcessCloseImage
-        ///</summary>
-        [TestMethod()]
-        public void ProcessCloseImageTest()
-        {
-            var listener = new Mock<DefaultCommunicator>();
-            MessageEvent messagesListeners = null;
-            messagesListeners += listener.Object.ReceiveMessage;
-
-            ServiceCommandsLocalActivation target = new ServiceCommandsLocalActivation(messagesListeners);
-            target.ProcessCloseImage();
-
-            CommonTest.WaitForEventAsyncInvoke();
-
-            listener.Verify(foo => foo.ReceiveMessage(ServiceCommands.CLOSE_IMAGE));
-        }
-
-        /// <summary>
-        ///A test for ProcessClosePresentation
-        ///</summary>
-        [TestMethod()]
-        public void ProcessClosePresentationTest()
-        {
-            var listener = new Mock<DefaultCommunicator>();
-            MessageEvent messagesListeners = null;
-            messagesListeners += listener.Object.ReceiveMessage;
-
-            ServiceCommandsLocalActivation target = new ServiceCommandsLocalActivation(messagesListeners); // TODO: Initialize to an appropriate value
-            target.ProcessClosePresentation();
-
-            CommonTest.WaitForEventAsyncInvoke();
-
-            listener.Verify(foo => foo.ReceiveMessage(ServiceCommands.CLOSE_PRESENTATION));
-        }
     }
 }
