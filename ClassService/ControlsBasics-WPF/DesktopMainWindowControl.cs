@@ -12,7 +12,7 @@ using ServiceCore.Utils;
 
 namespace Microsoft.Samples.Kinect.ControlsBasics
 {
-    public class DesktopMainWindowControl : DefaultCommunicator, IKinectMainWindowControl
+    public class DesktopMainWindowControl : IKinectMainWindowControl
     {
         delegate void CloseDelegate();
         public string FilesFolder { get; set; }
@@ -77,17 +77,13 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             //Get the main windows after created on startup
             this.window = (DesktopMainWindow)((App)sender).MainWindow;
             this.window.LoadFilesFromFolder(FilesFolder);
-            this.window.MessageSent += this.ReceiveMessage;
+            this.window.Executor += this.Executor;
            
             pauseEventsDelegate += this.window.PauseEvents;
             startEventsDelegate += this.window.StartEvents;
         }
 
-        public virtual void ReceiveMessage(string message)
-        {
-            //Output.Debug("Control", message);
-            SendMessage(message);
-        }
+        public CommandExecutor Executor { get; set; }
 
         public bool IsThreadRunning()
         {

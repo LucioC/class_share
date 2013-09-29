@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.IO;
 using ServiceCore.Utils;
 using ServiceCore;
+using System.Globalization;
 
 namespace ImageZoom
 {
@@ -14,12 +15,16 @@ namespace ImageZoom
         Point mouseDown;
         int startx = 0;                         // offset of image when mouse was pressed
         int starty = 0;
-
+        
+        //TODO this class is not fully used here, maybe create an specialized one
         ImageState imageState;
 
         bool mousepressed = false;  // true as long as left mousebutton is pressed
 
         ImageUtils imageUtils;
+
+        private float maxZoom = 10;
+        private float minZoom = 0.5f;
 
         InterceptKeyboard interceptor;
         protected event UpdateImageState UpdateImage;
@@ -27,7 +32,6 @@ namespace ImageZoom
         public void AddListenerForUpdateImageEvent(UpdateImageState UpdateEventCallback)
         {
             this.UpdateImage += UpdateEventCallback;
-            sendImageStateUpdateForListeners(GetImageState());
         }
 
         public ImageZoomMainForm(String imagePath)
@@ -40,9 +44,11 @@ namespace ImageZoom
             imageState.X = 0;
             imageState.Y = 0;
             imageState.Angle = 0;
-                        
+            
             string imagefilename = imagePath;
             loadImage(imagefilename);
+            imageState.Width = img.Width;
+            imageState.Height = img.Height;
                         
             pictureBox.Paint += new PaintEventHandler(imageBox_Paint);
 
@@ -157,6 +163,7 @@ namespace ImageZoom
             MouseEventArgs mouse = e as MouseEventArgs;
             Point mousePosNow = mouse.Location;
             zoomPicture(e.Delta, mousePosNow);
+            pictureBox.Refresh();
         }
 
         public void setPositionAndZoom(int x, int y, float zoom)
@@ -172,16 +179,56 @@ namespace ImageZoom
             return new Point(Width / 2, Height / 2);
         }
 
+        ImageCalcHelper calcHelper = new ImageCalcHelper();
+
         public void addToX(int x)
         {
             imageState.X += x;
-            pictureBox.Refresh();
+        }
+
+        public void keepInsideBounds(ImageState zoomedImageState)
+        {
+            Graphics graphics = pictureBox.CreateGraphics();
+            if (zoomedImageState.Height > pictureBox.Height)
+            {
+                if (zoomedImageState.Height + zoomedImageState.Y < graphics.VisibleClipBounds.Height)
+                {
+                    imageState.Y = (int)((graphics.VisibleClipBounds.Height - zoomedImageState.Height) / imageState.Zoom);
+                }
+                if (imageState.Y > 0)
+                {
+                    imageState.Y = 0;
+                }
+            }
+            else
+            {
+                //If height is less than screen width, keep centralized
+                int excess = (int)((imageState.ScreenHeight - zoomedImageState.Height) / imageState.Zoom);
+                imageState.Y = (int)(excess / 2);
+            }
+
+            if (zoomedImageState.Width > pictureBox.Width)
+            {
+                if (zoomedImageState.Width + zoomedImageState.X < graphics.VisibleClipBounds.Width)
+                {
+                    imageState.X = (int)((graphics.VisibleClipBounds.Width - zoomedImageState.Width) / imageState.Zoom);
+                }
+                if (imageState.X > 0)
+                {
+                    imageState.X = 0;
+                }
+            }
+            else
+            {
+                //If width is less than screen width, keep centralized
+                int excess = (int)((imageState.ScreenWidth - zoomedImageState.Width) / imageState.Zoom);
+                imageState.X = (int)(excess / 2);
+            }
         }
 
         public void addToY(int y)
         {
             imageState.Y += y;
-            pictureBox.Refresh();
         }
 
         public void setZoom(float newZoom)
@@ -195,11 +242,13 @@ namespace ImageZoom
 
             if (zoomDelta > 0)
             {
-                imageState.Zoom = Math.Min(imageState.Zoom + 0.1F, 10F);
+                float newZoom = imageState.Zoom + imageState.Zoom * 0.1F;
+                imageState.Zoom = Math.Min(newZoom, maxZoom);
             }
             else if (zoomDelta < 0)
             {
-                imageState.Zoom = Math.Max(imageState.Zoom - 0.1F, 0.5F);
+                float newZoom = imageState.Zoom + imageState.Zoom * -0.1F;
+                imageState.Zoom = Math.Max(newZoom, minZoom);
             }
 
             int x = pointerPosition.X - pictureBox.Location.X;    // Where location of the mouse in the pictureframe
@@ -213,14 +262,11 @@ namespace ImageZoom
 
             imageState.X = newimagex - oldimagex + imageState.X;  // Where to move image to keep focus on one point
             imageState.Y = newimagey - oldimagey + imageState.Y;
-
-            //pictureBox.Refresh();  // calls imageBox_Paint
         }
 
         public void setAngle(int newAngle)
         {
             imageState.Angle = newAngle;
-            pictureBox.Refresh();
         }
 
         private void imageBox_Paint(object sender, PaintEventArgs e)
@@ -232,7 +278,76 @@ namespace ImageZoom
             Image i = (Image)img.Clone();
             i = imageUtils.RotateImage(i, imageState.Angle);
 
-            e.Graphics.DrawImage(i, 1, 1);
+            e.Graphics.DrawImage(i, 0, 0);
+        }
+        
+        public void CommandExecutor(String command, String param)
+        {
+            if (command == ServiceCommands.IMAGE_SET_VISIBLE_PART)
+            {
+                String[] paramArray = param.Split(Char.Parse(":"));
+                int left = 0;
+                int bottom = 0;
+                int right = 0;
+                int top = 0;
+                int imageH = 0;
+                int imageW = 0;
+                int rotation = 0;
+                if (paramArray.Length > 1)
+                {
+                    left = Int32.Parse(paramArray[0]);
+                    top = Int32.Parse(paramArray[1]);
+                    right = Int32.Parse(paramArray[2]);
+                    bottom = Int32.Parse(paramArray[3]);
+                    imageH = Int32.Parse(paramArray[4]);
+                    imageW = Int32.Parse(paramArray[5]);
+                    rotation = Int32.Parse(paramArray[6]);
+                }
+                this.Invoke((MethodInvoker)delegate
+                {
+                    this.setViewMinimumBounds(left, top, right, bottom, imageH, imageW, rotation);
+                });           
+            }
+            else
+            {
+                float value = float.Parse(param, CultureInfo.InvariantCulture);
+                ProcessCommand(command, value);
+                Output.Debug("IMAGECOMMAND", command + ":" + value);
+            }
+        }
+
+        public void ProcessCommand(String command, float value)
+        {
+            switch (command)
+            {
+                case ServiceCommands.IMAGE_MOVE_X:
+                    addToX((int)(pictureBox.Width * value / imageState.Zoom));
+                    break;
+
+                case ServiceCommands.IMAGE_MOVE_Y:
+                    addToY((int)(pictureBox.Height * value / imageState.Zoom));
+                    break;
+
+                case ServiceCommands.IMAGE_ZOOM:
+                    zoomPicture(value, new Point(imageState.X, imageState.Y));
+                    break;
+
+                case ServiceCommands.IMAGE_ROTATE:
+                    imageState.Angle += (int)value;
+                    break;
+
+                case ServiceCommands.CLOSE_IMAGE:
+                    //this.Close();
+                    break;
+            }
+
+            ImageState zoomedImageState = calcHelper.CalculateZoomedAndRotatedImageState(imageState);
+            keepInsideBounds(zoomedImageState);
+            
+            Invoke((MethodInvoker)delegate
+            {
+                pictureBox.Refresh();
+            });         
         }
         
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -240,52 +355,48 @@ namespace ImageZoom
             const int WM_KEYDOWN = 0x100;
             const int WM_SYSKEYDOWN = 0x104;
 
+            imageState.Width = img.Width;
+            imageState.Height = img.Height;
+
             if ((msg.Msg == WM_KEYDOWN) || (msg.Msg == WM_SYSKEYDOWN))
             {
                 switch (keyData)
                 {
                     case Keys.Right:
-                        imageState.X -= (int)(pictureBox.Width * 0.1F / imageState.Zoom);
-                        pictureBox.Refresh();
+                        ProcessCommand(ServiceCommands.IMAGE_MOVE_X, -0.1f);
                         break;
 
                     case Keys.Left:
-                        imageState.X += (int)(pictureBox.Width * 0.1F / imageState.Zoom);
-                        pictureBox.Refresh();
+                        ProcessCommand(ServiceCommands.IMAGE_MOVE_X, 0.1f);
                         break;
 
                     case Keys.Down:
-                        imageState.Y -= (int)(pictureBox.Height * 0.1F / imageState.Zoom);
-                        pictureBox.Refresh();
+                        ProcessCommand(ServiceCommands.IMAGE_MOVE_Y, -0.1f);
                         break;
 
                     case Keys.Up:
-                        imageState.Y += (int)(pictureBox.Height * 0.1F / imageState.Zoom);
-                        pictureBox.Refresh();
+                        ProcessCommand(ServiceCommands.IMAGE_MOVE_Y, 0.1f);
                         break;
 
                     case Keys.PageDown:
-                        zoomPicture(-0.1f, new Point(imageState.X, imageState.Y));
-                        pictureBox.Refresh();
+                        ProcessCommand(ServiceCommands.IMAGE_ZOOM, -0.1f);
                         break;
 
                     case Keys.PageUp:
-                        zoomPicture(0.1f, new Point(imageState.X, imageState.Y));
-                        pictureBox.Refresh();
+                        ProcessCommand(ServiceCommands.IMAGE_ZOOM, 0.1f);
                         break;
 
                     case Keys.End:
-                        imageState.Angle += 90;
-                        pictureBox.Refresh();
+                        ProcessCommand(ServiceCommands.IMAGE_ROTATE, 90);
                         break;
 
                     case Keys.Home:
-                        imageState.Angle -= 90;
-                        pictureBox.Refresh();
+                        ProcessCommand(ServiceCommands.IMAGE_ROTATE, -90);
                         break;
 
                     case Keys.Escape:
-                        this.Close();
+                        ProcessCommand(ServiceCommands.CLOSE_IMAGE, 0f);
+                        //this.Close();
                         ImageState closedState = new ImageState();
                         closedState.Active = false;
                         sendImageStateUpdateForListeners(closedState);
@@ -297,12 +408,10 @@ namespace ImageZoom
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
-
-        private ImageState GetImageState()
+        
+        public ImageState GetImageState()
         {
-            ImageState imageState = new ImageState();
-
-            imageState = this.imageState;
+            ImageState imageState = new ImageState(this.imageState);
 
             Size imageSize = img.Size;
             //if image is rotated its dimensions are inverted
@@ -326,14 +435,19 @@ namespace ImageZoom
             imageState.Top = (zoomedY >= 0) ? 0 : (int)-imageState.Y;
             imageState.Bottom = (displayArea.Height >= zoomedHeight + zoomedY) ? imageSize.Height : (int)((displayArea.Height - zoomedY)/imageState.Zoom);
 
-            imageState.Height = (int)displayArea.Height;
-            imageState.Width = (int)displayArea.Width;
+            imageState.ScreenHeight = (int)displayArea.Height;
+            imageState.ScreenWidth = (int)displayArea.Width;
+
+            this.imageState = new ImageState(imageState);
+            this.imageState.Width = img.Width;
+            this.imageState.Height = img.Height;
             
             return imageState;
         }
 
         private void ImageZoomMainForm_Load(object sender, EventArgs e)
         {
+
         }
 
         private void ImageZoomMainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -348,6 +462,8 @@ namespace ImageZoom
 
         public void setViewMinimumBounds(int left, int top, int right, int bottom, int otherImageHeight, int otherImageWidth, int rotation)
         {
+            Output.Debug("SetView", left + ":" + top + ":" + right + ":" + bottom);
+
             Size otherImageSize = new Size(otherImageWidth, otherImageHeight);
 
             imageState = imageUtils.adjustAngle(rotation, imageState);
@@ -356,10 +472,6 @@ namespace ImageZoom
             imageState = imageUtils.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, dimensionMultiplier[0], dimensionMultiplier[1], rotation);
 
             pictureBox.Refresh();
-
-            //Output.Debug("POSITION", imgx + ":" + imgy);
-            //Output.Debug("EXTRA", extrawidth + ":" + extraheight);
-            //Output.Debug("SCALE", zoom + "");
         }
     }
 }

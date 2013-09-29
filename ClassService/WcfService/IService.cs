@@ -232,21 +232,6 @@ namespace ClassService
             this.Command = command;
         }
 
-        public const String ZOOMIN = "zoomin";
-        public const String ZOOMOUT = "zoomout";
-        public const String ROTATERIGHT = "rotateright";
-        public const String ROTATELEFT = "rotateleft";
-        public const String VIEWBOUNDS = "visiblepart";
-        public const String MOVERIGHT = "moveright";
-        public const String MOVEUP = "moveup";
-        public const String MOVEDOWN = "movedown";
-        public const String MOVELEFT = "moveleft";
-        public const String MOVEZOOM = "movezoom";
-        public const String MOVE = "move";
-        public const String ZOOM = "zoom";
-        public const String ROTATION = "rotation";
-        public const String CLOSE = "close";
-
         [DataMember(Order = 1, Name = "command")]
         public string Command { get; set; }
         

@@ -31,6 +31,7 @@ namespace ClassService
             {
                 restClient.Put(new Uri("http://" + ClientIP + ":8080/"), "{}", "application/json");
                 LastCallResponse = true;
+                Output.Debug("ClinetUpdate","Sending update to " + ClientIP);
             }
             catch(Exception e)
             {

@@ -51,8 +51,8 @@ namespace ClassService
         {
             mainWindow.FilesFolder = fileManager.FilesPath;
             mainWindow.StartThread();
-            KinectWindow.MessageSent += this.MessageReceived;
-            mainWindow.MessageSent += this.ReceiveCommand;
+            KinectWindow.Executor = this.ExecutePresentationCommand;
+            mainWindow.Executor = this.MainWindowCommand;
             ImageForm.ImageUpdate += this.ImageUpdated;
         }
 
@@ -149,28 +149,23 @@ namespace ClassService
             {
                 ImageState imageState = ImageForm.ImageState;
                 imageInfo.Bottom = imageState.Bottom;
-                imageInfo.Height = imageState.Height;
+                imageInfo.Height = imageState.ScreenHeight;
                 imageInfo.Left = imageState.Left;
                 imageInfo.Right = imageState.Right;
                 imageInfo.Rotation = imageState.Angle;
                 imageInfo.Top = imageState.Top;
-                imageInfo.Width = imageState.Width;
+                imageInfo.Width = imageState.ScreenWidth;
             }
             return imageInfo;
         }
 
-        private void ReceiveCommand(string message)
+        private void MainWindowCommand(string message, string param)
         {
             string command = message;
-            int index = message.IndexOf(":");
-            if (index >= 0)
-            {
-                command = message.Substring(0, index);
-            }
 
             if (command == "open")
             {
-                string filename = message.Substring(index+1);
+                string filename = param;
 
                 string extension = System.IO.Path.GetExtension(filename);
 
@@ -186,23 +181,36 @@ namespace ClassService
             }
         }
 
-        public void MessageReceived(string message)
+        public void ExecutePresentationCommand(string command, string param)
         {
-            if (message == ServiceCommands.CLOSE_IMAGE)
+            float value = 0;
+            if (param != null && param != "") value = float.Parse(param);
+            switch (command)
             {
-                CloseCurrentImage();
-            }
-            else if (message == ServiceCommands.CLOSE_PRESENTATION)
-            {
-                ClosePresentation();
-            }
-            else if (message == ServiceCommands.NEXT_SLIDE)
-            {
-                NextSlide();
-            }
-            else if (message == ServiceCommands.PREVIOUS_SLIDE)
-            {
-                PreviousSlide();
+                case ServiceCommands.CLOSE_IMAGE:
+                    CloseCurrentImage();
+                    break;
+
+                case ServiceCommands.CLOSE_PRESENTATION:
+                    ClosePresentation();
+                    break;
+
+                case ServiceCommands.NEXT_SLIDE:
+                    NextSlide();
+                    break;
+
+                case ServiceCommands.PREVIOUS_SLIDE:
+                    PreviousSlide();
+                    break;
+
+                case ServiceCommands.IMAGE_MOVE_X:
+                case ServiceCommands.IMAGE_MOVE_Y:
+                case ServiceCommands.IMAGE_ROTATE:
+                case ServiceCommands.IMAGE_ZOOM:
+                    ImageAction action = new ImageAction(command);
+                    action.Param = param;
+                    ImageCommand(action);
+                    break;
             }
         }
 
@@ -451,31 +459,14 @@ namespace ClassService
         {
             switch (action.Command)
             {
-                case ImageAction.ROTATION: ImageForm.SendCommand(action.Command + ":" + action.Param);
+                case ServiceCommands.IMAGE_MOVE_X:
+                case ServiceCommands.IMAGE_MOVE_Y:
+                case ServiceCommands.IMAGE_ROTATE:
+                case ServiceCommands.IMAGE_SET_VISIBLE_PART:
+                case ServiceCommands.IMAGE_ZOOM:
+                    ImageForm.Executor.BeginInvoke(action.Command, action.Param, null, null);
                     break;
-                case ImageAction.VIEWBOUNDS: ImageForm.SendCommand(action.Command + ":" + action.Param);
-                    break;
-                case ImageAction.MOVE: ImageForm.SendCommand(action.Command + ":" + action.Param);
-                    break;
-                case ImageAction.MOVEZOOM: ImageForm.SendCommand(action.Command + ":" + action.Param);
-                    break;
-                case ImageAction.ZOOMIN: ImageForm.SendCommand(action.Command);
-                    break;
-                case ImageAction.ZOOMOUT: ImageForm.SendCommand(action.Command);
-                    break;
-                case ImageAction.ROTATERIGHT: ImageForm.SendCommand(action.Command);
-                    break;
-                case ImageAction.ROTATELEFT: ImageForm.SendCommand(action.Command);
-                    break;
-                case ImageAction.MOVERIGHT: ImageForm.SendCommand(action.Command);
-                    break;
-                case ImageAction.MOVELEFT: ImageForm.SendCommand(action.Command);
-                    break;
-                case ImageAction.MOVEUP: ImageForm.SendCommand(action.Command);
-                    break;
-                case ImageAction.MOVEDOWN: ImageForm.SendCommand(action.Command);
-                    break;
-                case ImageAction.CLOSE: CloseCurrentImage();
+                case ServiceCommands.CLOSE_IMAGE: CloseCurrentImage();
                     break;
                 default:
                     WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.BadRequest;

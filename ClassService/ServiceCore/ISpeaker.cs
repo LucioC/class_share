@@ -8,7 +8,7 @@ namespace ServiceCore
     public delegate void MessageEvent(string message);
     public interface ISpeaker
     {
-        event MessageEvent MessageSent;
+        event MessageEvent Listeners;
         void SendMessage(string message);
     }
 }
