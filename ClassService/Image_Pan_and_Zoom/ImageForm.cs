@@ -333,7 +333,7 @@ namespace ImageZoom
                     break;
 
                 case ServiceCommands.IMAGE_ZOOM:
-                    zoomPicture(value, new Point(imageState.X, imageState.Y));
+                    zoomPicture(value, new Point(pictureBox.Width/2, pictureBox.Height/2));
                     break;
 
                 case ServiceCommands.IMAGE_ROTATE:
