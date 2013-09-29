@@ -242,12 +242,12 @@ namespace ImageZoom
 
             if (zoomDelta > 0)
             {
-                float newZoom = imageState.Zoom + imageState.Zoom * 0.1F;
+                float newZoom = imageState.Zoom + imageState.Zoom * zoomDelta;
                 imageState.Zoom = Math.Min(newZoom, maxZoom);
             }
             else if (zoomDelta < 0)
             {
-                float newZoom = imageState.Zoom + imageState.Zoom * -0.1F;
+                float newZoom = imageState.Zoom + imageState.Zoom * zoomDelta;
                 imageState.Zoom = Math.Max(newZoom, minZoom);
             }
 
@@ -312,12 +312,16 @@ namespace ImageZoom
             {
                 float value = float.Parse(param, CultureInfo.InvariantCulture);
                 ProcessCommand(command, value);
-                Output.Debug("IMAGECOMMAND", command + ":" + value);
             }
         }
 
         public void ProcessCommand(String command, float value)
         {
+            imageState.Width = img.Width;
+            imageState.Height = img.Height;
+            imageState.ScreenHeight = pictureBox.Height;
+            imageState.ScreenWidth = pictureBox.Width;
+
             switch (command)
             {
                 case ServiceCommands.IMAGE_MOVE_X:
@@ -344,6 +348,8 @@ namespace ImageZoom
             ImageState zoomedImageState = calcHelper.CalculateZoomedAndRotatedImageState(imageState);
             keepInsideBounds(zoomedImageState);
             
+            sendImageStateUpdateForListeners(GetImageState());
+
             Invoke((MethodInvoker)delegate
             {
                 pictureBox.Refresh();
@@ -403,8 +409,6 @@ namespace ImageZoom
                         return true;
                 }
             }
-
-            sendImageStateUpdateForListeners(GetImageState());
 
             return base.ProcessCmdKey(ref msg, keyData);
         }

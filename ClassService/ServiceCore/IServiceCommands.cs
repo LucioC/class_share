@@ -6,17 +6,17 @@ namespace ServiceCore
         void ProcessCloseImage();
         void ProcessClosePresentation();
 
-        void ProcessMoveRight();
-        void ProcessMoveLeft();
+        void ProcessMoveRight(int multiplier);
+        void ProcessMoveLeft(int multiplier);
 
-        void ProcessMoveUp();
-        void ProcessMoveDown();
+        void ProcessMoveUp(int multiplier);
+        void ProcessMoveDown(int multiplier);
 
         void ProcessRotateRight();
         void ProcessRotateLeft();
 
-        void ProcessZoomOut();
-        void ProcessZoomIn();
+        void ProcessZoomOut(int multiplier);
+        void ProcessZoomIn(int multiplier);
 
         void ProcessNextSlide();
         void ProcessPreviousSlide();

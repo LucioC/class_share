@@ -75,7 +75,8 @@ namespace ImageZoom
             }
         }
 
-        public CommandExecutor Executor { get; set; }
+        private volatile CommandExecutor executor;
+        public CommandExecutor Executor { get { return executor; } set { executor = value; } }
 
         public void StartThread()
         {

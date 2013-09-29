@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ServiceCore;
+using System.Globalization;
+using ServiceCore.Utils;
 
 namespace KinectPowerPointControl
 {
@@ -22,6 +24,7 @@ namespace KinectPowerPointControl
 
         private void SendCommandAssynchrnously(String command, String value)
         {
+            Output.Debug("ServiceLocalCommand","Command: " + command + " with param " + value);
             this.executor.BeginInvoke(command, value, null, null);
         }
 
@@ -45,24 +48,28 @@ namespace KinectPowerPointControl
             SendCommandAssynchrnously(ServiceCommands.PREVIOUS_SLIDE, "");
         }
         
-        public void ProcessMoveRight()
+        public void ProcessMoveRight(int multiplier=1)
         {
-            SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_X, "0.1");
+            float value = 0.1f*multiplier;
+            SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_X, value.ToString(CultureInfo.InvariantCulture));
         }
 
-        public void ProcessMoveLeft()
+        public void ProcessMoveLeft(int multiplier = 1)
         {
-            SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_X, "-0.1");
+            float value = -0.1f * multiplier;
+            SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_X, value.ToString(CultureInfo.InvariantCulture));
         }
 
-        public void ProcessMoveUp()
+        public void ProcessMoveUp(int multiplier = 1)
         {
-            SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_Y, "-0.1");
+            float value = -0.1f * multiplier;
+            SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_Y, value.ToString(CultureInfo.InvariantCulture));
         }
 
-        public void ProcessMoveDown()
+        public void ProcessMoveDown(int multiplier = 1)
         {
-            SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_Y, "0.1");
+            float value = 0.1f * multiplier;
+            SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_Y, value.ToString(CultureInfo.InvariantCulture));
         }
 
         public void ProcessRotateRight()
@@ -75,14 +82,16 @@ namespace KinectPowerPointControl
             SendCommandAssynchrnously(ServiceCommands.IMAGE_ROTATE, "-90");
         }
 
-        public void ProcessZoomOut()
+        public void ProcessZoomOut(int multiplier = 1)
         {
-            SendCommandAssynchrnously(ServiceCommands.IMAGE_ZOOM, "-0.1");
+            float value = -0.1f * multiplier;
+            SendCommandAssynchrnously(ServiceCommands.IMAGE_ZOOM, value.ToString(CultureInfo.InvariantCulture));
         }
 
-        public void ProcessZoomIn()
+        public void ProcessZoomIn(int multiplier = 1)
         {
-            SendCommandAssynchrnously(ServiceCommands.IMAGE_ZOOM, "0.1");
+            float value = 0.1f * multiplier;
+            SendCommandAssynchrnously(ServiceCommands.IMAGE_ZOOM, value.ToString(CultureInfo.InvariantCulture));
         }
     }
 }
