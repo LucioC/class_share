@@ -242,12 +242,12 @@ namespace ImageZoom
 
             if (zoomDelta > 0)
             {
-                float newZoom = imageState.Zoom + imageState.Zoom * 0.1F;
+                float newZoom = imageState.Zoom + imageState.Zoom * zoomDelta;
                 imageState.Zoom = Math.Min(newZoom, maxZoom);
             }
             else if (zoomDelta < 0)
             {
-                float newZoom = imageState.Zoom + imageState.Zoom * -0.1F;
+                float newZoom = imageState.Zoom + imageState.Zoom * zoomDelta;
                 imageState.Zoom = Math.Max(newZoom, minZoom);
             }
 

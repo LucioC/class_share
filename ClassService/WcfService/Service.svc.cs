@@ -464,7 +464,8 @@ namespace ClassService
                 case ServiceCommands.IMAGE_ROTATE:
                 case ServiceCommands.IMAGE_SET_VISIBLE_PART:
                 case ServiceCommands.IMAGE_ZOOM:
-                    ImageForm.Executor.BeginInvoke(action.Command, action.Param, null, null);
+                    if (ImageForm.Executor != null)
+                        ImageForm.Executor.BeginInvoke(action.Command, action.Param, null, null);
                     break;
                 case ServiceCommands.CLOSE_IMAGE: CloseCurrentImage();
                     break;
