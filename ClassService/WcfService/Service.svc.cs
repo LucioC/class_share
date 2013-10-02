@@ -94,7 +94,10 @@ namespace ClassService
 
         private void ImageUpdated(ImageState imageState)
         {
-            if (!imageState.Active) this.CloseCurrentImage();
+            if (!imageState.Active)
+            {
+                this.CloseCurrentImage();
+            }
             WarnImagePresentationListeners();
         }
 
@@ -191,6 +194,7 @@ namespace ClassService
             {
                 case ServiceCommands.CLOSE_IMAGE:
                     CloseCurrentImage();
+                    WarnImagePresentationListeners();
                     break;
 
                 case ServiceCommands.CLOSE_PRESENTATION:

@@ -341,7 +341,9 @@ namespace ImageZoom
                     break;
 
                 case ServiceCommands.CLOSE_IMAGE:
-                    //this.Close();
+                    ImageState closedState = new ImageState();
+                    closedState.Active = false;
+                    sendImageStateUpdateForListeners(closedState);
                     break;
             }
 
@@ -402,10 +404,6 @@ namespace ImageZoom
 
                     case Keys.Escape:
                         ProcessCommand(ServiceCommands.CLOSE_IMAGE, 0f);
-                        //this.Close();
-                        ImageState closedState = new ImageState();
-                        closedState.Active = false;
-                        sendImageStateUpdateForListeners(closedState);
                         return true;
                 }
             }

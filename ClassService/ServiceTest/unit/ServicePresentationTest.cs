@@ -102,26 +102,7 @@ namespace TestProject.Units
             presentationControlMock.Verify(x => x.StartPresentation(), Times.Exactly(1));
             kinectControlMock.Verify(x => x.StartThread(), Times.Exactly(1));
         }
-
-        [TestMethod()]
-        public void StopPresentationTest()
-        {
-            Service target = CommonTest.CreateAMockedService();
-
-            var presentationControlMock = new Mock<IPowerPointControl>();
-            var kinectControlMock = new Mock<IKinectService>();
-            var fileManagerMock = new Mock<IServiceFileManager>();
-
-            Service.PresentationControl = presentationControlMock.Object;
-            Service.KinectWindow = kinectControlMock.Object;
-            Service.fileManager = fileManagerMock.Object;
-
-            target.ClosePresentation();
-
-            presentationControlMock.Verify(x => x.ClosePresentation(), Times.Exactly(1));
-            kinectControlMock.Verify(x => x.StopThread(), Times.Exactly(1));
-        }
-
+        
         [TestMethod()]
         public void PresentationNextCommand()
         {
@@ -158,26 +139,6 @@ namespace TestProject.Units
             target.PresentationCommand(action);
 
             presentationControlMock.Verify(x => x.GoToPreviousSlide(), Times.Exactly(1));
-        }
-
-        [TestMethod()]
-        public void PresentationCloseCommand()
-        {
-            Service target = CommonTest.CreateAMockedService();
-
-            var presentationControlMock = new Mock<IPowerPointControl>();
-            var kinectControlMock = new Mock<IKinectService>();
-            var fileManagerMock = new Mock<IServiceFileManager>();
-
-            Service.PresentationControl = presentationControlMock.Object;
-            Service.KinectWindow = kinectControlMock.Object;
-            Service.fileManager = fileManagerMock.Object;
-
-            ClassService.PresentationAction action = new ClassService.PresentationAction(ClassService.PresentationAction.CLOSE);
-            target.PresentationCommand(action);
-
-            presentationControlMock.Verify(x => x.ClosePresentation(), Times.Exactly(1));
-            kinectControlMock.Verify(x => x.StopThread(), Times.Exactly(1));
         }
 
         #endregion

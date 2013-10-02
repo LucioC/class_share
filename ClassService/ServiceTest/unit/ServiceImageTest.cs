@@ -66,29 +66,7 @@ namespace TestProject.Units
         //}
         //
         #endregion
-
-        /// <summary>
-        ///A test for CloseCurrentImage
-        ///</summary>
-        [TestMethod()]
-        public void CloseImageWindowTest()
-        {
-            Service target = CommonTest.CreateAMockedService();
-
-            var imageControlMock = new Mock<IImageService>();
-            var kinectControlMock = new Mock<IKinectService>();
-            var fileManagerMock = new Mock<IServiceFileManager>();
-
-            Service.ImageForm = imageControlMock.Object;
-            Service.KinectWindow = kinectControlMock.Object;
-            Service.fileManager = fileManagerMock.Object;
-
-            target.CloseCurrentImage();
-
-            imageControlMock.Verify(x => x.StopThread(), Times.Exactly(1));
-            kinectControlMock.Verify(x => x.StopThread(), Times.Exactly(1));
-        }
-        
+                
         [TestMethod()]
         public void OpenImageTest()
         {
