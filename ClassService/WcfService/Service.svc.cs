@@ -366,14 +366,21 @@ namespace ClassService
         {
             try
             {
-                KinectWindow.StopThread();
-                PresentationControl.ClosePresentation();
-                mainWindow.RestartEvents();
-                setSlidePresentationName("");
-                WarnSlidePresentationListeners();
+                if (PresentationControl.IsActive())
+                {
+                    KinectWindow.StopThread();
+                    PresentationControl.ClosePresentation();
+                    mainWindow.RestartEvents();
+                    setSlidePresentationName("");
+                    WarnSlidePresentationListeners();
 
-                Log("Close Presentation");
-                return new Result("Presentation was closed");
+                    Log("Close Presentation");
+                    return new Result("Presentation was closed");
+                }
+                else
+                {
+                    return new Result("Presentation is not active");
+                }
             }
             catch(Exception e)
             {
@@ -468,16 +475,20 @@ namespace ClassService
 
         public Result CloseCurrentImage()
         {
-            ImageForm.StopThread();
+            if (ImageForm.IsThreadRunning())
+            {
+                ImageForm.StopThread();
 
-            KinectWindow.StopThread();
-            mainWindow.RestartEvents();
+                KinectWindow.StopThread();
+                mainWindow.RestartEvents();
 
-            setImagePresentationName("");
+                setImagePresentationName("");
 
-            Log("Close Image");
+                Log("Close Image");
 
-            return new Result("Image Closed");
+                return new Result("Image Closed");
+            }
+            return new Result("Image is Already Closed");
         }
 
         public Result ImageCommand(ImageAction action)
