@@ -29,8 +29,7 @@ namespace KinectPowerPointControl.Gesture
         public bool IdentifyRotationGesture(IJoint rightHand, IJoint leftHand, IJoint spine, bool isLeftHandGripped, bool isRightHandGripped)
         {
             if (
-                rightHand.Position.Y <= spine.Position.Y
-                || leftHand.Position.Y <= spine.Position.Y
+                GestureUtils.AreHandsBelowSpine(rightHand,leftHand,spine)
                 )
             {
                 State = 0;
@@ -56,7 +55,8 @@ namespace KinectPowerPointControl.Gesture
                 CurrentAngleDelta = 0;
                 return false;
             }
-            if (Math.Abs(GestureUtils.CalculateDistanceZ(rightHand.Position, leftHand.Position)) > 0.1)
+
+            if(GestureUtils.AreHandsSeparatedInZ(rightHand,leftHand, 0.1f))
             {
                 State = 0;
                 CurrentAngleDelta = 0;
@@ -129,16 +129,6 @@ namespace KinectPowerPointControl.Gesture
             var leftShoulder = skeleton.ShoulderLeft;
 
             return IdentifyRotationGesture(rightHand, leftHand, spine, userState.IsLeftHandGripped, userState.IsRightHandGripped);
-        }
-
-        private bool isClose(float value1, float value2, float acceptedError)
-        {
-            float difference = value1 - value2;
-            difference = Math.Abs(difference);
-
-            if (difference > acceptedError) return false;
-
-            return true;
         }
 
         public string Name

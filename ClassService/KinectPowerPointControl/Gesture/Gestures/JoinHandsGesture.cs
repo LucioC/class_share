@@ -28,59 +28,69 @@ namespace KinectPowerPointControl.Gesture
             var leftHand = skeleton.HandLeft;
             var spine = skeleton.Spine;
 
-            if (rightHand.Position.Y < spine.Position.Y && leftHand.Position.Y < spine.Position.Y)
+            if (GestureUtils.AreHandsBelowSpine(rightHand, leftHand, spine))
             {
                 State = 0;
                 return false;
             }
-            else if(rightHand.Position.Z > spine.Position.Z - 0.1 || leftHand.Position.Z > spine.Position.Z - 0.1)
+            else if (GestureUtils.IsHandCloseToSpineInZ(rightHand, spine, 0.1f) || GestureUtils.IsHandCloseToSpineInZ(leftHand, spine, 0.1f))
             {
                 State = 0;
                 return false;
             }
 
-            //Gesture already executed
+            //Gesture already executed or rejected
             if (State == 2) return false;
 
             float handsDifferenceX = rightHand.Position.X - leftHand.Position.X;
             float handsDifferenceY = rightHand.Position.Y - leftHand.Position.Y;
 
             //separate hands
-            if(State == 0)
-            if (Math.Abs(handsDifferenceX) > 0.5 )
+            if (State == 0)
             {
-                //Gesture started
-                State = 1;
-                Output.Debug("JointHandsGesture", "Hands are separated");
+                if (AreHandsSeparatedMoreThan(handsDifferenceX, 0.5f))
+                {
+                    //Gesture started
+                    State = 1;
+                    Output.Debug("JointHandsGesture", "Hands are separated");
 
-                openJoinHandsIntervalControl.TriggerIt();
-                return false;
+                    //separation started
+                    openJoinHandsIntervalControl.TriggerIt();
+                    return false;
+                }
             }
 
             //join hands after separated
-            if( State == 1 )
-            if (Math.Abs(handsDifferenceX) <= 0.1 && Math.Abs(handsDifferenceY) <= 0.1)
+            if (State == 1)
             {
-                //If took to long, is not a join hands gesture
-                if (openJoinHandsIntervalControl.HasIntervalPassed())
+                if (GestureUtils.AreHandsCloserThan(handsDifferenceX, handsDifferenceY, 0.1f))
                 {
-                    State = 2;
-                    return false;
-                }
+                    //If took to long to join hands, is not a join hands gesture
+                    if (openJoinHandsIntervalControl.HasIntervalPassed())
+                    {
+                        State = 2;
+                        return false;
+                    }
 
-                if (userState.IsRightHandGripped || userState.IsLeftHandGripped)
-                {
-                    State = 2;
-                    return false;
-                }
+                    if (userState.IsRightHandGripped || userState.IsLeftHandGripped)
+                    {
+                        State = 2;
+                        return false;
+                    }
 
-                //Gesture executed
-                State = 2;
-                Output.Debug("JoinHandsGesture", "Joins Hand Event");
-                return true;
+                    //Gesture executed
+                    State = 2;
+                    Output.Debug("JoinHandsGesture", "Joins Hand Event");
+                    return true;
+                }
             }
 
             return false;
+        }
+
+        private static bool AreHandsSeparatedMoreThan(float handsXDifference, float distance)
+        {
+            return Math.Abs(handsXDifference) > distance;
         }
 
         public string Name

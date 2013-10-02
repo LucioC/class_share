@@ -74,7 +74,7 @@ namespace TestProject.Units
             float errorExpected = 1.0F;
             float expected = 1.0F;
             float actual;
-            actual = GestureUtils.normalizeDistance(deltaDistance, errorExpected);
+            actual = GestureUtils.NormalizeDistance(deltaDistance, errorExpected);
             Assert.AreEqual(expected, actual);
         }
 
@@ -85,7 +85,7 @@ namespace TestProject.Units
             float errorExpected = 1.0F;
             float expected = -1.0F;
             float actual;
-            actual = GestureUtils.normalizeDistance(deltaDistance, errorExpected);
+            actual = GestureUtils.NormalizeDistance(deltaDistance, errorExpected);
             Assert.AreEqual(expected, actual);
         }
 
@@ -96,7 +96,7 @@ namespace TestProject.Units
             float errorExpected = 3.0F;
             float expected = 0.0F;
             float actual;
-            actual = GestureUtils.normalizeDistance(deltaDistance, errorExpected);
+            actual = GestureUtils.NormalizeDistance(deltaDistance, errorExpected);
             Assert.AreEqual(expected, actual);
         }
 
@@ -107,7 +107,7 @@ namespace TestProject.Units
             float errorExpected = 3.0F;
             float expected = 0.0F;
             float actual;
-            actual = GestureUtils.normalizeDistance(deltaDistance, errorExpected);
+            actual = GestureUtils.NormalizeDistance(deltaDistance, errorExpected);
             Assert.AreEqual(expected, actual);
         }
     }

@@ -18,6 +18,8 @@ namespace KinectPowerPointControl.Gesture
 
         public int State { get; set; }
         private SkeletonPoint initialPosition;
+        public float minimumDistanceToTrigger = 0.15f;
+        public float heightToReset = 0.1f;
 
         public bool IdentifyGesture(UserSkeletonState userState)
         {
@@ -25,16 +27,17 @@ namespace KinectPowerPointControl.Gesture
             var rightHand = skeleton.HandRight;
             var leftHand = skeleton.HandLeft;
             var head = skeleton.Head;
-            var centerShoulder = skeleton.ShoulderCenter;
+            var spine = skeleton.Spine;
 
-            if (IsBelowMinimumHeight(rightHand, centerShoulder))
+            if (State == 1 && 
+                GestureUtils.HasMovedToLeft(initialPosition, rightHand.Position, minimumDistanceToTrigger) && 
+                GestureUtils.IsHandBelow(rightHand, initialPosition, heightToReset))
             {
-                if (State == 1 && IsAtLeft(rightHand.Position))
-                {
-                    State = 0;
-                    return true;
-                }
-
+                State = 0;
+                return true;
+            } 
+            else if (GestureUtils.IsHandBelow(rightHand, spine))
+            {
                 State = 0;
                 return false;
             }
@@ -53,7 +56,7 @@ namespace KinectPowerPointControl.Gesture
             {
                 SkeletonPoint nextPoint = rightHand.Position;
                 
-                if ((IsAtLeft(nextPoint) && !userState.IsRightHandGripped))
+                if ((GestureUtils.HasMovedToLeft(initialPosition, nextPoint, minimumDistanceToTrigger) && !userState.IsRightHandGripped))
                 {
                     State = 0;
                     Output.Debug("SwipeLeft", "Left Gesture Executed");
@@ -71,16 +74,6 @@ namespace KinectPowerPointControl.Gesture
 
             State = 0;
             return false;
-        }
-
-        private static bool IsBelowMinimumHeight(IJoint rightHand, IJoint centerShoulder)
-        {
-            return rightHand.Position.Y < centerShoulder.Position.Y - 0.1;
-        }
-
-        private bool IsAtLeft(SkeletonPoint nextPoint)
-        {
-            return nextPoint.X < initialPosition.X - 0.15;
         }
 
         public string Name

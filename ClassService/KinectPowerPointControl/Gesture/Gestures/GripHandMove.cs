@@ -24,15 +24,14 @@ namespace KinectPowerPointControl.Gesture
 
         public bool IdentifyGrippedMove(IJoint rightHand, IJoint leftHand, IJoint spine, bool isRightHandGripped)
         {
-            //Should be in grip mode only for left hand
             if (!isRightHandGripped)
             {
                 State = 0;
                 return false;
             }
-            float allowedDistance = (rightHand.Position.Z - spine.Position.Z)/2;
-            //if left hand is close in Z to right hand
-            if(leftHand.Position.Z < rightHand.Position.Z - allowedDistance)
+            float halfDistanceBetweenRightHandAndSpine = GestureUtils.HalfDistanceBetweenRightHandAndSpine(rightHand, spine);
+
+            if (GestureUtils.IsLeftHandCloseToRightOrInFront(rightHand, leftHand, halfDistanceBetweenRightHandAndSpine))
             {
                 State = 0;
                 return false;
@@ -46,8 +45,8 @@ namespace KinectPowerPointControl.Gesture
 
             SkeletonPoint currentPoint = rightHand.Position;
 
+            //If X grew, than hand moved right, else left
             float xd = currentPoint.X - lastHandPosition.X;
-
             if (xd > 0 && xd > DistanceToTriggerMove)
             {
                 Name = GestureEvents.MOVE_RIGHT;
@@ -61,6 +60,7 @@ namespace KinectPowerPointControl.Gesture
                 return true;
             }
 
+            //If Y grew, hand moved up, else down
             float yd = currentPoint.Y - lastHandPosition.Y;
             if (yd > 0 && yd > DistanceToTriggerMove)
             {

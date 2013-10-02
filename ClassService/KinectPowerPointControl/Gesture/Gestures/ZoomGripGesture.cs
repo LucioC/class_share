@@ -29,7 +29,7 @@ namespace KinectPowerPointControl.Gesture
         public bool IdentiftZoomGesture(IJoint rightHand, IJoint leftHand, IJoint spine, Boolean isLeftHandGripped, Boolean isRightHandGripped)
         {
             //If hands are below spine dont track gesture 
-            if (rightHand.Position.Y < spine.Position.Y || leftHand.Position.Y < spine.Position.Y)
+            if (GestureUtils.IsOneHandBelowSpine(rightHand, leftHand, spine))
             {
                 State = 0;
                 return false;
@@ -39,35 +39,35 @@ namespace KinectPowerPointControl.Gesture
                 State = 0;
                 return false;
             }
-            if(Math.Abs(GestureUtils.CalculateDistanceZ(rightHand.Position, leftHand.Position)) > 0.1)
+            if (GestureUtils.AreHandsSeparatedInZ(rightHand, leftHand, 0.1f))
             {
                 State = 0;
                 return false;
             }
 
             //Calculate and update hands distance
-            float distance = GestureUtils.CalculateDistanceX(rightHand.Position, leftHand.Position);
-            float deltaDistance = distance - HandsDistance;
-            deltaDistance = GestureUtils.normalizeDistance(deltaDistance, HandsDistanceErrorIgnored);
+            float xDistance = GestureUtils.CalculateDistanceX(rightHand.Position, leftHand.Position);
+            float deltaXDistance = xDistance - HandsDistance;
+            deltaXDistance = GestureUtils.NormalizeDistance(deltaXDistance, HandsDistanceErrorIgnored);
 
             if (State == 0)
             {
                 State = 1;
-                HandsDistance = distance;
+                HandsDistance = xDistance;
                 return false;
             }
 
             //If got here than distance was updated and changed from last frame. Trigger gesture event to listeners.
-            if (deltaDistance > 0)
+            if (deltaXDistance > 0)
             {
                 Name = GestureEvents.ZOOM_IN;
-                HandsDistance = distance;
+                HandsDistance = xDistance;
                 return true;
             }
-            else if (deltaDistance < 0)
+            else if (deltaXDistance < 0)
             {
                 Name = GestureEvents.ZOOM_OUT; 
-                HandsDistance = distance;
+                HandsDistance = xDistance;
                 return true;
             }
             return false;

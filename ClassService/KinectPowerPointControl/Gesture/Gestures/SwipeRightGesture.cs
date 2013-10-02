@@ -14,10 +14,13 @@ namespace KinectPowerPointControl.Gesture
         {
             Name = GestureEvents.SWIPE_RIGHT;
             State = 0;
+
         }
 
         public int State { get; set; }
         SkeletonPoint initialPosition;
+        public float minimumDistanceToTrigger = 0.15f;
+        public float heightToReset = 0.1f;
 
         public bool IdentifyGesture(UserSkeletonState userState)
         {
@@ -25,21 +28,21 @@ namespace KinectPowerPointControl.Gesture
             var rightHand = skeleton.HandRight;
             var leftHand = skeleton.HandLeft;
             var head = skeleton.Head;
-            var centerShoulder = skeleton.ShoulderCenter;
+            var spine = skeleton.Spine;
 
-            if(IsBelowMinimumHeight(rightHand,centerShoulder))
+            if (State == 1 && 
+                GestureUtils.HasMovedToRight(initialPosition, rightHand.Position, minimumDistanceToTrigger) &&
+                GestureUtils.IsHandBelow(rightHand, initialPosition, heightToReset))
             {
-                if (State == 1 && IsAtRight(rightHand.Position))
-                {
-                    State = 0;
-                    return true;
-                }
-
+                State = 0;
+                return true;
+            }
+            else if(GestureUtils.IsHandBelow(rightHand, spine))
+            {
                 State = 0;
                 return false;
             }
 
-            //If hand is above minimun height and is closed then advance to next state
             if (State == 0 && userState.IsRightHandGripped)
             {
                 State = 1;
@@ -50,12 +53,11 @@ namespace KinectPowerPointControl.Gesture
                 return false;
             }
 
-            //If hands was swipe to the right
             if (State == 1)
             {
                 SkeletonPoint nextPoint = rightHand.Position;
 
-                if ((IsAtRight(nextPoint) && !userState.IsRightHandGripped))
+                if ((GestureUtils.HasMovedToRight(initialPosition, nextPoint, minimumDistanceToTrigger) && !userState.IsRightHandGripped))
                 {
                     State = 0;
                     Output.Debug("SwipeRight", "Right Gesture Executed");
@@ -73,16 +75,6 @@ namespace KinectPowerPointControl.Gesture
 
             State = 0;
             return false;
-        }
-
-        private bool IsAtRight(SkeletonPoint nextPoint)
-        {
-            return nextPoint.X > initialPosition.X + 0.15;
-        }
-
-        private static bool IsBelowMinimumHeight(IJoint rightHand, IJoint centerShoulder)
-        {
-            return rightHand.Position.Y < centerShoulder.Position.Y - 0.2;
         }
 
         public string Name

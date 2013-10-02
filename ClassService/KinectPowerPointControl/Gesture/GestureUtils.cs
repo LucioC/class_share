@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Kinect;
+using ServiceCore;
 
 namespace KinectPowerPointControl.Gesture
 {
@@ -13,6 +14,63 @@ namespace KinectPowerPointControl.Gesture
         {
             float distance = Math.Abs(rightHandPosition.X - leftHandPosition.X);
             return distance;
+        }
+
+        public static bool AreHandsBelowSpine(IJoint rightHand, IJoint leftHand, IJoint spine)
+        {
+            return rightHand.Position.Y < spine.Position.Y && leftHand.Position.Y < spine.Position.Y;
+        }
+
+        public static bool HasMovedToRight(SkeletonPoint initialPoint, SkeletonPoint currentPoint, float minimumDistance)
+        {
+            return currentPoint.X > initialPoint.X + minimumDistance;
+        }
+
+        public static bool HasMovedToLeft(SkeletonPoint initialPoint, SkeletonPoint currentPoint, float minimumDistance)
+        {
+            return currentPoint.X < initialPoint.X - minimumDistance;
+        }
+
+        public static bool IsOneHandBelowSpine(IJoint rightHand, IJoint leftHand, IJoint spine)
+        {
+            return rightHand.Position.Y < spine.Position.Y || leftHand.Position.Y < spine.Position.Y;
+        }
+
+        public static bool IsHandBelow(IJoint rightHand, IJoint otherJoint)
+        {
+            return rightHand.Position.Y < otherJoint.Position.Y;
+        }
+
+        public static bool IsHandBelow(IJoint rightHand, SkeletonPoint aPoint, float extra)
+        {
+            return rightHand.Position.Y < aPoint.Y - extra;
+        }
+
+        public static bool AreHandsCloserThan(float handsDifferenceX, float handsDifferenceY, float distance)
+        {
+            return Math.Abs(handsDifferenceX) <= distance && Math.Abs(handsDifferenceY) <= distance;
+        }
+
+        public static bool AreHandsSeparatedInZ(IJoint rightHand, IJoint leftHand, float distance)
+        {
+            return Math.Abs(GestureUtils.CalculateDistanceZ(rightHand.Position, leftHand.Position)) > distance;
+        }
+
+        public static bool IsHandCloseToSpineInZ(IJoint hand, IJoint spine, float minimumDistance)
+        {
+            return hand.Position.Z > spine.Position.Z - minimumDistance;
+        }
+
+        public static bool IsLeftHandCloseToRightOrInFront(IJoint rightHand, IJoint leftHand, float minimumDistanceAllowed)
+        {
+            //Less Z is closer to sensor
+            return leftHand.Position.Z < rightHand.Position.Z || leftHand.Position.Z < rightHand.Position.Z - minimumDistanceAllowed;
+        }
+
+        public static float HalfDistanceBetweenRightHandAndSpine(IJoint rightHand, IJoint spine)
+        {
+            float allowedDistance = (rightHand.Position.Z - spine.Position.Z) / 2;
+            return allowedDistance;
         }
 
         public static bool IsUserFacingForward(Skeleton skeleton)
@@ -62,7 +120,7 @@ namespace KinectPowerPointControl.Gesture
         }
 
         //From diferent frames an error may occur, eliminate error perception
-        public static float normalizeDistance(float deltaDistance, float errorExpected)
+        public static float NormalizeDistance(float deltaDistance, float errorExpected)
         {
             float result = deltaDistance;
 
