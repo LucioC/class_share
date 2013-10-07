@@ -344,7 +344,7 @@ namespace ImageZoom
                     ImageState closedState = new ImageState();
                     closedState.Active = false;
                     sendImageStateUpdateForListeners(closedState);
-                    break;
+                    return;
             }
 
             ImageState zoomedImageState = calcHelper.CalculateZoomedAndRotatedImageState(imageState);

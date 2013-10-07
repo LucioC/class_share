@@ -90,6 +90,7 @@ namespace ImageZoom
             if (IsThreadRunning())
             {
                 imageForm.Invoke(new CloseDelegate(imageForm.Close));
+                Executor = null;
             }
         }
 
