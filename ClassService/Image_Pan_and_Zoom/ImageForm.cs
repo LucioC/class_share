@@ -68,6 +68,8 @@ namespace ImageZoom
             interceptor = new InterceptKeyboard();
             InterceptKeyboard.SetHook(interceptor.hook);
             interceptor.KeyEvent += keyDown;
+
+            zoomLabel.Text = "zoom is: " + imageState.Zoom;
         }
 
         public void sendImageStateUpdateForListeners(ImageState imageState)
@@ -239,6 +241,7 @@ namespace ImageZoom
         public void zoomPicture(float zoomDelta, Point pointerPosition)
         {
             Output.Debug("ZoomPicture", zoomDelta + "");
+
             float oldzoom = imageState.Zoom;
 
             if (zoomDelta > 0)
@@ -251,6 +254,8 @@ namespace ImageZoom
                 float newZoom = imageState.Zoom + zoomDelta;
                 imageState.Zoom = Math.Max(newZoom, minZoom);
             }
+
+            zoomLabel.Text = "zoom is: " + imageState.Zoom;
 
             int x = pointerPosition.X - pictureBox.Location.X;    // Where location of the mouse in the pictureframe
             int y = pointerPosition.Y - pictureBox.Location.Y;
@@ -475,6 +480,11 @@ namespace ImageZoom
             imageState = imageUtils.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, dimensionMultiplier[0], dimensionMultiplier[1], rotation);
 
             pictureBox.Refresh();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
