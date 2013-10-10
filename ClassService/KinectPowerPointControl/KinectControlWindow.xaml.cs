@@ -273,11 +273,11 @@ namespace KinectPowerPointControl
         {
             SemanticValue semanticCommandValue = speechRecognized.Semantics["command"];
 
-            int value = 1;
+            float value = 1;
             if(speechRecognized.Semantics.ContainsKey("multiplier"))
             {
                 SemanticValue semanticMultiplierValue = speechRecognized.Semantics["multiplier"];
-                value = Int32.Parse((string)semanticMultiplierValue.Value);
+                value = float.Parse((string)semanticMultiplierValue.Value);
             }
             
             if (!skeletonRepository.FirstUser.IsFacingForward)

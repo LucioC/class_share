@@ -22,7 +22,10 @@ xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0">
   <rule id="Forward">
     <one-of>
       <item>
-        next slide <tag>out = "next slide"; </tag>
+        next <tag>out = "next slide"; </tag>
+      </item>
+      <item>
+        forward <tag>out = "next slide"; </tag>
       </item>
     </one-of>
   </rule>
@@ -30,7 +33,10 @@ xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0">
   <rule id="Backward">
     <one-of>
       <item>
-        previous slide <tag>out = "previous slide"; </tag>
+        previous <tag>out = "previous slide"; </tag>
+      </item>
+      <item>
+        back <tag>out = "previous slide"; </tag>
       </item>
     </one-of>
   </rule>

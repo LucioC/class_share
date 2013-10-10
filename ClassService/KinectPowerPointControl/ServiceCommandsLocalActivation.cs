@@ -48,25 +48,25 @@ namespace KinectPowerPointControl
             SendCommandAssynchrnously(ServiceCommands.PREVIOUS_SLIDE, "");
         }
         
-        public void ProcessMoveRight(int multiplier=1)
+        public void ProcessMoveRight(float multiplier=1)
         {
             float value = 0.1f*multiplier;
             SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_X, value.ToString(CultureInfo.InvariantCulture));
         }
 
-        public void ProcessMoveLeft(int multiplier = 1)
+        public void ProcessMoveLeft(float multiplier = 1)
         {
             float value = -0.1f * multiplier;
             SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_X, value.ToString(CultureInfo.InvariantCulture));
         }
 
-        public void ProcessMoveUp(int multiplier = 1)
+        public void ProcessMoveUp(float multiplier = 1)
         {
             float value = -0.1f * multiplier;
             SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_Y, value.ToString(CultureInfo.InvariantCulture));
         }
 
-        public void ProcessMoveDown(int multiplier = 1)
+        public void ProcessMoveDown(float multiplier = 1)
         {
             float value = 0.1f * multiplier;
             SendCommandAssynchrnously(ServiceCommands.IMAGE_MOVE_Y, value.ToString(CultureInfo.InvariantCulture));
@@ -82,16 +82,15 @@ namespace KinectPowerPointControl
             SendCommandAssynchrnously(ServiceCommands.IMAGE_ROTATE, "-90");
         }
 
-        public void ProcessZoomOut(int multiplier = 1)
+        public void ProcessZoomOut(float multiplier = 1)
         {
-            float value = -0.1f * multiplier;
-            SendCommandAssynchrnously(ServiceCommands.IMAGE_ZOOM, value.ToString(CultureInfo.InvariantCulture));
+            multiplier = -multiplier;
+            SendCommandAssynchrnously(ServiceCommands.IMAGE_ZOOM, multiplier.ToString(CultureInfo.InvariantCulture));
         }
 
-        public void ProcessZoomIn(int multiplier = 1)
+        public void ProcessZoomIn(float multiplier = 1)
         {
-            float value = 0.1f * multiplier;
-            SendCommandAssynchrnously(ServiceCommands.IMAGE_ZOOM, value.ToString(CultureInfo.InvariantCulture));
+            SendCommandAssynchrnously(ServiceCommands.IMAGE_ZOOM, multiplier.ToString(CultureInfo.InvariantCulture));
         }
     }
 }

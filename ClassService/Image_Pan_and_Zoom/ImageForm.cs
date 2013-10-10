@@ -238,16 +238,17 @@ namespace ImageZoom
 
         public void zoomPicture(float zoomDelta, Point pointerPosition)
         {
+            Output.Debug("ZoomPicture", zoomDelta + "");
             float oldzoom = imageState.Zoom;
 
             if (zoomDelta > 0)
             {
-                float newZoom = imageState.Zoom + imageState.Zoom * zoomDelta;
+                float newZoom = imageState.Zoom + zoomDelta;
                 imageState.Zoom = Math.Min(newZoom, maxZoom);
             }
             else if (zoomDelta < 0)
             {
-                float newZoom = imageState.Zoom + imageState.Zoom * zoomDelta;
+                float newZoom = imageState.Zoom + zoomDelta;
                 imageState.Zoom = Math.Max(newZoom, minZoom);
             }
 
