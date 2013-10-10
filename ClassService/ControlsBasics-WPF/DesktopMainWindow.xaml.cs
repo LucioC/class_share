@@ -96,14 +96,12 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
         public void PauseEvents()
         {
-            //TODO this probably is not needed anymore, because kinect is disassociated from this window
-            //this.wrapPanel.RemoveHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new System.Windows.RoutedEventHandler(this.KinectTileButtonClick));
-            
             speechControl.SpeechRecognized -= this.SpeechRecognized;
             speechControl.SpeechHypothesized -= this.SpeechHypothesized;
             BindingOperations.ClearBinding(this.kinectRegion, KinectRegion.KinectSensorProperty);
             speechControl.UnloadGrammar(grammar);
             speechControl.StopEvents();
+            ResetTilesColor();
         }
 
         private void SpeechHypothesized(RecognitionResult speechHypothesized)
@@ -155,11 +153,20 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             this.wrapPanel.Height = ( (filePaths.Length + 2) / 3) * 220;
         }
 
+        public void ResetTilesColor()
+        {
+            for(int i=0; i<wrapPanel.Children.Count ; i++)
+            {
+                setTileAsNormal((KinectTileButton)wrapPanel.Children[i]);
+            }
+        }
+
         public void setTileAsNormal(KinectTileButton button)
         {
             button.Width = 350;
             button.Height = 200;
             button.Margin = new Thickness(5);
+            button.Background = Brushes.DarkBlue;
         }
 
         public void setTileAsSelected(KinectTileButton button)
@@ -270,9 +277,9 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private void KinectTileButtonClick(object sender, RoutedEventArgs e)
         {
             var button = (FileKinectButton)e.OriginalSource;
-            //var selectionDisplay = new SelectionDisplay(button.FilePath as string);
-            //this.kinectRegionGrid.Children.Add(selectionDisplay);
-            
+
+            setTileAsSelected(button);
+
             clickButton(button);
             
             e.Handled = true;
