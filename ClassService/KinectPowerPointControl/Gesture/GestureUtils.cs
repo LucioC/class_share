@@ -7,6 +7,11 @@ using ServiceCore;
 
 namespace KinectPowerPointControl.Gesture
 {
+    /***
+     * Lezz Z is closer to kinect device
+     * Less Y is down of the vision of kinect
+     * More X is more to the Left side vision of kinect, and more to the Right side of the user if facing forward to the device
+     * **/
     public class GestureUtils
     {
         //Calculate distance of X axis
@@ -79,23 +84,54 @@ namespace KinectPowerPointControl.Gesture
 
             var shoulderRight = skeleton.Joints[JointType.ShoulderRight];
             var shoulderLeft = skeleton.Joints[JointType.ShoulderLeft];
+            var spine = skeleton.Joints[JointType.Spine];
+            var hipCenter = skeleton.Joints[JointType.HipCenter];
 
-            if (shoulderRight.TrackingState != JointTrackingState.Tracked || shoulderLeft.TrackingState != JointTrackingState.Tracked)
+            if (shoulderRight.TrackingState != JointTrackingState.Tracked || shoulderLeft.TrackingState != JointTrackingState.Tracked
+                || (spine.TrackingState != JointTrackingState.Tracked && hipCenter.TrackingState != JointTrackingState.Tracked))
             {
                 isFacingForward = false;
             }
             else // If user is facing forward
-                if (shoulderRight.Position.X > shoulderLeft.Position.X && GestureUtils.CalculateDistanceZ(shoulderRight.Position, shoulderLeft.Position) < 0.1)
-                {
-                    isFacingForward = true;
-                }
-                else
-                {
-                    isFacingForward = false;
-                }
+            {
+                //Gets one of the center points that is being tracked
+                var center = (spine.TrackingState != JointTrackingState.Tracked) ? hipCenter : spine;
+
+                isFacingForward = IsUserFacingForward(new KinectJointWrapper(shoulderRight), new KinectJointWrapper(shoulderLeft), new KinectJointWrapper(center));
+            }
 
             return isFacingForward;
         }
+
+        public static bool IsUserFacingForward(IJoint shoulderRight, IJoint shoulderLeft, IJoint center)
+        {
+            float angleOfUserCenterTillKinectDevice = GetAngleOfLineBetweenTwoPoints(new SkeletonPoint(), center.Position);
+            float angleOfUserShoulderLine = GetAngleOfLineBetweenTwoPoints(shoulderLeft.Position, shoulderRight.Position);
+
+            float angleDifference = angleOfUserCenterTillKinectDevice - angleOfUserShoulderLine;
+            angleDifference -= 90f;
+
+            if (Math.Abs(angleDifference) > 10)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /** * Determines the angle of a straight line drawn between point one and two. 
+         * The number returned, which is a float in degrees, tells us how much we have to rotate a horizontal line clockwise for it to match the line 
+         * between the two points. 
+         * If you prefer to deal with angles using radians instead of degrees, just change the last line to: "return Math.Atan2(yDiff, xDiff);" 
+         */
+        public static float GetAngleOfLineBetweenTwoPoints(SkeletonPoint p1, SkeletonPoint p2) 
+        { 
+            float xDiff = p2.X - p1.X; 
+            float zDiff = p2.Z - p1.Z; 
+            return (float)(Math.Atan2(zDiff, xDiff) * (180 / Math.PI)); 
+        } //- See more at: http://wikicode.wikidot.com/get-angle-of-line-between-two-points#sthash.kjEbIDbN.dpuf
 
         public static float CalculateDistanceZ(SkeletonPoint rightHandPosition, SkeletonPoint leftHandPosition)
         {

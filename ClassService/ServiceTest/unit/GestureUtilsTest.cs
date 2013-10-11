@@ -1,6 +1,7 @@
 ﻿using KinectPowerPointControl.Gesture;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using ServiceTest;
 
 namespace TestProject.Units
 {
@@ -110,5 +111,102 @@ namespace TestProject.Units
             actual = GestureUtils.NormalizeDistance(deltaDistance, errorExpected);
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod()]
+        public void WhenUserIsFacingForwardAndPositionedAtTheCenterOfVisionOfTheDevice_ThenItShouldSayThatHeIsFacingForward()
+        {
+            var shoulderRight = CommonTest.CreateDummyJointWithSkeletonPoint(0.5f, 1, 1f);
+            var shoulderLeft = CommonTest.CreateDummyJointWithSkeletonPoint(-0.5f, 1, 1f);
+            var center = CommonTest.CreateDummyJointWithSkeletonPoint(0f, 0f, 1f);
+
+            bool expected = true;
+            bool actual = GestureUtils.IsUserFacingForward(shoulderRight, shoulderLeft, center);
+            Assert.AreEqual(expected, actual);
+        }
+        
+        [TestMethod()]
+        public void WhenUserIsFacingRightAndPositionedAtTheCenterOfVisionOfTheDevice_ThenItShouldSayThatHeIsNotFacingForward()
+        {
+            var shoulderRight = CommonTest.CreateDummyJointWithSkeletonPoint(0.3f, 1, 1.3f);
+            var shoulderLeft = CommonTest.CreateDummyJointWithSkeletonPoint(-0.3f, 1, 0.7f);
+            var center = CommonTest.CreateDummyJointWithSkeletonPoint(0f, 0f, 1f);
+
+            bool expected = false;
+            bool actual = GestureUtils.IsUserFacingForward(shoulderRight, shoulderLeft, center);
+            Assert.AreEqual(expected, actual);
+        }
+        
+        [TestMethod()]
+        public void WhenUserIsFacingLeftAndPositionedAtTheCenterOfVisionOfTheDevice_ThenItShouldSayThatHeIsNotFacingForward()
+        {
+            var shoulderRight = CommonTest.CreateDummyJointWithSkeletonPoint(0.3f, 1, 0.7f);
+            var shoulderLeft = CommonTest.CreateDummyJointWithSkeletonPoint(-0.3f, 1, 1.3f);
+            var center = CommonTest.CreateDummyJointWithSkeletonPoint(0f, 0f, 1f);
+
+            bool expected = false;
+            bool actual = GestureUtils.IsUserFacingForward(shoulderRight, shoulderLeft, center);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void WhenUserIsFacingTheDeviceAndAtIsPositionedALittleRightOfTheDevice_ThenItShouldSayThatHeIsFacingForward()
+        {
+            var shoulderRight = CommonTest.CreateDummyJointWithSkeletonPoint(1.45f, 1, 0.7f);
+            var shoulderLeft = CommonTest.CreateDummyJointWithSkeletonPoint(0.65f, 1, 1.3f);
+            var center = CommonTest.CreateDummyJointWithSkeletonPoint(1f, 0f, 1f);
+
+            bool expected = true;
+            bool actual = GestureUtils.IsUserFacingForward(shoulderRight, shoulderLeft, center);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void WhenUserIsNotFacingTheDeviceAndAtIsPositionedALittleRightOfTheDevice_ThenItShouldSayThatHeIsNotFacingForward()
+        {
+            var shoulderRight = CommonTest.CreateDummyJointWithSkeletonPoint(1.5f, 1, 1f);
+            var shoulderLeft = CommonTest.CreateDummyJointWithSkeletonPoint(0.5f, 1, 1f);
+            var center = CommonTest.CreateDummyJointWithSkeletonPoint(1f, 0f, 1f);
+
+            bool expected = false;
+            bool actual = GestureUtils.IsUserFacingForward(shoulderRight, shoulderLeft, center);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void WhenUserIsFacingRightAndAtIsPositionedALittleRightOfTheDevice_ThenItShouldSayThatHeIsNotFacingForward()
+        {
+            var shoulderRight = CommonTest.CreateDummyJointWithSkeletonPoint(1.3f, 1, 1.3f);
+            var shoulderLeft = CommonTest.CreateDummyJointWithSkeletonPoint(0.7f, 1, 0.7f);
+            var center = CommonTest.CreateDummyJointWithSkeletonPoint(1f, 0f, 1f);
+
+            bool expected = false;
+            bool actual = GestureUtils.IsUserFacingForward(shoulderRight, shoulderLeft, center);
+            Assert.AreEqual(expected, actual);
+        }
+        
+        [TestMethod()]
+        public void WhenUserIsNotFacingTheDeviceAndAtIsPositionedALittleLeftOfTheDevice_ThenItShouldSayThatHeIsNotFacingForward()
+        {
+            var shoulderRight = CommonTest.CreateDummyJointWithSkeletonPoint(-0.5f, 1, 1f);
+            var shoulderLeft = CommonTest.CreateDummyJointWithSkeletonPoint(-1.5f, 1, 1f);
+            var center = CommonTest.CreateDummyJointWithSkeletonPoint(-1f, 0f, 1f);
+
+            bool expected = false;
+            bool actual = GestureUtils.IsUserFacingForward(shoulderRight, shoulderLeft, center);
+            Assert.AreEqual(expected, actual);
+        }
+        
+        [TestMethod()]
+        public void WhenUserIsFacingLeftAndAtIsPositionedALittleLeftOfTheDevice_ThenItShouldSayThatHeIsNotFacingForward()
+        {
+            var shoulderRight = CommonTest.CreateDummyJointWithSkeletonPoint(-0.7f, 1, 0.7f);
+            var shoulderLeft = CommonTest.CreateDummyJointWithSkeletonPoint(-1.3f, 1, 1.3f);
+            var center = CommonTest.CreateDummyJointWithSkeletonPoint(-1f, 0f, 1f);
+
+            bool expected = false;
+            bool actual = GestureUtils.IsUserFacingForward(shoulderRight, shoulderLeft, center);
+            Assert.AreEqual(expected, actual);
+        }
+
     }
 }
