@@ -253,7 +253,10 @@ namespace ImageZoom
                 imageState.Zoom = Math.Max(newZoom, minZoom);
             }
 
-            zoomLabel.Text = "zoom is: " + imageState.Zoom;
+            Invoke((MethodInvoker)delegate
+            {
+                zoomLabel.Text = "zoom is: " + imageState.Zoom;
+            });         
 
             int x = pointerPosition.X - pictureBox.Location.X;    // Where location of the mouse in the pictureframe
             int y = pointerPosition.Y - pictureBox.Location.Y;

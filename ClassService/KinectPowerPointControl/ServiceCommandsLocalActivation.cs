@@ -82,13 +82,13 @@ namespace KinectPowerPointControl
             SendCommandAssynchrnously(ServiceCommands.IMAGE_ROTATE, "-90");
         }
 
-        public void ProcessZoomOut(float multiplier = 1)
+        public void ProcessZoomOut(float multiplier = 0.1f)
         {
             multiplier = -multiplier;
             SendCommandAssynchrnously(ServiceCommands.IMAGE_ZOOM, multiplier.ToString(CultureInfo.InvariantCulture));
         }
 
-        public void ProcessZoomIn(float multiplier = 1)
+        public void ProcessZoomIn(float multiplier = 0.1f)
         {
             SendCommandAssynchrnously(ServiceCommands.IMAGE_ZOOM, multiplier.ToString(CultureInfo.InvariantCulture));
         }

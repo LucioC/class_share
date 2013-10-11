@@ -166,6 +166,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             button.Width = 350;
             button.Height = 200;
             button.Margin = new Thickness(5);
+            button.BorderThickness = new Thickness(0);
+            button.BorderBrush = Brushes.Transparent;
             button.Background = Brushes.DarkBlue;
         }
 
@@ -174,7 +176,9 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             button.Width = 350;
             button.Height = 200;
             button.Margin = new Thickness(5);
-            button.Background = Brushes.DarkGray;
+            button.BorderThickness = new Thickness(10);
+            button.BorderBrush = Brushes.Black;
+            button.Background = Brushes.DarkCyan;
         }
 
         /// <summary>
@@ -278,8 +282,6 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         {
             var button = (FileKinectButton)e.OriginalSource;
 
-            setTileAsSelected(button);
-
             clickButton(button);
             
             e.Handled = true;
@@ -288,6 +290,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private void clickButton(FileKinectButton button)
         {
             this.Executor.BeginInvoke("open", button.FileName, null, null);
+            setTileAsSelected(button);
         }
 
         /// <summary>
