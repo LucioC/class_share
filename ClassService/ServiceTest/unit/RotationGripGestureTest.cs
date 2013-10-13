@@ -93,7 +93,6 @@ namespace TestProject.Units
             expected = false;
             Assert.AreEqual(expected, actual);
 
-            Assert.AreEqual(GestureEvents.ROTATE_RIGHT, target.Name);
             Assert.AreEqual(2, target.State);
         }
 
@@ -177,7 +176,7 @@ namespace TestProject.Units
             bool expected = false;
             bool actual;
 
-            var rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1.5f, 1.1f, 0);
+            var rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1.5f, 1.2f, 0);
             var leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(1f, 1f, 0);
             var spine = CommonTest.CreateDummyJointWithSkeletonPoint(0.5f, 0.5f, 0);
             actual = target.IdentifyRotationGesture(rightHand, leftHand, spine, false, false);
@@ -193,6 +192,30 @@ namespace TestProject.Units
             Assert.AreEqual(expected, actual);
 
             Assert.AreEqual(GestureEvents.ROTATE_LEFT, target.Name);
+        }
+
+        [TestMethod()]
+        //Distance minimum equals 12cm
+        public void ShouldNotIdentifyRotationIfHandsAreCloseInY()
+        {
+            RotationGripGesture target = new RotationGripGesture();
+            bool expected = false;
+            bool actual;
+
+            var rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1f, 1f, 0);
+            var leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(0f, 1.11f, 0);
+            var spine = CommonTest.CreateDummyJointWithSkeletonPoint(0.5f, 0.5f, 0);
+            actual = target.IdentifyRotationGesture(rightHand, leftHand, spine, false, false);
+            Assert.AreEqual(expected, actual);
+
+            //Closed hands
+            actual = target.IdentifyRotationGesture(rightHand, leftHand, spine, true, true);
+            Assert.AreEqual(expected, actual);
+
+            rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1f, 1.11f, 0);
+            leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(0f, 1f, 0);
+            actual = target.IdentifyRotationGesture(rightHand, leftHand, spine, true, true);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod()]

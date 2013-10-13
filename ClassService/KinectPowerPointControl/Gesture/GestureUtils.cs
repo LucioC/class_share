@@ -68,6 +68,11 @@ namespace KinectPowerPointControl.Gesture
         {
             return Math.Abs(GestureUtils.CalculateDistanceZ(rightHand.Position, leftHand.Position)) > distance;
         }
+        
+        public static bool AreHandsSeparatedInY(IJoint rightHand, IJoint leftHand, float distance)
+        {
+            return Math.Abs(GestureUtils.CalculateDistanceY(rightHand.Position, leftHand.Position)) > distance;
+        }
 
         public static bool IsHandCloseToSpineInZ(IJoint hand, IJoint spine, float minimumDistance)
         {

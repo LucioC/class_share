@@ -17,12 +17,14 @@ namespace KinectPowerPointControl.Gesture
 
         public float HandsDistance { get; set; }
         public float HandsDistanceErrorIgnored { get; set; }
+        public float MaximumHandsYDistanceToStart { get; set; }
 
         public ZoomGripGesture()
         {
             HandsDistance = 0f;
             HandsDistanceErrorIgnored = 0.05f;
             Interval = 100;
+            MaximumHandsYDistanceToStart = 0.12f;
             State = 0;
         }
 
@@ -43,6 +45,15 @@ namespace KinectPowerPointControl.Gesture
             {
                 State = 0;
                 return false;
+            }
+
+            //If gesture is not being executed yet, then if hands are separated in Y, dont start it
+            if (State == 0)
+            {
+                if (GestureUtils.AreHandsSeparatedInY(rightHand, leftHand, MaximumHandsYDistanceToStart))
+                {
+                    return false;
+                }
             }
 
             //Calculate and update hands distance
