@@ -478,7 +478,7 @@ namespace ImageZoom
             imageState = imageUtils.adjustAngle(rotation, imageState);
 
             float[] dimensionMultiplier = imageUtils.MultipliersToSameSize(img.Size, otherImageSize, imageState.Angle);
-            imageState = imageUtils.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, dimensionMultiplier[0], dimensionMultiplier[1], rotation);
+            imageState = imageUtils.AdjustPositionAndScale(left, top, right, bottom, dimensionMultiplier[0], dimensionMultiplier[1], rotation);
 
             pictureBox.Refresh();
         }

@@ -43,7 +43,7 @@ namespace ImageZoom
         public Size BoxSize { get; set; }
         public Point Center { get; set; }
 
-        public ImageState AdjustPositionAndScale(ref int left, ref int top, ref int right, ref int bottom, float otherImageScaleH, float otherImageScaleW, int angle=0)
+        public ImageState AdjustPositionAndScale(int left, int top, int right, int bottom, float otherImageScaleH, float otherImageScaleW, int angle=0)
         {
             ImageState imageState = new ImageState();
             imageState = adjustAngle(angle, imageState);
@@ -56,14 +56,10 @@ namespace ImageZoom
             int width = right - left;
             int height = bottom - top;
 
-           // if (width < ImageSize.Width) width = ImageSize.Width;
-           // if (height < ImageSize.Height) height = ImageSize.Height;
-
             float scaleh = (float)BoxSize.Height / height;
             float scalew = (float)BoxSize.Width / width;
 
             float minScale = Math.Min(scaleh, scalew);
-            //float minScale = scalew;
 
             Point center = Center;
 

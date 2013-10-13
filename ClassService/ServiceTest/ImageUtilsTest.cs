@@ -83,7 +83,7 @@ namespace TestProject1
             target.ImageSize = new Size(100,100);
             target.BoxSize = new Size(100, 100);            
 
-            actual = target.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, otherImageScaleH, otherImageScaleW);
+            actual = target.AdjustPositionAndScale(left, top, right, bottom, otherImageScaleH, otherImageScaleW);
             Assert.AreEqual(expected.X, actual.X);
             Assert.AreEqual(expected.Y, actual.Y);
             Assert.AreEqual(expected.Zoom, actual.Zoom);
@@ -109,7 +109,7 @@ namespace TestProject1
             target.ImageSize = new Size(1000, 100);
             target.BoxSize = new Size(100, 100);
 
-            actual = target.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, otherImageScaleH, otherImageScaleW);
+            actual = target.AdjustPositionAndScale(left, top, right, bottom, otherImageScaleH, otherImageScaleW);
             Assert.AreEqual(expected.X, actual.X);
             Assert.AreEqual(expected.Y, actual.Y);
             Assert.AreEqual(expected.Zoom, actual.Zoom);
@@ -136,7 +136,7 @@ namespace TestProject1
             target.ImageSize = new Size(100, 1000);
             target.BoxSize = new Size(100, 100);
 
-            actual = target.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, otherImageScaleH, otherImageScaleW);
+            actual = target.AdjustPositionAndScale(left, top, right, bottom, otherImageScaleH, otherImageScaleW);
             Assert.AreEqual(expected.X, actual.X);
             Assert.AreEqual(expected.Y, actual.Y);
             Assert.AreEqual(expected.Zoom, actual.Zoom);
@@ -162,7 +162,7 @@ namespace TestProject1
             target.ImageSize = new Size(100, 100);
             target.BoxSize = new Size(100, 100);
 
-            actual = target.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, otherImageScaleH, otherImageScaleW);
+            actual = target.AdjustPositionAndScale(left, top, right, bottom, otherImageScaleH, otherImageScaleW);
             Assert.AreEqual(expected.X, actual.X);
             Assert.AreEqual(expected.Y, actual.Y);
             Assert.AreEqual(expected.Zoom, actual.Zoom);
@@ -193,7 +193,7 @@ namespace TestProject1
             target.ImageSize = new Size(100, 100);
             target.BoxSize = new Size(100, 100);
 
-            actual = target.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, otherImageScaleH, otherImageScaleW, 180);
+            actual = target.AdjustPositionAndScale(left, top, right, bottom, otherImageScaleH, otherImageScaleW, 180);
             Assert.AreEqual(expected.X, actual.X);
             Assert.AreEqual(expected.Y, actual.Y);
             Assert.AreEqual(expected.Zoom, actual.Zoom);
@@ -220,7 +220,7 @@ namespace TestProject1
             target.ImageSize = new Size(1000, 100);
             target.BoxSize = new Size(100, 100);
 
-            actual = target.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, otherImageScaleH, otherImageScaleW, 180);
+            actual = target.AdjustPositionAndScale(left, top, right, bottom, otherImageScaleH, otherImageScaleW, 180);
             Assert.AreEqual(expected.X, actual.X);
             Assert.AreEqual(expected.Y, actual.Y);
             Assert.AreEqual(expected.Zoom, actual.Zoom);
@@ -248,7 +248,7 @@ namespace TestProject1
             target.ImageSize = new Size(100, 1000);
             target.BoxSize = new Size(100, 100);
 
-            actual = target.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, otherImageScaleH, otherImageScaleW, 90);
+            actual = target.AdjustPositionAndScale(left, top, right, bottom, otherImageScaleH, otherImageScaleW, 90);
             Assert.AreEqual(expected.X, actual.X);
             Assert.AreEqual(expected.Y, actual.Y);
             Assert.AreEqual(expected.Zoom, actual.Zoom);
@@ -275,7 +275,7 @@ namespace TestProject1
             target.ImageSize = new Size(100, 100);
             target.BoxSize = new Size(100, 100);
 
-            actual = target.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, otherImageScaleH, otherImageScaleW, 180);
+            actual = target.AdjustPositionAndScale(left, top, right, bottom, otherImageScaleH, otherImageScaleW, 180);
             Assert.AreEqual(expected.X, actual.X);
             Assert.AreEqual(expected.Y, actual.Y);
             Assert.AreEqual(expected.Zoom, actual.Zoom);
@@ -302,7 +302,7 @@ namespace TestProject1
             target.ImageSize = new Size(100, 100);
             target.BoxSize = new Size(100, 100);
 
-            actual = target.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, otherImageScaleH, otherImageScaleW, 90);
+            actual = target.AdjustPositionAndScale(left, top, right, bottom, otherImageScaleH, otherImageScaleW, 90);
             Assert.AreEqual(expected.X, actual.X);
             Assert.AreEqual(expected.Y, actual.Y);
             Assert.AreEqual(expected.Zoom, actual.Zoom);
@@ -331,7 +331,7 @@ namespace TestProject1
             target.ImageSize = new Size(200, 100);
             target.BoxSize = new Size(100, 100);
 
-            actual = target.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, otherImageScaleH, otherImageScaleW);
+            actual = target.AdjustPositionAndScale(left, top, right, bottom, otherImageScaleH, otherImageScaleW);
             Assert.AreEqual(expected.X, actual.X);
             Assert.AreEqual(expected.Y, actual.Y);
             Assert.AreEqual(expected.Zoom, actual.Zoom);
@@ -358,7 +358,7 @@ namespace TestProject1
             target.ImageSize = new Size(100, 200);
             target.BoxSize = new Size(100, 100);
 
-            actual = target.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, otherImageScaleH, otherImageScaleW);
+            actual = target.AdjustPositionAndScale(left, top, right, bottom, otherImageScaleH, otherImageScaleW);
             Assert.AreEqual(expected.X, actual.X);
             Assert.AreEqual(expected.Y, actual.Y);
             Assert.AreEqual(expected.Zoom, actual.Zoom);
@@ -385,7 +385,7 @@ namespace TestProject1
             target.ImageSize = new Size(200, 100);
             target.BoxSize = new Size(100, 100);
 
-            actual = target.AdjustPositionAndScale(ref left, ref top, ref right, ref bottom, otherImageScaleH, otherImageScaleW, 90);
+            actual = target.AdjustPositionAndScale(left, top, right, bottom, otherImageScaleH, otherImageScaleW, 90);
             Assert.AreEqual(expected.X, actual.X);
             Assert.AreEqual(expected.Y, actual.Y);
             Assert.AreEqual(expected.Zoom, actual.Zoom);
