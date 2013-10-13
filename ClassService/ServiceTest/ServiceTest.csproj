@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="ActionDependencyTest.cs" />
     <Compile Include="DummyJoint.cs" />
+    <Compile Include="unit\JoinHandsGestureTest.cs" />
     <Compile Include="unit\GripHandMoveTest.cs" />
     <Compile Include="ImageUtilsTest.cs" />
     <Compile Include="unit\RotationGripGestureTest.cs" />

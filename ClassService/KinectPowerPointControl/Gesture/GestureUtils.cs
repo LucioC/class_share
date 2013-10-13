@@ -76,7 +76,7 @@ namespace KinectPowerPointControl.Gesture
 
         public static bool IsHandCloseToSpineInZ(IJoint hand, IJoint spine, float minimumDistance)
         {
-            return hand.Position.Z > spine.Position.Z - minimumDistance;
+            return Math.Abs(hand.Position.Z - spine.Position.Z) < minimumDistance;
         }
 
         public static bool IsLeftHandCloseToRightOrInFront(IJoint rightHand, IJoint leftHand, float minimumDistanceAllowed)

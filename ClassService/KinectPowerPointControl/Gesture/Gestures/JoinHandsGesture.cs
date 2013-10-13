@@ -27,13 +27,20 @@ namespace KinectPowerPointControl.Gesture
             var rightHand = skeleton.HandRight;
             var leftHand = skeleton.HandLeft;
             var spine = skeleton.Spine;
+            var rightShoulder = skeleton.ShoulderRight;
+            var leftShoulder = skeleton.ShoulderLeft;
 
+            return IdentifyGesture(rightHand, leftHand, userState.IsRightHandGripped, userState.IsLeftHandGripped, spine, rightShoulder, leftShoulder);
+        }
+
+        public bool IdentifyGesture(IJoint rightHand, IJoint leftHand, bool isRightHandGripped, bool isLeftHandGripped, IJoint spine, IJoint rightShoulder, IJoint leftShoulder)
+        {
             if (GestureUtils.AreHandsBelowSpine(rightHand, leftHand, spine))
             {
                 State = 0;
                 return false;
             }
-            else if (GestureUtils.IsHandCloseToSpineInZ(rightHand, spine, 0.1f) || GestureUtils.IsHandCloseToSpineInZ(leftHand, spine, 0.1f))
+            else if (GestureUtils.IsHandCloseToSpineInZ(rightHand, spine, 0.05f) || GestureUtils.IsHandCloseToSpineInZ(leftHand, spine, 0.05f))
             {
                 State = 0;
                 return false;
@@ -72,7 +79,7 @@ namespace KinectPowerPointControl.Gesture
                         return false;
                     }
 
-                    if (userState.IsRightHandGripped || userState.IsLeftHandGripped)
+                    if (isRightHandGripped || isLeftHandGripped)
                     {
                         State = 2;
                         return false;
