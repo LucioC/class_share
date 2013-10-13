@@ -12,6 +12,9 @@ namespace ImageZoom
     public partial class ImageZoomMainForm : Form
     {
         Image img;
+
+        private object imageBlock = new Object();
+        
         Point mouseDown;
         int startx = 0;                         // offset of image when mouse was pressed
         int starty = 0;
@@ -114,11 +117,29 @@ namespace ImageZoom
 
         private void centralizeImage(float dpiy, float dpix)
         {
-            int centerX = pictureBox.Width / 2 - img.Width / 2;
-            int centery = pictureBox.Height / 2 - img.Height / 2;
+            Size imageSize = GetImageSize();
+            int centerX = pictureBox.Width / 2 - imageSize.Width / 2;
+            int centery = pictureBox.Height / 2 - imageSize.Height / 2;
             imageState.X += centerX;
             imageState.Y += centery;
             pictureBox.Refresh();
+        }
+
+        private Size GetImageSize()
+        {
+            lock (imageBlock)
+            {
+                Size imageSize = img.Size;
+                return imageSize;
+            }
+        }
+
+        private Object CloneImage()
+        {
+            lock (imageBlock)
+            {
+                return img.Clone();
+            }
         }
 
         private void pictureBox_MouseMove(object sender, EventArgs e)
@@ -282,7 +303,7 @@ namespace ImageZoom
             e.Graphics.ScaleTransform(imageState.Zoom, imageState.Zoom);
             e.Graphics.TranslateTransform(imageState.X, imageState.Y);
 
-            Image i = (Image)img.Clone();
+            Image i = (Image)CloneImage();
             i = imageUtils.RotateImage(i, imageState.Angle);
 
             e.Graphics.DrawImage(i, 0, 0);
@@ -324,8 +345,9 @@ namespace ImageZoom
 
         public void ProcessCommand(String command, float value)
         {
-            imageState.Width = img.Width;
-            imageState.Height = img.Height;
+            Size imageSize = GetImageSize();
+            imageState.Width = imageSize.Width;
+            imageState.Height = imageSize.Height;
             imageState.ScreenHeight = pictureBox.Height;
             imageState.ScreenWidth = pictureBox.Width;
 
@@ -370,8 +392,9 @@ namespace ImageZoom
             const int WM_KEYDOWN = 0x100;
             const int WM_SYSKEYDOWN = 0x104;
 
-            imageState.Width = img.Width;
-            imageState.Height = img.Height;
+            Size imageSize = GetImageSize();
+            imageState.Width = imageSize.Width;
+            imageState.Height = imageSize.Height;
 
             if ((msg.Msg == WM_KEYDOWN) || (msg.Msg == WM_SYSKEYDOWN))
             {
@@ -420,14 +443,17 @@ namespace ImageZoom
         
         public ImageState GetImageState()
         {
+            Size originalImageSize = GetImageSize();
+
+            Size imageSize = originalImageSize;
+
             ImageState imageState = new ImageState(this.imageState);
 
-            Size imageSize = img.Size;
             //if image is rotated its dimensions are inverted
             if (imageState.Angle == 90 || imageState.Angle == 270)
             {
-                imageSize.Height = img.Width;
-                imageSize.Width = img.Height;
+                imageSize.Height = originalImageSize.Width;
+                imageSize.Width = originalImageSize.Height;
             }
 
             RectangleF displayArea = pictureBox.CreateGraphics().VisibleClipBounds;
@@ -448,8 +474,8 @@ namespace ImageZoom
             imageState.ScreenWidth = (int)displayArea.Width;
 
             this.imageState = new ImageState(imageState);
-            this.imageState.Width = img.Width;
-            this.imageState.Height = img.Height;
+            this.imageState.Width = originalImageSize.Width;
+            this.imageState.Height = originalImageSize.Height;
             
             return imageState;
         }
@@ -477,7 +503,7 @@ namespace ImageZoom
 
             imageState = imageUtils.adjustAngle(rotation, imageState);
 
-            float[] dimensionMultiplier = imageUtils.MultipliersToSameSize(img.Size, otherImageSize, imageState.Angle);
+            float[] dimensionMultiplier = imageUtils.MultipliersToSameSize(GetImageSize(), otherImageSize, imageState.Angle);
             imageState = imageUtils.AdjustPositionAndScale(left, top, right, bottom, dimensionMultiplier[0], dimensionMultiplier[1], rotation);
 
             pictureBox.Refresh();
