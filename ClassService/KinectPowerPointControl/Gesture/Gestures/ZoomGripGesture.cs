@@ -26,7 +26,7 @@ namespace KinectPowerPointControl.Gesture
             State = 0;
         }
 
-        public bool IdentiftZoomGesture(IJoint rightHand, IJoint leftHand, IJoint spine, Boolean isLeftHandGripped, Boolean isRightHandGripped)
+        public bool IdentifyZoomGesture(IJoint rightHand, IJoint leftHand, IJoint spine, Boolean isLeftHandGripped, Boolean isRightHandGripped)
         {
             //If hands are below spine dont track gesture 
             if (GestureUtils.IsOneHandBelowSpine(rightHand, leftHand, spine))
@@ -46,14 +46,14 @@ namespace KinectPowerPointControl.Gesture
             }
 
             //Calculate and update hands distance
-            float xDistance = GestureUtils.CalculateDistanceX(rightHand.Position, leftHand.Position);
-            float deltaXDistance = xDistance - HandsDistance;
+            float distance = GestureUtils.DistanceXYBetweenPoints(rightHand.Position, leftHand.Position);
+            float deltaXDistance = distance - HandsDistance;
             deltaXDistance = GestureUtils.NormalizeDistance(deltaXDistance, HandsDistanceErrorIgnored);
 
             if (State == 0)
             {
                 State = 1;
-                HandsDistance = xDistance;
+                HandsDistance = distance;
                 return false;
             }
 
@@ -61,13 +61,13 @@ namespace KinectPowerPointControl.Gesture
             if (deltaXDistance > 0)
             {
                 Name = GestureEvents.ZOOM_IN;
-                HandsDistance = xDistance;
+                HandsDistance = distance;
                 return true;
             }
             else if (deltaXDistance < 0)
             {
                 Name = GestureEvents.ZOOM_OUT; 
-                HandsDistance = xDistance;
+                HandsDistance = distance;
                 return true;
             }
             return false;
@@ -81,7 +81,7 @@ namespace KinectPowerPointControl.Gesture
             var head = skeleton.Head;
             var spine = skeleton.Spine;
 
-            return IdentiftZoomGesture(rightHand, leftHand, spine, userState.IsLeftHandGripped, userState.IsRightHandGripped);
+            return IdentifyZoomGesture(rightHand, leftHand, spine, userState.IsLeftHandGripped, userState.IsRightHandGripped);
         }
         
         public string Name

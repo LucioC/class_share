@@ -75,19 +75,68 @@ namespace TestProject.Units
             var rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1f, 1, 0);
             var leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(0f, 1, 0);
             var spine = CommonTest.CreateDummyJointWithSkeletonPoint(0.5f, 0.5f, 0);
-            actual = target.IdentiftZoomGesture(rightHand, leftHand, spine, false, false);
+            actual = target.IdentifyZoomGesture(rightHand, leftHand, spine, false, false);
             Assert.AreEqual(expected, actual);
 
-            actual = target.IdentiftZoomGesture(rightHand, leftHand, spine, true, true);
+            actual = target.IdentifyZoomGesture(rightHand, leftHand, spine, true, true);
             Assert.AreEqual(expected, actual);
             
             rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1.1f, 1, 0);
             leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(0f, 1, 0);
-            actual = target.IdentiftZoomGesture(rightHand, leftHand, spine, true, true);
+            actual = target.IdentifyZoomGesture(rightHand, leftHand, spine, true, true);
             expected = true;
             Assert.AreEqual(expected, actual);
 
             Assert.AreEqual(GestureEvents.ZOOM_IN, target.Name);
+        }
+
+
+        [TestMethod()]
+        public void IdentifyZoomInGestureDoneDiagnally()
+        {
+            ZoomGripGesture target = new ZoomGripGesture();
+            bool expected = false;
+            bool actual;
+
+            var rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1f, 1, 0);
+            var leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(0f, 1, 0);
+            var spine = CommonTest.CreateDummyJointWithSkeletonPoint(0.5f, 0.5f, 0);
+            actual = target.IdentifyZoomGesture(rightHand, leftHand, spine, false, false);
+            Assert.AreEqual(expected, actual);
+
+            actual = target.IdentifyZoomGesture(rightHand, leftHand, spine, true, true);
+            Assert.AreEqual(expected, actual);
+
+            rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1.049f, 1.049f, 0);
+            leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(0f, 1, 0);
+            actual = target.IdentifyZoomGesture(rightHand, leftHand, spine, true, true);
+            expected = true;
+            Assert.AreEqual(expected, actual);
+
+            Assert.AreEqual(GestureEvents.ZOOM_IN, target.Name);
+        }
+        
+        [TestMethod()]
+        public void DoNotIdentifyZoomInGestureDoneDiagnallyIfDistanceWasLessThan5cm()
+        {
+            ZoomGripGesture target = new ZoomGripGesture();
+            bool expected = false;
+            bool actual;
+
+            var rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1f, 1, 0);
+            var leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(0f, 1, 0);
+            var spine = CommonTest.CreateDummyJointWithSkeletonPoint(0.5f, 0.5f, 0);
+            actual = target.IdentifyZoomGesture(rightHand, leftHand, spine, false, false);
+            Assert.AreEqual(expected, actual);
+
+            actual = target.IdentifyZoomGesture(rightHand, leftHand, spine, true, true);
+            Assert.AreEqual(expected, actual);
+
+            rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1.03f, 1.03f, 0);
+            leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(0f, 1, 0);
+            actual = target.IdentifyZoomGesture(rightHand, leftHand, spine, true, true);
+            expected = false;
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod()]
@@ -100,15 +149,15 @@ namespace TestProject.Units
             var rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1f, 1, 0);
             var leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(0f, 1, 0);
             var spine = CommonTest.CreateDummyJointWithSkeletonPoint(0.5f, 0.5f, 0);
-            actual = target.IdentiftZoomGesture(rightHand, leftHand, spine, false, false);
+            actual = target.IdentifyZoomGesture(rightHand, leftHand, spine, false, false);
             Assert.AreEqual(expected, actual);
 
-            actual = target.IdentiftZoomGesture(rightHand, leftHand, spine, true, true);
+            actual = target.IdentifyZoomGesture(rightHand, leftHand, spine, true, true);
             Assert.AreEqual(expected, actual);
 
             rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(0.9f, 1, 0);
             leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(0.1f, 1, 0);
-            actual = target.IdentiftZoomGesture(rightHand, leftHand, spine, true, true);
+            actual = target.IdentifyZoomGesture(rightHand, leftHand, spine, true, true);
             expected = true;
             Assert.AreEqual(expected, actual);
 
@@ -125,15 +174,15 @@ namespace TestProject.Units
             var rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1f, 1, 0);
             var leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(0f, 1, 0);
             var spine = CommonTest.CreateDummyJointWithSkeletonPoint(0.5f, 0.5f, 0);
-            actual = target.IdentiftZoomGesture(rightHand, leftHand, spine, false, false);
+            actual = target.IdentifyZoomGesture(rightHand, leftHand, spine, false, false);
             Assert.AreEqual(expected, actual);
 
-            actual = target.IdentiftZoomGesture(rightHand, leftHand, spine, false, false);
+            actual = target.IdentifyZoomGesture(rightHand, leftHand, spine, false, false);
             Assert.AreEqual(expected, actual);
 
             rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(0.9f, 1, 0);
             leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(0.1f, 1, 0);
-            actual = target.IdentiftZoomGesture(rightHand, leftHand, spine, true, true);
+            actual = target.IdentifyZoomGesture(rightHand, leftHand, spine, true, true);
             Assert.AreEqual(expected, actual);
         }
 
@@ -147,15 +196,15 @@ namespace TestProject.Units
             var rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(1f, 1, 0);
             var leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(0f, 1, 0);
             var spine = CommonTest.CreateDummyJointWithSkeletonPoint(0.5f, 0.5f, 0);
-            actual = target.IdentiftZoomGesture(rightHand, leftHand, spine, false, false);
+            actual = target.IdentifyZoomGesture(rightHand, leftHand, spine, false, false);
             Assert.AreEqual(expected, actual);
 
-            actual = target.IdentiftZoomGesture(rightHand, leftHand, spine, false, false);
+            actual = target.IdentifyZoomGesture(rightHand, leftHand, spine, false, false);
             Assert.AreEqual(expected, actual);
 
             rightHand = CommonTest.CreateDummyJointWithSkeletonPoint(0.9f, 1, 0);
             leftHand = CommonTest.CreateDummyJointWithSkeletonPoint(0.1f, 1, 0);
-            actual = target.IdentiftZoomGesture(rightHand, leftHand, spine, true, true);
+            actual = target.IdentifyZoomGesture(rightHand, leftHand, spine, true, true);
             Assert.AreEqual(expected, actual);
         }
     }

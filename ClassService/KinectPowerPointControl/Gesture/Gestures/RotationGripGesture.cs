@@ -37,13 +37,12 @@ namespace KinectPowerPointControl.Gesture
                 return false;
             }
             if (
-                //isClose(rightHand.Position.Y, leftHand.Position.Y, handsYDistanceToStart)
                 isLeftHandGripped && isRightHandGripped && State == 0
                 )
             {
                 initialRightHand = rightHand.Position;
                 initialLeftHand = leftHand.Position;
-                initialAngle = GestureUtils.angleBetweenPoints(initialLeftHand, initialRightHand);
+                initialAngle = GestureUtils.AngleBetweenPoints(initialLeftHand, initialRightHand);
                 CurrentAngleDelta = 0;
                 State = 1;
                 Output.Debug("RotationGesture","Initial position");
@@ -70,7 +69,7 @@ namespace KinectPowerPointControl.Gesture
                 bool rightWasUp = (initialRightHand.Y > initialLeftHand.Y) ? true : false;
                 bool isRightUpNow = (rightHand.Position.Y > leftHand.Position.Y) ? true : false;
 
-                float currentAngle = GestureUtils.angleBetweenPoints(leftHand.Position, rightHand.Position);
+                float currentAngle = GestureUtils.AngleBetweenPoints(leftHand.Position, rightHand.Position);
                 CurrentAngleDelta = initialAngle - currentAngle;
                 
                 //If hands were significantly distant and changed heights then rotation happened

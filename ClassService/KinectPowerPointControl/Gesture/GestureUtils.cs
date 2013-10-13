@@ -14,6 +14,14 @@ namespace KinectPowerPointControl.Gesture
      * **/
     public class GestureUtils
     {
+        public static float DistanceXYBetweenPoints(SkeletonPoint point1, SkeletonPoint point2)
+        {
+            double d1 = point1.X - point2.X;
+            double d2 = point1.Y - point2.Y;
+
+            return (float)Math.Sqrt(d1 * d1 + d2 * d2);
+        }
+
         //Calculate distance of X axis
         public static float CalculateDistanceX(SkeletonPoint rightHandPosition, SkeletonPoint leftHandPosition)
         {
@@ -145,7 +153,7 @@ namespace KinectPowerPointControl.Gesture
             return distance;
         }
 
-        public static float angleBetweenPoints(SkeletonPoint p1, SkeletonPoint p2)
+        public static float AngleBetweenPoints(SkeletonPoint p1, SkeletonPoint p2)
         {
             float deltaY = p2.Y - p1.Y;
             float deltaX = p2.X - p1.X;

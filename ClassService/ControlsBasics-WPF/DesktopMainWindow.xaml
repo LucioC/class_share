@@ -9,7 +9,7 @@
         Title="Presentation Panel"
         Closing="WindowClosing"
         mc:Ignorable="d"
-        d:DesignWidth="1200"
+        d:DesignWidth="1024"
         d:DesignHeight="700"
         MinWidth="500"
         MinHeight="700"
@@ -112,7 +112,7 @@
             <k:KinectUserViewer k:KinectRegion.KinectRegion="{Binding ElementName=kinectRegion}" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" />
             <k:KinectSensorChooserUI HorizontalAlignment="Center" VerticalAlignment="Top" Name="sensorChooserUi" />
             <TextBlock HorizontalAlignment="Right" Margin="0 0 -1 0" VerticalAlignment="Bottom" Foreground="{StaticResource MediumGreyBrush}" FontSize="18">Files</TextBlock>
-            <ListBox Name="listbox1" Margin="0,0,914,0">
+            <ListBox Name="listbox1" Margin="0,13,655,0">
             </ListBox>
         </Grid>
 
