@@ -41,7 +41,10 @@ namespace KinectPowerPointControl.Gesture
                 State = 0;
                 return false;
             }
-            if (GestureUtils.AreHandsSeparatedInZ(rightHand, leftHand, 0.1f))
+
+            var handInFront = (rightHand.Position.Z > leftHand.Position.Z) ? rightHand : leftHand;
+            float halfDistanceBetweenHandAndSpine = GestureUtils.HalfDistanceBetweenHandAndSpine(handInFront, spine);
+            if (GestureUtils.AreHandsSeparatedInZ(rightHand, leftHand, halfDistanceBetweenHandAndSpine) )
             {
                 State = 0;
                 return false;

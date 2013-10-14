@@ -55,7 +55,9 @@ namespace KinectPowerPointControl.Gesture
             //separate hands
             if (State == 0)
             {
-                if (AreHandsSeparatedMoreThan(handsDifferenceX, 0.5f))
+                float DistanceBetweenShoulders = GestureUtils.DistanceXYBetweenPoints(rightShoulder.Position, leftShoulder.Position);
+                if (AreHandsSeparatedMoreThan(handsDifferenceX, DistanceBetweenShoulders + 0.15f)
+                    && !isLeftHandGripped && !isRightHandGripped)
                 {
                     //Gesture started
                     State = 1;

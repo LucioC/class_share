@@ -82,13 +82,13 @@ namespace KinectPowerPointControl.Gesture
         public static bool IsLeftHandCloseToRightOrInFront(IJoint rightHand, IJoint leftHand, float minimumDistanceAllowed)
         {
             //Less Z is closer to sensor
-            return leftHand.Position.Z < rightHand.Position.Z || leftHand.Position.Z < rightHand.Position.Z - minimumDistanceAllowed;
+            return leftHand.Position.Z < rightHand.Position.Z || leftHand.Position.Z < rightHand.Position.Z + minimumDistanceAllowed;
         }
 
-        public static float HalfDistanceBetweenRightHandAndSpine(IJoint rightHand, IJoint spine)
+        public static float HalfDistanceBetweenHandAndSpine(IJoint rightHand, IJoint spine)
         {
-            float allowedDistance = (rightHand.Position.Z - spine.Position.Z) / 2;
-            return allowedDistance;
+            float distance = (rightHand.Position.Z - spine.Position.Z) / 2;
+            return Math.Abs(distance);
         }
 
         public static bool IsUserFacingForward(Skeleton skeleton)

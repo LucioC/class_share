@@ -29,7 +29,7 @@ namespace KinectPowerPointControl.Gesture
                 State = 0;
                 return false;
             }
-            float halfDistanceBetweenRightHandAndSpine = GestureUtils.HalfDistanceBetweenRightHandAndSpine(rightHand, spine);
+            float halfDistanceBetweenRightHandAndSpine = GestureUtils.HalfDistanceBetweenHandAndSpine(rightHand, spine);
 
             if (GestureUtils.IsLeftHandCloseToRightOrInFront(rightHand, leftHand, halfDistanceBetweenRightHandAndSpine))
             {
