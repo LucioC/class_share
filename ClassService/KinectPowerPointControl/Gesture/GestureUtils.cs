@@ -124,7 +124,7 @@ namespace KinectPowerPointControl.Gesture
             float angleDifference = angleOfUserCenterTillKinectDevice - angleOfUserShoulderLine;
             angleDifference -= 90f;
 
-            if (Math.Abs(angleDifference) > 10)
+            if (Math.Abs(angleDifference) > 25)
             {
                 return false;
             }

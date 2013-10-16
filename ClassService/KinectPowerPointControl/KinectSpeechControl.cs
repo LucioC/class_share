@@ -109,7 +109,7 @@ namespace KinectPowerPointControl
 
             this.readyTimer = new DispatcherTimer();
             this.readyTimer.Tick += this.ReadyTimerTick;
-            this.readyTimer.Interval = new TimeSpan(0, 0, 4);
+            this.readyTimer.Interval = new TimeSpan(0, 0, 1);
             this.readyTimer.Start();
         }
 
