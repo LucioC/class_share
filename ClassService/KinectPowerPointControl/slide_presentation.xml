@@ -44,7 +44,7 @@ xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0">
   <rule id="Close">
     <one-of>
       <item>
-        close <tag>out = "close presentation"; </tag>
+        close file <tag>out = "close presentation"; </tag>
       </item>
     </one-of>
   </rule>

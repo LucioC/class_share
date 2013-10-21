@@ -74,7 +74,7 @@ xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0">
   <rule id="Close">
     <one-of>
       <item>
-        close <tag>out = "closeimage"; </tag>
+        close file <tag>out = "closeimage"; </tag>
       </item>
     </one-of>
   </rule>
@@ -112,6 +112,9 @@ xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0">
   <rule id="NumberTimes">
     <tag>out=1;</tag> <!-- 1 is default if nothing said -->
     <one-of>
+      <item>
+        one <tag>out = 1; </tag>
+      </item>
       <item>
         two <tag>out = 2; </tag>
       </item>
