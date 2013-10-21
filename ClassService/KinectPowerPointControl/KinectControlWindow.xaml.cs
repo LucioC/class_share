@@ -307,19 +307,23 @@ namespace KinectPowerPointControl
             }
             else if (ImagePresentationGrammar.MOVE_RIGHT.Equals(speech))
             {
-                commands.ProcessMoveRight(value);
+                //move port view to right
+                commands.ProcessMoveLeft(value);
             }
             else if (ImagePresentationGrammar.MOVE_LEFT.Equals(speech))
             {
-                commands.ProcessMoveLeft(value);
+                //move port view to left
+                commands.ProcessMoveRight(value);
             }
             else if (ImagePresentationGrammar.MOVE_UP.Equals(speech))
             {
-                commands.ProcessMoveUp(value);
+                //move port view up
+                commands.ProcessMoveDown(value);
             }
             else if (ImagePresentationGrammar.MOVE_DOWN.Equals(speech))
             {
-                commands.ProcessMoveDown(value);
+                //move port view down
+                commands.ProcessMoveUp(value);
             }
             else if (ImagePresentationGrammar.ROTATE_RIGHT.Equals(speech))
             {
