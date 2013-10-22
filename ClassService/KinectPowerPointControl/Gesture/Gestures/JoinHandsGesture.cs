@@ -81,7 +81,7 @@ namespace KinectPowerPointControl.Gesture
                         return false;
                     }
 
-                    if (isRightHandGripped || isLeftHandGripped)
+                    if (isRightHandGripped && isLeftHandGripped)
                     {
                         State = 2;
                         return false;
