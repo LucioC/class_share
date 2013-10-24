@@ -9,5 +9,6 @@ namespace ServiceCore
     public interface IJoint
     {
         SkeletonPoint Position { get; }
+        JointTrackingState State { get; }
     }
 }

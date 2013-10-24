@@ -25,7 +25,6 @@ namespace KinectPowerPointControl.Gesture
         {
             ISkeleton skeleton = userState.Skeleton;
             var rightHand = skeleton.HandRight;
-            var leftHand = skeleton.HandLeft;
             var head = skeleton.Head;
             var spine = skeleton.Spine;
 

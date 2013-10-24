@@ -19,5 +19,10 @@ namespace ServiceCore
         {
             get { return kinectJoint.Position; }
         }
+
+        public JointTrackingState State
+        {
+            get { return kinectJoint.TrackingState; }
+        }
     }
 }

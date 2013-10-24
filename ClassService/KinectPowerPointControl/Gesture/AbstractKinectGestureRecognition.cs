@@ -44,10 +44,9 @@ namespace KinectPowerPointControl.Gesture
             var leftHand = closestSkeleton.Joints[JointType.HandLeft];
             var shoulderCenter = closestSkeleton.Joints[JointType.ShoulderCenter];
 
-            if (head.TrackingState != JointTrackingState.Tracked ||
-                rightHand.TrackingState != JointTrackingState.Tracked ||
-                leftHand.TrackingState != JointTrackingState.Tracked || 
-                shoulderCenter.TrackingState != JointTrackingState.Tracked)
+            if (
+                rightHand.TrackingState != JointTrackingState.Tracked
+                )
             {
                 //Don't have a good read on the joints so we cannot process gestures
                 return;

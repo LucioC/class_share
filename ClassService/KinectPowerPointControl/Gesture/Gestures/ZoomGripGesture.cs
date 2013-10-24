@@ -95,6 +95,8 @@ namespace KinectPowerPointControl.Gesture
             var head = skeleton.Head;
             var spine = skeleton.Spine;
 
+            if (rightHand.State != JointTrackingState.Tracked || leftHand.State != JointTrackingState.Tracked) return false;
+
             return IdentifyZoomGesture(rightHand, leftHand, spine, userState.IsLeftHandGripped, userState.IsRightHandGripped);
         }
         

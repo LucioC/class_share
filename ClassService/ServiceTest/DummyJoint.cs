@@ -10,6 +10,7 @@ namespace ServiceTest
 {
     public class DummyJoint: IJoint
     {
+        public JointTrackingState State { get; set; }
         SkeletonPoint point;
         public DummyJoint(SkeletonPoint point)
         {

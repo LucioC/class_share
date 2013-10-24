@@ -136,6 +136,8 @@ namespace KinectPowerPointControl.Gesture
             var spine = skeleton.Spine;
             var rightShoulder = skeleton.ShoulderRight;
             var leftShoulder = skeleton.ShoulderLeft;
+            
+            if (rightHand.State != JointTrackingState.Tracked || leftHand.State != JointTrackingState.Tracked) return false;
 
             return IdentifyRotationGesture(rightHand, leftHand, spine, userState.IsLeftHandGripped, userState.IsRightHandGripped);
         }
