@@ -63,7 +63,7 @@ namespace ClassService
         PresentationInfo GetPresentationInfo();
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/presentation",
+        [WebInvoke(UriTemplate = "/presentation/slides",
             Method = "GET",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
